@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<script>
+    function getThing(num) {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4) {
+                var respons = this.responseText;
+                document.getElementById("response").innerHTML = respons;
+            }
+        };
+        xhr.open("GET", "http://localhost:8082/test/" + num, true);
+        xhr.send();
+    }
+    function getSum(begin, end) {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4) {
+                var respons = this.responseText;
+                document.getElementById("response").innerHTML = respons;
+            }
+        }
+        xhr.open("GET", "http://localhost:8082/sum/" + begin + "/" + end);
+        xhr.send();
+    }
+
+    function factorial(num) {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if (this.readyState==4){
+                var respons = this.responseText;
+                document.getElementById("response").innerHTML = respons;
+            }
+        }
+        xhr.open("GET", "http://localhost:8082/factorial/"+num);
+        xhr.send();
+    }
+
+    function geometric(num) {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if (this.readyState==4){
+                var respons = this.responseText;
+                document.getElementById("response").innerHTML = respons;
+            }
+        }
+        xhr.open("GET","http://localhost:8082/series/geometric/"+num);
+        xhr.send();
+    }
+
+    function getE(num){
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if (this.readyState == 4){
+                var respons = this.responseText;
+                document.getElementById("response").innerHTML = respons;
+            }
+        }
+        xhr.open("GET","http://localhost:8082/getNumber/e/"+num);
+        xhr.send();
+    }
+
+    function getDer(func){
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if (this.readyState == 4){
+                var respons = this.responseText;
+                document.getElementById("response").innerHTML = respons;
+            }
+        }
+        xhr.open("GET","http://localhost:8082/get/derivative/"+func);
+        xhr.send();
+    }
+</script>
+
+<html>
+<input type="text" id="begin"> <input type="text" id="end">
+<button id="naturalNumbersSum" onclick="getSum(begin.value,end.value)">Sum</button><br>
+<input type="text" id="factorialInput"> <button id="factorialButton" onclick="factorial(factorialInput.value)">Factorial</button><br>
+<input type="text" id="geometricInput"> <button id="geometricButton" onclick="geometric(geometricInput.value)">Geometric series</button>(1+x+x^2+x^3+...)<br>
+<input type="text" id="eInput"><button id="ebutton" onclick="getE(eInput.value)">get e</button><br>
+<input type="text" id="derInput"><button id="derbutton" onclick="getDer(derInput.value)">get derivative</button>
+<div id="response"></div>
+
+</html>
