@@ -38,21 +38,29 @@ public class TestEndPoint {
 	}
 	
 	@GetMapping("/getNumber/e/{n}")
-	public String gete(@PathVariable int n) {
+	public String gete(@PathVariable long n) {
 		if(n==0) {
 			return "ILLEGAL VALUE!";
 		}else if(n<0) {
 			n=abs(n);
 		}
-		BigDecimal largeE = new BigDecimal(1);
+		/*BigDecimal largeE = new BigDecimal(1);
 		BigDecimal largeE2 = new BigDecimal(1).divide(BigDecimal.valueOf(n),MathContext.DECIMAL128);
-		BigDecimal largeE3 = largeE.add(largeE2).pow(n);
-		String ans = largeE3.toString();
+		BigDecimal largeE3 = largeE.add(largeE2);
+		largeE3 = largeE3.pow(n);*/
+		if(n>100000000000l) {
+			return "Value too large";
+		}
+		double largeE = 1.0;
+		double largeE2 = 1.0/((double) n);
+		double largeE3 = (largeE + largeE2);
+		largeE3 = Math.pow(largeE3, (double) n);
+		String ans = Double.toString(largeE3);
 		if(ans.length()>200)
 			ans = ans.substring(0, 200);
 		return ans;
 	}
-	private int abs(int num) {
+	private long abs(long num) {
 		if(num<0)
 			num=-num;
 		return num;
