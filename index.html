@@ -65,7 +65,8 @@
         xhr.onreadystatechange = function(){
             if (this.readyState == 4){
                 var respons = this.responseText;
-                document.getElementById("response").innerHTML = respons;
+                document.getElementById("response").innerHTML = "Original: "+func+"<br>";
+                document.getElementById("response").innerHTML += "Derivative: "+respons;
             }
         }
         xhr.open("GET","http://localhost:8082/get/derivative/"+func);

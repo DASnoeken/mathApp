@@ -7,6 +7,7 @@ public class Derivative {
 	private ArrayList<String> terms;
 	private ArrayList<String> specialTerms;
 	private ArrayList<String> polynomialTerms;
+	private ArrayList<String> productRuleTerms;
 	private StringBuilder derivative;
 	private Matrix powerruleMatrix;
 	
@@ -14,32 +15,89 @@ public class Derivative {
 		this.function=function;
 		specialTerms=new ArrayList<String>();
 		polynomialTerms = new ArrayList<String>();
+		productRuleTerms = new ArrayList<String>();
 	}
 	
-	public void specializeTerms() {
+	private void specializeTerms() {
 		for(String term:terms) {
 			if(term.matches("[-]?\\d{0,}x\\^\\d{1,}") || term.matches("[-]?\\d{0,}x")) {
 				polynomialTerms.add(term);
-				continue;
 			}else {
 				specialTerms.add(term);
+			}
+			if(term.contains("*")) {
+				productRuleTerms.add(term);
 			}
 		}
 	}
 	
 	public String derive() {
 		breakIntoTerms();
+		for(int index=0;index<terms.size();index++) {
+			String term = terms.get(index);
+			if(term.charAt(0)=='*') {
+				terms.remove(index);
+			}
+		}
 		specializeTerms();
-		String result;
+		String result = new String();
 		result = powerRule();
 		if(result.length()>0)
 			result += " + ";
 		result += special();
+		result += productRule();
 		result = result.trim();
 		if(result.charAt(result.length()-1) == '+') {
 			result = result.substring(0, result.length()-2);
 		}
 		return result;
+	}
+	
+	private String productRule() {
+		String ans = new String();
+		for(String term:productRuleTerms) {
+			String[] tmp = term.split("[*]");
+			for(int i =0;i<tmp.length;i++) {
+				if(!tmp[i].matches("\\d{1,}"))
+					ans+=singleTerm(tmp[i])+"*";
+				else
+					continue;
+				for(int j = 0;j<tmp.length;j++) {
+					if(j==i) {
+						continue;
+					}
+					ans+=tmp[j]+"*";
+				}
+				if(ans.length()>=1 && ans.charAt(ans.length()-1)=='*') {
+					ans = ans.substring(0, ans.length()-1);
+				}
+				ans+=" + ";
+			}
+		}
+		if(ans.length()>=1 && ans.charAt(ans.length()-1)=='*') {
+			ans = ans.substring(0, ans.length()-1);
+		}
+		return ans;
+	}
+	
+	private String singleTerm(String term) {
+		String ans = new String();
+		if(term.matches("[-]?\\d{0,}x\\^\\d{1,}") || term.matches("[-]?\\d{0,}x")) {
+			ans+=powerRule(term);
+		}else {
+			switch(term) {
+			case "ln(x)": {ans+="1/x";break;}
+			case "e^x": {ans+="e^x";break;}
+			case "exp(x)": {ans+="exp(x)";break;}
+			case "sin(x)": {ans+="cos(x)";break;}
+			case "cos(x)": {ans+="-sin(x)";break;}
+			case "-sin(x)": {ans+="-cos(x)";break;}
+			case "-cos(x)": {ans+="sin(x)";break;}
+			case "tan(x)": {ans+="sec(x)*sec(x)";break;}
+			case "sec(x)": {ans+="tan(x)*sec(x)";break;}
+			}
+		}
+		return ans;
 	}
 	
 	private String special() {
@@ -48,7 +106,40 @@ public class Derivative {
 			switch(term) {
 			case "ln(x)": {ans+="1/x + ";break;}
 			case "e^x": {ans+="e^x + ";break;}
+			case "exp(x)": {ans+="exp(x) + ";break;}
+			case "sin(x)": {ans+="cos(x) + ";break;}
+			case "cos(x)": {ans+="-sin(x) + ";break;}
+			case "-sin(x)": {ans+="-cos(x) + ";break;}
+			case "-cos(x)": {ans+="sin(x) + ";break;}
+			case "tan(x)": {ans+="sec(x)*sec(x) + ";break;}
+			case "sec(x)": {ans+="tan(x)*sec(x) + ";break;}
 			}
+		}
+		return ans;
+	}
+	
+	private String powerRule(String term) {
+		String ans = new String();
+		if(term.contains("^")) {
+			String[] coef_pow = term.split("x\\^");
+			double coef;
+			double pow;
+			if(coef_pow[0].equals("")) {
+				pow = Double.parseDouble(coef_pow[1]);
+				coef = 1.0;
+			}else {
+				coef = Double.parseDouble(coef_pow[0]);
+				pow = Double.parseDouble(coef_pow[1]);
+			}
+			double newCoef = coef*pow;
+			double newPow = pow - 1.0;
+			ans+=newCoef+"x^"+newPow;
+		}else {
+			String[] coef_pow = term.split("x");
+			if(coef_pow.length>0)
+				ans+=coef_pow[0];
+			else
+				ans+="1";
 		}
 		return ans;
 	}

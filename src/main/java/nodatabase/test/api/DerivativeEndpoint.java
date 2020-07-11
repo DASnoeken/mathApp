@@ -11,7 +11,13 @@ public class DerivativeEndpoint {
 	@GetMapping("/get/derivative/{function}")
 	public String getDerivative(@PathVariable String function) {
 		Derivative d = new Derivative(function);
-		String derivative = d.derive();
+		String derivative = new String();
+		try {
+			derivative = d.derive();
+		}catch(Exception e) {
+			e.printStackTrace();
+			derivative = "INPUT ERROR!";
+		}
 		return derivative;
 	}
 }
