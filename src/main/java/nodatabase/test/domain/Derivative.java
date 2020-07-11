@@ -7,7 +7,9 @@ public class Derivative {
 	private ArrayList<String> terms;
 	private ArrayList<String> specialTerms;
 	private ArrayList<String> polynomialTerms;
+	private ArrayList<String> exponentialTerms;
 	private ArrayList<String> productRuleTerms;
+	private ArrayList<String> logTerms;
 	private StringBuilder derivative;
 	private Matrix powerruleMatrix;
 	
@@ -16,13 +18,20 @@ public class Derivative {
 		specialTerms=new ArrayList<String>();
 		polynomialTerms = new ArrayList<String>();
 		productRuleTerms = new ArrayList<String>();
+		exponentialTerms = new ArrayList<String>();
+		logTerms = new ArrayList<String>();
 	}
 	
 	private void specializeTerms() {
 		for(String term:terms) {
-			if(term.matches("[-]?\\d{0,}x\\^\\d{1,}") || term.matches("[-]?\\d{0,}x")) {
+			if(term.matches("[-]?\\d{0,}x\\^[-]?\\d{1,}") || term.matches("[-]?\\d{0,}x")) {
 				polynomialTerms.add(term);
-			}else {
+			}else if(term.matches("[-]?\\d{1,}\\^x")) {
+				exponentialTerms.add(term);
+			}else if(term.matches("[-]?(log)[_]\\d{1,}[(]x[)]")) {
+				logTerms.add(term);
+			}
+			else {
 				specialTerms.add(term);
 			}
 			if(term.contains("*")) {
@@ -45,6 +54,8 @@ public class Derivative {
 		if(result.length()>0)
 			result += " + ";
 		result += special();
+		result += exponentialNonE();
+		result += logarithmicNonE();
 		result += productRule();
 		result = result.trim();
 		if(result.charAt(result.length()-1) == '+') {
@@ -84,6 +95,10 @@ public class Derivative {
 		String ans = new String();
 		if(term.matches("[-]?\\d{0,}x\\^\\d{1,}") || term.matches("[-]?\\d{0,}x")) {
 			ans+=powerRule(term);
+		}else if(term.matches("[-]?\\d{1,}\\^x")) {
+			ans+=exponentialNonE(term);
+		}else if(term.matches("[-]?(log)[_]\\d{1,}[(]x[)]")){
+			ans+=logarithmicNonE(term);
 		}else {
 			switch(term) {
 			case "ln(x)": {ans+="1/x";break;}
@@ -96,6 +111,44 @@ public class Derivative {
 			case "tan(x)": {ans+="sec(x)*sec(x)";break;}
 			case "sec(x)": {ans+="tan(x)*sec(x)";break;}
 			}
+		}
+		return ans;
+	}
+	
+	private String logarithmicNonE(String term) {
+		String ans = new String();
+		String[] tmp = term.split("[_]");
+		tmp = tmp[1].split("[(]");
+		String base = tmp[0];
+		ans="1/(x*ln("+base+"))";
+		return ans;
+	}
+	
+	private String logarithmicNonE() {
+		String ans = new String();
+		for(String term:logTerms) {
+			String[] tmp = term.split("[_]");
+			tmp = tmp[1].split("[(]");
+			String base = tmp[0];
+			ans="1/(x*ln("+base+"))";
+		}
+		return ans;
+	}
+	
+	private String exponentialNonE(String term) {
+		String ans = new String();
+		String[] tmp = term.split("\\^");
+		String base = tmp[0];
+		ans = term+"*ln("+base+")";
+		return ans;
+	}
+	
+	private String exponentialNonE() {
+		String ans = new String();
+		for(String term:exponentialTerms) {
+			String[] tmp = term.split("\\^");
+			String base = tmp[0];
+			ans = term+"*ln("+base+") + ";
 		}
 		return ans;
 	}
@@ -157,12 +210,8 @@ public class Derivative {
 				a_n="0";
 				p_n="0";
 			}else if(a_terms.length==0) {
-				a_n="1";
-				if(a_terms.length>1) {
-					p_n = a_terms[1].substring(1);
-				}else {
-					p_n = "1";
-				}
+				a_n = "1";
+				p_n = "1";
 			}else{
 				a_n = a_terms[0];
 				if(a_terms.length>1) {
@@ -170,6 +219,7 @@ public class Derivative {
 				}else {
 					p_n = "1";
 				}
+				
 			}
 			if(a_n.length()==0 || a_n.equals("-")) {
 				a_n+="1";
@@ -182,7 +232,7 @@ public class Derivative {
 		for(int i = 0; i<polynomialTerms.size();i++) {
 			if(derivativeCoefficients.getMatrix().get(i).get(0)!=0.0) {
 				result.append(derivativeCoefficients.getMatrix().get(i).get(0));
-				if(powerruleMatrix.getMatrix().get(i).get(i)-1.0>0.0) {
+				if(powerruleMatrix.getMatrix().get(i).get(i)-1.0!=0.0) {
 					if(powerruleMatrix.getMatrix().get(i).get(i)-1.0!=1.0)
 						result.append("x^").append(powerruleMatrix.getMatrix().get(i).get(i)-1.0);
 					else
@@ -190,14 +240,13 @@ public class Derivative {
 					if(i<polynomialTerms.size()-1)
 						result.append(" + ");
 				}
-				
 			}
 		}
 		return result.toString();
 	}
 	
 	private void breakIntoTerms() {
-		String[] terms_P = function.split("-");
+		String[] terms_P = function.split("(?<!\\^)-");
 		if (terms_P[0].equals("")) {
 			for(int i = 0;i<terms_P.length-1;i++) {
 				terms_P[i]=terms_P[i+1];
