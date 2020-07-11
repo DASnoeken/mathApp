@@ -1,8 +1,7 @@
 package nodatabase.test.api;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.math.MathContext;
+
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,8 +11,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestEndPoint {
 	
 	@GetMapping("/sum/{begin}/{end}")
-	public long getSum(@PathVariable long begin, @PathVariable long end) {
-		long ans=(begin+end)*(end-begin+1)/2;
+	public BigInteger getSum(@PathVariable String begin, @PathVariable String end) {
+		BigInteger ans;
+		if(Long.parseLong(end)>1000000000) {
+			BigInteger Begin = new BigInteger(begin);
+			BigInteger End = new BigInteger(end);
+			ans=(Begin.add(End)).multiply((End.subtract(Begin).add(new BigInteger("1")))).divide(new BigInteger("2"));
+		}else {
+			long beginl = Long.parseLong(begin);
+			long endl = Long.parseLong(end);
+			long answer = (beginl+endl)*(endl-beginl+1)/2;
+			ans = BigInteger.valueOf(answer);
+		}
 		return ans;
 	}
 	

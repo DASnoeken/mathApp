@@ -42,8 +42,7 @@ public class Derivative {
 			}
 			if(term.contains("*")) {
 				productRuleTerms.add(term);
-			}
-			if(term.contains("{") && term.contains("}")) {
+			}else if(term.contains("{") && term.contains("}")) {
 				chainRuleTerms.add(term);
 			}
 		}
@@ -60,8 +59,9 @@ public class Derivative {
 		specializeTerms();
 		String result = new String();
 		result = powerRule();
-		if(result.length()>0)
+		if(result.length()>0) {
 			result += " + ";
+		}
 		result += special();
 		result += exponentialNonE();
 		result += logarithmicNonE();
@@ -84,11 +84,13 @@ public class Derivative {
 			Derivative d_outer = new Derivative(outerTerm);
 			String outerDerivative = d_outer.derive();
 			outerDerivative = outerDerivative.replaceAll("\\(x\\)","(u)");
-			System.out.println(outerDerivative);
-			ans+=outerDerivative+"*";
 			do {
 				if (matcher.find()){
 					extractedTerm = matcher.group(0).substring(1, matcher.group(0).length()-1);
+					System.out.println(extractedTerm);
+					System.out.println(outerDerivative);
+					outerDerivative = outerDerivative.replaceAll("\\(u\\)", "({"+extractedTerm+"})");
+					ans+=outerDerivative+"*";
 				}	
 				try {
 					Derivative d = new Derivative(extractedTerm);
@@ -100,6 +102,32 @@ public class Derivative {
 			}while(extractedTerm.contains("{") && extractedTerm.contains("}"));
 			ans+="+";
 		}
+		return ans;
+	}
+	
+	private String chainRule(String term) {
+		String ans = new String();
+		String extractedTerm=new String();
+		Pattern pattern = Pattern.compile("\\{.*\\}");
+		Matcher matcher = pattern.matcher(term);
+		String outerTerm = term.replaceAll("\\{.*\\}", "u");
+		Derivative d_outer = new Derivative(outerTerm);
+		String outerDerivative = d_outer.derive();
+		outerDerivative = outerDerivative.replaceAll("\\(x\\)","(u)");
+		do {
+			if (matcher.find()){
+				extractedTerm = matcher.group(0).substring(1, matcher.group(0).length()-1);
+				outerDerivative = outerDerivative.replaceAll("\\(u\\)", "({"+extractedTerm+"})");
+				ans+=outerDerivative+"*";
+			}	
+			try {
+				Derivative d = new Derivative(extractedTerm);
+				ans+=d.derive();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			matcher = pattern.matcher(extractedTerm);
+		}while(extractedTerm.contains("{") && extractedTerm.contains("}"));
 		return ans;
 	}
 	
@@ -138,10 +166,12 @@ public class Derivative {
 			ans+=exponentialNonE(term);
 		}else if(term.matches("[-]?(log)[_]\\d{1,}[(]x[)]")){
 			ans+=logarithmicNonE(term);
+		}else if(term.contains("{") && term.contains("}")){
+			ans+=chainRule(term);
 		}else {
 			switch(term) {
-			case "ln(x)": {ans+="1/x";break;}
-			case "e^x": {ans+="e^x";break;}
+			case "ln(x)": {ans+="1/(x)";break;}
+			case "e^x": {ans+="e^(x)";break;}
 			case "exp(x)": {ans+="exp(x)";break;}
 			case "sin(x)": {ans+="cos(x)";break;}
 			case "cos(x)": {ans+="-sin(x)";break;}
@@ -196,8 +226,8 @@ public class Derivative {
 		String ans = new String();
 		for(String term:specialTerms) {
 			switch(term) {
-			case "ln(x)": {ans+="1/x + ";break;}
-			case "e^x": {ans+="e^x + ";break;}
+			case "ln(x)": {ans+="1/(x) + ";break;}
+			case "e^x": {ans+="e^(x) + ";break;}
 			case "exp(x)": {ans+="exp(x) + ";break;}
 			case "sin(x)": {ans+="cos(x) + ";break;}
 			case "cos(x)": {ans+="-sin(x) + ";break;}
