@@ -1,6 +1,8 @@
 package nodatabase.test.domain;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Derivative {
 	private String function;
@@ -9,17 +11,21 @@ public class Derivative {
 	private ArrayList<String> polynomialTerms;
 	private ArrayList<String> exponentialTerms;
 	private ArrayList<String> productRuleTerms;
+	private ArrayList<String> chainRuleTerms;
 	private ArrayList<String> logTerms;
 	private StringBuilder derivative;
 	private Matrix powerruleMatrix;
 	
 	public Derivative(String function){
+		function = function.replaceAll("\\s", "");
+		function = function.replaceAll("u", "x");
 		this.function=function;
 		specialTerms=new ArrayList<String>();
 		polynomialTerms = new ArrayList<String>();
 		productRuleTerms = new ArrayList<String>();
 		exponentialTerms = new ArrayList<String>();
 		logTerms = new ArrayList<String>();
+		chainRuleTerms = new ArrayList<String>();
 	}
 	
 	private void specializeTerms() {
@@ -36,6 +42,9 @@ public class Derivative {
 			}
 			if(term.contains("*")) {
 				productRuleTerms.add(term);
+			}
+			if(term.contains("{") && term.contains("}")) {
+				chainRuleTerms.add(term);
 			}
 		}
 	}
@@ -57,11 +66,41 @@ public class Derivative {
 		result += exponentialNonE();
 		result += logarithmicNonE();
 		result += productRule();
+		result += chainRule();
 		result = result.trim();
 		if(result.charAt(result.length()-1) == '+') {
-			result = result.substring(0, result.length()-2);
+			result = result.substring(0, result.length()-1);
 		}
 		return result;
+	}
+	
+	private String chainRule() {
+		String ans = new String();
+		for(String term:chainRuleTerms) {
+			String extractedTerm=new String();
+			Pattern pattern = Pattern.compile("\\{.*\\}");
+			Matcher matcher = pattern.matcher(term);
+			String outerTerm = term.replaceAll("\\{.*\\}", "u");
+			Derivative d_outer = new Derivative(outerTerm);
+			String outerDerivative = d_outer.derive();
+			outerDerivative = outerDerivative.replaceAll("\\(x\\)","(u)");
+			System.out.println(outerDerivative);
+			ans+=outerDerivative+"*";
+			do {
+				if (matcher.find()){
+					extractedTerm = matcher.group(0).substring(1, matcher.group(0).length()-1);
+				}	
+				try {
+					Derivative d = new Derivative(extractedTerm);
+					ans+=d.derive();
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+				matcher = pattern.matcher(extractedTerm);
+			}while(extractedTerm.contains("{") && extractedTerm.contains("}"));
+			ans+="+";
+		}
+		return ans;
 	}
 	
 	private String productRule() {
@@ -93,7 +132,7 @@ public class Derivative {
 	
 	private String singleTerm(String term) {
 		String ans = new String();
-		if(term.matches("[-]?\\d{0,}x\\^\\d{1,}") || term.matches("[-]?\\d{0,}x")) {
+		if(term.matches("[-]?\\d{0,}x\\^[-]?\\d{1,}") || term.matches("[-]?\\d{0,}x")) {
 			ans+=powerRule(term);
 		}else if(term.matches("[-]?\\d{1,}\\^x")) {
 			ans+=exponentialNonE(term);
@@ -246,7 +285,7 @@ public class Derivative {
 	}
 	
 	private void breakIntoTerms() {
-		String[] terms_P = function.split("(?<!\\^)-");
+		String[] terms_P = function.split("(?<!\\^|\\{)-");
 		if (terms_P[0].equals("")) {
 			for(int i = 0;i<terms_P.length-1;i++) {
 				terms_P[i]=terms_P[i+1];
