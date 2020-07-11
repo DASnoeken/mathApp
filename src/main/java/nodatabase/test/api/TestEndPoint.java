@@ -10,10 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TestEndPoint {
-	@GetMapping("/test/{num}")
-	public int getTest(@PathVariable int num) {
-		return num;
-	}
 	
 	@GetMapping("/sum/{begin}/{end}")
 	public long getSum(@PathVariable long begin, @PathVariable long end) {

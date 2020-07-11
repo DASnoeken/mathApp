@@ -5,26 +5,60 @@ import java.util.ArrayList;
 public class Derivative {
 	private String function;
 	private ArrayList<String> terms;
+	private ArrayList<String> specialTerms;
+	private ArrayList<String> polynomialTerms;
 	private StringBuilder derivative;
 	private Matrix powerruleMatrix;
 	
 	public Derivative(String function){
 		this.function=function;
-		
+		specialTerms=new ArrayList<String>();
+		polynomialTerms = new ArrayList<String>();
+	}
+	
+	public void specializeTerms() {
+		for(String term:terms) {
+			if(term.matches("[-]?\\d{0,}x\\^\\d{1,}") || term.matches("[-]?\\d{0,}x")) {
+				polynomialTerms.add(term);
+				continue;
+			}else {
+				specialTerms.add(term);
+			}
+		}
 	}
 	
 	public String derive() {
 		breakIntoTerms();
-		String result = powerRule();
+		specializeTerms();
+		String result;
+		result = powerRule();
+		if(result.length()>0)
+			result += " + ";
+		result += special();
+		result = result.trim();
+		if(result.charAt(result.length()-1) == '+') {
+			result = result.substring(0, result.length()-2);
+		}
 		return result;
+	}
+	
+	private String special() {
+		String ans = new String();
+		for(String term:specialTerms) {
+			switch(term) {
+			case "ln(x)": {ans+="1/x + ";break;}
+			case "e^x": {ans+="e^x + ";break;}
+			}
+		}
+		return ans;
 	}
 	
 	private String powerRule() {
 		StringBuilder result = new StringBuilder();
-		powerruleMatrix = new Matrix(terms.size(),terms.size());
-		Matrix coefficients = new Matrix(terms.size(),1);
+		powerruleMatrix = new Matrix(polynomialTerms.size(),polynomialTerms.size());
+		Matrix coefficients = new Matrix(polynomialTerms.size(),1);
 		int count=0;
-		for(String term:terms) {
+		for(String term:polynomialTerms) {
 			String[] a_terms = term.split("x");
 			String a_n;
 			String p_n;
@@ -54,7 +88,7 @@ public class Derivative {
 			count++;
 		}
 		Matrix derivativeCoefficients = powerruleMatrix.multiply(coefficients);
-		for(int i = 0; i<terms.size();i++) {
+		for(int i = 0; i<polynomialTerms.size();i++) {
 			if(derivativeCoefficients.getMatrix().get(i).get(0)!=0.0) {
 				result.append(derivativeCoefficients.getMatrix().get(i).get(0));
 				if(powerruleMatrix.getMatrix().get(i).get(i)-1.0>0.0) {
@@ -62,7 +96,7 @@ public class Derivative {
 						result.append("x^").append(powerruleMatrix.getMatrix().get(i).get(i)-1.0);
 					else
 						result.append("x");
-					if(i<terms.size()-1)
+					if(i<polynomialTerms.size()-1)
 						result.append(" + ");
 				}
 				
