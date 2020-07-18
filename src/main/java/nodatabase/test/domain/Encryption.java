@@ -24,13 +24,11 @@ public class Encryption {
 		}
 		BigInteger inputInteger = new BigInteger(s);
 		Random dC = new Random();
-		
 		BigInteger directionCoef = nextRandomBigInteger(new BigInteger(s));
 		int sign = dC.nextInt();
 		if(sign%2==1) {
 			directionCoef = directionCoef.negate();
 		}
-		System.out.println(directionCoef);
 		BigInteger[] outNumbers = {inputInteger.add(directionCoef),inputInteger.add(directionCoef.multiply(new BigInteger("2")))};
 		for(int i = 0;i<2;i++) {
 			output+=outNumbers[i]+";  ";

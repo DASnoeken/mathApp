@@ -30,6 +30,8 @@ public class TestEndPoint {
 	public String factorial(@PathVariable String num) {
 		if(num.contains("-")) {
 			return "No Negative Numbers Please";
+		}else if(num.contains(".")) {
+			return "Only integers!";
 		}
 		BigInteger ans = new BigInteger("1");
 		BigInteger initNum = new BigInteger(num);
