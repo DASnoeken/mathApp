@@ -28,6 +28,9 @@ public class TestEndPoint {
 	
 	@GetMapping("/factorial/{num}")
 	public String factorial(@PathVariable String num) {
+		if(num.contains("-")) {
+			return "No Negative Numbers Please";
+		}
 		BigInteger ans = new BigInteger("1");
 		BigInteger initNum = new BigInteger(num);
 		for(BigInteger i = BigInteger.valueOf(1l); i.compareTo(initNum)==-1 || i.compareTo(initNum)==0; i=i.add(BigInteger.valueOf(1l))) {
