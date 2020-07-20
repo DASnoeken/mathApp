@@ -95,6 +95,18 @@
             xhr.open("GET","http://localhost:8082/Encrypt/"+s+"/"+order);
             xhr.send();
         }
+        
+        function getDecryption(num){
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function(){
+                if(this.readyState==4){
+                    var respons = this.responseText;
+                    document.getElementById("response").innerHTML = respons;
+                }
+            }
+            xhr.open("GET","http://localhost:8082/Decrypt/"+num);
+            xhr.send();
+        }
     </script>
 </head>
 
@@ -108,7 +120,8 @@
             onclick="geometric(geometricInput.value)">Geometric series</button>(1+x+x^2+x^3+...)<br>
         <input type="text" id="eInput"><button id="ebutton" onclick="getE(eInput.value)">get e</button><br>
         <input type="text" id="derInput"><button id="derbutton" onclick="getDer(derInput.value)">get derivative</button><br>
-        <input type="text" value="string" id="encInput"><input type="text" value="order" id="encOrder"><button id="encButton" onclick="getEncryption(encInput.value,encOrder.value)">get encryption</button>
+        <input type="text" value="string" id="encInput"><input type="text" value="order" id="encOrder"><button id="encButton" onclick="getEncryption(encInput.value,encOrder.value)">get encryption</button><br>
+        <input type="text" id="decInput"><button id="decButton" onclick="getDecryption(decInput.value)">get decryption</button>
     </div>
     <br>
     <div id="response"></div>

@@ -14,4 +14,9 @@ public class EncryptionEndpoint {
 		Encryption e = new Encryption(s,orderI);
 		return e.getOutput();
 	}
+	@GetMapping("Decrypt/{s}")
+	public String getDecryptedNumber(@PathVariable String s) {
+		Encryption d = new Encryption(s);
+		return d.getOutput();
+	}
 }

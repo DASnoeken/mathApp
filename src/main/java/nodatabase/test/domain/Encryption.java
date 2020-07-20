@@ -10,10 +10,32 @@ public class Encryption {
 	private String output;
 	private int encryptionOrder;
 	
+	public Encryption(String s) {this.input = s;decrypt();}	//Decryption
 	public Encryption(String s,int o) {this.encryptionOrder=o+1;this.input=s;encrypt();}
 	
 	public String getOutput() {
 		return output;
+	}
+	
+	private void decrypt() {
+		output = new String();
+		char[] c = this.input.toCharArray();
+		if(c.length%3!=0) {
+			output += "ERROR! INVALID NUMBER OF DIGITS!";
+			return;
+		}
+		int[] cints = new int[c.length/3];
+		int j=0;
+		char[] outArray = new char[cints.length];
+		for(int i = 0;i<c.length;i=i+3) {
+			cints[j]=Integer.parseInt(Character.toString(c[i])+Character.toString(c[i+1])+Character.toString(c[i+2]));
+			cints[j]-=(101+j);
+			outArray[j]=(char)cints[j];
+			j++;
+		}
+		for(char cc : outArray) {
+			output+=cc;
+		}
 	}
 	
 	private void encrypt() {
@@ -22,10 +44,16 @@ public class Encryption {
 		int[] cints = new int[c.length];
 		String s = new String();
 		for(int i = 0;i<c.length;i++) {
-			cints[i] = (int)(c[i]+101);
+			cints[i] = (int)(c[i]+101)+i;
 			s+=cints[i];
 		}
-		ArrayList<Long> xar = randomizedXValues(this.encryptionOrder, -1*this.encryptionOrder*10, this.encryptionOrder*10);
+		int xBound;
+		if(this.encryptionOrder<100) {
+			xBound=1000;
+		}else {
+			xBound=10*this.encryptionOrder;
+		}
+		ArrayList<Long> xar = randomizedXValues(this.encryptionOrder, -1*xBound, xBound);
 		BigInteger inputInteger = new BigInteger(s);
 		Random dC = new Random();
 		ArrayList<BigInteger> a_Values = new ArrayList<>();
@@ -42,6 +70,13 @@ public class Encryption {
 		output+="point: (xvalue, yvalue);<br>";
 		for(int i = 0;i<outNumbers.size();i++) {
 			output+=""+(i+1)+": ("+xar.get(i)+", " + outNumbers.get(i)+");<br>";
+		}
+		output+="<br>Printed on single line:<br>";
+		for(int i = 0;i<outNumbers.size();i++) {
+			if(i<outNumbers.size()-1)
+				output+="("+xar.get(i)+", "+outNumbers.get(i)+"), ";
+			else
+				output+="("+xar.get(i)+", "+outNumbers.get(i)+")";
 		}
 	}
 	
