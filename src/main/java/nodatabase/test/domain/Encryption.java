@@ -78,6 +78,22 @@ public class Encryption {
 			else
 				output+="("+xar.get(i)+", "+outNumbers.get(i)+")";
 		}
+		output+="<br><br>Scilab input:<br>x=[";
+		for(int i = 0; i<outNumbers.size();i++) {
+			if(i<outNumbers.size()-1) {
+				output+=""+xar.get(i)+",";
+			}else {
+				output+=xar.get(i)+"];";
+			}
+		}
+		output+="<br>y=[";
+		for(int i = 0; i<outNumbers.size();i++) {
+			if(i<outNumbers.size()-1) {
+				output+=""+outNumbers.get(i)+",";
+			}else {
+				output+=outNumbers.get(i)+"];";
+			}
+		}
 	}
 	
 	private BigInteger getNumber(ArrayList<BigInteger> a_vals, Long x_val) {
