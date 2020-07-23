@@ -85,6 +85,13 @@
         }
         
         function getEncryption(s,order){
+            if(s.length==0){
+                document.getElementById("response").innerHTML = "What were ye gonne do with that empty string there, mate?";
+                return;
+            }else if (order.length==0 || order=="order"){
+                document.getElementById("response").innerHTML = "You need to insert the order up there!";
+                return;
+            }
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function(){
                 if (this.readyState==4){
@@ -97,6 +104,10 @@
         }
         
         function getDecryption(num){
+            if(num.length==0){
+                document.getElementById("response").innerHTML = "I would enter a number in that field there, mate!";
+                return;
+            }
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function(){
                 if(this.readyState==4){
