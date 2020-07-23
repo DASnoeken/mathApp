@@ -100,7 +100,7 @@ public class Encryption {
 				"M = Matrix([";
 		for(int i = 0;i<outNumbers.size();i++) {
 			if(i<outNumbers.size()-1) {
-				output+="[1,";//+xar.get(i)+","+xar.get(i)+"*"+xar.get(i)+","+outNumbers.get(i)+"],";
+				output+="[1,";
 				for(int j=1;j<encryptionOrder;j++) {
 					output+="("+xar.get(i)+")**"+j;
 					if(j<encryptionOrder-1)
@@ -110,7 +110,7 @@ public class Encryption {
 				}
 				
 			}else {
-				output+="[1,";//+xar.get(i)+","+xar.get(i)+"*"+xar.get(i)+","+outNumbers.get(i)+"]])";
+				output+="[1,";
 				for(int j=1;j<encryptionOrder;j++) {
 					output+="("+xar.get(i)+")**"+j;
 					if(j<encryptionOrder-1)
@@ -123,7 +123,8 @@ public class Encryption {
 		output+="<br>print(\"Matrix : {} \".format(M))<br>";
 		output+="# Use sympy.rref() method  <br>" + 
 				"M_rref = M.rref()<br>";
-		output+="print(\"The Row echelon form of matrix M and the pivot columns : {}\".format(M_rref))";
+		output+="print(\"The Row echelon form of matrix M and the pivot columns : {}\".format(M_rref))<br>";
+		output+="print(\"Your number of interest should be : {}\".format(M_rref[0]["+(encryptionOrder)+"]))";
 	}
 	
 	private BigInteger getNumber(ArrayList<BigInteger> a_vals, Long x_val) {
@@ -131,7 +132,6 @@ public class Encryption {
 		int p = 0;
 		for(BigInteger a:a_vals) {
 			y=y.add(a.multiply(BigInteger.valueOf((long) Math.pow((double)x_val,(double)p))));
-			//System.out.println("p = "+p+ " a_n="+a);
 			p++;
 		}
 		return y;
