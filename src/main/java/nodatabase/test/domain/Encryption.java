@@ -94,6 +94,36 @@ public class Encryption {
 				output+=outNumbers.get(i)+"];";
 			}
 		}
+
+		output+="<br><br>Python Script:<br># import sympy  <br>" + 
+				"from sympy import * <br>" + 
+				"M = Matrix([";
+		for(int i = 0;i<outNumbers.size();i++) {
+			if(i<outNumbers.size()-1) {
+				output+="[1,";//+xar.get(i)+","+xar.get(i)+"*"+xar.get(i)+","+outNumbers.get(i)+"],";
+				for(int j=1;j<encryptionOrder;j++) {
+					output+="("+xar.get(i)+")**"+j;
+					if(j<encryptionOrder-1)
+						output+=",";
+					else
+						output+=","+outNumbers.get(i)+"],";
+				}
+				
+			}else {
+				output+="[1,";//+xar.get(i)+","+xar.get(i)+"*"+xar.get(i)+","+outNumbers.get(i)+"]])";
+				for(int j=1;j<encryptionOrder;j++) {
+					output+="("+xar.get(i)+")**"+j;
+					if(j<encryptionOrder-1)
+						output+=",";
+					else
+						output+=","+outNumbers.get(i)+"]])";
+				}
+			}
+		}
+		output+="<br>print(\"Matrix : {} \".format(M))<br>";
+		output+="# Use sympy.rref() method  <br>" + 
+				"M_rref = M.rref()<br>";
+		output+="print(\"The Row echelon form of matrix M and the pivot columns : {}\".format(M_rref))";
 	}
 	
 	private BigInteger getNumber(ArrayList<BigInteger> a_vals, Long x_val) {
