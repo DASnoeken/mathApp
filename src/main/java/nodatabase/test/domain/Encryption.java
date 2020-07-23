@@ -49,9 +49,9 @@ public class Encryption {
 		}
 		int xBound;
 		if(this.encryptionOrder<100) {
-			xBound=1000;
+			xBound=100;
 		}else {
-			xBound=10*this.encryptionOrder;
+			xBound=2*this.encryptionOrder;
 		}
 		ArrayList<Long> xar = randomizedXValues(this.encryptionOrder, -1*xBound, xBound);
 		BigInteger inputInteger = new BigInteger(s);

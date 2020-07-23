@@ -11,6 +11,9 @@ public class EncryptionEndpoint {
 	@GetMapping("/Encrypt/{s}/{order}")
 	public String getEncryptedString(@PathVariable String s, @PathVariable String order) {
 		int orderI = Integer.parseInt(order);
+		if(orderI > 8) {
+			return "Sorry, but something goes wrong for order > 8";
+		}
 		Encryption e = new Encryption(s,orderI);
 		return e.getOutput();
 	}
