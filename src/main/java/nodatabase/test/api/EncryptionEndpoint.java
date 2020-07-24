@@ -12,7 +12,35 @@ public class EncryptionEndpoint {
 	public String getEncryptedString(@PathVariable String s, @PathVariable String order) {
 		int orderI = Integer.parseInt(order);
 		if(orderI > 8) {
-			return "Sorry, but something goes wrong for order > 8";
+			String returnString = new String();
+			int j = orderI/8;
+			if(orderI%8!=0) {
+				j++;
+			}
+			returnString+="Sorry, but something goes wrong for order > 8.<br>"
+					+ "Try to cut your input into " + j + " pieces and encrypt these separately.";
+			String newInput = new String();
+			int lastIndex = s.length()/j;
+			int intervalSize = s.length()/j;
+			newInput += s.substring(0, lastIndex);
+			for(int i=0;i<j-1;i++) {
+				newInput+="||"+s.substring(lastIndex, lastIndex+intervalSize);
+				lastIndex=lastIndex+intervalSize;
+			}
+			if(lastIndex!=s.length()) {
+				newInput+="||"+s.substring(lastIndex, s.length());
+			}
+			returnString += "<br>Use: "+newInput;
+			String orderString = new String();
+			orderString += "With example orders: || ";
+			for(int i=0;i<orderI/8;i++) {
+				orderString += 8+" || ";
+			}
+			if(orderI%8!=0) {
+				orderString += orderI%8;
+			}
+			returnString +="<br>"+orderString;
+			return returnString;
 		}
 		Encryption e = new Encryption(s,orderI);
 		return e.getOutput();
