@@ -49,7 +49,7 @@ public class Encryption {
 		}
 		int xBound;
 		if(this.encryptionOrder<100) {
-			xBound=100;
+			xBound=200;
 		}else {
 			xBound=2*this.encryptionOrder;
 		}
