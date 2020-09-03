@@ -236,6 +236,7 @@ public class Derivative {
 			case "-cos(x)": {ans+="sin(x) + ";break;}
 			case "tan(x)": {ans+="sec(x)*sec(x) + ";break;}
 			case "sec(x)": {ans+="tan(x)*sec(x) + ";break;}
+			case "x^x": {ans+="x^x*(ln(x)+1)";break;}
 			}
 		}
 		return ans;
