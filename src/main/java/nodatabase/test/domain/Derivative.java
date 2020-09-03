@@ -87,8 +87,8 @@ public class Derivative {
 			do {
 				if (matcher.find()){
 					extractedTerm = matcher.group(0).substring(1, matcher.group(0).length()-1);
-					System.out.println(extractedTerm);
-					System.out.println(outerDerivative);
+					//System.out.println(extractedTerm);
+					//System.out.println(outerDerivative);
 					outerDerivative = outerDerivative.replaceAll("\\(u\\)", "({"+extractedTerm+"})");
 					ans+=outerDerivative+"*";
 				}	
@@ -179,6 +179,7 @@ public class Derivative {
 			case "-cos(x)": {ans+="sin(x)";break;}
 			case "tan(x)": {ans+="sec(x)*sec(x)";break;}
 			case "sec(x)": {ans+="tan(x)*sec(x)";break;}
+			case "x^x": {ans+="x^x*(ln(x)+1)";break;}
 			}
 		}
 		return ans;
