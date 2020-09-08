@@ -118,6 +118,54 @@
             xhr.open("GET","http://localhost:8082/Decrypt/"+num);
             xhr.send();
         }
+
+        function getUnitConversion(){
+            document.getElementById("input").hidden = true;
+            document.getElementById("c-to-f").hidden = true;
+            document.getElementById("f-to-c").hidden = true;
+            document.getElementById("UnitConversionDiv").hidden = false;
+            document.getElementById("response").innerHTML = "";
+        }
+        function backToInput(){
+            document.getElementById("input").hidden = false;
+            document.getElementById("UnitConversionDiv").hidden = true;
+            document.getElementById("response").innerHTML = "";
+
+        }
+        function cTof(){
+            document.getElementById("UnitConversionDiv").hidden = true;
+            document.getElementById("c-to-f").hidden = false;
+            document.getElementById("response").innerHTML = "";
+        }
+        function fToc(){
+            document.getElementById("UnitConversionDiv").hidden = true;
+            document.getElementById("f-to-c").hidden = false;
+            document.getElementById("response").innerHTML = "";
+        }
+
+        function cTofCalculate(val){
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function(){
+                if(this.readyState==4){
+                    var respons = this.responseText;
+                    document.getElementById("response").innerHTML = respons;
+                }
+            }
+            xhr.open("GET","http://localhost:8082/Units/ctof/"+val);
+            xhr.send();
+        }
+
+        function fTocCalculate(val){
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function(){
+                if(this.readyState==4){
+                    var respons = this.responseText;
+                    document.getElementById("response").innerHTML = respons;
+                }
+            }
+            xhr.open("GET","http://localhost:8082/Units/ftoc/"+val);
+            xhr.send();
+        }
     </script>
 </head>
 
@@ -132,7 +180,22 @@
         <input type="text" id="eInput"><button id="ebutton" onclick="getE(eInput.value)">get e</button><br>
         <input type="text" id="derInput"><button id="derbutton" onclick="getDer(derInput.value)">get derivative</button><br>
         <input type="text" value="string" id="encInput"><input type="text" value="order" id="encOrder"><button id="encButton" onclick="getEncryption(encInput.value,encOrder.value)">get encryption</button><br>
-        <input type="text" id="decInput"><button id="decButton" onclick="getDecryption(decInput.value)">get decryption</button>
+        <input type="text" id="decInput"><button id="decButton" onclick="getDecryption(decInput.value)">get decryption</button><br>
+        <button id="ToUnitConv" onclick="getUnitConversion()">Unit conversions</button>
+    </div>
+    <div id="UnitConversionDiv" hidden>
+        <button id="backButton" onclick="backToInput()">Back</button><br>
+        <button id="C-to-F" onclick="cTof()">Celcius to Fahrenheit</button> <button onclick="fToc()">Fahrenheit to Celcius</button>
+    </div>
+    <div id="c-to-f" hidden>
+        Celcius to Fahrenheit calculation<br>
+        <button onclick="getUnitConversion()">Back</button><br>
+        <input type="text" id="celciusInput"><button onclick="cTofCalculate(celciusInput.value)">Calculate</button>
+    </div>
+    <div id="f-to-c" hidden>
+        Fahrenheit to Celcius calculation<br>
+        <button onclick="getUnitConversion()">Back</button><br>
+        <input type="text" id="fahrenheitInput"><button onclick="fTocCalculate(fahrenheitInput.value)">Calculate</button>
     </div>
     <br>
     <div id="response"></div>
