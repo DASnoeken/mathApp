@@ -3,7 +3,7 @@
 
 <head>
     <style>
-        #input {
+        .main {
             border-style: solid;
             border-color: black;
             border-width: 2px;
@@ -206,7 +206,7 @@
 </head>
 
 <body>
-    <div id="input">
+    <div id="input" class="main">
         <input type="text" id="begin"> <input type="text" id="end">
         <button id="naturalNumbersSum" onclick="getSum(begin.value,end.value)">Sum</button><br>
         <input type="text" id="factorialInput"> <button id="factorialButton"
@@ -219,27 +219,27 @@
         <input type="text" id="decInput"><button id="decButton" onclick="getDecryption(decInput.value)">get decryption</button><br>
         <button id="ToUnitConv" onclick="getUnitConversion()">Unit conversions</button>
     </div>
-    <div id="UnitConversionDiv" hidden>
+    <div id="UnitConversionDiv" class="main" hidden>
         <button id="backButton" onclick="backToInput()">Back</button><br>
         <button id="C-to-F" onclick="cTof()">Celcius to Fahrenheit</button> <button onclick="fToc()">Fahrenheit to Celcius</button><br>
         <button onclick="kgToLbs()">kg to lbs</button><button onclick="lbsToKg()">lbs to kg</button>
     </div>
-    <div id="c-to-f" hidden>
+    <div id="c-to-f" class="main" hidden>
         Celcius to Fahrenheit calculation<br>
         <button onclick="getUnitConversion()">Back</button><br>
         <input type="text" id="celciusInput"><button onclick="cTofCalculate(celciusInput.value)">Calculate</button>
     </div>
-    <div id="f-to-c" hidden>
+    <div id="f-to-c" class="main" hidden>
         Fahrenheit to Celcius calculation<br>
         <button onclick="getUnitConversion()">Back</button><br>
         <input type="text" id="fahrenheitInput"><button onclick="fTocCalculate(fahrenheitInput.value)">Calculate</button>
     </div>
-    <div id="kg-to-lbs" hidden>
+    <div id="kg-to-lbs" class="main" hidden>
         Kilograms to pounds calculation<br>
         <button onclick="getUnitConversion()">Back</button><br>
         <input type="text" id="kgInput"><button onclick="kgToLbsCalculate(kgInput.value)">Calculate</button>
-    </div>
-    <div id="lbs-to-kg" hidden>
+    </div> 
+    <div id="lbs-to-kg" class="main" hidden>
         Pounds to kilograms calculation<br>
         <button onclick="getUnitConversion()">Back</button>
         <input type="text" id="lbsInput"><button onclick="lbsToKgCalculate(lbsInput.value)">Calculate</button>
