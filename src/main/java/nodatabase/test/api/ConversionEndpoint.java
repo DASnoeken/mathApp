@@ -15,7 +15,7 @@ public class ConversionEndpoint {
 		Conversion conv = new Conversion();
 		conv.setCelcius(celcius);
 		conv.cToF();
-		return Double.toString(conv.getFahrenheit());
+		return Double.toString(conv.getFahrenheit()) + " <sup>o</sup>F";
 	}
 	
 	@GetMapping("/Units/ftoc/{value}")
@@ -24,7 +24,25 @@ public class ConversionEndpoint {
 		Conversion conv = new Conversion();
 		conv.setFahrenheit(fahrenheit);
 		conv.fToC();
-		return Double.toString(conv.getCelcius());
+		return Double.toString(conv.getCelcius()) + " <sup>o</sup>C";
+	}
+	
+	@GetMapping("/Units/kgToLbs/{value}")
+	public String getLbs(@PathVariable String value) {
+		Conversion c = new Conversion();
+		Double kg = Double.valueOf(value);
+		c.setKg(kg);
+		c.kgToLbs();
+		return Double.toString(c.getLbs()) + " lbs";
+	}
+	
+	@GetMapping("/Units/lbsToKg/{value}")
+	public String getKg(@PathVariable String value) {
+		Conversion c = new Conversion();
+		Double lbs = Double.valueOf(value);
+		c.setLbs(lbs);
+		c.lbsToKg();
+		return Double.toString(c.getKg()) + " kg";
 	}
 	
 }

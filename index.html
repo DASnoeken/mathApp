@@ -124,6 +124,8 @@
             document.getElementById("c-to-f").hidden = true;
             document.getElementById("f-to-c").hidden = true;
             document.getElementById("UnitConversionDiv").hidden = false;
+            document.getElementById("kg-to-lbs").hidden = true;
+            document.getElementById("lbs-to-kg").hidden = true;
             document.getElementById("response").innerHTML = "";
         }
         function backToInput(){
@@ -140,6 +142,16 @@
         function fToc(){
             document.getElementById("UnitConversionDiv").hidden = true;
             document.getElementById("f-to-c").hidden = false;
+            document.getElementById("response").innerHTML = "";
+        }
+        function kgToLbs(){
+            document.getElementById("kg-to-lbs").hidden = false;
+            document.getElementById("UnitConversionDiv").hidden = true;
+            document.getElementById("response").innerHTML = "";
+        }
+        function lbsToKg(){
+            document.getElementById("lbs-to-kg").hidden = false;
+            document.getElementById("UnitConversionDiv").hidden = true;
             document.getElementById("response").innerHTML = "";
         }
 
@@ -166,6 +178,30 @@
             xhr.open("GET","http://localhost:8082/Units/ftoc/"+val);
             xhr.send();
         }
+
+        function kgToLbsCalculate(val){
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function(){
+                if(this.readyState==4){
+                    var respons = this.responseText;
+                    document.getElementById("response").innerHTML = respons;
+                }
+            }
+            xhr.open("GET","http://localhost:8082/Units/kgToLbs/"+val);
+            xhr.send();
+        }
+
+        function lbsToKgCalculate(val){
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function(){
+                if(this.readyState==4){
+                    var respons = this.responseText;
+                    document.getElementById("response").innerHTML = respons;
+                }
+            }
+            xhr.open("GET","http://localhost:8082/Units/lbsToKg/"+val);
+            xhr.send();
+        }
     </script>
 </head>
 
@@ -185,7 +221,8 @@
     </div>
     <div id="UnitConversionDiv" hidden>
         <button id="backButton" onclick="backToInput()">Back</button><br>
-        <button id="C-to-F" onclick="cTof()">Celcius to Fahrenheit</button> <button onclick="fToc()">Fahrenheit to Celcius</button>
+        <button id="C-to-F" onclick="cTof()">Celcius to Fahrenheit</button> <button onclick="fToc()">Fahrenheit to Celcius</button><br>
+        <button onclick="kgToLbs()">kg to lbs</button><button onclick="lbsToKg()">lbs to kg</button>
     </div>
     <div id="c-to-f" hidden>
         Celcius to Fahrenheit calculation<br>
@@ -197,8 +234,17 @@
         <button onclick="getUnitConversion()">Back</button><br>
         <input type="text" id="fahrenheitInput"><button onclick="fTocCalculate(fahrenheitInput.value)">Calculate</button>
     </div>
-    <br>
-    <div id="response"></div>
+    <div id="kg-to-lbs" hidden>
+        Kilograms to pounds calculation<br>
+        <button onclick="getUnitConversion()">Back</button><br>
+        <input type="text" id="kgInput"><button onclick="kgToLbsCalculate(kgInput.value)">Calculate</button>
+    </div>
+    <div id="lbs-to-kg" hidden>
+        Pounds to kilograms calculation<br>
+        <button onclick="getUnitConversion()">Back</button>
+        <input type="text" id="lbsInput"><button onclick="lbsToKgCalculate(lbsInput.value)">Calculate</button>
+    </div>
+    <br><div id="response"></div>
 </body>
 
 </html>
