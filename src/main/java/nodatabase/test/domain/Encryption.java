@@ -56,7 +56,7 @@ public class Encryption {
 		ArrayList<Long> xar = randomizedXValues(this.encryptionOrder, -1*xBound, xBound);
 		BigInteger inputInteger = new BigInteger(s);
 		Random dC = new Random();
-		ArrayList<BigInteger> a_Values = new ArrayList<>();
+		ArrayList<BigInteger> a_Values = new ArrayList<>();		//polynomial coefficients
 		a_Values.add(inputInteger);
 		int sign;
 		for(int i = 1; i <encryptionOrder;i++) {
