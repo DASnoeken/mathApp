@@ -12,17 +12,6 @@
     </style>
 
     <script>
-        function getThing(num) {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (this.readyState == 4) {
-                    var respons = this.responseText;
-                    document.getElementById("response").innerHTML = respons;
-                }
-            };
-            xhr.open("GET", "http://localhost:8082/test/" + num, true);
-            xhr.send();
-        }
         function getSum(begin, end) {
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
