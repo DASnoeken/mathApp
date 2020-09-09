@@ -202,12 +202,24 @@ function setDegree(deg) {
                     document.getElementById("response").innerHTML += " + ";
                 }
             }
-            document.getElementById("response").innerHTML += "   <button onclick=\"submitGame()\">Submit</button>";
+            document.getElementById("response").innerHTML += "   <button onclick=\"submitGame(degreeInput.value)\">Submit</button>";
         }
     }
     xhr.open("GET", "http://localhost:8082/game/getpolynomial/" + deg);
     xhr.send();
 }
-function submitGame(){
-    
+function submitGame(deg) {
+    var xhr = new XMLHttpRequest();
+    var arr = new Array();
+    for (var i = 0; i <= deg; i++) {
+        arr.push(document.getElementById("coef"+i).value);
+    }
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
+
+        }
+    }
+    xhr.open("POST", "http://localhost:8082/game/submitAnswer");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(JSON.stringify(arr));
 }
