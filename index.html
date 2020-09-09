@@ -11,189 +11,8 @@
         }
     </style>
 
-    <script>
-        function getSum(begin, end) {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (this.readyState == 4) {
-                    var respons = this.responseText;
-                    document.getElementById("response").innerHTML = respons;
-                }
-            }
-            xhr.open("GET", "http://localhost:8082/sum/" + begin + "/" + end);
-            xhr.send();
-        }
-
-        function factorial(num) {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (this.readyState == 4) {
-                    var respons = this.responseText;
-                    document.getElementById("response").innerHTML = respons;
-                }
-            }
-            xhr.open("GET", "http://localhost:8082/factorial/" + num);
-            xhr.send();
-        }
-
-        function geometric(num) {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (this.readyState == 4) {
-                    var respons = this.responseText;
-                    document.getElementById("response").innerHTML = respons;
-                }
-            }
-            xhr.open("GET", "http://localhost:8082/series/geometric/" + num);
-            xhr.send();
-        }
-
-        function getE(num) {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (this.readyState == 4) {
-                    var respons = this.responseText;
-                    document.getElementById("response").innerHTML = respons;
-                }
-            }
-            xhr.open("GET", "http://localhost:8082/getNumber/e/" + num);
-            xhr.send();
-        }
-
-        function getDer(func) {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (this.readyState == 4) {
-                    var respons = this.responseText;
-                    document.getElementById("response").innerHTML = "Original: " + func + "<br>";
-                    document.getElementById("response").innerHTML += "Derivative: " + respons;
-                }
-            }
-            xhr.open("GET", "http://localhost:8082/get/derivative/" + func);
-            xhr.send();
-        }
-        
-        function getEncryption(s,order){
-            if(s.length==0){
-                document.getElementById("response").innerHTML = "What were ye gonne do with that empty string there, mate?";
-                return;
-            }else if (order.length==0 || order=="order"){
-                document.getElementById("response").innerHTML = "You need to insert the order up there!";
-                return;
-            }
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function(){
-                if (this.readyState==4){
-                    var respons = this.responseText;
-                    document.getElementById("response").innerHTML = respons;
-                }
-            }
-            xhr.open("GET","http://localhost:8082/Encrypt/"+s+"/"+order);
-            xhr.send();
-        }
-        
-        function getDecryption(num){
-            if(num.length==0){
-                document.getElementById("response").innerHTML = "I would enter a number in that field there, mate!";
-                return;
-            }
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function(){
-                if(this.readyState==4){
-                    var respons = this.responseText;
-                    document.getElementById("response").innerHTML = respons;
-                }
-            }
-            xhr.open("GET","http://localhost:8082/Decrypt/"+num);
-            xhr.send();
-        }
-
-        function getUnitConversion(){
-            document.getElementById("input").hidden = true;
-            document.getElementById("c-to-f").hidden = true;
-            document.getElementById("f-to-c").hidden = true;
-            document.getElementById("UnitConversionDiv").hidden = false;
-            document.getElementById("kg-to-lbs").hidden = true;
-            document.getElementById("lbs-to-kg").hidden = true;
-            document.getElementById("response").innerHTML = "";
-        }
-        function backToInput(){
-            document.getElementById("input").hidden = false;
-            document.getElementById("UnitConversionDiv").hidden = true;
-            document.getElementById("response").innerHTML = "";
-
-        }
-        function cTof(){
-            document.getElementById("UnitConversionDiv").hidden = true;
-            document.getElementById("c-to-f").hidden = false;
-            document.getElementById("response").innerHTML = "";
-        }
-        function fToc(){
-            document.getElementById("UnitConversionDiv").hidden = true;
-            document.getElementById("f-to-c").hidden = false;
-            document.getElementById("response").innerHTML = "";
-        }
-        function kgToLbs(){
-            document.getElementById("kg-to-lbs").hidden = false;
-            document.getElementById("UnitConversionDiv").hidden = true;
-            document.getElementById("response").innerHTML = "";
-        }
-        function lbsToKg(){
-            document.getElementById("lbs-to-kg").hidden = false;
-            document.getElementById("UnitConversionDiv").hidden = true;
-            document.getElementById("response").innerHTML = "";
-        }
-
-        function cTofCalculate(val){
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function(){
-                if(this.readyState==4){
-                    var respons = this.responseText;
-                    document.getElementById("response").innerHTML = respons;
-                }
-            }
-            xhr.open("GET","http://localhost:8082/Units/ctof/"+val);
-            xhr.send();
-        }
-
-        function fTocCalculate(val){
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function(){
-                if(this.readyState==4){
-                    var respons = this.responseText;
-                    document.getElementById("response").innerHTML = respons;
-                }
-            }
-            xhr.open("GET","http://localhost:8082/Units/ftoc/"+val);
-            xhr.send();
-        }
-
-        function kgToLbsCalculate(val){
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function(){
-                if(this.readyState==4){
-                    var respons = this.responseText;
-                    document.getElementById("response").innerHTML = respons;
-                }
-            }
-            xhr.open("GET","http://localhost:8082/Units/kgToLbs/"+val);
-            xhr.send();
-        }
-
-        function lbsToKgCalculate(val){
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function(){
-                if(this.readyState==4){
-                    var respons = this.responseText;
-                    document.getElementById("response").innerHTML = respons;
-                }
-            }
-            xhr.open("GET","http://localhost:8082/Units/lbsToKg/"+val);
-            xhr.send();
-        }
-    </script>
+    <script src="index.js"></script>
 </head>
-
 <body>
     <div id="input" class="main">
         <input type="text" id="begin"> <input type="text" id="end">
@@ -206,7 +25,8 @@
         <input type="text" id="derInput"><button id="derbutton" onclick="getDer(derInput.value)">get derivative</button><br>
         <input type="text" value="string" id="encInput"><input type="text" value="order" id="encOrder"><button id="encButton" onclick="getEncryption(encInput.value,encOrder.value)">get encryption</button><br>
         <input type="text" id="decInput"><button id="decButton" onclick="getDecryption(decInput.value)">get decryption</button><br>
-        <button id="ToUnitConv" onclick="getUnitConversion()">Unit conversions</button>
+        <button id="ToUnitConv" onclick="getUnitConversion()">Unit conversions</button><br>
+        <button onclick="gameStart()">Game</button>
     </div>
     <div id="UnitConversionDiv" class="main" hidden>
         <button id="backButton" onclick="backToInput()">Back</button><br>
@@ -232,6 +52,10 @@
         Pounds to kilograms calculation<br>
         <button onclick="getUnitConversion()">Back</button><br>
         <input type="text" id="lbsInput"><button onclick="lbsToKgCalculate(lbsInput.value)">Calculate</button>
+    </div>
+    <div id="Gamescreen" hidden>
+        <button onclick="backToInput()">Back</button><br>
+        <input type="text" id="degreeInput"><button onclick="setDegree(degreeInput.value)">Set Degree</button>
     </div>
     <br><div id="response"></div>
 </body>
