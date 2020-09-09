@@ -4,23 +4,23 @@ import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Game {
-	private int degree;
-	private ArrayList<Integer> coefficients;
-	private ArrayList<String> points;
-	private ArrayList<Integer> xvalues;
+	private long degree;
+	private ArrayList<Long> coefficients;
+	private ArrayList<String> polongs;
+	private ArrayList<Long> xvalues;
 	
-	public Game(int d) {
+	public Game(long d) {
 		this.degree = d;
 		this.coefficients = new ArrayList<>();
-		this.points = new ArrayList<>();
+		this.polongs = new ArrayList<>();
 	}
-	public int getDegree() {
+	public long getDegree() {
 		return degree;
 	}
-	public void setDegree(int degree) {
+	public void setDegree(long degree) {
 		this.degree = degree;
 	}
-	public ArrayList<Integer> getCoefficients() {
+	public ArrayList<Long> getCoefficients() {
 		return coefficients;
 	}
 	public void generateCoefficients() {
@@ -29,26 +29,26 @@ public class Game {
 	public void setPoints() {
 		this.xvalues = randomizedXValues(degree+1,-50,50);
 		for(int i = 0; i<degree+1;i++) {
-			int yvalue=0;
+			long yvalue=0;
 			for(int j=0;j<degree+1;j++) {
-				yvalue+=coefficients.get(j) * (int) Math.pow((double)xvalues.get(i),(double)j);
+				yvalue+=coefficients.get(j) * (long) Math.pow((double)xvalues.get(i),(double)j);
 			}
-			this.points.add("("+xvalues.get(i)+", "+yvalue+")");
+			this.polongs.add("("+xvalues.get(i)+", "+yvalue+")");
 		}
 	}
 	public ArrayList<String> getPoints() {
-		return points;
+		return polongs;
 	}
-	private ArrayList<Integer> randomizedXValues(int numOfValues, int min, int max) {
-		ArrayList<Integer> ans = new ArrayList<>();
-		for(int i=0;i<numOfValues;i++) {
-			Integer number = (int) ThreadLocalRandom.current().nextLong(min,max);
-			if(!ans.contains(number)&& !number.equals(0))
+	private ArrayList<Long> randomizedXValues(long numOfValues, long min, long max) {
+		ArrayList<Long> ans = new ArrayList<>();
+		for(long i=0;i<numOfValues;i++) {
+			Long number = ThreadLocalRandom.current().nextLong(min,max);
+			if(!ans.contains(number)&& !number.equals(0l))
 				ans.add(number);
 			else
 				while(true) {
-					number = (int) ThreadLocalRandom.current().nextLong(min,max);
-					if(!ans.contains(number) && !number.equals(0)) {
+					number = ThreadLocalRandom.current().nextLong(min,max);
+					if(!ans.contains(number) && !number.equals(0l)) {
 						ans.add(number);
 						break;
 					}
