@@ -12,8 +12,8 @@ import nodatabase.test.domain.Game;
 
 @RestController
 public class GameEndpoint {
-	Game theGame;
-	boolean answer;
+	private Game theGame;
+	private boolean answer;
 	@GetMapping("/game/getpolynomial/{degree}")
 	public ArrayList<String> getPolynomial(@PathVariable int degree) {
 		Game g = new Game(degree);
@@ -25,12 +25,19 @@ public class GameEndpoint {
 	
 	@PostMapping("/game/submitAnswer")
 	public void submitAnswer(@RequestBody String[] as) {
-		this.answer = true;
+		this.answer = false;
 		for(int i =0;i<as.length;i++) {
+			if(as[i].equals("")) {
+				this.answer=false;
+				return;
+			}
 			if(Integer.parseInt(as[i]) != theGame.getCoefficients().get(i)) {
 				this.answer = false;
+				return;
 			}
 		}
+		this.answer = true;
+		return;
 	}
 	
 	@GetMapping("/game/checkAnswer")

@@ -242,20 +242,33 @@ function setDegree(deg) {
 }
 function submitGame(deg) {
     var xhr = new XMLHttpRequest();
-    var xhr2 = new XMLHttpRequest();
     var arr = new Array();
     for (var i = 0; i <= deg; i++) {
-        arr.push(document.getElementById("coef" + i).value);
+        if(!isNaN(document.getElementById("coef" + i).value)){   
+            arr.push(document.getElementById("coef" + i).value);
+        }else{
+            document.getElementById("response").innerHTML = "You can only use numbers!";
+            return;
+        }
     }
+    xhr.onreadystatechange = function(){
+        if(this.readyState == 4){
+            getAnswer();
+        }
+    }
+    xhr.open("POST", "http://localhost:8082/game/submitAnswer");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(JSON.stringify(arr));
+    
+}
+function getAnswer(){
+    var xhr2 = new XMLHttpRequest();
     xhr2.onreadystatechange = function () {
         if (this.readyState == 4) {
             var respons = this.responseText;
             document.getElementById("response").innerHTML = respons;
         }
     }
-    xhr.open("POST", "http://localhost:8082/game/submitAnswer");
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.send(JSON.stringify(arr));
     xhr2.open("GET", "http://localhost:8082/game/checkAnswer");
     xhr2.send();
     document.getElementById("setDegreeButton").disabled = false;
