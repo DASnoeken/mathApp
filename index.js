@@ -180,6 +180,7 @@ function setDegree(deg) {
         document.getElementById("response").innerHTML = "Use degree < 10";
         return;
     }
+    document.getElementById("setDegreeButton").disabled = true;
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
@@ -202,7 +203,7 @@ function setDegree(deg) {
                     document.getElementById("response").innerHTML += " + ";
                 }
             }
-            document.getElementById("response").innerHTML += "   <button onclick=\"submitGame(degreeInput.value)\">Submit</button>";
+            document.getElementById("response").innerHTML += "   <button id=\"submitGame\" onclick=\"submitGame(degreeInput.value)\">Submit</button>";
         }
     }
     xhr.open("GET", "http://localhost:8082/game/getpolynomial/" + deg);
@@ -210,16 +211,21 @@ function setDegree(deg) {
 }
 function submitGame(deg) {
     var xhr = new XMLHttpRequest();
+    var xhr2 = new XMLHttpRequest();
     var arr = new Array();
     for (var i = 0; i <= deg; i++) {
         arr.push(document.getElementById("coef"+i).value);
     }
-    xhr.onreadystatechange = function () {
+    xhr2.onreadystatechange = function () {
         if (this.readyState == 4) {
-
+            var respons = this.responseText;
+            document.getElementById("response").innerHTML += "<br><br>"+respons;
         }
     }
     xhr.open("POST", "http://localhost:8082/game/submitAnswer");
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(JSON.stringify(arr));
+    xhr2.open("GET","http://localhost:8082/game/checkAnswer");
+    xhr2.send();
+    document.getElementById("setDegreeButton").disabled = false;
 }

@@ -6,13 +6,13 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Game {
 	private long degree;
 	private ArrayList<Long> coefficients;
-	private ArrayList<String> polongs;
+	private ArrayList<String> points;
 	private ArrayList<Long> xvalues;
 	
 	public Game(long d) {
 		this.degree = d;
 		this.coefficients = new ArrayList<>();
-		this.polongs = new ArrayList<>();
+		this.points = new ArrayList<>();
 	}
 	public long getDegree() {
 		return degree;
@@ -33,11 +33,11 @@ public class Game {
 			for(int j=0;j<degree+1;j++) {
 				yvalue+=coefficients.get(j) * (long) Math.pow((double)xvalues.get(i),(double)j);
 			}
-			this.polongs.add("("+xvalues.get(i)+", "+yvalue+")");
+			this.points.add("("+xvalues.get(i)+", "+yvalue+")");
 		}
 	}
 	public ArrayList<String> getPoints() {
-		return polongs;
+		return points;
 	}
 	private ArrayList<Long> randomizedXValues(long numOfValues, long min, long max) {
 		ArrayList<Long> ans = new ArrayList<>();
