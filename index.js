@@ -185,25 +185,25 @@ function setDegree(deg) {
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
             var respons = JSON.parse(this.responseText);
-            document.getElementById("response").innerHTML += "Given the following points:<br>";
+            document.getElementById("Gamescreen2").innerHTML = "<br><br>Given the following points:<br>";
             for (var i = 0; i < respons.length; i++) {
-                document.getElementById("response").innerHTML += "Point #" + (i + 1) + ": " + respons[i] + "<br>";
+                document.getElementById("Gamescreen2").innerHTML += "Point #" + (i + 1) + ": " + respons[i] + "<br>";
             }
-            document.getElementById("response").innerHTML += "Calculate the polynomial coefficients that fits them exactly.<br>Give your coefficients and submit<br>";
+            document.getElementById("Gamescreen2").innerHTML += "Calculate the polynomial coefficients that fits them exactly.<br>Give your coefficients and submit<br>";
             for (var i = 0; i < respons.length; i++) {
                 if (i == 0) {
-                    document.getElementById("response").innerHTML += "<input type=\"text\" id=\"coef" + i + "\">";
+                    document.getElementById("Gamescreen2").innerHTML += "<input type=\"text\" id=\"coef" + i + "\">";
                 } else if (i == 1) {
-                    document.getElementById("response").innerHTML += "<input type=\"text\" id=\"coef" + i + "\"> x";
+                    document.getElementById("Gamescreen2").innerHTML += "<input type=\"text\" id=\"coef" + i + "\"> x";
                 }
                 else {
-                    document.getElementById("response").innerHTML += "<input type=\"text\" id=\"coef" + i + "\"> x^" + i;
+                    document.getElementById("Gamescreen2").innerHTML += "<input type=\"text\" id=\"coef" + i + "\"> x^" + i;
                 }
                 if (i < respons.length - 1) {
-                    document.getElementById("response").innerHTML += " + ";
+                    document.getElementById("Gamescreen2").innerHTML += " + ";
                 }
             }
-            document.getElementById("response").innerHTML += "   <button id=\"submitGame\" onclick=\"submitGame(degreeInput.value)\">Submit</button>";
+            document.getElementById("Gamescreen2").innerHTML += "   <button id=\"submitGame\" onclick=\"submitGame(degreeInput.value)\">Submit</button>";
         }
     }
     xhr.open("GET", "http://localhost:8082/game/getpolynomial/" + deg);
@@ -219,7 +219,7 @@ function submitGame(deg) {
     xhr2.onreadystatechange = function () {
         if (this.readyState == 4) {
             var respons = this.responseText;
-            document.getElementById("response").innerHTML += "<br><br>"+respons;
+            document.getElementById("response").innerHTML = respons;
         }
     }
     xhr.open("POST", "http://localhost:8082/game/submitAnswer");
