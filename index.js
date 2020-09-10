@@ -94,6 +94,8 @@ function getUnitConversion() {
     document.getElementById("UnitConversionDiv").hidden = false;
     document.getElementById("kg-to-lbs").hidden = true;
     document.getElementById("lbs-to-kg").hidden = true;
+    document.getElementById("miles-to-km").hidden = true;
+    document.getElementById("km-to-miles").hidden = true;
     document.getElementById("response").innerHTML = "";
 }
 function backToInput() {
@@ -101,7 +103,6 @@ function backToInput() {
     document.getElementById("Gamescreen").hidden = true;
     document.getElementById("UnitConversionDiv").hidden = true;
     document.getElementById("response").innerHTML = "";
-
 }
 function cTof() {
     document.getElementById("UnitConversionDiv").hidden = true;
@@ -120,6 +121,16 @@ function kgToLbs() {
 }
 function lbsToKg() {
     document.getElementById("lbs-to-kg").hidden = false;
+    document.getElementById("UnitConversionDiv").hidden = true;
+    document.getElementById("response").innerHTML = "";
+}
+function milesToKm(){
+    document.getElementById("miles-to-km").hidden = false;
+    document.getElementById("UnitConversionDiv").hidden = true;
+    document.getElementById("response").innerHTML = "";
+}
+function kmToMiles(){
+    document.getElementById("km-to-miles").hidden = false;
     document.getElementById("UnitConversionDiv").hidden = true;
     document.getElementById("response").innerHTML = "";
 }
@@ -165,6 +176,26 @@ function lbsToKgCalculate(val) {
         }
     }
     xhr.open("GET", "http://localhost:8082/Units/lbsToKg/" + val);
+    xhr.send();
+}
+function milesToKmCalculate(val) {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            document.getElementById("response").innerHTML = this.responseText;
+        }
+    }
+    xhr.open("GET", "http://localhost:8082/Units/milesToKm/" + val);
+    xhr.send();
+}
+function kmToMilesCalculate(val){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            document.getElementById("response").innerHTML = this.responseText;
+        }
+    }
+    xhr.open("GET", "http://localhost:8082/Units/kmToMiles/" + val);
     xhr.send();
 }
 function gameStart() {
@@ -214,7 +245,7 @@ function submitGame(deg) {
     var xhr2 = new XMLHttpRequest();
     var arr = new Array();
     for (var i = 0; i <= deg; i++) {
-        arr.push(document.getElementById("coef"+i).value);
+        arr.push(document.getElementById("coef" + i).value);
     }
     xhr2.onreadystatechange = function () {
         if (this.readyState == 4) {
@@ -225,7 +256,7 @@ function submitGame(deg) {
     xhr.open("POST", "http://localhost:8082/game/submitAnswer");
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(JSON.stringify(arr));
-    xhr2.open("GET","http://localhost:8082/game/checkAnswer");
+    xhr2.open("GET", "http://localhost:8082/game/checkAnswer");
     xhr2.send();
     document.getElementById("setDegreeButton").disabled = false;
 }

@@ -45,4 +45,21 @@ public class ConversionEndpoint {
 		return Double.toString(c.getKg()) + " kg";
 	}
 	
+	@GetMapping("/Units/milesToKm/{value}")
+	public String getKm(@PathVariable String value) {
+		Conversion c = new Conversion();
+		Double miles = Double.valueOf(value);
+		c.setMiles(miles);
+		c.milesToKm();
+		return Double.toString(c.getKm()) + " km";
+	}
+	
+	@GetMapping("/Units/kmToMiles/{value}")
+	public String getMiles(@PathVariable String value) {
+		Conversion c = new Conversion();
+		Double km = Double.valueOf(value);
+		c.setKm(km);
+		c.kmToMiles();
+		return Double.toString(c.getMiles()) + " miles";
+	}
 }

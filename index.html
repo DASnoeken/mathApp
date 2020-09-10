@@ -34,9 +34,24 @@
     </div>
     <div id="UnitConversionDiv" class="main" hidden>
         <button id="backButton" onclick="backToInput()">Back</button><br>
-        <button id="C-to-F" onclick="cTof()">Celcius to Fahrenheit</button> <button onclick="fToc()">Fahrenheit to
-            Celcius</button><br>
-        <button onclick="kgToLbs()">kg to lbs</button><button onclick="lbsToKg()">lbs to kg</button>
+        <table>
+            <tr>
+                <td>
+                    <button id="C-to-F" onclick="cTof()">Celcius to Fahrenheit</button>
+                </td>
+                <td><button onclick="fToc()">Fahrenheit to
+                        Celcius</button>
+                </td>
+            </tr>
+            <tr>
+                <td><button onclick="kgToLbs()">kg to lbs</button></td>
+                <td><button onclick="lbsToKg()">lbs to kg</button></td>
+            </tr>
+            <tr>
+                <td><button onclick="milesToKm()">miles to km</button></td>
+                <td><button onclick="kmToMiles()">km to miles</button></td>
+            </tr>
+        </table>
     </div>
     <div id="c-to-f" class="main" hidden>
         Celcius to Fahrenheit calculation<br>
@@ -59,9 +74,20 @@
         <button onclick="getUnitConversion()">Back</button><br>
         <input type="text" id="lbsInput"><button onclick="lbsToKgCalculate(lbsInput.value)">Calculate</button>
     </div>
+    <div id="miles-to-km" class="main" hidden>
+        Miles to kilometer calculation<br>
+        <button onclick="getUnitConversion()">Back</button>
+        <input type="text" id="milesInput"><button onclick="milesToKmCalculate(milesInput.value)">Calculate</button>
+    </div>
+    <div id="km-to-miles" class="main" hidden>
+        Kilometer to miles calculation<br>
+        <button onclick="getUnitConversion()">Back</button>
+        <input type="text" id="kmInput"><button onclick="kmToMilesCalculate(kmInput.value)">Calculate</button>
+    </div>
     <div id="Gamescreen" class="main" hidden>
         <button onclick="backToInput()">Back</button><br>
-        <input type="text" id="degreeInput"><button id="setDegreeButton" onclick="setDegree(degreeInput.value)">Set Degree</button><br>
+        <input type="text" id="degreeInput"><button id="setDegreeButton" onclick="setDegree(degreeInput.value)">Set
+            Degree</button><br>
         <div id="Gamescreen2"></div>
     </div>
     <br>

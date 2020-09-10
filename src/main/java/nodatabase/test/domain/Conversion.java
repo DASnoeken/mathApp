@@ -5,7 +5,27 @@ public class Conversion {
 	private double fahrenheit;
 	private double kg;
 	private double lbs;
+	private double miles;
+	private double km;
 	
+	public void kmToMiles() {
+		this.miles = this.km/1.609344;
+	}
+	public void milesToKm() {
+		this.km = this.miles*1.609344;
+	}
+	public double getMiles() {
+		return miles;
+	}
+	public void setMiles(double miles) {
+		this.miles = miles;
+	}
+	public double getKm() {
+		return km;
+	}
+	public void setKm(double km) {
+		this.km = km;
+	}
 	public void kgToLbs() {
 		this.lbs = this.kg / 0.4536;
 	}
