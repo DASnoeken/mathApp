@@ -21,7 +21,7 @@ public class Calculator {
 	}
 	
 	public Calculator(String input) {
-		this.sum = input;
+		this.sum = "1*1-1+"+input+"*1"; //Shut up! This works (for now)!
 		this.answer = 0.0;
 		calculate();
 	}
@@ -45,10 +45,22 @@ public class Calculator {
 			if(ops[i].equals("*")) {
 				addsubTerms.add(multiply(Double.parseDouble(terms[i]),Double.parseDouble(terms[i+1])));
 			}else if(ops[i].equals("/")) {
-				addsubTerms.add(divide(Double.parseDouble(terms[i]),Double.parseDouble(terms[i+1])));
+				try {
+					addsubTerms.add(divide(Double.parseDouble(terms[i]),Double.parseDouble(terms[i+1])));
+				}catch(ArithmeticException ae) {
+					this.answer = Double.NaN;
+					return;
+				}
+			}else if(((i==ops.length-1) && ops[i].equals("+")) || ops[i].equals("+")&&!(ops[i+1].equals("*")||ops[i+1].equals("/"))) {
+				addsubTerms.add(Double.parseDouble(terms[i]));
+			}else if(((i==ops.length-1) && ops[i].equals("-")) || ops[i].equals("-")&&!(ops[i+1].equals("*")||ops[i+1].equals("/"))) {
+				addsubTerms.add(Double.parseDouble(terms[i]));
 			}
 		}
-		
+		/*System.out.println("addsubTerms:");
+		for(Double d:addsubTerms) {
+			System.out.println(d);
+		}*/
 		boolean test2 = Arrays.stream(ops).anyMatch("*"::equals);
 		boolean test3 = Arrays.stream(ops).anyMatch("/"::equals);
 		//remove * and / from ops
@@ -65,14 +77,12 @@ public class Calculator {
 		this.answer+=addsubTerms.get(0);
 		for(int i=0;i<ops.length;i++) {
 			if(ops[i].equals("+")) {
-				System.out.println(addsubTerms.get(i)+", "+addsubTerms.get(i+1));
 				this.answer+=addsubTerms.get(i+1);
 			}else if(ops[i].equals("-")) {
-				System.out.println(addsubTerms.get(i)+", "+addsubTerms.get(i+1));
 				this.answer-=addsubTerms.get(i+1);
 			}
 		}
-		System.out.println(this.answer);
+		//System.out.println(this.answer);
 	}
 	
 

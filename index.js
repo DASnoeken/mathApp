@@ -273,3 +273,24 @@ function getAnswer(){
     xhr2.send();
     document.getElementById("setDegreeButton").disabled = false;
 }
+function calculator(sum){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if(this.readyState==4){
+            calculatorAnswer();
+        }
+    }
+    xhr.open("POST","http://localhost:8082/calculator/setCalculation");
+    xhr.setRequestHeader("Content-Type","application/json");
+    xhr.send(sum);
+}
+function calculatorAnswer(){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if(this.readyState==4){
+            document.getElementById("response").innerHTML = this.responseText;
+        }
+    }
+    xhr.open("GET","http://localhost:8082/calculator/getAnswer");
+    xhr.send();
+}
