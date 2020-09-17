@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import nodatabase.test.domain.Calculator;
-import nodatabase.test.domain.Encryption;
+//import nodatabase.test.domain.Encryption;
 
 @SpringBootTest
 class TestApplicationTests {

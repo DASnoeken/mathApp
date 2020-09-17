@@ -73,7 +73,7 @@ public class Calculator {
 	}
 	
 	public void calculate() {
-		this.sum = this.sum.replace("\\s", ""); // remove spaces
+		this.sum = this.sum.replaceAll("\\s", ""); // remove spaces
 		this.terms = this.sum.split("\\+|\\-"); // contains numbers
 		this.ops = this.sum.split("[\\*\\/]?\\d{1,}[\\*\\/]?"); // contains operations
 		this.addsubTerms = new ArrayList<Double>();
@@ -89,7 +89,6 @@ public class Calculator {
 		}
 		// multiply and divide first
 		for (int i = 0; i < terms.length; i++) {
-			// Double finalValue = 1.0;
 			if (!terms[i].contains("*") && !terms[i].contains("/")) {
 				addsubTerms.add(Double.parseDouble(terms[i]));
 				continue;
