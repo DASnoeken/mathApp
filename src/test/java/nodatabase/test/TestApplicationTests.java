@@ -27,6 +27,8 @@ class TestApplicationTests {
 		assertEquals(120,c6.getAnswer());
 		Calculator c7 = new Calculator("5*4*3/2*1");
 		assertEquals(30,c7.getAnswer());
+		Calculator c8 = new Calculator("3*4+1+2*3");
+		assertEquals(19, c8.getAnswer());
 	}
 
 }

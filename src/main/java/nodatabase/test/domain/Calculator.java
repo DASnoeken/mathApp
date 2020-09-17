@@ -42,12 +42,13 @@ public class Calculator {
 		}
 		//multiply and divide first	
 		for(int i=0;i<terms.length;i++) {
-			Double finalValue = 1.0;
+			//Double finalValue = 1.0;
 			if(!terms[i].contains("*") && !terms[i].contains("/")) {
 				addsubTerms.add(Double.parseDouble(terms[i]));
+				continue;
 			}
 			String[] termsI = terms[i].split("\\*|\\/");
-			finalValue*=Double.parseDouble(termsI[0]);
+			Double finalValue=Double.parseDouble(termsI[0]);
 			String[] opsI = terms[i].split("\\d{1,}");
 			boolean test2 = Arrays.stream(opsI).anyMatch(""::equals);
 			if(test2) {	//Remove annoying empty strings
