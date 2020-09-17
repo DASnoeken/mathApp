@@ -29,6 +29,8 @@ class TestApplicationTests {
 		assertEquals(30,c7.getAnswer());
 		Calculator c8 = new Calculator("3*4+1+2*3");
 		assertEquals(19, c8.getAnswer());
+		Calculator c9 = new Calculator("(9+1)*2");
+		assertEquals(20, c9.getAnswer());
 	}
 
 }

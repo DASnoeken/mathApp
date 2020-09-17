@@ -17,6 +17,11 @@ public class CalculatorEndpoint {
 	
 	@GetMapping("/calculator/getAnswer")
 	public String getAnswer() {
-		return Double.toString(c.getAnswer());
+		if(c.getErrorMessage().equals("None")) {
+			return Double.toString(c.getAnswer());
+		}else {
+			return c.getErrorMessage();
+		}
+		
 	}
 }
