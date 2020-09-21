@@ -96,6 +96,7 @@ function getUnitConversion() {
     document.getElementById("lbs-to-kg").hidden = true;
     document.getElementById("miles-to-km").hidden = true;
     document.getElementById("km-to-miles").hidden = true;
+    document.getElementById("eur-to-usd").hidden = true;
     document.getElementById("response").innerHTML = "";
 }
 function backToInput() {
@@ -131,6 +132,11 @@ function milesToKm(){
 }
 function kmToMiles(){
     document.getElementById("km-to-miles").hidden = false;
+    document.getElementById("UnitConversionDiv").hidden = true;
+    document.getElementById("response").innerHTML = "";
+}
+function euroToUSDollars(){
+    document.getElementById("eur-to-usd").hidden = false;
     document.getElementById("UnitConversionDiv").hidden = true;
     document.getElementById("response").innerHTML = "";
 }
@@ -292,5 +298,26 @@ function calculatorAnswer(){
         }
     }
     xhr.open("GET","http://localhost:8082/calculator/getAnswer");
+    xhr.send();
+}
+function webpage(){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if(this.readyState == 4){
+            document.getElementById("response").innerHTML = this.responseText;
+            console.log(this.responseText);
+        }
+    }
+    xhr.open("GET","http://localhost:8082/web/test");
+    xhr.send();
+}
+function EurToUsd(eur){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if(this.readyState == 4){
+            document.getElementById("response").innerHTML = this.responseText;
+        }
+    }
+    xhr.open("GET","http://localhost:8082/currency/EUR/USD/"+eur);
     xhr.send();
 }

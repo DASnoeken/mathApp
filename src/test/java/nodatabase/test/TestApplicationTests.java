@@ -2,9 +2,12 @@ package nodatabase.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.IOException;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import nodatabase.test.api.WebPageEndpoint;
 import nodatabase.test.domain.Calculator;
 //import nodatabase.test.domain.Encryption;
 
@@ -13,7 +16,7 @@ class TestApplicationTests {
 
 	@Test
 	void contextLoads() {
-		Calculator c2 = new Calculator("5*5-3/4");
+		/*Calculator c2 = new Calculator("5*5-3/4");
 		assertEquals(24.25,c2.getAnswer());
 		Calculator c = new Calculator("5*5*5-3*3+3*4");
 		assertEquals(128,c.getAnswer());
@@ -30,7 +33,14 @@ class TestApplicationTests {
 		Calculator c8 = new Calculator("3*4+1+2*3");
 		assertEquals(19, c8.getAnswer());
 		Calculator c9 = new Calculator("(9+1)*2");
-		assertEquals(20, c9.getAnswer());
+		assertEquals(20, c9.getAnswer());*/
+		
+		WebPageEndpoint wpe = new WebPageEndpoint();
+		try {
+			wpe.eurToUsd("17.02");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

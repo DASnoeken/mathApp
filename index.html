@@ -44,6 +44,9 @@
                 <td><button onclick="kmToMiles()">km to miles</button></td>
                 <td><button onclick="milesToKm()">miles to km</button></td>
             </tr>
+            <tr>
+                <td><button onclick="euroToUSDollars()">EUR to USD</button></td>
+            </tr>
         </table>
     </div>
     <div id="c-to-f" class="main" hidden>
@@ -76,6 +79,12 @@
         Kilometer to miles calculation<br>
         <button onclick="getUnitConversion()">Back</button>
         <input type="text" id="kmInput"><button onclick="kmToMilesCalculate(kmInput.value)">Calculate</button>
+    </div>
+    <div id="eur-to-usd" class="main" hidden>
+        EUR to USD calculation<br>
+        Conversion factor taken from: <a href="https://themoneyconverter.com">The Money Converter</a><br>
+        <button onclick="getUnitConversion()">Back</button><br>
+        <input type="text" id="eurToUsd"><button onclick="EurToUsd(eurToUsd.value)">EUR to USD</button>
     </div>
     <div id="Gamescreen" class="main" hidden>
         <button onclick="backToInput()">Back</button><br>
