@@ -317,18 +317,7 @@ function webpage(){
     xhr.open("GET","http://localhost:8082/web/test");
     xhr.send();
 }
-function EurToUsd(eur){
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if(this.readyState == 4){
-            document.getElementById("response").innerHTML = this.responseText;
-        }
-    }
-    xhr.open("GET","http://localhost:8082/currency/EUR/USD/"+eur);
-    xhr.send();
-}
 function currConversion(from,to,value){
-    console.log("http://localhost:8082/currency/"+from+"/"+to+"/"+value);
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function(){
         if(this.readyState==4){

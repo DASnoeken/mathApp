@@ -11,3 +11,4 @@ Currently, the app contains the following:
 - Unit conversions, currently supported: Fahrenheit-Celcius, pounds-kilograms, miles-kilometers and vice versa.
 - Randomly generated math problems to work on your ability to solve systems of equations.
 - An actual calculator that requires a string as input.
+- Currency converter that's automatically updated.
