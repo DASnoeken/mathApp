@@ -14,21 +14,22 @@ import nodatabase.test.domain.Currency;
 
 @RestController
 public class WebPageEndpoint {
-	@GetMapping("/web/test")
-	public String webtest() throws IOException { 
-		Document doc = Jsoup.connect("https://themoneyconverter.com/EUR/USD").get();
-		String test = doc.title()+"<br><br><br>";
-		Elements newsHeadlines = doc.select("#res1");
-		for (Element headline : newsHeadlines) {
-			  test+=headline + "<br>";
-			}
-		return test;
-	}
-	
 	@GetMapping("/currency/EUR/USD/{input}")
 	public double eurToUsd(@PathVariable String input) throws IOException {
 		Currency c = new Currency();
 		Document doc = Jsoup.connect("https://themoneyconverter.com/EUR/USD").get();
+		String rate = "";
+		Element conversionRate = doc.select("#res1").get(0);
+		rate += conversionRate;
+		double ans = c.convert(rate, Double.parseDouble(input));
+		return ans;
+	}
+	
+	@GetMapping("/currency/{from}/{to}/{input}")
+	public double convertCurrency(@PathVariable String from, @PathVariable String to, @PathVariable String input) throws IOException{
+		Currency c = new Currency();
+		String url = "https://themoneyconverter.com/"+from+"/"+to;
+		Document doc = Jsoup.connect(url).get();
 		String rate = "";
 		Element conversionRate = doc.select("#res1").get(0);
 		rate += conversionRate;

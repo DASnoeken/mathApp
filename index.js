@@ -97,6 +97,7 @@ function getUnitConversion() {
     document.getElementById("miles-to-km").hidden = true;
     document.getElementById("km-to-miles").hidden = true;
     document.getElementById("eur-to-usd").hidden = true;
+    document.getElementById("currencies").hidden = true;
     document.getElementById("response").innerHTML = "";
 }
 function backToInput() {
@@ -137,6 +138,11 @@ function kmToMiles(){
 }
 function euroToUSDollars(){
     document.getElementById("eur-to-usd").hidden = false;
+    document.getElementById("UnitConversionDiv").hidden = true;
+    document.getElementById("response").innerHTML = "";
+}
+function convertCurrencies(){
+    document.getElementById("currencies").hidden = false;
     document.getElementById("UnitConversionDiv").hidden = true;
     document.getElementById("response").innerHTML = "";
 }
@@ -319,5 +325,16 @@ function EurToUsd(eur){
         }
     }
     xhr.open("GET","http://localhost:8082/currency/EUR/USD/"+eur);
+    xhr.send();
+}
+function currConversion(from,to,value){
+    console.log("http://localhost:8082/currency/"+from+"/"+to+"/"+value);
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if(this.readyState==4){
+            document.getElementById("response").innerHTML = this.responseText;
+        }
+    }
+    xhr.open("GET","http://localhost:8082/currency/"+from+"/"+to+"/"+value);
     xhr.send();
 }

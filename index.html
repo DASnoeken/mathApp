@@ -46,6 +46,7 @@
             </tr>
             <tr>
                 <td><button onclick="euroToUSDollars()">EUR to USD</button></td>
+                <td><button onclick="convertCurrencies()">Other Currencies</button></td>
             </tr>
         </table>
     </div>
@@ -85,6 +86,35 @@
         Conversion factor taken from: <a href="https://themoneyconverter.com">The Money Converter</a><br>
         <button onclick="getUnitConversion()">Back</button><br>
         <input type="text" id="eurToUsd"><button onclick="EurToUsd(eurToUsd.value)">EUR to USD</button>
+    </div>
+    <div id="currencies" class="main" hidden>
+        Convert currencies<br>
+        Conversion factors taken from: <a href="https://themoneyconverter.com">The Money Converter</a><br>
+        <button onclick="getUnitConversion()">Back</button><br>
+        <input type="text" id="fromCurrencyInput"><br>
+        <label for="from">From currency: </label>
+        <select name="from" id="fromCurrency">
+            <option value="EUR">EUR - Euro</option>
+            <option value="USD">USD - US Dollar</option>
+            <option value="GBP">GBP - British Pounds Sterling</option>
+            <option value="CHF">CHF - Swiss Franc</option>
+            <option value="JPY">JPY - Japanese Yen</option>
+            <option value="HKD">HKD - Hong Kong Dollar</option>
+            <option value="AUD">AUD - Australian Dollar</option>
+            <option value="ILS">ILS - Israeli Sheqel</option>
+        </select><br>
+        <label for="to">To currency: </label>
+        <select name="to" id="toCurrency">
+            <option value="EUR">EUR - Euro</option>
+            <option value="USD">USD - US Dollar</option>
+            <option value="GBP">GBP - British Pounds Sterling</option>
+            <option value="CHF">CHF - Swiss Franc</option>
+            <option value="JPY">JPY - Japanese Yen</option>
+            <option value="HKD">HKD - Hong Kong Dollar</option>
+            <option value="AUD">AUD - Australian Dollar</option>
+            <option value="ILS">ILS - Israeli Sheqel</option>
+        </select><br>
+        <button onclick="currConversion(fromCurrency.value,toCurrency.value,fromCurrencyInput.value)">Convert</button>
     </div>
     <div id="Gamescreen" class="main" hidden>
         <button onclick="backToInput()">Back</button><br>
