@@ -102,6 +102,7 @@
             <option value="HKD">HKD - Hong Kong Dollar</option>
             <option value="AUD">AUD - Australian Dollar</option>
             <option value="ILS">ILS - Israeli Sheqel</option>
+            <option value="CAD">CAD - Canadian Dollar</option>
         </select><br>
         <label for="to">To currency: </label>
         <select name="to" id="toCurrency">
@@ -113,8 +114,10 @@
             <option value="HKD">HKD - Hong Kong Dollar</option>
             <option value="AUD">AUD - Australian Dollar</option>
             <option value="ILS">ILS - Israeli Sheqel</option>
+            <option value="CAD">CAD - Canadian Dollar</option>
         </select><br>
-        <button onclick="currConversion(fromCurrency.value,toCurrency.value,fromCurrencyInput.value)">Convert</button>
+        <button id="convertCurrencyButton" onclick="currConversion(fromCurrency.value,toCurrency.value,fromCurrencyInput.value)">Convert</button>
+        <button id="ReEnableButton" onclick="reEnable()" hidden>Re-enable button</button>
     </div>
     <div id="Gamescreen" class="main" hidden>
         <button onclick="backToInput()">Back</button><br>

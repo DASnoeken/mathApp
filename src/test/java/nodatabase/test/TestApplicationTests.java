@@ -35,12 +35,7 @@ class TestApplicationTests {
 		Calculator c9 = new Calculator("(9+1)*2");
 		assertEquals(20, c9.getAnswer());*/
 		
-		WebPageEndpoint wpe = new WebPageEndpoint();
-		try {
-			wpe.eurToUsd("17.02");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
 	}
 
 }

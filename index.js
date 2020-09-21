@@ -306,24 +306,31 @@ function calculatorAnswer(){
     xhr.open("GET","http://localhost:8082/calculator/getAnswer");
     xhr.send();
 }
-function webpage(){
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if(this.readyState == 4){
-            document.getElementById("response").innerHTML = this.responseText;
-            console.log(this.responseText);
-        }
-    }
-    xhr.open("GET","http://localhost:8082/web/test");
-    xhr.send();
-}
 function currConversion(from,to,value){
+    if(isNaN(value)){
+        document.getElementById("response").innerHTML = "ERROR: Invalid Input!";
+        return;
+    }
+    if(from == to){
+        document.getElementById("response").innerHTML = "ERROR: Convert to different currency!";
+        return;
+    }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function(){
+        if(this.readyState==1){
+            document.getElementById("convertCurrencyButton").disabled = true;
+            document.getElementById("ReEnableButton").hidden = false;
+        }
         if(this.readyState==4){
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
     xhr.open("GET","http://localhost:8082/currency/"+from+"/"+to+"/"+value);
     xhr.send();
+}
+function reEnable(){
+    setTimeout(() => {
+        document.getElementById("convertCurrencyButton").disabled = false;
+    }, 1000);
+    document.getElementById("ReEnableButton").hidden = true;
 }
