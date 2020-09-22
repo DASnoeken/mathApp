@@ -29,7 +29,7 @@ public class WebPageEndpoint {
 		LocalDateTime now = LocalDateTime.now();
 		String nowString = now.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
 		nowString = nowString.replace('T', ' ');
-		return Double.toString(ans) +"<br>"+ updated + "<br>Current Time: "+nowString;
+		return input + " " + from + " = " + Double.toString(ans) + " " + to +"<br><br>"+ updated + "<br>Current Time: "+nowString;
 	}
 	
 	/*@GetMapping("currency/live/EUR/USD")

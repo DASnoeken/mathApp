@@ -8,12 +8,13 @@
 
 <body>
     <div id="welcome" class="welcome">
-        <h1>MathApp</h1>
+        <h1 id="mathapp">MathApp</h1>
     </div>
     <div id="input" class="main">
         <table>
             <tr>
-                <td><input type="text" value="start" id="begin"></td><td><input type="text" value="end" id="end"></td>
+                <td><input type="text" value="start" id="begin"></td>
+                <td><input type="text" value="end" id="end"></td>
                 <td><button id="naturalNumbersSum" class="buttons" onclick="getSum(begin.value,end.value)">Sum</button>
                 </td>
             </tr>
@@ -74,116 +75,129 @@
                 <td>
                     <button id="ToUnitConv" class="buttons" onclick="getUnitConversion()">Unit conversions</button>
                 </td>
-                
+
                 <td><button class="buttons" onclick="gameStart()">Exercise</button></td>
             </tr>
-            
+
         </table>
     </div>
     <div id="UnitConversionDiv" class="main" hidden>
-        <button id="backButton" onclick="backToInput()">Back</button><br>
+        <button class="buttons" id="backButton" onclick="backToInput()">Back</button><br>
         <table>
             <tr>
                 <td>
-                    <button id="C-to-F" onclick="cTof()">Celcius to Fahrenheit</button>
+                    <button class="buttons" id="C-to-F" onclick="cTof()">Celcius to Fahrenheit</button>
                 </td>
-                <td><button onclick="fToc()">Fahrenheit to
+                <td><button class="buttons" onclick="fToc()">Fahrenheit to
                         Celcius</button>
                 </td>
             </tr>
             <tr>
-                <td><button onclick="kgToLbs()">kg to lbs</button></td>
-                <td><button onclick="lbsToKg()">lbs to kg</button></td>
+                <td><button class="buttons" onclick="kgToLbs()">kg to lbs</button></td>
+                <td><button class="buttons" onclick="lbsToKg()">lbs to kg</button></td>
             </tr>
             <tr>
-                <td><button onclick="kmToMiles()">km to miles</button></td>
-                <td><button onclick="milesToKm()">miles to km</button></td>
+                <td><button class="buttons" onclick="kmToMiles()">km to miles</button></td>
+                <td><button class="buttons" onclick="milesToKm()">miles to km</button></td>
             </tr>
             <tr>
-                <td><button onclick="euroToUSDollars()">EUR to USD</button></td>
-                <td><button onclick="convertCurrencies()">Other Currencies</button></td>
+                <td><button class="buttons" onclick="euroToUSDollars()">EUR to USD</button></td>
+                <td><button class="buttons" onclick="convertCurrencies()">Other Currencies</button></td>
             </tr>
         </table>
     </div>
     <div id="c-to-f" class="main" hidden>
         Celcius to Fahrenheit calculation<br>
-        <button onclick="getUnitConversion()">Back</button><br>
-        <input type="text" id="celciusInput"><button onclick="cTofCalculate(celciusInput.value)">Calculate</button>
+        <button class="buttons" onclick="getUnitConversion()">Back</button><br>
+        <input type="text" id="celciusInput"><button class="buttons"
+            onclick="cTofCalculate(celciusInput.value)">Calculate</button>
     </div>
     <div id="f-to-c" class="main" hidden>
         Fahrenheit to Celcius calculation<br>
-        <button onclick="getUnitConversion()">Back</button><br>
-        <input type="text" id="fahrenheitInput"><button
+        <button class="buttons" onclick="getUnitConversion()">Back</button><br>
+        <input type="text" id="fahrenheitInput"><button class="buttons"
             onclick="fTocCalculate(fahrenheitInput.value)">Calculate</button>
     </div>
     <div id="kg-to-lbs" class="main" hidden>
         Kilograms to pounds calculation<br>
-        <button onclick="getUnitConversion()">Back</button><br>
-        <input type="text" id="kgInput"><button onclick="kgToLbsCalculate(kgInput.value)">Calculate</button>
+        <button class="buttons" onclick="getUnitConversion()">Back</button><br>
+        <input type="text" id="kgInput"><button class="buttons" onclick="kgToLbsCalculate(kgInput.value)">Calculate</button>
     </div>
     <div id="lbs-to-kg" class="main" hidden>
         Pounds to kilograms calculation<br>
-        <button onclick="getUnitConversion()">Back</button><br>
-        <input type="text" id="lbsInput"><button onclick="lbsToKgCalculate(lbsInput.value)">Calculate</button>
+        <button class="buttons" onclick="getUnitConversion()">Back</button><br>
+        <input type="text" id="lbsInput"><button class="buttons" onclick="lbsToKgCalculate(lbsInput.value)">Calculate</button>
     </div>
     <div id="miles-to-km" class="main" hidden>
         Miles to kilometer calculation<br>
-        <button onclick="getUnitConversion()">Back</button>
-        <input type="text" id="milesInput"><button onclick="milesToKmCalculate(milesInput.value)">Calculate</button>
+        <button class="buttons" onclick="getUnitConversion()">Back</button>
+        <input type="text" id="milesInput"><button class="buttons" onclick="milesToKmCalculate(milesInput.value)">Calculate</button>
     </div>
     <div id="km-to-miles" class="main" hidden>
         Kilometer to miles calculation<br>
-        <button onclick="getUnitConversion()">Back</button>
-        <input type="text" id="kmInput"><button onclick="kmToMilesCalculate(kmInput.value)">Calculate</button>
+        <button class="buttons" onclick="getUnitConversion()">Back</button>
+        <input type="text" id="kmInput"><button class="buttons" onclick="kmToMilesCalculate(kmInput.value)">Calculate</button>
     </div>
     <div id="eur-to-usd" class="main" hidden>
         EUR to USD calculation<br>
         Conversion factor taken from: <a href="https://themoneyconverter.com">The Money Converter</a><br>
-        <button onclick="getUnitConversion()">Back</button><br>
-        <input type="text" id="eurToUsd"><button onclick="currConversion('EUR','USD',eurToUsd.value)">EUR to
+        <button class="buttons" onclick="getUnitConversion()">Back</button><br>
+        <input type="text" id="eurToUsd"><button class="buttons" onclick="currConversion('EUR','USD',eurToUsd.value)">EUR to
             USD</button>
     </div>
     <div id="currencies" class="main" hidden>
         Convert currencies<br>
         Conversion factors taken from: <a href="https://themoneyconverter.com">The Money Converter</a><br>
-        <button onclick="getUnitConversion()">Back</button><br>
+        <button class="buttons" onclick="getUnitConversion()">Back</button><br>
         <input type="text" id="fromCurrencyInput"><br>
         <label for="from">From currency: </label>
         <select name="from" id="fromCurrency">
-            <option value="EUR">EUR - Euro</option>
+            <option selected value="EUR">EUR - Euro</option>
             <option value="USD">USD - US Dollar</option>
-            <option value="GBP">GBP - British Pounds Sterling</option>
-            <option value="CHF">CHF - Swiss Franc</option>
-            <option value="JPY">JPY - Japanese Yen</option>
-            <option value="HKD">HKD - Hong Kong Dollar</option>
             <option value="AUD">AUD - Australian Dollar</option>
-            <option value="ILS">ILS - Israeli Sheqel</option>
             <option value="CAD">CAD - Canadian Dollar</option>
+            <option value="CHF">CHF - Swiss Franc</option>
+            <option value="CNY">CNY - Chinese Yuan</option>
+            <option value="DKK">DKK - Danish Krone</option>
+            <option value="GBP">GBP - British Pounds Sterling</option>
+            <option value="HKD">HKD - Hong Kong Dollar</option>
+            <option value="ILS">ILS - Israeli Sheqel</option>
+            <option value="INR">INR - Indian Rupee</option>
+            <option value="JPY">JPY - Japanese Yen</option>
+            <option value="KRW">KRW - South Korean Won</option>
+            <option value="NZD">NZD - New Zealand Dollar</option>
+            <option value="PLN">PLN - Polish Zloty</option>
         </select><br>
         <label for="to">To currency: </label>
         <select name="to" id="toCurrency">
             <option value="EUR">EUR - Euro</option>
-            <option value="USD">USD - US Dollar</option>
-            <option value="GBP">GBP - British Pounds Sterling</option>
-            <option value="CHF">CHF - Swiss Franc</option>
-            <option value="JPY">JPY - Japanese Yen</option>
-            <option value="HKD">HKD - Hong Kong Dollar</option>
+            <option selected value="USD">USD - US Dollar</option>
             <option value="AUD">AUD - Australian Dollar</option>
-            <option value="ILS">ILS - Israeli Sheqel</option>
             <option value="CAD">CAD - Canadian Dollar</option>
+            <option value="CHF">CHF - Swiss Franc</option>
+            <option value="CNY">CNY - Chinese Yuan</option>
+            <option value="DKK">DKK - Danish Krone</option>
+            <option value="GBP">GBP - British Pounds Sterling</option>
+            <option value="HKD">HKD - Hong Kong Dollar</option>
+            <option value="ILS">ILS - Israeli Sheqel</option>
+            <option value="INR">INR - Indian Rupee</option>
+            <option value="JPY">JPY - Japanese Yen</option>
+            <option value="KRW">KRW - South Korean Won</option>
+            <option value="NZD">NZD - New Zealand Dollar</option>
+            <option value="PLN">PLN - Polish Zloty</option>
         </select><br>
-        <button id="convertCurrencyButton"
+        <button class="buttons" id="convertCurrencyButton"
             onclick="currConversion(fromCurrency.value,toCurrency.value,fromCurrencyInput.value)">Convert</button>
-        <button id="ReEnableButton" onclick="reEnable()" hidden>Re-enable button</button>
+        <button class="buttons" id="ReEnableButton" onclick="reEnable()" hidden>Re-enable button</button>
     </div>
     <div id="Gamescreen" class="main" hidden>
-        <button onclick="backToInput()">Back</button><br>
-        <input type="text" id="degreeInput"><button id="setDegreeButton" onclick="setDegree(degreeInput.value)">Set
+        <button class="buttons" onclick="backToInput()">Back</button><br>
+        <input type="text" id="degreeInput"><button class="buttons" id="setDegreeButton" onclick="setDegree(degreeInput.value)">Set
             Degree</button><br>
         <div id="Gamescreen2"></div>
     </div>
     <br>
-    <div id="response"></div>
+    <div id="response">Response area</div>
 </body>
 
 </html>

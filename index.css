@@ -2,17 +2,19 @@
     border-style: solid;
     border-color: black;
     border-width: 2px;
-    width: 50%;
+    width: 60%;
     margin: auto;
     padding: 10px;
+    font-size: x-large;
 }
 
 .welcome {
-    width: 50%;
+    width: 10%;
     margin: auto;
     padding: 10px;
     text-align: center;
     font-size: larger;
+    transition: 0.5s;
 }
 
 #response {
@@ -22,6 +24,11 @@
     width: 50%;
     margin: auto;
     padding: 10px;
+    font-size: larger;
+}
+
+input {
+    font-size: larger;
 }
 
 .buttons {
@@ -29,8 +36,27 @@
     color: black;
     border-color: rgb(0, 204, 255);
     transition: 0.5s;
+    font-size: 22px;
+    border-radius: 1px;
+}
+
+.buttons:disabled {
+    background-color: grey;
+    color: black;
+    border-color: grey;
+    transition: 0.5s;
     font-size: larger;
     border-radius: 1px;
+}
+
+.buttons:disabled:hover {
+    background-color: grey;
+    color: black;
+    border-color: grey;
+    font-size: larger;
+    border-radius: 1px;
+    box-shadow: 0px;
+    cursor: not-allowed;
 }
 
 .buttons:hover {
@@ -39,7 +65,7 @@
     border-color: white;
     border-radius: 4px;
     cursor: pointer;
-    box-shadow: 4px 4px 3px black;
+    box-shadow: 4px 4px 6px black;
 }
 
 td {
@@ -54,4 +80,12 @@ table {
 h1 {
     color: red;
     text-shadow: -1px 0 rgb(20, 0, 255), 0 1px rgb(20, 0, 255), 1px 0 rgb(20, 0, 255), 0 -1px rgb(20, 0, 255);
+}
+
+.welcome:hover {
+    transform: rotateZ(180deg);
+}
+
+select {
+    font-size: larger;
 }

@@ -246,7 +246,7 @@ function setDegree(deg) {
                     document.getElementById("Gamescreen2").innerHTML += " + ";
                 }
             }
-            document.getElementById("Gamescreen2").innerHTML += "   <button id=\"submitGame\" onclick=\"submitGame(degreeInput.value)\">Submit</button>";
+            document.getElementById("Gamescreen2").innerHTML += "   <button class=\"buttons\" id=\"submitGame\" onclick=\"submitGame(degreeInput.value)\">Submit</button>";
         }
     }
     xhr.open("GET", "http://localhost:8082/game/getpolynomial/" + deg);
