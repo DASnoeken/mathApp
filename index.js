@@ -286,6 +286,10 @@ function getAnswer(){
     document.getElementById("setDegreeButton").disabled = false;
 }
 function calculator(sum){
+    if(sum==""){
+        document.getElementById("response").innerHTML = "ERROR: Need Input!"
+        return;
+    }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function(){
         if(this.readyState==4){

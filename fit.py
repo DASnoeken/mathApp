@@ -1,8 +1,8 @@
 # import sympy
 from sympy import *
-M = Matrix([[1,(80)**1,(80)**2,910278581122570360195603958544441172139796200789911631],[1,(59)**1,(59)**2,497011816540753727636861240124927316297416732490156553],[1,(-98)**1,(-98)**2,1340248283807808886609166242937210601758141943979257199]])
+M = Matrix([[1,(-62)**1,(-62)**2,(-62)**3,-39174000709015419871660],[1,(-27)**1,(-27)**2,(-27)**3,-3295474391563744172630],[1,(135)**1,(135)**2,(135)**3,396139040542163344366138],[1,(126)**1,(126)**2,(126)**3,321926659177336358816848]])
 print("Matrix : {} ".format(M))
 # Use sympy.rref() method
 M_rref = M.rref()
 print("The Row echelon form of matrix M and the pivot columns : {}".format(M_rref))
-print("Your number of interest should be : {}".format(M_rref[0][3]))
+print("Your number of interest should be : {}".format(M_rref[0][4]))

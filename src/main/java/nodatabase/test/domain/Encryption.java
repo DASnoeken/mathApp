@@ -71,7 +71,7 @@ public class Encryption {
 		for(int i = 0;i<outNumbers.size();i++) {
 			output+=""+(i+1)+": ("+xar.get(i)+", " + outNumbers.get(i)+");<br>";
 		}
-		output+="<br>Printed on single line:<br>";
+		output+="<h3>Printed on single line:</h3>";
 		for(int i = 0;i<outNumbers.size();i++) {
 			if(i<outNumbers.size()-1)
 				output+="("+xar.get(i)+", "+outNumbers.get(i)+"), ";
@@ -79,7 +79,7 @@ public class Encryption {
 				output+="("+xar.get(i)+", "+outNumbers.get(i)+")";
 		}
 
-		output+="<br><br>Python Script:<br># import sympy  <br>" + 
+		output+="<h3>Python Script:</h3># import sympy  <br>" + 
 				"from sympy import * <br>" + 
 				"M = Matrix([";
 		for(int i = 0;i<outNumbers.size();i++) {

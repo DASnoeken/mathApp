@@ -13,7 +13,7 @@
     margin: auto;
     padding: 10px;
     text-align: center;
-    font-size: larger;
+    font-size: x-large;
     transition: 0.5s;
 }
 
@@ -24,7 +24,7 @@
     width: 50%;
     margin: auto;
     padding: 10px;
-    font-size: larger;
+    font-size: x-large;
 }
 
 input {
@@ -61,8 +61,8 @@ input {
 
 .buttons:hover {
     background-color: white;
-    color: red;
-    border-color: white;
+    color: rgb(247, 22, 67);
+    border-color: rgb(0, 204, 255);
     border-radius: 4px;
     cursor: pointer;
     box-shadow: 4px 4px 6px black;
@@ -78,7 +78,7 @@ table {
 }
 
 h1 {
-    color: red;
+    color: rgb(247, 22, 67);
     text-shadow: -1px 0 rgb(20, 0, 255), 0 1px rgb(20, 0, 255), 1px 0 rgb(20, 0, 255), 0 -1px rgb(20, 0, 255);
 }
 
