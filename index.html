@@ -122,8 +122,7 @@
                 <td><button class="buttons" onclick="milesToKm()">miles to km</button></td>
             </tr>
             <tr>
-                <td><button class="buttons" onclick="euroToUSDollars()">EUR to USD</button></td>
-                <td><button class="buttons" onclick="convertCurrencies()">Other Currencies</button></td>
+                <td><button class="buttons" onclick="convertCurrencies()">Currency converter</button></td>
             </tr>
         </table>
     </div>
@@ -162,14 +161,6 @@
         <button class="buttons" onclick="getUnitConversion()">Back</button>
         <input type="text" id="kmInput"><button class="buttons"
             onclick="kmToMilesCalculate(kmInput.value)">Calculate</button>
-    </div>
-    <div id="eur-to-usd" class="main" hidden>
-        EUR to USD calculation<br>
-        Conversion factor taken from: <a href="https://themoneyconverter.com">The Money Converter</a><br>
-        <button class="buttons" onclick="getUnitConversion()">Back</button><br>
-        <input type="text" id="eurToUsd"><button class="buttons"
-            onclick="currConversion('EUR','USD',eurToUsd.value)">EUR to
-            USD</button>
     </div>
     <div id="currencies" class="main" hidden>
         Convert currencies<br>

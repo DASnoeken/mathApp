@@ -50,7 +50,7 @@ input {
     color: black;
     border-color: grey;
     transition: 0.5s;
-    font-size: larger;
+    font-size: 22px;
     border-radius: 1px;
 }
 
@@ -58,9 +58,8 @@ input {
     background-color: grey;
     color: black;
     border-color: grey;
-    font-size: larger;
-    border-radius: 1px;
-    box-shadow: 0px;
+    transition: 0.5s;
+    font-size: 22px;
     cursor: not-allowed;
 }
 

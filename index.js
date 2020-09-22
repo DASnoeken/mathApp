@@ -1,4 +1,8 @@
 function getSum(begin, end) {
+    if(isNaN(begin) || isNaN(end)){
+        document.getElementById("response").innerHTML = "Not a Number";
+        return;
+    }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
@@ -10,6 +14,10 @@ function getSum(begin, end) {
     xhr.send();
 }
 function factorial(num) {
+    if(isNaN(num) || num==""){
+        document.getElementById("response").innerHTML = "Not a Number";
+        return;
+    }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
@@ -21,6 +29,10 @@ function factorial(num) {
     xhr.send();
 }
 function geometric(num) {
+    if(isNaN(num) || num==""){
+        document.getElementById("response").innerHTML = "Not a Number";
+        return;
+    }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
@@ -32,6 +44,10 @@ function geometric(num) {
     xhr.send();
 }
 function getE(num) {
+    if(isNaN(num) || num==""){
+        document.getElementById("response").innerHTML = "Not a Number";
+        return;
+    }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
@@ -43,6 +59,10 @@ function getE(num) {
     xhr.send();
 }
 function getDer(func) {
+    if(func==""){
+        document.getElementById("response").innerHTML = "Needs input";
+        return;
+    }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
@@ -58,7 +78,8 @@ function getEncryption(s, order) {
     if (s.length == 0) {
         document.getElementById("response").innerHTML = "What were ye gonne do with that empty string there, mate?";
         return;
-    } else if (order.length == 0 || order == "order") {
+    }
+    if (order.length == 0 || order == "order") {
         document.getElementById("response").innerHTML = "You need to insert the order up there!";
         return;
     }
@@ -96,57 +117,55 @@ function getUnitConversion() {
     document.getElementById("lbs-to-kg").hidden = true;
     document.getElementById("miles-to-km").hidden = true;
     document.getElementById("km-to-miles").hidden = true;
-    document.getElementById("eur-to-usd").hidden = true;
     document.getElementById("currencies").hidden = true;
-    document.getElementById("response").innerHTML = "";
+    document.getElementById("response").innerHTML = "Response area";
 }
 function backToInput() {
     document.getElementById("input").hidden = false;
     document.getElementById("Gamescreen").hidden = true;
     document.getElementById("UnitConversionDiv").hidden = true;
-    document.getElementById("response").innerHTML = "";
+    document.getElementById("response").innerHTML = "Response area";
 }
 function cTof() {
     document.getElementById("UnitConversionDiv").hidden = true;
     document.getElementById("c-to-f").hidden = false;
-    document.getElementById("response").innerHTML = "";
+    document.getElementById("response").innerHTML = "Response area";
 }
 function fToc() {
     document.getElementById("UnitConversionDiv").hidden = true;
     document.getElementById("f-to-c").hidden = false;
-    document.getElementById("response").innerHTML = "";
+    document.getElementById("response").innerHTML = "Response area";
 }
 function kgToLbs() {
     document.getElementById("kg-to-lbs").hidden = false;
     document.getElementById("UnitConversionDiv").hidden = true;
-    document.getElementById("response").innerHTML = "";
+    document.getElementById("response").innerHTML = "Response area";
 }
 function lbsToKg() {
     document.getElementById("lbs-to-kg").hidden = false;
     document.getElementById("UnitConversionDiv").hidden = true;
-    document.getElementById("response").innerHTML = "";
+    document.getElementById("response").innerHTML = "Response area";
 }
 function milesToKm(){
     document.getElementById("miles-to-km").hidden = false;
     document.getElementById("UnitConversionDiv").hidden = true;
-    document.getElementById("response").innerHTML = "";
+    document.getElementById("response").innerHTML = "Response area";
 }
 function kmToMiles(){
     document.getElementById("km-to-miles").hidden = false;
     document.getElementById("UnitConversionDiv").hidden = true;
-    document.getElementById("response").innerHTML = "";
-}
-function euroToUSDollars(){
-    document.getElementById("eur-to-usd").hidden = false;
-    document.getElementById("UnitConversionDiv").hidden = true;
-    document.getElementById("response").innerHTML = "";
+    document.getElementById("response").innerHTML = "Response area";
 }
 function convertCurrencies(){
     document.getElementById("currencies").hidden = false;
     document.getElementById("UnitConversionDiv").hidden = true;
-    document.getElementById("response").innerHTML = "";
+    document.getElementById("response").innerHTML = "Response area";
 }
 function cTofCalculate(val) {
+    if(isNaN(val)){
+        document.getElementById("response").innerHTML = "Not a Number";
+        return;
+    }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
@@ -158,6 +177,10 @@ function cTofCalculate(val) {
     xhr.send();
 }
 function fTocCalculate(val) {
+    if(isNaN(val)){
+        document.getElementById("response").innerHTML = "Not a Number";
+        return;
+    }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
@@ -169,6 +192,10 @@ function fTocCalculate(val) {
     xhr.send();
 }
 function kgToLbsCalculate(val) {
+    if(isNaN(val)){
+        document.getElementById("response").innerHTML = "Not a Number";
+        return;
+    }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
@@ -180,6 +207,10 @@ function kgToLbsCalculate(val) {
     xhr.send();
 }
 function lbsToKgCalculate(val) {
+    if(isNaN(val)){
+        document.getElementById("response").innerHTML = "Not a Number";
+        return;
+    }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
@@ -191,6 +222,10 @@ function lbsToKgCalculate(val) {
     xhr.send();
 }
 function milesToKmCalculate(val) {
+    if(isNaN(val)){
+        document.getElementById("response").innerHTML = "Not a Number";
+        return;
+    }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
@@ -201,6 +236,10 @@ function milesToKmCalculate(val) {
     xhr.send();
 }
 function kmToMilesCalculate(val){
+    if(isNaN(val)){
+        document.getElementById("response").innerHTML = "Not a Number";
+        return;
+    }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
@@ -215,7 +254,7 @@ function gameStart() {
     document.getElementById("input").hidden = true;
 }
 function setDegree(deg) {
-    document.getElementById("response").innerHTML = "";
+    document.getElementById("response").innerHTML = "Response area";
     if (isNaN(deg)) {
         document.getElementById("response").innerHTML = "This should be an integer!";
         return;
