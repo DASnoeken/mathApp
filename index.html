@@ -7,23 +7,78 @@
 </head>
 
 <body>
+    <div id="welcome" class="welcome">
+        <h1>MathApp</h1>
+    </div>
     <div id="input" class="main">
-        <input type="text" id="begin"> <input type="text" id="end">
-        <button id="naturalNumbersSum" class="buttons" onclick="getSum(begin.value,end.value)">Sum</button><br>
-        <input type="text" id="factorialInput"> <button id="factorialButton" class="buttons"
-            onclick="factorial(factorialInput.value)">Factorial</button><br>
-        <input type="text" id="geometricInput"> <button id="geometricButton" class="buttons"
-            onclick="geometric(geometricInput.value)">Geometric series</button>(1+x+x^2+x^3+...)<br>
-        <input type="text" id="eInput"><button id="ebutton" class="buttons" onclick="getE(eInput.value)">get e</button><br>
-        <input type="text" id="derInput"><button id="derbutton" class="buttons" onclick="getDer(derInput.value)">get
-            derivative</button><br>
-        <input type="text" value="string" id="encInput"><input type="text" value="order" id="encOrder"><button
-            id="encButton" class="buttons" onclick="getEncryption(encInput.value,encOrder.value)">get encryption</button><br>
-        <input type="text" id="decInput"><button class="buttons" id="decButton" onclick="getDecryption(decInput.value)">get
-            decryption</button><br>
-        <button id="ToUnitConv" class="buttons" onclick="getUnitConversion()">Unit conversions</button><br>
-        <button class="buttons" onclick="gameStart()">Exercise</button><br>
-        <input type="text" id="calculatorInput"><button class="buttons" onclick="calculator(calculatorInput.value)">Calculate</button>
+        <table>
+            <tr>
+                <td><input type="text" value="start" id="begin"></td><td><input type="text" value="end" id="end"></td>
+                <td><button id="naturalNumbersSum" class="buttons" onclick="getSum(begin.value,end.value)">Sum</button>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="text" id="factorialInput"></td>
+                <td></td>
+                <td><button id="factorialButton" class="buttons"
+                        onclick="factorial(factorialInput.value)">Factorial</button></td>
+            </tr>
+            <tr>
+                <td> <input type="text" id="geometricInput"></td>
+                <td></td>
+                <td><button id="geometricButton" class="buttons" onclick="geometric(geometricInput.value)">Geometric
+                        series</button></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="eInput"></td>
+                <td></td>
+                <td><button id="ebutton" class="buttons" onclick="getE(eInput.value)">Get
+                        e</button></td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" id="derInput">
+                </td>
+                <td></td>
+                <td><button id="derbutton" class="buttons" onclick="getDer(derInput.value)">Get
+                        derivative</button></td>
+            </tr>
+            <tr>
+                <td><input type="text" value="secret message" id="encInput"></td>
+                <td><input type="text" value="order (integer)" id="encOrder"></td>
+                <td><button id="encButton" class="buttons" onclick="getEncryption(encInput.value,encOrder.value)">Get
+                        encryption</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" id="decInput">
+                </td>
+                <td></td>
+                <td>
+                    <button class="buttons" id="decButton" onclick="getDecryption(decInput.value)">Get
+                        decryption</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" id="calculatorInput">
+                </td>
+                <td></td>
+                <td>
+                    <button class="buttons" onclick="calculator(calculatorInput.value)">Calculate</button>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td>
+                    <button id="ToUnitConv" class="buttons" onclick="getUnitConversion()">Unit conversions</button>
+                </td>
+                
+                <td><button class="buttons" onclick="gameStart()">Exercise</button></td>
+            </tr>
+            
+        </table>
     </div>
     <div id="UnitConversionDiv" class="main" hidden>
         <button id="backButton" onclick="backToInput()">Back</button><br>
@@ -85,7 +140,8 @@
         EUR to USD calculation<br>
         Conversion factor taken from: <a href="https://themoneyconverter.com">The Money Converter</a><br>
         <button onclick="getUnitConversion()">Back</button><br>
-        <input type="text" id="eurToUsd"><button onclick="currConversion('EUR','USD',eurToUsd.value)">EUR to USD</button>
+        <input type="text" id="eurToUsd"><button onclick="currConversion('EUR','USD',eurToUsd.value)">EUR to
+            USD</button>
     </div>
     <div id="currencies" class="main" hidden>
         Convert currencies<br>
@@ -116,7 +172,8 @@
             <option value="ILS">ILS - Israeli Sheqel</option>
             <option value="CAD">CAD - Canadian Dollar</option>
         </select><br>
-        <button id="convertCurrencyButton" onclick="currConversion(fromCurrency.value,toCurrency.value,fromCurrencyInput.value)">Convert</button>
+        <button id="convertCurrencyButton"
+            onclick="currConversion(fromCurrency.value,toCurrency.value,fromCurrencyInput.value)">Convert</button>
         <button id="ReEnableButton" onclick="reEnable()" hidden>Re-enable button</button>
     </div>
     <div id="Gamescreen" class="main" hidden>

@@ -7,6 +7,14 @@
     padding: 10px;
 }
 
+.welcome {
+    width: 50%;
+    margin: auto;
+    padding: 10px;
+    text-align: center;
+    font-size: larger;
+}
+
 #response {
     border-style: solid;
     border-color: black;
@@ -16,16 +24,34 @@
     padding: 10px;
 }
 
-.buttons{
-    background-color: red;
-    color:white;
-    border-color: black;
-    transition: 1s;
+.buttons {
+    background-color: rgb(0, 204, 255);
+    color: black;
+    border-color: rgb(0, 204, 255);
+    transition: 0.5s;
+    font-size: larger;
+    border-radius: 1px;
 }
-.buttons:hover{
+
+.buttons:hover {
     background-color: white;
-    color:red;
-    border-color: black;
+    color: red;
+    border-color: white;
     border-radius: 4px;
     cursor: pointer;
+    box-shadow: 4px 4px 3px black;
+}
+
+td {
+    padding: 1px;
+}
+
+table {
+    width: 90%;
+    margin: auto;
+}
+
+h1 {
+    color: red;
+    text-shadow: -1px 0 rgb(20, 0, 255), 0 1px rgb(20, 0, 255), 1px 0 rgb(20, 0, 255), 0 -1px rgb(20, 0, 255);
 }
