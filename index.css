@@ -2,26 +2,31 @@
     border-style: solid;
     border-color: black;
     border-width: 2px;
-    width: 60%;
+    width: 70%;
     margin: auto;
     padding: 10px;
     font-size: x-large;
 }
 
 .welcome {
-    width: 10%;
+    width: 40%;
     margin: auto;
     padding: 10px;
     text-align: center;
     font-size: x-large;
     transition: 0.5s;
+    border-radius: 10px;
+}
+
+#mathapp{
+    cursor: default;
 }
 
 #response {
     border-style: solid;
     border-color: black;
     border-width: 2px;
-    width: 50%;
+    width: 70%;
     margin: auto;
     padding: 10px;
     font-size: x-large;
@@ -83,7 +88,8 @@ h1 {
 }
 
 .welcome:hover {
-    transform: rotateZ(180deg);
+    background-color: lightblue;
+    border-radius: 20px;
 }
 
 select {

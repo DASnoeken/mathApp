@@ -3,12 +3,33 @@
 
 <head>
     <link rel="stylesheet" href="index.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+          }
+        };
+        </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="index.js"></script>
 </head>
 
 <body>
     <div id="welcome" class="welcome">
-        <h1 id="mathapp">MathApp</h1>
+        <table>
+            <tr>
+                <td>
+                    $e^{i\pi}+1=0$
+                </td>
+                <td>
+                    <h1 id="mathapp">MathApp</h1>
+                </td>
+                <td>
+                    $\sum_{n=1}^\infty \frac{1}{n^2} = \frac{\pi^2}{6}$
+                </td>
+            </tr>
+        </table>
     </div>
     <div id="input" class="main">
         <table>
@@ -121,28 +142,33 @@
     <div id="kg-to-lbs" class="main" hidden>
         Kilograms to pounds calculation<br>
         <button class="buttons" onclick="getUnitConversion()">Back</button><br>
-        <input type="text" id="kgInput"><button class="buttons" onclick="kgToLbsCalculate(kgInput.value)">Calculate</button>
+        <input type="text" id="kgInput"><button class="buttons"
+            onclick="kgToLbsCalculate(kgInput.value)">Calculate</button>
     </div>
     <div id="lbs-to-kg" class="main" hidden>
         Pounds to kilograms calculation<br>
         <button class="buttons" onclick="getUnitConversion()">Back</button><br>
-        <input type="text" id="lbsInput"><button class="buttons" onclick="lbsToKgCalculate(lbsInput.value)">Calculate</button>
+        <input type="text" id="lbsInput"><button class="buttons"
+            onclick="lbsToKgCalculate(lbsInput.value)">Calculate</button>
     </div>
     <div id="miles-to-km" class="main" hidden>
         Miles to kilometer calculation<br>
         <button class="buttons" onclick="getUnitConversion()">Back</button>
-        <input type="text" id="milesInput"><button class="buttons" onclick="milesToKmCalculate(milesInput.value)">Calculate</button>
+        <input type="text" id="milesInput"><button class="buttons"
+            onclick="milesToKmCalculate(milesInput.value)">Calculate</button>
     </div>
     <div id="km-to-miles" class="main" hidden>
         Kilometer to miles calculation<br>
         <button class="buttons" onclick="getUnitConversion()">Back</button>
-        <input type="text" id="kmInput"><button class="buttons" onclick="kmToMilesCalculate(kmInput.value)">Calculate</button>
+        <input type="text" id="kmInput"><button class="buttons"
+            onclick="kmToMilesCalculate(kmInput.value)">Calculate</button>
     </div>
     <div id="eur-to-usd" class="main" hidden>
         EUR to USD calculation<br>
         Conversion factor taken from: <a href="https://themoneyconverter.com">The Money Converter</a><br>
         <button class="buttons" onclick="getUnitConversion()">Back</button><br>
-        <input type="text" id="eurToUsd"><button class="buttons" onclick="currConversion('EUR','USD',eurToUsd.value)">EUR to
+        <input type="text" id="eurToUsd"><button class="buttons"
+            onclick="currConversion('EUR','USD',eurToUsd.value)">EUR to
             USD</button>
     </div>
     <div id="currencies" class="main" hidden>
@@ -192,7 +218,8 @@
     </div>
     <div id="Gamescreen" class="main" hidden>
         <button class="buttons" onclick="backToInput()">Back</button><br>
-        <input type="text" id="degreeInput"><button class="buttons" id="setDegreeButton" onclick="setDegree(degreeInput.value)">Set
+        <input type="text" id="degreeInput"><button class="buttons" id="setDegreeButton"
+            onclick="setDegree(degreeInput.value)">Set
             Degree</button><br>
         <div id="Gamescreen2"></div>
     </div>
