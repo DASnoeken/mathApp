@@ -9,21 +9,21 @@
 <body>
     <div id="input" class="main">
         <input type="text" id="begin"> <input type="text" id="end">
-        <button id="naturalNumbersSum" onclick="getSum(begin.value,end.value)">Sum</button><br>
-        <input type="text" id="factorialInput"> <button id="factorialButton"
+        <button id="naturalNumbersSum" class="buttons" onclick="getSum(begin.value,end.value)">Sum</button><br>
+        <input type="text" id="factorialInput"> <button id="factorialButton" class="buttons"
             onclick="factorial(factorialInput.value)">Factorial</button><br>
-        <input type="text" id="geometricInput"> <button id="geometricButton"
+        <input type="text" id="geometricInput"> <button id="geometricButton" class="buttons"
             onclick="geometric(geometricInput.value)">Geometric series</button>(1+x+x^2+x^3+...)<br>
-        <input type="text" id="eInput"><button id="ebutton" onclick="getE(eInput.value)">get e</button><br>
-        <input type="text" id="derInput"><button id="derbutton" onclick="getDer(derInput.value)">get
+        <input type="text" id="eInput"><button id="ebutton" class="buttons" onclick="getE(eInput.value)">get e</button><br>
+        <input type="text" id="derInput"><button id="derbutton" class="buttons" onclick="getDer(derInput.value)">get
             derivative</button><br>
         <input type="text" value="string" id="encInput"><input type="text" value="order" id="encOrder"><button
-            id="encButton" onclick="getEncryption(encInput.value,encOrder.value)">get encryption</button><br>
-        <input type="text" id="decInput"><button id="decButton" onclick="getDecryption(decInput.value)">get
+            id="encButton" class="buttons" onclick="getEncryption(encInput.value,encOrder.value)">get encryption</button><br>
+        <input type="text" id="decInput"><button class="buttons" id="decButton" onclick="getDecryption(decInput.value)">get
             decryption</button><br>
-        <button id="ToUnitConv" onclick="getUnitConversion()">Unit conversions</button><br>
-        <button onclick="gameStart()">Exercise</button><br>
-        <input type="text" id="calculatorInput"><button onclick="calculator(calculatorInput.value)">Calculate</button>
+        <button id="ToUnitConv" class="buttons" onclick="getUnitConversion()">Unit conversions</button><br>
+        <button class="buttons" onclick="gameStart()">Exercise</button><br>
+        <input type="text" id="calculatorInput"><button class="buttons" onclick="calculator(calculatorInput.value)">Calculate</button>
     </div>
     <div id="UnitConversionDiv" class="main" hidden>
         <button id="backButton" onclick="backToInput()">Back</button><br>

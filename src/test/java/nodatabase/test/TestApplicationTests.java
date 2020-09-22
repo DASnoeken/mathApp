@@ -34,7 +34,7 @@ class TestApplicationTests {
 		assertEquals(19, c8.getAnswer());
 		Calculator c9 = new Calculator("(9+1)*2");
 		assertEquals(20, c9.getAnswer());*/
-		
+
 		
 	}
 

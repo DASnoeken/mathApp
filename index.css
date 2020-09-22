@@ -1,6 +1,31 @@
 .main {
-            border-style: solid;
-            border-color: black;
-            border-width: 2px;
-            width: 50%;
-        }
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    width: 50%;
+    margin: auto;
+    padding: 10px;
+}
+
+#response {
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    width: 50%;
+    margin: auto;
+    padding: 10px;
+}
+
+.buttons{
+    background-color: red;
+    color:white;
+    border-color: black;
+    transition: 1s;
+}
+.buttons:hover{
+    background-color: white;
+    color:red;
+    border-color: black;
+    border-radius: 4px;
+    cursor: pointer;
+}
