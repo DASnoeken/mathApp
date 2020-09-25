@@ -75,7 +75,7 @@ public class Calculator {
 	public void calculate() {
 		this.sum = this.sum.replaceAll("\\s", ""); // remove spaces
 		this.terms = this.sum.split("\\+|\\-"); // contains numbers
-		this.ops = this.sum.split("[\\*\\/]?\\d{1,}[\\*\\/]?"); // contains operations
+		this.ops = this.sum.split("[\\*\\/\\^]?\\d{1,}[\\*\\/\\^]?"); // contains operations
 		this.addsubTerms = new ArrayList<Double>();
 		boolean test = Arrays.stream(ops).anyMatch(""::equals);
 		if (test) { // Remove annoying empty strings
@@ -89,11 +89,11 @@ public class Calculator {
 		}
 		// multiply and divide first
 		for (int i = 0; i < terms.length; i++) {
-			if (!terms[i].contains("*") && !terms[i].contains("/")) {
+			if (!terms[i].contains("*") && !terms[i].contains("/") && !terms[i].contains("^")) {
 				addsubTerms.add(Double.parseDouble(terms[i]));
 				continue;
 			}
-			String[] termsI = terms[i].split("\\*|\\/");
+			String[] termsI = terms[i].split("\\*|\\/|\\^");
 			Double finalValue = Double.parseDouble(termsI[0]);
 			String[] opsI = terms[i].split("\\d{1,}\\.?\\d{0,}");
 			boolean test2 = Arrays.stream(opsI).anyMatch(""::equals);
@@ -107,9 +107,14 @@ public class Calculator {
 				opsI = help.toArray(opsI);
 			}
 			for (int j = 0; j < opsI.length; j++) {
-				if (opsI[j].equals("*")) {
+				 if(opsI[j].equals("^")) {
+					double power = Double.parseDouble(termsI[j + 1]);
+					for(int k = 1; k<power;k++) {
+						finalValue *= Double.parseDouble(termsI[j]);
+					}
+				}else if (opsI[j].equals("*")) {
 					finalValue *= Double.parseDouble(termsI[j + 1]);
-				} else if (opsI[j].equals("/")) {
+				}else if (opsI[j].equals("/")) {
 					finalValue /= Double.parseDouble(termsI[j + 1]);
 				}
 			}

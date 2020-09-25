@@ -87,8 +87,6 @@ public class Derivative {
 			do {
 				if (matcher.find()){
 					extractedTerm = matcher.group(0).substring(1, matcher.group(0).length()-1);
-					//System.out.println(extractedTerm);
-					//System.out.println(outerDerivative);
 					outerDerivative = outerDerivative.replaceAll("\\(u\\)", "({"+extractedTerm+"})");
 					ans+=outerDerivative+"*";
 				}	

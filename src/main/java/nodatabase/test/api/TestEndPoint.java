@@ -58,10 +58,6 @@ public class TestEndPoint {
 		}else if(n<0) {
 			n=abs(n);
 		}
-		/*BigDecimal largeE = new BigDecimal(1);
-		BigDecimal largeE2 = new BigDecimal(1).divide(BigDecimal.valueOf(n),MathContext.DECIMAL128);
-		BigDecimal largeE3 = largeE.add(largeE2);
-		largeE3 = largeE3.pow(n);*/
 		if(n>100000000000l) {
 			return "Value too large";
 		}

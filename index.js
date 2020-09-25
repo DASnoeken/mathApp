@@ -48,6 +48,7 @@ function getE(num) {
         document.getElementById("response").innerHTML = "Not a Number";
         return;
     }
+    num = Math.floor(num);
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {

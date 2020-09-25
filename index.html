@@ -34,26 +34,26 @@
     <div id="input" class="main">
         <table>
             <tr>
-                <td><input type="text" value="start" id="begin"></td>
-                <td><input type="text" value="end" id="end"></td>
+                <td><input type="text" value="start (integer)" id="begin"></td>
+                <td><input type="text" value="end (integer)" id="end"></td>
                 <td><button id="naturalNumbersSum" class="buttons" onclick="getSum(begin.value,end.value)">Sum</button>
                 </td>
             </tr>
             <tr>
-                <td><input type="text" id="factorialInput"></td>
-                <td></td>
+                <td><input type="text" id="factorialInput" value="factorial (integer)"></td>
+                <td>$n!=n(n-1)(n-2)...3\cdot2$</td>
                 <td><button id="factorialButton" class="buttons"
                         onclick="factorial(factorialInput.value)">Factorial</button></td>
             </tr>
             <tr>
-                <td> <input type="text" id="geometricInput"></td>
-                <td></td>
+                <td> <input type="text" id="geometricInput" value="Value of x"></td>
+                <td>$\sum_{k=0}^\infty x^k$</td>
                 <td><button id="geometricButton" class="buttons" onclick="geometric(geometricInput.value)">Geometric
                         series</button></td>
             </tr>
             <tr>
-                <td><input type="text" id="eInput"></td>
-                <td></td>
+                <td><input type="text" id="eInput" value="Value of n (integer)"></td>
+                <td>$(1+\frac{1}{n})^n$</td>
                 <td><button id="ebutton" class="buttons" onclick="getE(eInput.value)">Get
                         e</button></td>
             </tr>
