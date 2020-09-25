@@ -198,6 +198,8 @@
             <option value="KRW">KRW - South Korean Won</option>
             <option value="NZD">NZD - New Zealand Dollar</option>
             <option value="PLN">PLN - Polish Zloty</option>
+            <option value="RUB">RUB - Russian Rouble</option>
+            <option value="SEK">SEK - Swedish Krona</option>
         </select><br>
         <label for="to">To currency: </label>
         <select name="to" id="toCurrency">
@@ -216,7 +218,9 @@
             <option value="KRW">KRW - South Korean Won</option>
             <option value="NZD">NZD - New Zealand Dollar</option>
             <option value="PLN">PLN - Polish Zloty</option>
-        </select><br>
+            <option value="RUB">RUB - Russian Rouble</option>
+            <option value="SEK">SEK - Swedish Krona</option>
+        </select><button id="switchCurrencyButton" class="buttons" onclick="switchCurrencies()">Switch</button><br>
         <button class="buttons" id="convertCurrencyButton"
             onclick="currConversion(fromCurrency.value,toCurrency.value,fromCurrencyInput.value)">Convert</button>
         <button class="buttons" id="ReEnableButton" onclick="reEnable()" hidden>Re-enable button</button>

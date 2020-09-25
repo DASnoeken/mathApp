@@ -422,3 +422,8 @@ function reEnable(){
     }, 1000);
     document.getElementById("ReEnableButton").hidden = true;
 }
+function switchCurrencies(){
+    var tmp = document.getElementById("fromCurrency").value;
+    document.getElementById("fromCurrency").value = document.getElementById("toCurrency").value;
+    document.getElementById("toCurrency").value = tmp;
+}
