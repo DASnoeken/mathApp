@@ -75,7 +75,7 @@ public class Calculator {
 	public void calculate() {
 		this.sum = this.sum.replaceAll("\\s", ""); // remove spaces
 		this.terms = this.sum.split("\\+|\\-"); // contains numbers
-		this.ops = this.sum.split("[\\*\\/\\^]?\\d{1,}[\\*\\/\\^]?"); // contains operations
+		this.ops = this.sum.split("[\\*\\/\\^]?\\d{1,}[\\*\\/\\^]?|[a-z]{1,}\\{\\d{1,}\\}"); // contains operations
 		this.addsubTerms = new ArrayList<Double>();
 		boolean test = Arrays.stream(ops).anyMatch(""::equals);
 		if (test) { // Remove annoying empty strings
@@ -89,13 +89,20 @@ public class Calculator {
 		}
 		// multiply and divide first
 		for (int i = 0; i < terms.length; i++) {
-			if (!terms[i].contains("*") && !terms[i].contains("/") && !terms[i].contains("^")) {
+			if (!terms[i].contains("*") && !terms[i].contains("/") && !terms[i].contains("^") && !terms[i].contains("sqrt")) {
 				addsubTerms.add(Double.parseDouble(terms[i]));
 				continue;
 			}
 			String[] termsI = terms[i].split("\\*|\\/|\\^");
+			String[] opsI = terms[i].split("\\d{1,}\\.?\\d{0,}|[a-z]{1,}\\{\\d{1,}\\}");
+			for(int j = 0;j<termsI.length;j++) {
+				if (termsI[j].contains("sqrt")) {
+					String[] termsIp = termsI[j].split("\\{");
+					termsIp[1] = termsIp[1].substring(0, termsIp[1].length()-1); //contains number we want sqrt of
+					termsI[j] = Double.toString(Math.sqrt(Double.valueOf(termsIp[1])));
+				}
+			}
 			Double finalValue = Double.parseDouble(termsI[0]);
-			String[] opsI = terms[i].split("\\d{1,}\\.?\\d{0,}");
 			boolean test2 = Arrays.stream(opsI).anyMatch(""::equals);
 			if (test2) { // Remove annoying empty strings
 				ArrayList<String> help = new ArrayList<>();
@@ -181,9 +188,14 @@ public class Calculator {
 				opsI = help.toArray(opsI);
 			}
 			for (int j = 0; j < opsI.length; j++) {
-				if (opsI[j].equals("*")) {
+				if(opsI[j].equals("^")) {
+					double power = Double.parseDouble(termsI[j + 1]);
+					for(int k = 1; k<power;k++) {
+						finalValue *= Double.parseDouble(termsI[j]);
+					}
+				}else if (opsI[j].equals("*")) {
 					finalValue *= Double.parseDouble(termsI[j + 1]);
-				} else if (opsI[j].equals("/")) {
+				}else if (opsI[j].equals("/")) {
 					finalValue /= Double.parseDouble(termsI[j + 1]);
 				}
 			}

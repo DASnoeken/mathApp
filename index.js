@@ -395,7 +395,7 @@ function calculatorAnswer(){
     xhr.send();
 }
 function currConversion(from,to,value){
-    if(isNaN(value)){
+    if(isNaN(value) || value==""){
         document.getElementById("response").innerHTML = "ERROR: Invalid Input!";
         return;
     }

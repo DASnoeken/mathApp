@@ -31,20 +31,4 @@ public class WebPageEndpoint {
 		nowString = nowString.replace('T', ' ');
 		return input + " " + from + " = " + Double.toString(ans) + " " + to +"<br><br>"+ updated + "<br>Current Time: "+nowString;
 	}
-	
-	/*@GetMapping("currency/live/EUR/USD")
-	public double liveEurUsd() {
-		Currency c = new Currency();
-		WebDriver driver = new FirefoxDriver();
-		WebDriverWait wait = new WebDriverWait(driver, 5l);
-        try {
-            driver.get("https://google.com/ncr");
-            driver.findElement(By.name("q")).sendKeys("cheese" + Keys.ENTER);
-            WebElement firstResult = wait.until(presenceOfElementLocated(By.cssSelector("h3>div")));
-            System.out.println(firstResult.getAttribute("textContent"));
-        } finally {
-            driver.quit();
-        }
-		return 0.0;
-	}*/
 }

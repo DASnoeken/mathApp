@@ -38,7 +38,15 @@ public class TestEndPoint {
 		for(BigInteger i = BigInteger.valueOf(1l); i.compareTo(initNum)==-1 || i.compareTo(initNum)==0; i=i.add(BigInteger.valueOf(1l))) {
 			ans=ans.multiply(i);
 		}
-		return ans.toString();
+		String strAns = new String();
+		String tmp = ans.toString();
+		for(int i=0;i<tmp.length();i++) {
+			strAns += tmp.charAt(i);
+			if(i%50==0 && i!=0) {
+				strAns+="<br>";
+			}
+		}
+		return strAns;
 	}
 	
 	@GetMapping("/series/geometric/{num}")
