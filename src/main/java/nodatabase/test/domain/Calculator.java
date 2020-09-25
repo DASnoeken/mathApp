@@ -261,7 +261,7 @@ public class Calculator {
 		return ans;
 	}
 	private boolean checkSpecialFunction(String input) {
-		if(input.contains("sqrt") && input.contains("sin")) {
+		if(input.contains("sqrt") && input.contains("sin") && input.contains("cos") && input.contains("tan")) {
 			return false;
 		}else {
 			return true;
