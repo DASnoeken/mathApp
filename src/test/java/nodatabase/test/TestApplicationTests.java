@@ -7,6 +7,7 @@ import java.io.IOException;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import nodatabase.test.api.ConversionEndpoint;
 import nodatabase.test.api.WebPageEndpoint;
 import nodatabase.test.domain.Calculator;
 //import nodatabase.test.domain.Encryption;
@@ -34,7 +35,8 @@ class TestApplicationTests {
 		assertEquals(19, c8.getAnswer());
 		Calculator c9 = new Calculator("(9+1)*2");
 		assertEquals(20, c9.getAnswer());*/
-
+		ConversionEndpoint ce = new ConversionEndpoint();
+		
 		
 	}
 

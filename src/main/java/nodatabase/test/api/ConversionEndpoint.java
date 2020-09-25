@@ -62,4 +62,28 @@ public class ConversionEndpoint {
 		c.kmToMiles();
 		return Double.toString(c.getMiles()) + " miles";
 	}
+	
+	@GetMapping("/Units/cmToInch/{value}")
+	public String getFeetInch(@PathVariable String value) {
+		Conversion c = new Conversion();
+		Double cm = Double.valueOf(value);
+		c.setCm(cm);
+		c.cmToInch();
+		int feet = (int) c.getInch()/ 12;
+		String inches = Double.toString(c.getInch()%12);
+		String ans = feet + "' " + inches + "''";
+		return ans;
+	}
+	
+	@GetMapping("/Units/inchToCm/{foot}/{inch}")
+	public String getCm(@PathVariable String foot, @PathVariable String inch) {
+		Conversion c = new Conversion();
+		Double inches = Double.valueOf(inch);
+		Double feet = Double.valueOf(foot);
+		Double inchesFromFeet = feet * 12;
+		inches = inches + inchesFromFeet;
+		c.setInch(inches);
+		c.inchToCm();
+		return Double.toString(c.getCm());
+	}
 }

@@ -119,12 +119,24 @@ function getUnitConversion() {
     document.getElementById("miles-to-km").hidden = true;
     document.getElementById("km-to-miles").hidden = true;
     document.getElementById("currencies").hidden = true;
+    document.getElementById("cm-to-inch").hidden = true;
+    document.getElementById("inch-to-cm").hidden = true;
     document.getElementById("response").innerHTML = "Response area";
 }
 function backToInput() {
     document.getElementById("input").hidden = false;
     document.getElementById("Gamescreen").hidden = true;
     document.getElementById("UnitConversionDiv").hidden = true;
+    document.getElementById("response").innerHTML = "Response area";
+}
+function inchToCm(){
+    document.getElementById("UnitConversionDiv").hidden = true;
+    document.getElementById("inch-to-cm").hidden = false;
+    document.getElementById("response").innerHTML = "Response area";
+}
+function cmToInch(){
+    document.getElementById("UnitConversionDiv").hidden = true;
+    document.getElementById("cm-to-inch").hidden = false;
     document.getElementById("response").innerHTML = "Response area";
 }
 function cTof() {
@@ -161,6 +173,35 @@ function convertCurrencies(){
     document.getElementById("currencies").hidden = false;
     document.getElementById("UnitConversionDiv").hidden = true;
     document.getElementById("response").innerHTML = "Response area";
+}
+function inchToCmCalculate(foot, inch){
+    if(isNaN(foot) || isNaN(inch)){
+        document.getElementById("response").innerHTML = "Not a Number";
+        return;
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if(this.readyState==4){
+            document.getElementById("response").innerHTML = this.responseText;
+        }
+    }
+    xhr.open("GET","http://localhost:8082/Units/inchToCm/"+foot+"/"+inch);
+    xhr.send();
+}
+function cmToInchCalculate(val){
+    if(isNaN(val)){
+        document.getElementById("response").innerHTML = "Not a Number";
+        return;
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            var respons = this.responseText;
+            document.getElementById("response").innerHTML = respons;
+        }
+    }
+    xhr.open("GET", "http://localhost:8082/Units/cmToInch/" + val);
+    xhr.send();
 }
 function cTofCalculate(val) {
     if(isNaN(val)){
@@ -256,11 +297,14 @@ function gameStart() {
 }
 function setDegree(deg) {
     document.getElementById("response").innerHTML = "Response area";
-    if (isNaN(deg)) {
+    if (isNaN(deg) || deg=="") {
         document.getElementById("response").innerHTML = "This should be an integer!";
         return;
     } else if (deg > 10) {
         document.getElementById("response").innerHTML = "Use degree < 10";
+        return;
+    } else if (deg < 0){
+        document.getElementById("response").innerHTML = "Degree should be > 0";
         return;
     }
     document.getElementById("setDegreeButton").disabled = true;

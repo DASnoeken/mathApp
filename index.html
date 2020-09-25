@@ -122,9 +122,23 @@
                 <td><button class="buttons" onclick="milesToKm()">miles to km</button></td>
             </tr>
             <tr>
+                <td><button class="buttons" onclick="cmToInch()">cm to feet/inch</button></td>
+                <td><button class="buttons" onclick="inchToCm()">feet/inch to cm</button></td>
+            </tr>
+            <tr>
                 <td><button class="buttons" onclick="convertCurrencies()">Currency converter</button></td>
             </tr>
         </table>
+    </div>
+    <div id="inch-to-cm" class="main" hidden>
+        feet and inch to Centimeter calculation.<br>
+        <button class="buttons" onclick="getUnitConversion()">Back</button><br>
+        <input type="text" id="FootInput">' <input type="text" id="InchInput">'' <button class="buttons" onclick="inchToCmCalculate(FootInput.value,InchInput.value)">Calculate</button>
+    </div>
+    <div id="cm-to-inch" class="main" hidden>
+        Centimeter to feet and inch calculation.<br>
+        <button class="buttons" onclick="getUnitConversion()">Back</button><br>
+        <input type="text" id="CentimeterInput"><button class="buttons" onclick="cmToInchCalculate(CentimeterInput.value)">Calculate</button>
     </div>
     <div id="c-to-f" class="main" hidden>
         Celcius to Fahrenheit calculation<br>

@@ -7,7 +7,27 @@ public class Conversion {
 	private double lbs;
 	private double miles;
 	private double km;
+	private double inch;
+	private double cm;
 	
+	public void inchToCm() {
+		this.cm = this.inch*2.54;
+	}
+	public void cmToInch() {
+		this.inch = this.cm/2.54;
+	}
+	public double getCm() {
+		return cm;
+	}
+	public void setCm(double cm) {
+		this.cm = cm;
+	}
+	public double getInch() {
+		return inch;
+	}
+	public void setInch(double inch) {
+		this.inch = inch;
+	}
 	public void kmToMiles() {
 		this.miles = this.km/1.609344;
 	}
