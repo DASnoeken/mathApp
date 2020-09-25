@@ -89,7 +89,7 @@ public class Calculator {
 		}
 		// multiply and divide first
 		for (int i = 0; i < terms.length; i++) {
-			if (!terms[i].contains("*") && !terms[i].contains("/") && !terms[i].contains("^") && !terms[i].contains("sqrt")) {
+			if (!terms[i].contains("*") && !terms[i].contains("/") && !terms[i].contains("^") && !checkSpecialFunction(terms[i])) {
 				addsubTerms.add(Double.parseDouble(terms[i]));
 				continue;
 			}
@@ -100,6 +100,21 @@ public class Calculator {
 					String[] termsIp = termsI[j].split("\\{");
 					termsIp[1] = termsIp[1].substring(0, termsIp[1].length()-1); //contains number we want sqrt of
 					termsI[j] = Double.toString(Math.sqrt(Double.valueOf(termsIp[1])));
+				}
+				if(termsI[j].contains("sin")) {
+					String[] termsIp = termsI[j].split("\\{");
+					termsIp[1] = termsIp[1].substring(0, termsIp[1].length()-1); 
+					termsI[j] = Double.toString(Math.sin(Double.valueOf(termsIp[1])*Math.PI/180.0));
+				}
+				if(termsI[j].contains("cos")) {
+					String[] termsIp = termsI[j].split("\\{");
+					termsIp[1] = termsIp[1].substring(0, termsIp[1].length()-1); 
+					termsI[j] = Double.toString(Math.cos(Double.valueOf(termsIp[1])*Math.PI/180.0));
+				}
+				if(termsI[j].contains("tan")) {
+					String[] termsIp = termsI[j].split("\\{");
+					termsIp[1] = termsIp[1].substring(0, termsIp[1].length()-1); 
+					termsI[j] = Double.toString(Math.tan(Double.valueOf(termsIp[1])*Math.PI/180.0));
 				}
 			}
 			Double finalValue = Double.parseDouble(termsI[0]);
@@ -244,5 +259,12 @@ public class Calculator {
 			}
 		}
 		return ans;
+	}
+	private boolean checkSpecialFunction(String input) {
+		if(input.contains("sqrt") && input.contains("sin")) {
+			return false;
+		}else {
+			return true;
+		}
 	}
 }
