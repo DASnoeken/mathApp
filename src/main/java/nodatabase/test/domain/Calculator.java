@@ -188,14 +188,6 @@ public class Calculator {
 		}
 		// add and subtract everything
 		this.answer += addsubTerms.get(0);
-		System.out.println("ops");
-		for(String op:ops) {
-			System.out.println(op);
-		}
-		System.out.println("terms");
-		for(Double d: addsubTerms) {
-			System.out.println(d);
-		}
 		for (int i = 0; i < ops.length; i++) {
 			if (ops[i].equals("+")) {
 				this.answer += addsubTerms.get(i + 1);
