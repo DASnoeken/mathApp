@@ -65,18 +65,16 @@ public class Calculator {
 			throw new CalculatorSyntaxException("Parenthesis Error!");
 		}
 		String subsum = this.sum.substring(ind + 1, indP);
-		// System.out.println(subsum+" = "+calculate(subsum));
 		Double subAnswer = calculate(subsum);
 		StringBuilder replacer = new StringBuilder(this.sum);
 		replacer.replace(ind, indP + 1, Double.toString(subAnswer));
 		this.sum = replacer.toString();
-		// System.out.println(this.sum);
 	}
 
 	public void calculate() {
 		this.sum = this.sum.replaceAll("\\s", ""); // remove spaces
 		this.terms = this.sum.split("\\+|\\-"); // contains numbers
-		this.ops = this.sum.split("[\\*\\/\\^]?\\d{1,}[\\*\\/\\^]?|[a-z]{1,}\\{\\d{1,}\\}"); // contains operations
+		this.ops = this.sum.split("[\\*\\/\\^]?\\d{1,}[\\*\\/\\^]?|[a-z]{1,}\\{\\d{1,}\\}|e|pi"); // contains operations
 		this.addsubTerms = new ArrayList<Double>();
 		boolean test = Arrays.stream(ops).anyMatch(""::equals);
 		if (test) { // Remove annoying empty strings
@@ -91,19 +89,25 @@ public class Calculator {
 		// multiply and divide first
 		for (int i = 0; i < terms.length; i++) {
 			if (!terms[i].contains("*") && !terms[i].contains("/") && !terms[i].contains("^")
-					&& !checkSpecialFunction(terms[i])) {
+					&& !checkSpecialFunction(terms[i]) && !checkSpecialNumber(terms[i])) {
 				addsubTerms.add(Double.parseDouble(terms[i]));
 				continue;
 			}
 			String[] termsI = terms[i].split("\\*|\\/|\\^");
-			String[] opsI = terms[i].split("\\d{1,}\\.?\\d{0,}|[a-z]{1,}\\{\\d{1,}\\}");
+			String[] opsI = terms[i].split("\\d{1,}\\.?\\d{0,}|[a-z]{1,}\\{\\d{1,}\\}|pi|e");
 			for (int j = 0; j < termsI.length; j++) {
+				if (termsI[j].equalsIgnoreCase("pi")) {
+					termsI[j] = Double.toString(Math.PI);
+				}
+				if(termsI[j].equalsIgnoreCase("e")) {
+					termsI[j] = Double.toString(Math.E);
+				}
 				if (termsI[j].contains("sqrt")) { // square roots
 					String[] termsIp = termsI[j].split("\\{");
 					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1); // contains number we want sqrt of
 					termsI[j] = Double.toString(Math.sqrt(Double.valueOf(termsIp[1])));
 				}
-				if (termsI[j].contains("cbrt")) {
+				if (termsI[j].contains("cbrt")) { // cube roots
 					String[] termsIp = termsI[j].split("\\{");
 					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 					termsI[j] = Double.toString(Math.cbrt(Double.valueOf(termsIp[1])));
@@ -171,11 +175,12 @@ public class Calculator {
 		boolean test2 = Arrays.stream(ops).anyMatch("*"::equals);
 		boolean test3 = Arrays.stream(ops).anyMatch("/"::equals);
 		boolean test4 = Arrays.stream(ops).anyMatch("."::equals);
+		boolean test5 = Arrays.stream(ops).anyMatch("^"::equals);
 		// remove *, . and / from ops
-		if (test2 || test3 || test4) {
+		if (test2 || test3 || test4 || test5) {
 			ArrayList<String> help = new ArrayList<>();
 			for (int i = 0; i < ops.length; i++) {
-				if (!ops[i].equals("*") && !ops[i].equals("/") && !ops[i].equals("."))
+				if (!ops[i].equals("*") && !ops[i].equals("/") && !ops[i].equals(".") && !ops[i].equals("^"))
 					help.add(ops[i]);
 			}
 			ops = new String[help.size()];
@@ -183,6 +188,14 @@ public class Calculator {
 		}
 		// add and subtract everything
 		this.answer += addsubTerms.get(0);
+		System.out.println("ops");
+		for(String op:ops) {
+			System.out.println(op);
+		}
+		System.out.println("terms");
+		for(Double d: addsubTerms) {
+			System.out.println(d);
+		}
 		for (int i = 0; i < ops.length; i++) {
 			if (ops[i].equals("+")) {
 				this.answer += addsubTerms.get(i + 1);
@@ -211,13 +224,19 @@ public class Calculator {
 		// multiply and divide first
 		for (int i = 0; i < terms.length; i++) {
 			if (!terms[i].contains("*") && !terms[i].contains("/") && !terms[i].contains("^")
-					&& !checkSpecialFunction(terms[i])) {
+					&& !checkSpecialFunction(terms[i]) && !checkSpecialNumber(terms[i])) {
 				addsubTerms.add(Double.parseDouble(terms[i]));
 				continue;
 			}
 			String[] termsI = terms[i].split("\\*|\\/|\\^");
-			String[] opsI = terms[i].split("\\d{1,}\\.?\\d{0,}|[a-z]{1,}\\{\\d{1,}\\}");
+			String[] opsI = terms[i].split("\\d{1,}\\.?\\d{0,}|[a-z]{1,}\\{\\d{1,}\\}|pi");
 			for (int j = 0; j < termsI.length; j++) {
+				if (termsI[j].equalsIgnoreCase("pi")) {
+					termsI[j] = Double.toString(Math.PI);
+				}
+				if(termsI[j].equalsIgnoreCase("e")) {
+					termsI[j] = Double.toString(Math.E);
+				}
 				if (termsI[j].contains("sqrt")) {
 					String[] termsIp = termsI[j].split("\\{");
 					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1); // contains number we want sqrt of
@@ -291,11 +310,12 @@ public class Calculator {
 		boolean test2 = Arrays.stream(ops).anyMatch("*"::equals);
 		boolean test3 = Arrays.stream(ops).anyMatch("/"::equals);
 		boolean test4 = Arrays.stream(ops).anyMatch("."::equals);
+		boolean test5 = Arrays.stream(ops).anyMatch("^"::equals);
 		// remove *, . and / from ops
-		if (test2 || test3 || test4) {
+		if (test2 || test3 || test4 || test5) {
 			ArrayList<String> help = new ArrayList<>();
 			for (int i = 0; i < ops.length; i++) {
-				if (!ops[i].equals("*") && !ops[i].equals("/") && !ops[i].equals("."))
+				if (!ops[i].equals("*") && !ops[i].equals("/") && !ops[i].equals(".") && !ops[i].equals("^"))
 					help.add(ops[i]);
 			}
 			ops = new String[help.size()];
@@ -338,6 +358,14 @@ public class Calculator {
 		if (input.contains("sqrt") || input.contains("sin") || input.contains("cos") || input.contains("tan")
 				|| input.contains("cbrt") || input.contains("sinh") || input.contains("cosh")
 				|| input.contains("tanh")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private boolean checkSpecialNumber(String input) {
+		if (input.equalsIgnoreCase("pi") || input.equalsIgnoreCase("e")) {
 			return true;
 		} else {
 			return false;
