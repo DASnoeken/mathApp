@@ -32,10 +32,11 @@ public class Calculator {
 		this.errorMessage = "None";
 		this.answer = 0.0;
 		try {
-			if (this.sum.contains("(") && (countCharOcc(this.sum, '(') == countCharOcc(this.sum, ')'))) {
-				solveParenthesis();
-			} else if((countCharOcc(this.sum, '(') != countCharOcc(this.sum, ')'))){
+			if((countCharOcc(this.sum, '(') != countCharOcc(this.sum, ')'))){
 				throw new CalculatorSyntaxException("Syntax error! Parenthesis error!");
+			}
+			while (this.sum.contains("(") && (countCharOcc(this.sum, '(') == countCharOcc(this.sum, ')'))) {
+				solveParenthesis();
 			}
 			if (syntaxCheck()) {
 				calculate();
@@ -169,7 +170,7 @@ public class Calculator {
 	public Double calculate(String subsum) {
 		subsum = subsum.replace("\\s", ""); // remove spaces
 		String[] terms = subsum.split("\\+|\\-"); // contains numbers
-		String[] ops = subsum.split("[\\*\\/]?\\d{1,}[\\*\\/]?"); // contains operations
+		String[] ops = subsum.split("[\\*\\/\\^]?\\d{1,}[\\*\\/\\^]?|[a-z]{1,}\\{\\d{1,}\\}"); // contains operations
 		ArrayList<Double> addsubTerms = new ArrayList<Double>();
 		Double answer = 0.0;
 		boolean test = Arrays.stream(ops).anyMatch(""::equals);
@@ -184,14 +185,35 @@ public class Calculator {
 		}
 		// multiply and divide first
 		for (int i = 0; i < terms.length; i++) {
-			// Double finalValue = 1.0;
-			if (!terms[i].contains("*") && !terms[i].contains("/")) {
+			if (!terms[i].contains("*") && !terms[i].contains("/") && !terms[i].contains("^") && !checkSpecialFunction(terms[i])) {
 				addsubTerms.add(Double.parseDouble(terms[i]));
 				continue;
 			}
-			String[] termsI = terms[i].split("\\*|\\/");
+			String[] termsI = terms[i].split("\\*|\\/|\\^");
+			String[] opsI = terms[i].split("\\d{1,}\\.?\\d{0,}|[a-z]{1,}\\{\\d{1,}\\}");
+			for(int j = 0;j<termsI.length;j++) {
+				if (termsI[j].contains("sqrt")) {
+					String[] termsIp = termsI[j].split("\\{");
+					termsIp[1] = termsIp[1].substring(0, termsIp[1].length()-1); //contains number we want sqrt of
+					termsI[j] = Double.toString(Math.sqrt(Double.valueOf(termsIp[1])));
+				}
+				if(termsI[j].contains("sin")) {
+					String[] termsIp = termsI[j].split("\\{");
+					termsIp[1] = termsIp[1].substring(0, termsIp[1].length()-1); 
+					termsI[j] = Double.toString(Math.sin(Double.valueOf(termsIp[1])*Math.PI/180.0));
+				}
+				if(termsI[j].contains("cos")) {
+					String[] termsIp = termsI[j].split("\\{");
+					termsIp[1] = termsIp[1].substring(0, termsIp[1].length()-1); 
+					termsI[j] = Double.toString(Math.cos(Double.valueOf(termsIp[1])*Math.PI/180.0));
+				}
+				if(termsI[j].contains("tan")) {
+					String[] termsIp = termsI[j].split("\\{");
+					termsIp[1] = termsIp[1].substring(0, termsIp[1].length()-1); 
+					termsI[j] = Double.toString(Math.tan(Double.valueOf(termsIp[1])*Math.PI/180.0));
+				}
+			}
 			Double finalValue = Double.parseDouble(termsI[0]);
-			String[] opsI = terms[i].split("\\d{1,}");
 			boolean test2 = Arrays.stream(opsI).anyMatch(""::equals);
 			if (test2) { // Remove annoying empty strings
 				ArrayList<String> help = new ArrayList<>();
