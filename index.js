@@ -370,6 +370,14 @@ function getAnswer(){
     document.getElementById("setDegreeButton").disabled = false;
 }
 function calculator(sum){
+    var radios = document.getElementsByName('trig');
+    var trigState;
+    for (var i = 0, length = radios.length; i < length; i++) {
+        if (radios[i].checked) {
+          trigState=radios[i].value;
+          break;
+        }
+      }
     if(sum==""){
         document.getElementById("response").innerHTML = "ERROR: Need Input!"
         return;
@@ -380,7 +388,7 @@ function calculator(sum){
             calculatorAnswer();
         }
     }
-    xhr.open("POST","http://localhost:8082/calculator/setCalculation");
+    xhr.open("POST","http://localhost:8082/calculator/setCalculation/?trigState="+trigState);
     xhr.setRequestHeader("Content-Type","application/json");
     xhr.send(sum);
 }

@@ -6,11 +6,11 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script>
         MathJax = {
-          tex: {
-            inlineMath: [['$', '$'], ['\\(', '\\)']]
-          }
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            }
         };
-        </script>
+    </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="index.js"></script>
 </head>
@@ -86,7 +86,8 @@
                 <td>
                     <input type="text" id="calculatorInput">
                 </td>
-                <td></td>
+                <td><input type="radio" id="degrees" name="trig" value="degrees" checked>DEG</input><input type="radio"
+                        id="radians" name="trig" value="radians">RAD</input></td>
                 <td>
                     <button class="buttons" onclick="calculator(calculatorInput.value)">Calculate</button>
                 </td>
@@ -133,12 +134,14 @@
     <div id="inch-to-cm" class="main" hidden>
         feet and inch to Centimeter calculation.<br>
         <button class="buttons" onclick="getUnitConversion()">Back</button><br>
-        <input type="text" id="FootInput">' <input type="text" id="InchInput">'' <button class="buttons" onclick="inchToCmCalculate(FootInput.value,InchInput.value)">Calculate</button>
+        <input type="text" id="FootInput">' <input type="text" id="InchInput">'' <button class="buttons"
+            onclick="inchToCmCalculate(FootInput.value,InchInput.value)">Calculate</button>
     </div>
     <div id="cm-to-inch" class="main" hidden>
         Centimeter to feet and inch calculation.<br>
         <button class="buttons" onclick="getUnitConversion()">Back</button><br>
-        <input type="text" id="CentimeterInput"><button class="buttons" onclick="cmToInchCalculate(CentimeterInput.value)">Calculate</button>
+        <input type="text" id="CentimeterInput"><button class="buttons"
+            onclick="cmToInchCalculate(CentimeterInput.value)">Calculate</button>
     </div>
     <div id="c-to-f" class="main" hidden>
         Celcius to Fahrenheit calculation<br>

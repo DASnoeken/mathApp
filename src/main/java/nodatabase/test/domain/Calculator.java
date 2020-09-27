@@ -10,6 +10,15 @@ public class Calculator {
 	private String[] ops;
 	private String[] terms;
 	private ArrayList<Double> addsubTerms;
+	private String trigState;
+
+	public String getTrigState() {
+		return trigState;
+	}
+
+	public void setTrigState(String trigState) {
+		this.trigState = trigState;
+	}
 
 	public String getSum() {
 		return sum;
@@ -27,7 +36,8 @@ public class Calculator {
 		return answer;
 	}
 
-	public Calculator(String input) {
+	public Calculator(String input,String trigStateInput) {
+		this.trigState = trigStateInput;
 		this.sum = input;
 		this.errorMessage = "None";
 		this.answer = 0.0;
@@ -113,19 +123,37 @@ public class Calculator {
 					termsI[j] = Double.toString(Math.cbrt(Double.valueOf(termsIp[1])));
 				}
 				if (termsI[j].contains("sin") && !termsI[j].contains("sinh")) { // trigonometry
-					String[] termsIp = termsI[j].split("\\{");
-					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
-					termsI[j] = Double.toString(Math.sin(Double.valueOf(termsIp[1]) * Math.PI / 180.0));
+					if(this.trigState.equals("radians")) {
+						String[] termsIp = termsI[j].split("\\{");
+						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
+						termsI[j] = Double.toString(Math.sin(Double.valueOf(termsIp[1])));
+					}else {
+						String[] termsIp = termsI[j].split("\\{");
+						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
+						termsI[j] = Double.toString(Math.sin(Double.valueOf(termsIp[1]) * Math.PI / 180.0));
+					}
 				}
 				if (termsI[j].contains("cos") && !termsI[j].contains("cosh")) {
-					String[] termsIp = termsI[j].split("\\{");
-					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
-					termsI[j] = Double.toString(Math.cos(Double.valueOf(termsIp[1]) * Math.PI / 180.0));
+					if(this.trigState.equals("radians")) {
+						String[] termsIp = termsI[j].split("\\{");
+						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
+						termsI[j] = Double.toString(Math.cos(Double.valueOf(termsIp[1])));
+					}else {
+						String[] termsIp = termsI[j].split("\\{");
+						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
+						termsI[j] = Double.toString(Math.cos(Double.valueOf(termsIp[1]) * Math.PI / 180.0));
+					}
 				}
 				if (termsI[j].contains("tan") && !termsI[j].contains("tanh")) {
-					String[] termsIp = termsI[j].split("\\{");
-					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
-					termsI[j] = Double.toString(Math.tan(Double.valueOf(termsIp[1]) * Math.PI / 180.0));
+					if(this.trigState.equals("radians")) {
+						String[] termsIp = termsI[j].split("\\{");
+						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
+						termsI[j] = Double.toString(Math.tan(Double.valueOf(termsIp[1])));
+					}else {
+						String[] termsIp = termsI[j].split("\\{");
+						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
+						termsI[j] = Double.toString(Math.tan(Double.valueOf(termsIp[1]) * Math.PI / 180.0));
+					}
 				}
 				if (termsI[j].contains("sinh")) { // hyperbolic functions
 					String[] termsIp = termsI[j].split("\\{");
