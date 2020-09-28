@@ -1,5 +1,7 @@
 package nodatabase.test.api;
 
+import java.math.BigDecimal;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +24,16 @@ public class CalculatorEndpoint {
 	@GetMapping("/calculator/getAnswer")
 	public String getAnswer() {
 		if(c.getErrorMessage().equals("None")) {
-			return Double.toString(c.getAnswer());
+			String ans = c.getAnswer().toString();
+			String strAns = new String();
+			String tmp = ans.toString();
+			for (int i = 1; i < tmp.length()+1; i++) {
+				strAns += tmp.charAt(i-1);
+				if (i % 80 == 0 && i != 0) {
+					strAns += "<br>";
+				}
+			}
+			return strAns;
 		}else {
 			return c.getErrorMessage();
 		}
