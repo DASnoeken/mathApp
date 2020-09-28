@@ -1,5 +1,5 @@
 function getSum(begin, end) {
-    if(isNaN(begin) || isNaN(end)){
+    if (isNaN(begin) || isNaN(end)) {
         document.getElementById("response").innerHTML = "Not a Number";
         return;
     }
@@ -14,10 +14,10 @@ function getSum(begin, end) {
     xhr.send();
 }
 function factorial(num) {
-    if(isNaN(num) || num==""){
+    if (isNaN(num) || num == "") {
         document.getElementById("response").innerHTML = "Not a Number";
         return;
-    }else if(num>100000){
+    } else if (num > 100000) {
         document.getElementById("response").innerHTML = "Don't exceed n=100 000";
         return;
     }
@@ -32,7 +32,7 @@ function factorial(num) {
     xhr.send();
 }
 function geometric(num) {
-    if(isNaN(num) || num==""){
+    if (isNaN(num) || num == "") {
         document.getElementById("response").innerHTML = "Not a Number";
         return;
     }
@@ -47,7 +47,7 @@ function geometric(num) {
     xhr.send();
 }
 function getE(num) {
-    if(isNaN(num) || num==""){
+    if (isNaN(num) || num == "") {
         document.getElementById("response").innerHTML = "Not a Number";
         return;
     }
@@ -63,7 +63,7 @@ function getE(num) {
     xhr.send();
 }
 function getDer(func) {
-    if(func==""){
+    if (func == "") {
         document.getElementById("response").innerHTML = "Needs input";
         return;
     }
@@ -133,12 +133,12 @@ function backToInput() {
     document.getElementById("LinAlgScreen").hidden = true;
     document.getElementById("response").innerHTML = "Response area";
 }
-function inchToCm(){
+function inchToCm() {
     document.getElementById("UnitConversionDiv").hidden = true;
     document.getElementById("inch-to-cm").hidden = false;
     document.getElementById("response").innerHTML = "Response area";
 }
-function cmToInch(){
+function cmToInch() {
     document.getElementById("UnitConversionDiv").hidden = true;
     document.getElementById("cm-to-inch").hidden = false;
     document.getElementById("response").innerHTML = "Response area";
@@ -163,50 +163,59 @@ function lbsToKg() {
     document.getElementById("UnitConversionDiv").hidden = true;
     document.getElementById("response").innerHTML = "Response area";
 }
-function milesToKm(){
+function milesToKm() {
     document.getElementById("miles-to-km").hidden = false;
     document.getElementById("UnitConversionDiv").hidden = true;
     document.getElementById("response").innerHTML = "Response area";
 }
-function kmToMiles(){
+function kmToMiles() {
     document.getElementById("km-to-miles").hidden = false;
     document.getElementById("UnitConversionDiv").hidden = true;
     document.getElementById("response").innerHTML = "Response area";
 }
-function convertCurrencies(){
+function convertCurrencies() {
     document.getElementById("currencies").hidden = false;
     document.getElementById("UnitConversionDiv").hidden = true;
     document.getElementById("response").innerHTML = "Response area";
 }
-function gotoLinAlg(){
+function gotoLinAlg() {
     document.getElementById("input").hidden = true;
     document.getElementById("Gamescreen").hidden = true;
     document.getElementById("UnitConversionDiv").hidden = true;
     document.getElementById("LinAlgScreen").hidden = false;
+    document.getElementById("LinAlgOperationsScreen").hidden = true;
     document.getElementById("response").innerHTML = "Response area";
 }
-function inchToCmCalculate(foot, inch){
-    if(isNaN(foot) || isNaN(inch)){
+function gotoLinAlgOperations(){
+    document.getElementById("input").hidden = true;
+    document.getElementById("Gamescreen").hidden = true;
+    document.getElementById("UnitConversionDiv").hidden = true;
+    document.getElementById("LinAlgScreen").hidden = true;
+    document.getElementById("LinAlgOperationsScreen").hidden = false;
+    document.getElementById("response").innerHTML = "Response area";
+}
+function inchToCmCalculate(foot, inch) {
+    if (isNaN(foot) || isNaN(inch)) {
         document.getElementById("response").innerHTML = "Not a Number";
         return;
-    }else if(foot<0 || inch<0){
+    } else if (foot < 0 || inch < 0) {
         document.getElementById("response").innerHTML = "Positive numbers only!";
         return;
     }
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if(this.readyState==4){
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET","http://localhost:8082/Units/inchToCm/"+foot+"/"+inch);
+    xhr.open("GET", "http://localhost:8082/Units/inchToCm/" + foot + "/" + inch);
     xhr.send();
 }
-function cmToInchCalculate(val){
-    if(isNaN(val)){
+function cmToInchCalculate(val) {
+    if (isNaN(val)) {
         document.getElementById("response").innerHTML = "Not a Number";
         return;
-    }else if(val<0){
+    } else if (val < 0) {
         document.getElementById("response").innerHTML = "Positive numbers only!";
         return;
     }
@@ -221,7 +230,7 @@ function cmToInchCalculate(val){
     xhr.send();
 }
 function cTofCalculate(val) {
-    if(isNaN(val)){
+    if (isNaN(val)) {
         document.getElementById("response").innerHTML = "Not a Number";
         return;
     }
@@ -236,7 +245,7 @@ function cTofCalculate(val) {
     xhr.send();
 }
 function fTocCalculate(val) {
-    if(isNaN(val)){
+    if (isNaN(val)) {
         document.getElementById("response").innerHTML = "Not a Number";
         return;
     }
@@ -251,10 +260,10 @@ function fTocCalculate(val) {
     xhr.send();
 }
 function kgToLbsCalculate(val) {
-    if(isNaN(val)){
+    if (isNaN(val)) {
         document.getElementById("response").innerHTML = "Not a Number";
         return;
-    }else if(val<0){
+    } else if (val < 0) {
         document.getElementById("response").innerHTML = "Positive numbers only!";
         return;
     }
@@ -269,10 +278,10 @@ function kgToLbsCalculate(val) {
     xhr.send();
 }
 function lbsToKgCalculate(val) {
-    if(isNaN(val)){
+    if (isNaN(val)) {
         document.getElementById("response").innerHTML = "Not a Number";
         return;
-    }else if(val<0){
+    } else if (val < 0) {
         document.getElementById("response").innerHTML = "Positive numbers only!";
         return;
     }
@@ -287,10 +296,10 @@ function lbsToKgCalculate(val) {
     xhr.send();
 }
 function milesToKmCalculate(val) {
-    if(isNaN(val)){
+    if (isNaN(val)) {
         document.getElementById("response").innerHTML = "Not a Number";
         return;
-    }else if(val<0){
+    } else if (val < 0) {
         document.getElementById("response").innerHTML = "Positive numbers only!";
         return;
     }
@@ -303,11 +312,11 @@ function milesToKmCalculate(val) {
     xhr.open("GET", "http://localhost:8082/Units/milesToKm/" + val);
     xhr.send();
 }
-function kmToMilesCalculate(val){
-    if(isNaN(val)){
+function kmToMilesCalculate(val) {
+    if (isNaN(val)) {
         document.getElementById("response").innerHTML = "Not a Number";
         return;
-    }else if(val<0){
+    } else if (val < 0) {
         document.getElementById("response").innerHTML = "Positive numbers only!";
         return;
     }
@@ -326,13 +335,13 @@ function gameStart() {
 }
 function setDegree(deg) {
     document.getElementById("response").innerHTML = "Response area";
-    if (isNaN(deg) || deg=="") {
+    if (isNaN(deg) || deg == "") {
         document.getElementById("response").innerHTML = "This should be an integer!";
         return;
     } else if (deg > 10) {
         document.getElementById("response").innerHTML = "Use degree < 10";
         return;
-    } else if (deg < 0){
+    } else if (deg < 0) {
         document.getElementById("response").innerHTML = "Degree should be > 0";
         return;
     }
@@ -369,24 +378,24 @@ function submitGame(deg) {
     var xhr = new XMLHttpRequest();
     var arr = new Array();
     for (var i = 0; i <= deg; i++) {
-        if(!isNaN(document.getElementById("coef" + i).value)){   
+        if (!isNaN(document.getElementById("coef" + i).value)) {
             arr.push(document.getElementById("coef" + i).value);
-        }else{
+        } else {
             document.getElementById("response").innerHTML = "You can only use numbers!";
             return;
         }
     }
-    xhr.onreadystatechange = function(){
-        if(this.readyState == 4){
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
             getAnswer();
         }
     }
     xhr.open("POST", "http://localhost:8082/game/submitAnswer");
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(JSON.stringify(arr));
-    
+
 }
-function getAnswer(){
+function getAnswer() {
     var xhr2 = new XMLHttpRequest();
     xhr2.onreadystatechange = function () {
         if (this.readyState == 4) {
@@ -398,118 +407,128 @@ function getAnswer(){
     xhr2.send();
     document.getElementById("setDegreeButton").disabled = false;
 }
-function calculator(sum){
+function calculator(sum) {
     var radios = document.getElementsByName('trig');
     var trigState;
     for (var i = 0, length = radios.length; i < length; i++) {
         if (radios[i].checked) {
-          trigState=radios[i].value;
-          break;
+            trigState = radios[i].value;
+            break;
         }
-      }
-    if(sum==""){
+    }
+    if (sum == "") {
         document.getElementById("response").innerHTML = "ERROR: Need Input!"
         return;
     }
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if(this.readyState==4){
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
             calculatorAnswer();
         }
     }
-    xhr.open("POST","http://localhost:8082/calculator/setCalculation/?trigState="+trigState);
-    xhr.setRequestHeader("Content-Type","application/json");
+    xhr.open("POST", "http://localhost:8082/calculator/setCalculation/?trigState=" + trigState);
+    xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(sum);
 }
-function calculatorAnswer(){
+function calculatorAnswer() {
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if(this.readyState==4){
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET","http://localhost:8082/calculator/getAnswer");
+    xhr.open("GET", "http://localhost:8082/calculator/getAnswer");
     xhr.send();
 }
-function currConversion(from,to,value){
-    if(isNaN(value) || value==""){
+function currConversion(from, to, value) {
+    if (isNaN(value) || value == "") {
         document.getElementById("response").innerHTML = "ERROR: Invalid Input!";
         return;
     }
-    if(from == to){
+    if (from == to) {
         document.getElementById("response").innerHTML = "ERROR: Convert to different currency!";
         return;
-    }else if(value<0){
+    } else if (value < 0) {
         document.getElementById("response").innerHTML = "Positive numbers only!";
         return;
     }
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if(this.readyState==1){
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 1) {
             document.getElementById("convertCurrencyButton").disabled = true;
             document.getElementById("ReEnableButton").hidden = false;
         }
-        if(this.readyState==4){
+        if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET","http://localhost:8082/currency/"+from+"/"+to+"/"+value);
+    xhr.open("GET", "http://localhost:8082/currency/" + from + "/" + to + "/" + value);
     xhr.send();
 }
-function reEnable(){
+function reEnable() {
     setTimeout(() => {
         document.getElementById("convertCurrencyButton").disabled = false;
     }, 1000);
     document.getElementById("ReEnableButton").hidden = true;
 }
-function switchCurrencies(){
+function switchCurrencies() {
     var tmp = document.getElementById("fromCurrency").value;
     document.getElementById("fromCurrency").value = document.getElementById("toCurrency").value;
     document.getElementById("toCurrency").value = tmp;
 }
-function sendMatrix(matrixInput){
+function sendMatrix(matrixInput) {
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if(this.readyState==4){
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
             checkMatrixErrors();
         }
     }
-    xhr.open("POST","http://localhost:8082//LinAlg/makeMatrix");
-    xhr.setRequestHeader("Content-Type","application/json");
+    xhr.open("POST", "http://localhost:8082//LinAlg/makeMatrix");
+    xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(matrixInput);
 }
-function checkMatrixErrors(){
+function checkMatrixErrors() {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
-        if(this.readyState == 4){
-            if(this.responseText!=""){
+        if (this.readyState == 4) {
+            if (this.responseText != "") {
                 document.getElementById("response").innerHTML = this.responseText;
-            }else{
+            } else {
                 printAllMatrices();
             }
         }
     }
-    xhr.open("GET","http://localhost:8082/LinAlg/getErrorMessage");
+    xhr.open("GET", "http://localhost:8082/LinAlg/getErrorMessage");
     xhr.send();
 }
-function printMatrix(id){
+function printMatrix(id) {
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if(this.readyState==4){
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
 
         }
     }
-    xhr.open("GET","http://localhost:8082/LinAlg/getMatrixString/"+id)
+    xhr.open("GET", "http://localhost:8082/LinAlg/getMatrixString/" + id)
     xhr.send();
 }
-function printAllMatrices(){
+function printAllMatrices() {
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if(this.readyState==4){
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET","http://localhost:8082/LinAlg/getAllMatrixStrings")
+    xhr.open("GET", "http://localhost:8082/LinAlg/getAllMatrixStrings")
+    xhr.send();
+}
+function clearAllMatrices() {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if(this.readyState == 4){
+            document.getElementById("response").innerHTML = "Memory cleared!";
+        }
+    }
+    xhr.open("DELETE","http://localhost:8082/LinAlg/clearMatrices");
     xhr.send();
 }

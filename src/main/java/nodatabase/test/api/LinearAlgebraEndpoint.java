@@ -29,6 +29,7 @@ public class LinearAlgebraEndpoint {
 	@DeleteMapping("/LinAlg/clearMatrices")
 	public void clearMatrices() {
 		this.matrices.clear();
+		lastId=0;
 	}
 	
 	@GetMapping("/LinAlg/getMatrix/{id}")

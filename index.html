@@ -238,11 +238,42 @@
     </div>
     <div id="LinAlgScreen" class="main" hidden>
         <button class="buttons" onclick="backToInput()">Back</button><br>
-        <input type="text" id="MatrixInput" value="Matrix"> <button id="MatrixInputButton" class="buttons"
-            onclick="sendMatrix(MatrixInput.value)">Set Matrix</button>
-        <button class="buttons" onclick="printAllMatrices()">Print all matrices</button><br>
-        <input type="text" id="MatrixIdInput" value="ID to print"> <button id="MatrixPrintButton" class="buttons"
-            onclick="printMatrix(MatrixIdInput.value)">Print Matrix</button>
+        <table>
+            <tr>
+                <td>
+                    <input type="text" id="MatrixInput" value="Matrix">
+                </td>
+                <td>
+                    <button id="MatrixInputButton" class="buttons" onclick="sendMatrix(MatrixInput.value)">Set
+                        Matrix</button>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" id="MatrixIdInput" value="ID to print">
+                </td>
+                <td>
+                    <button id="MatrixPrintButton" class="buttons" onclick="printMatrix(MatrixIdInput.value)">Print
+                        Matrix</button>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="buttons" onclick="printAllMatrices()">Print all matrices</button>
+                </td>
+                <td>
+                    <button class="buttons" onclick="clearAllMatrices()">Clear Matrices</button>
+                </td>
+                <td>
+                    <button class="buttons" onclick="gotoLinAlgOperations()">To Operations</button>
+                </td>
+            </tr>
+        </table>        
+    </div>
+    <div id="LinAlgOperationsScreen" class="main" hidden>
+        <button class="buttons" onclick="gotoLinAlg()">Back</button>
     </div>
     <br>
     <div id="response">Response area</div>
