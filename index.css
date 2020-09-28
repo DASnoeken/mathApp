@@ -8,6 +8,18 @@
     font-size: x-large;
 }
 
+.matrix{
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    width:auto;
+    padding: 2px;
+    border-radius: 20px;
+}
+
+.matrixColumn{
+    padding:3px;
+}
+
 .welcome {
     width: 40%;
     margin: auto;
