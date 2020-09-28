@@ -17,6 +17,9 @@ function factorial(num) {
     if(isNaN(num) || num==""){
         document.getElementById("response").innerHTML = "Not a Number";
         return;
+    }else if(num>100000){
+        document.getElementById("response").innerHTML = "Don't exceed n=100 000";
+        return;
     }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
