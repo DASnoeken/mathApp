@@ -45,18 +45,16 @@ public class LinearAlgebraEndpoint {
 		try {
 			return matrices.get(id).toHTMLString();
 		} catch (IndexOutOfBoundsException ioobe) {
-			return null;
+			return "Matrix not found!";
 		}
 	}
 	
 	@GetMapping("/LinAlg/getAllMatrixStrings")
 	public String getAllMatrixStrings() {
 		String ans = new String();
-		System.out.println("hier");
 		for(Matrix m:this.matrices) {
 			ans+="Matrix(id = "+m.getId()+") = ";
-			ans+=m.toHTMLString();
-			System.out.println(ans);
+			ans+=m.toHTMLString()+"<br>";
 		}
 		return ans;
 	}

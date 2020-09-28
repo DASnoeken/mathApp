@@ -238,8 +238,11 @@
     </div>
     <div id="LinAlgScreen" class="main" hidden>
         <button class="buttons" onclick="backToInput()">Back</button><br>
-        <input type="text" id="MatrixInput"> <button id="MatrixInputButton" class="buttons" onclick="sendMatrix(MatrixInput.value)">Set Matrix</button>
-        <button class="buttons" onclick="printAllMatrices()">print</button>
+        <input type="text" id="MatrixInput" value="Matrix"> <button id="MatrixInputButton" class="buttons"
+            onclick="sendMatrix(MatrixInput.value)">Set Matrix</button>
+        <button class="buttons" onclick="printAllMatrices()">Print all matrices</button><br>
+        <input type="text" id="MatrixIdInput" value="ID to print"> <button id="MatrixPrintButton" class="buttons"
+            onclick="printMatrix(MatrixIdInput.value)">Print Matrix</button>
     </div>
     <br>
     <div id="response">Response area</div>
