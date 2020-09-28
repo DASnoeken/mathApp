@@ -36,7 +36,7 @@ public class Calculator {
 		return answer;
 	}
 
-	public Calculator(String input,String trigStateInput) {
+	public Calculator(String input, String trigStateInput) {
 		this.trigState = trigStateInput;
 		this.sum = input;
 		this.errorMessage = "None";
@@ -109,8 +109,13 @@ public class Calculator {
 				if (termsI[j].equalsIgnoreCase("pi")) {
 					termsI[j] = Double.toString(Math.PI);
 				}
-				if(termsI[j].equalsIgnoreCase("e")) {
+				if (termsI[j].equalsIgnoreCase("e")) {
 					termsI[j] = Double.toString(Math.E);
+				}
+				if (termsI[j].contains("exp")) {
+					String[] termsIp = termsI[j].split("\\{");
+					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
+					termsI[j] = Double.toString(Math.exp(Double.valueOf(termsIp[1])));
 				}
 				if (termsI[j].contains("sqrt")) { // square roots
 					String[] termsIp = termsI[j].split("\\{");
@@ -123,33 +128,33 @@ public class Calculator {
 					termsI[j] = Double.toString(Math.cbrt(Double.valueOf(termsIp[1])));
 				}
 				if (termsI[j].contains("sin") && !termsI[j].contains("sinh")) { // trigonometry
-					if(this.trigState.equals("radians")) {
+					if (this.trigState.equals("radians")) {
 						String[] termsIp = termsI[j].split("\\{");
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 						termsI[j] = Double.toString(Math.sin(Double.valueOf(termsIp[1])));
-					}else {
+					} else {
 						String[] termsIp = termsI[j].split("\\{");
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 						termsI[j] = Double.toString(Math.sin(Double.valueOf(termsIp[1]) * Math.PI / 180.0));
 					}
 				}
 				if (termsI[j].contains("cos") && !termsI[j].contains("cosh")) {
-					if(this.trigState.equals("radians")) {
+					if (this.trigState.equals("radians")) {
 						String[] termsIp = termsI[j].split("\\{");
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 						termsI[j] = Double.toString(Math.cos(Double.valueOf(termsIp[1])));
-					}else {
+					} else {
 						String[] termsIp = termsI[j].split("\\{");
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 						termsI[j] = Double.toString(Math.cos(Double.valueOf(termsIp[1]) * Math.PI / 180.0));
 					}
 				}
 				if (termsI[j].contains("tan") && !termsI[j].contains("tanh")) {
-					if(this.trigState.equals("radians")) {
+					if (this.trigState.equals("radians")) {
 						String[] termsIp = termsI[j].split("\\{");
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 						termsI[j] = Double.toString(Math.tan(Double.valueOf(termsIp[1])));
-					}else {
+					} else {
 						String[] termsIp = termsI[j].split("\\{");
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 						termsI[j] = Double.toString(Math.tan(Double.valueOf(termsIp[1]) * Math.PI / 180.0));
@@ -228,7 +233,8 @@ public class Calculator {
 	public Double calculate(String subsum) {
 		subsum = subsum.replace("\\s", ""); // remove spaces
 		String[] terms = subsum.split("\\+|\\-"); // contains numbers
-		String[] ops = subsum.split("[\\*\\/\\^]?\\d{1,}[\\*\\/\\^]?|[a-z]{1,}\\{\\d{1,}\\}"); // contains operations
+		String[] ops = subsum.split("[\\*\\/\\^]?\\d{1,}[\\*\\/\\^]?|[a-z]{1,}\\{\\d{1,}\\}|pi|e"); // contains
+																									// operations
 		ArrayList<Double> addsubTerms = new ArrayList<Double>();
 		Double answer = 0.0;
 		boolean test = Arrays.stream(ops).anyMatch(""::equals);
@@ -249,13 +255,18 @@ public class Calculator {
 				continue;
 			}
 			String[] termsI = terms[i].split("\\*|\\/|\\^");
-			String[] opsI = terms[i].split("\\d{1,}\\.?\\d{0,}|[a-z]{1,}\\{\\d{1,}\\}|pi");
+			String[] opsI = terms[i].split("\\d{1,}\\.?\\d{0,}|[a-z]{1,}\\{\\d{1,}\\}|pi|e");
 			for (int j = 0; j < termsI.length; j++) {
 				if (termsI[j].equalsIgnoreCase("pi")) {
 					termsI[j] = Double.toString(Math.PI);
 				}
-				if(termsI[j].equalsIgnoreCase("e")) {
+				if (termsI[j].equalsIgnoreCase("e")) {
 					termsI[j] = Double.toString(Math.E);
+				}
+				if (termsI[j].contains("exp")) {
+					String[] termsIp = termsI[j].split("\\{");
+					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
+					termsI[j] = Double.toString(Math.exp(Double.valueOf(termsIp[1])));
 				}
 				if (termsI[j].contains("sqrt")) {
 					String[] termsIp = termsI[j].split("\\{");
@@ -268,33 +279,33 @@ public class Calculator {
 					termsI[j] = Double.toString(Math.cbrt(Double.valueOf(termsIp[1])));
 				}
 				if (termsI[j].contains("sin") && !termsI[j].contains("sinh")) { // trigonometry
-					if(this.trigState.equals("radians")) {
+					if (this.trigState.equals("radians")) {
 						String[] termsIp = termsI[j].split("\\{");
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 						termsI[j] = Double.toString(Math.sin(Double.valueOf(termsIp[1])));
-					}else {
+					} else {
 						String[] termsIp = termsI[j].split("\\{");
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 						termsI[j] = Double.toString(Math.sin(Double.valueOf(termsIp[1]) * Math.PI / 180.0));
 					}
 				}
 				if (termsI[j].contains("cos") && !termsI[j].contains("cosh")) {
-					if(this.trigState.equals("radians")) {
+					if (this.trigState.equals("radians")) {
 						String[] termsIp = termsI[j].split("\\{");
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 						termsI[j] = Double.toString(Math.cos(Double.valueOf(termsIp[1])));
-					}else {
+					} else {
 						String[] termsIp = termsI[j].split("\\{");
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 						termsI[j] = Double.toString(Math.cos(Double.valueOf(termsIp[1]) * Math.PI / 180.0));
 					}
 				}
 				if (termsI[j].contains("tan") && !termsI[j].contains("tanh")) {
-					if(this.trigState.equals("radians")) {
+					if (this.trigState.equals("radians")) {
 						String[] termsIp = termsI[j].split("\\{");
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 						termsI[j] = Double.toString(Math.tan(Double.valueOf(termsIp[1])));
-					}else {
+					} else {
 						String[] termsIp = termsI[j].split("\\{");
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 						termsI[j] = Double.toString(Math.tan(Double.valueOf(termsIp[1]) * Math.PI / 180.0));
@@ -394,8 +405,8 @@ public class Calculator {
 
 	private boolean checkSpecialFunction(String input) {
 		if (input.contains("sqrt") || input.contains("sin") || input.contains("cos") || input.contains("tan")
-				|| input.contains("cbrt") || input.contains("sinh") || input.contains("cosh")
-				|| input.contains("tanh")) {
+				|| input.contains("cbrt") || input.contains("sinh") || input.contains("cosh") || input.contains("tanh")
+				|| input.contains("exp")) {
 			return true;
 		} else {
 			return false;
