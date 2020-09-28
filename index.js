@@ -178,6 +178,9 @@ function inchToCmCalculate(foot, inch){
     if(isNaN(foot) || isNaN(inch)){
         document.getElementById("response").innerHTML = "Not a Number";
         return;
+    }else if(foot<0 || inch<0){
+        document.getElementById("response").innerHTML = "Positive numbers only!";
+        return;
     }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function(){
@@ -191,6 +194,9 @@ function inchToCmCalculate(foot, inch){
 function cmToInchCalculate(val){
     if(isNaN(val)){
         document.getElementById("response").innerHTML = "Not a Number";
+        return;
+    }else if(val<0){
+        document.getElementById("response").innerHTML = "Positive numbers only!";
         return;
     }
     var xhr = new XMLHttpRequest();
@@ -237,6 +243,9 @@ function kgToLbsCalculate(val) {
     if(isNaN(val)){
         document.getElementById("response").innerHTML = "Not a Number";
         return;
+    }else if(val<0){
+        document.getElementById("response").innerHTML = "Positive numbers only!";
+        return;
     }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
@@ -251,6 +260,9 @@ function kgToLbsCalculate(val) {
 function lbsToKgCalculate(val) {
     if(isNaN(val)){
         document.getElementById("response").innerHTML = "Not a Number";
+        return;
+    }else if(val<0){
+        document.getElementById("response").innerHTML = "Positive numbers only!";
         return;
     }
     var xhr = new XMLHttpRequest();
@@ -267,6 +279,9 @@ function milesToKmCalculate(val) {
     if(isNaN(val)){
         document.getElementById("response").innerHTML = "Not a Number";
         return;
+    }else if(val<0){
+        document.getElementById("response").innerHTML = "Positive numbers only!";
+        return;
     }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
@@ -280,6 +295,9 @@ function milesToKmCalculate(val) {
 function kmToMilesCalculate(val){
     if(isNaN(val)){
         document.getElementById("response").innerHTML = "Not a Number";
+        return;
+    }else if(val<0){
+        document.getElementById("response").innerHTML = "Positive numbers only!";
         return;
     }
     var xhr = new XMLHttpRequest();
@@ -409,6 +427,9 @@ function currConversion(from,to,value){
     }
     if(from == to){
         document.getElementById("response").innerHTML = "ERROR: Convert to different currency!";
+        return;
+    }else if(value<0){
+        document.getElementById("response").innerHTML = "Positive numbers only!";
         return;
     }
     var xhr = new XMLHttpRequest();
