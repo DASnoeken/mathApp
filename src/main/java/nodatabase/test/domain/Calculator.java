@@ -13,6 +13,7 @@ public class Calculator {
 	private String[] terms;
 	private ArrayList<BigDecimal> addsubTerms;
 	private String trigState;
+	private MathContext mc;
 
 	public String getTrigState() {
 		return trigState;
@@ -46,6 +47,7 @@ public class Calculator {
 	public Calculator(String input, String trigStateInput) {
 		this.trigState = trigStateInput;
 		this.sum = input;
+		this.mc = new MathContext(50);
 		this.errorMessage = "None";
 		this.answer = BigDecimal.ZERO;
 		try {
@@ -212,8 +214,7 @@ public class Calculator {
 					finalValue = finalValue.multiply(new BigDecimal(termsI[j + 1]));// Double.parseDouble(termsI[j +
 																					// 1]);
 				} else if (opsI[j].equals("/")) {
-					MathContext mc = new MathContext(50);
-					finalValue = finalValue.divide(new BigDecimal(termsI[j + 1]), mc);// Double.parseDouble(termsI[j +
+					finalValue = finalValue.divide(new BigDecimal(termsI[j + 1]), this.mc);// Double.parseDouble(termsI[j +
 																						// 1]);
 				}
 			}
@@ -368,8 +369,7 @@ public class Calculator {
 					finalValue = finalValue.multiply(new BigDecimal(termsI[j + 1]));// Double.parseDouble(termsI[j +
 																					// 1]);
 				} else if (opsI[j].equals("/")) {
-					MathContext mc = new MathContext(50);
-					finalValue = finalValue.divide(new BigDecimal(termsI[j + 1]), mc);// Double.parseDouble(termsI[j +
+					finalValue = finalValue.divide(new BigDecimal(termsI[j + 1]), this.mc);// Double.parseDouble(termsI[j +
 																						// 1]);
 				}
 			}
