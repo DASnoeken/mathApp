@@ -84,7 +84,7 @@ public class Calculator {
 	public void calculate() {
 		this.sum = this.sum.replaceAll("\\s", ""); // remove spaces
 		this.terms = this.sum.split("\\+|\\-"); // contains numbers
-		this.ops = this.sum.split("[\\*\\/\\^]?\\d{1,}[\\*\\/\\^]?|[a-z]{1,}\\{\\d{1,}\\}|e|pi"); // contains operations
+		this.ops = this.sum.split("[\\*\\/\\^]?\\d{1,}[\\*\\/\\^]?|[a-z]{1,}\\{\\d{1,}\\.?\\d{0,}\\}|e|pi"); // contains operations
 		this.addsubTerms = new ArrayList<Double>();
 		boolean test = Arrays.stream(ops).anyMatch(""::equals);
 		if (test) { // Remove annoying empty strings
