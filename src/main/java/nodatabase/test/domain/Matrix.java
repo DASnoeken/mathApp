@@ -7,6 +7,15 @@ public class Matrix {
 	private int columnsCount;
 	private Vector<Vector<Double>> matrix;
 	private String errormessage;
+	private int id;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getErrormessage() {
 		return errormessage;

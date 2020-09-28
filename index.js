@@ -130,6 +130,7 @@ function backToInput() {
     document.getElementById("input").hidden = false;
     document.getElementById("Gamescreen").hidden = true;
     document.getElementById("UnitConversionDiv").hidden = true;
+    document.getElementById("LinAlgScreen").hidden = true;
     document.getElementById("response").innerHTML = "Response area";
 }
 function inchToCm(){
@@ -175,6 +176,13 @@ function kmToMiles(){
 function convertCurrencies(){
     document.getElementById("currencies").hidden = false;
     document.getElementById("UnitConversionDiv").hidden = true;
+    document.getElementById("response").innerHTML = "Response area";
+}
+function gotoLinAlg(){
+    document.getElementById("input").hidden = true;
+    document.getElementById("Gamescreen").hidden = true;
+    document.getElementById("UnitConversionDiv").hidden = true;
+    document.getElementById("LinAlgScreen").hidden = false;
     document.getElementById("response").innerHTML = "Response area";
 }
 function inchToCmCalculate(foot, inch){
@@ -458,4 +466,47 @@ function switchCurrencies(){
     var tmp = document.getElementById("fromCurrency").value;
     document.getElementById("fromCurrency").value = document.getElementById("toCurrency").value;
     document.getElementById("toCurrency").value = tmp;
+}
+function sendMatrix(matrixInput){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if(this.readyState==4){
+            checkMatrixErrors();
+        }
+    }
+    xhr.open("POST","http://localhost:8082//LinAlg/makeMatrix");
+    xhr.setRequestHeader("Content-Type","application/json");
+    xhr.send(matrixInput);
+}
+function checkMatrixErrors(){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if(this.readyState == 4){
+            if(this.responseText!=""){
+                document.getElementById("response").innerHTML = this.responseText;
+            }else{
+                printAllMatrices();
+            }
+        }
+    }
+    xhr.open("GET","http://localhost:8082/LinAlg/getErrorMessage");
+    xhr.send();
+}
+function printMatrix(id){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+
+    }
+    xhr.open("GET","http://localhost:8082/LinAlg/getMatrixString/"+id)
+    xhr.send();
+}
+function printAllMatrices(){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if(this.readyState==4){
+            document.getElementById("response").innerHTML = this.responseText;
+        }
+    }
+    xhr.open("GET","http://localhost:8082/LinAlg/getAllMatrixStrings")
+    xhr.send();
 }

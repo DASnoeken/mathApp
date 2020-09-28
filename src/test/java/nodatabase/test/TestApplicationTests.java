@@ -25,6 +25,8 @@ class TestApplicationTests {
 		System.out.println(lae.getMatrix(0).add(lae.getMatrix(1)).toString());
 		System.out.println();
 		System.out.println(lae.getMatrix(0).multiply(lae.getMatrix(2)));
+		System.out.println(lae.getAllMatrixStrings());
+		lae.clearMatrices();
 	}
 
 }

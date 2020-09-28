@@ -99,6 +99,7 @@
                 </td>
 
                 <td><button class="buttons" onclick="gameStart()">Exercise</button></td>
+                <td><button class="buttons" onclick="gotoLinAlg()">Linear Algebra</button></td>
             </tr>
 
         </table>
@@ -234,6 +235,11 @@
             onclick="setDegree(degreeInput.value)">Set
             Degree</button><br>
         <div id="Gamescreen2"></div>
+    </div>
+    <div id="LinAlgScreen" class="main" hidden>
+        <button class="buttons" onclick="backToInput()">Back</button><br>
+        <input type="text" id="MatrixInput"> <button id="MatrixInputButton" class="buttons" onclick="sendMatrix(MatrixInput.value)">Set Matrix</button>
+        <button class="buttons" onclick="printAllMatrices()">print</button>
     </div>
     <br>
     <div id="response">Response area</div>
