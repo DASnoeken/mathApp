@@ -36,7 +36,7 @@
 .welcome {
     width: 40%;
     margin: auto;
-    padding: 10px;
+    padding: 6px;
     text-align: center;
     font-size: x-large;
     transition: 0.5s;
@@ -109,6 +109,11 @@ table {
 h1 {
     color: rgb(247, 22, 67);
     text-shadow: -1px 0 rgb(20, 0, 255), 0 1px rgb(20, 0, 255), 1px 0 rgb(20, 0, 255), 0 -1px rgb(20, 0, 255);
+}
+
+#author{
+    color: rgb(210,10,20);
+    text-shadow: -1px 0 rgba(21, 0, 255, 0.5), 0 1px rgba(20, 0, 255, 0.5), 1px 0 rgba(20, 0, 255, 0.5), 0 -1px rgba(20, 0, 255, 0.5);
 }
 
 .welcome:hover {
