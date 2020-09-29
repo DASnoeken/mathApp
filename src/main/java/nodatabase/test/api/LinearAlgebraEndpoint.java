@@ -173,7 +173,7 @@ public class LinearAlgebraEndpoint {
 				+ "<td class=\"MatrixEquationColumn\">" + m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
 		return ans;
 	}
-	
+
 	@GetMapping("/LinAlg/Operations/subtract/{id1}/{id2}")
 	public String subtractMatrices(@PathVariable int id1, @PathVariable int id2) {
 		if (id1 >= matrices.size() || id2 >= matrices.size()) {
@@ -191,10 +191,28 @@ public class LinearAlgebraEndpoint {
 		String ans = new String();
 		ans += "<table class=\"matrixEquation\">\r\n" + "<tr class=\"MatrixEquationRow\">\r\n"
 				+ "<td class=\"MatrixEquationColumn\">";
-		ans += matrices.get(id1).toHTMLString() + "</td>\r\n" + "<td class=\"MatrixEquationColumn\">+</td>\r\n"
-				+ "<td class=\"MatrixEquationColumn\">" + matrices.get(id2).toHTMLString()
-				+ "</td class=\"MatrixEquationColumn\">\r\n" + "<td> = </td>\r\n"
-				+ "<td class=\"MatrixEquationColumn\">" + m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
+		ans += matrices.get(id1).toHTMLString() + "</td>\r\n" + "<td class=\"MatrixEquationColumn\">-</td>\r\n"
+				+ "<td class=\"MatrixEquationColumn\">" + matrices.get(id2).toHTMLString() + "</td>\r\n"
+				+ "<td class=\"MatrixEquationColumn\"> = </td>\r\n" + "<td class=\"MatrixEquationColumn\">"
+				+ m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
+		return ans;
+	}
+
+	@GetMapping("/LinAlg/Operations/rref/{id}")
+	public String getRref(@PathVariable int id) {
+		if (id >= matrices.size()) {
+			return "ID not found!";
+		}
+		String ans = new String();
+		Matrix m = matrices.get(id).rref();
+		matrices.add(m);
+		m.setId(this.lastId);
+		this.lastId++;
+		ans += "<table class=\"matrixEquation\">\r\n" + "<tr class=\"MatrixEquationRow\">\r\n"
+				+ "<td class=\"MatrixEquationColumn\">";
+		ans += "RREF:</td><td class=\"MatrixEquationColumn\">" + matrices.get(id).toHTMLString()
+				+ "</td><td class=\"MatrixEquationColumn\"> = </td>\r\n" + "<td class=\"MatrixEquationColumn\">"
+				+ m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
 		return ans;
 	}
 }
