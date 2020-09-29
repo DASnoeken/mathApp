@@ -111,6 +111,22 @@ public class Matrix {
 		}
 		return ans;
 	}
+	
+	public Matrix subtract(Matrix m) {
+		if (rowsCount != m.getRowsCount() || columnsCount != m.getColumnsCount()) {
+			System.out.println("Matrices need same dimensions");
+			this.errormessage = "Matrices need same dimensions";
+			throw new IllegalArgumentException("Matrices need same dimensions");
+		}
+		Matrix ans = new Matrix(rowsCount, columnsCount);
+		for (int i = 0; i < rowsCount; i++) {
+			for (int j = 0; j < columnsCount; j++) {
+				double value = this.matrix.get(i).get(j) - m.getMatrix().get(i).get(j);
+				ans.setMatrixElement(i, j, value);
+			}
+		}
+		return ans;
+	}
 
 	public Matrix transposeMatrix() {
 		Matrix m = new Matrix(this.columnsCount, this.rowsCount);

@@ -574,3 +574,17 @@ function transposeMatrix(ID){
     xhr.open("GET","http://localhost:8082/LinAlg/Operations/transpose/"+ID);
     xhr.send();
 }
+function subtractMatrix(ID1,ID2){
+    if(isNaN(ID1) || isNaN(ID2)){
+        document.getElementById("response").innerHTML = "Only use numbers for the ID's!";
+        return;
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if(this.readyState==4){
+            document.getElementById("response").innerHTML = this.responseText;
+        }
+    }
+    xhr.open("GET","http://localhost:8082/LinAlg/Operations/subtract/"+ID1+"/"+ID2);
+    xhr.send();
+}

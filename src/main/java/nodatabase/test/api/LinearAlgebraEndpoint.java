@@ -173,4 +173,28 @@ public class LinearAlgebraEndpoint {
 				+ "<td class=\"MatrixEquationColumn\">" + m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
 		return ans;
 	}
+	
+	@GetMapping("/LinAlg/Operations/subtract/{id1}/{id2}")
+	public String subtractMatrices(@PathVariable int id1, @PathVariable int id2) {
+		if (id1 >= matrices.size() || id2 >= matrices.size()) {
+			return "ID not found!";
+		}
+		Matrix m;
+		try {
+			m = matrices.get(id1).subtract(matrices.get(id2));
+		} catch (IllegalArgumentException iae) {
+			return iae.getMessage();
+		}
+		matrices.add(m);
+		m.setId(this.lastId);
+		this.lastId++;
+		String ans = new String();
+		ans += "<table class=\"matrixEquation\">\r\n" + "<tr class=\"MatrixEquationRow\">\r\n"
+				+ "<td class=\"MatrixEquationColumn\">";
+		ans += matrices.get(id1).toHTMLString() + "</td>\r\n" + "<td class=\"MatrixEquationColumn\">+</td>\r\n"
+				+ "<td class=\"MatrixEquationColumn\">" + matrices.get(id2).toHTMLString()
+				+ "</td class=\"MatrixEquationColumn\">\r\n" + "<td> = </td>\r\n"
+				+ "<td class=\"MatrixEquationColumn\">" + m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
+		return ans;
+	}
 }
