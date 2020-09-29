@@ -532,3 +532,13 @@ function clearAllMatrices() {
     xhr.open("DELETE","http://localhost:8082/LinAlg/clearMatrices");
     xhr.send();
 }
+function addMatrix(ID1,ID2){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if(this.readyState == 4){
+            document.getElementById("response").innerHTML = this.responseText;
+        }
+    }
+    xhr.open("GET","http://localhost:8082/LinAlg/Operations/add/"+ID1+"/"+ID2);
+    xhr.send();
+}

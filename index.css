@@ -13,11 +13,24 @@
     border-right: 2px solid black;
     width:auto;
     padding: 2px;
+    display: inline-block;
     border-radius: 20px;
 }
 
 .matrixColumn{
     padding:3px;
+}
+
+.matrixEquation{
+    width:auto;
+}
+
+.MatrixEquationRow{
+    padding:3px;
+}
+
+.MatrixEquationColumn{
+    padding:6px;
 }
 
 .welcome {

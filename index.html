@@ -270,10 +270,12 @@
                     <button class="buttons" onclick="gotoLinAlgOperations()">To Operations</button>
                 </td>
             </tr>
-        </table>        
+        </table>
     </div>
     <div id="LinAlgOperationsScreen" class="main" hidden>
-        <button class="buttons" onclick="gotoLinAlg()">Back</button>
+        <button class="buttons" onclick="gotoLinAlg()">Back</button><br>
+        <input type="text" value="ID 1" id="IDMatrix1"> <input type="text" value="ID 2" id="IDMatrix2"> <button
+            class="buttons" onclick="addMatrix(IDMatrix1.value,IDMatrix2.value)">Addition</button>
     </div>
     <br>
     <div id="response">Response area</div>

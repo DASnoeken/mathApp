@@ -97,7 +97,8 @@ public class Matrix {
 	public Matrix add(Matrix m) {
 		if (rowsCount != m.getRowsCount() || columnsCount != m.getColumnsCount()) {
 			System.out.println("Matrices need same dimensions");
-			throw new IllegalArgumentException();
+			this.errormessage = "Matrices need same dimensions";
+			throw new IllegalArgumentException("Matrices need same dimensions");
 		}
 		Matrix ans = new Matrix(rowsCount, columnsCount);
 		for (int i = 0; i < rowsCount; i++) {

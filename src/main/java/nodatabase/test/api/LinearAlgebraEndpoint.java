@@ -23,15 +23,15 @@ public class LinearAlgebraEndpoint {
 	public LinearAlgebraEndpoint() {
 		this.matrices = new ArrayList<Matrix>();
 		this.errormessage = "None";
-		lastId=0;
+		lastId = 0;
 	}
 
 	@DeleteMapping("/LinAlg/clearMatrices")
 	public void clearMatrices() {
 		this.matrices.clear();
-		lastId=0;
+		lastId = 0;
 	}
-	
+
 	@GetMapping("/LinAlg/getMatrix/{id}")
 	public Matrix getMatrix(@PathVariable int id) {
 		try {
@@ -40,7 +40,7 @@ public class LinearAlgebraEndpoint {
 			return null;
 		}
 	}
-	
+
 	@GetMapping("/LinAlg/getMatrixString/{id}")
 	public String getMatrixString(@PathVariable int id) {
 		try {
@@ -49,15 +49,18 @@ public class LinearAlgebraEndpoint {
 			return "Matrix not found!";
 		}
 	}
-	
+
 	@GetMapping("/LinAlg/getAllMatrixStrings")
 	public String getAllMatrixStrings() {
 		String ans = new String();
-		for(Matrix m:this.matrices) {
-			ans+="Matrix(id = "+m.getId()+") = ";
-			ans+=m.toHTMLString()+"<br>";
+		for (Matrix m : this.matrices) {
+			ans += "Matrix(id = " + m.getId() + ") = ";
+			ans += m.toHTMLString() + "<br>";
 		}
-		return ans;
+		if (!ans.equals(""))
+			return ans;
+		else
+			return "No matrices found!";
 	}
 
 	@PostMapping("/LinAlg/makeMatrix")
@@ -101,5 +104,29 @@ public class LinearAlgebraEndpoint {
 			}
 			return totalError;
 		}
+	}
+
+	@GetMapping("/LinAlg/Operations/add/{id1}/{id2}")
+	public String addMatrices(@PathVariable int id1, @PathVariable int id2) {
+		if (id1 >= matrices.size() || id2 >= matrices.size()) {
+			return "ID not found!";
+		}
+		Matrix m;
+		try {
+			m = matrices.get(id1).add(matrices.get(id2));
+		} catch (IllegalArgumentException iae) {
+			return iae.getMessage();
+		}
+		matrices.add(m);
+		m.setId(this.lastId);
+		this.lastId++;
+		String ans = new String();
+		ans += "<table class=\"matrixEquation\">\r\n" + "<tr class=\"MatrixEquationRow\">\r\n"
+				+ "<td class=\"MatrixEquationColumn\">";
+		ans += matrices.get(id1).toHTMLString() + "</td>\r\n" + "<td class=\"MatrixEquationColumn\">+</td>\r\n"
+				+ "<td class=\"MatrixEquationColumn\">" + matrices.get(id2).toHTMLString()
+				+ "</td class=\"MatrixEquationColumn\">\r\n" + "<td> = </td>\r\n"
+				+ "<td class=\"MatrixEquationColumn\">" + m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
+		return ans;
 	}
 }
