@@ -111,7 +111,7 @@ public class Matrix {
 		}
 		return ans;
 	}
-	
+
 	public Matrix subtract(Matrix m) {
 		if (rowsCount != m.getRowsCount() || columnsCount != m.getColumnsCount()) {
 			System.out.println("Matrices need same dimensions");
@@ -133,6 +133,36 @@ public class Matrix {
 		for (int i = 0; i < getRowsCount(); i++) {
 			for (int j = 0; j < getColumnsCount(); j++) {
 				m.setMatrixElement(j, i, this.matrix.get(i).get(j));
+			}
+		}
+		return m;
+	}
+
+	public Matrix rref() {
+		Matrix m = new Matrix(this.rowsCount, this.columnsCount);
+		for (int i = 0; i < getRowsCount(); i++) {
+			for (int j = 0; j < getColumnsCount(); j++) {
+				m.setMatrixElement(i, j, this.matrix.get(i).get(j));
+			}
+		}
+		for (int rowIndex = 0; rowIndex < getRowsCount(); rowIndex++) {
+			Vector<Double> currentRow = m.getMatrix().get(rowIndex);
+			Double divisor = currentRow.get(rowIndex);
+			for (int j = 0; j < getColumnsCount(); j++) {
+				m.setMatrixElement(rowIndex, j, currentRow.get(j) / divisor);
+			}
+
+			for (int i = 0; i < getRowsCount(); i++) {
+				if (i == rowIndex) {
+					continue;
+				}
+				Double rowMultiplicant = m.getMatrix().get(i).get(rowIndex);
+				Vector<Double> subtracter = new Vector<Double>();// m.getMatrix().get(rowIndex);
+				subtracter.setSize(getColumnsCount());
+				for (int j = 0; j < getColumnsCount(); j++) {
+					subtracter.set(j, rowMultiplicant * m.getMatrix().get(rowIndex).get(j));
+					m.setMatrixElement(i, j, m.getMatrix().get(i).get(j) - subtracter.get(j));
+				}
 			}
 		}
 		return m;
