@@ -14,12 +14,12 @@ class TestApplicationTests {
 	@Test
 	void contextLoads() {
 		Matrix m = new Matrix(3,4);
-		m.stringToMatrix("4,2,3,12;3,4,5,16;6,7,8,40");
-		m.printElements();
+		m.stringToMatrix("3,2,5,15;6,4,2,23;7,8,1,98");
+		//m.printElements();
 		System.out.println();
 		m=m.rref();
 		System.out.println();
-		m.printElements();
+		//m.printElements();
 	}
 
 }

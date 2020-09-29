@@ -149,9 +149,12 @@ public class Matrix {
 			Vector<Double> currentRow = m.getMatrix().get(rowIndex);
 			Double divisor = currentRow.get(rowIndex);
 			for (int j = 0; j < getColumnsCount(); j++) {
-				m.setMatrixElement(rowIndex, j, currentRow.get(j) / divisor);
+				m.setMatrixElement(rowIndex, j, currentRow.get(j) / divisor); //gets a 1 on diagonal
 			}
-
+			System.out.println("-----------"+rowIndex+"------------------");
+			m.printElements();
+		}
+		for (int rowIndex = 0; rowIndex < getRowsCount(); rowIndex++) {
 			for (int i = 0; i < getRowsCount(); i++) {
 				if (i == rowIndex) {
 					continue;
@@ -163,7 +166,26 @@ public class Matrix {
 					subtracter.set(j, rowMultiplicant * m.getMatrix().get(rowIndex).get(j));
 					m.setMatrixElement(i, j, m.getMatrix().get(i).get(j) - subtracter.get(j));
 				}
+				if(m.getMatrix().get(i).get(i)==0) {
+					m=Matrix.swapRows(m, i, i+1);
+				}
 			}
+		}
+		return m;
+	}
+	
+	public static Matrix swapRows(Matrix m, int row1, int row2) {
+		Vector<Double> first = new Vector<Double>();
+		Vector<Double> second = new Vector<Double>();
+		first.setSize(m.getColumnsCount());
+		second.setSize(m.getColumnsCount());
+		for(int i=0;i<m.getColumnsCount();i++) {
+			first.set(i, m.getMatrix().get(row1).get(i));
+			second.set(i, m.getMatrix().get(row2).get(i));
+		}
+		for(int i=0;i<m.getColumnsCount();i++) {
+			m.setMatrixElement(row1, i, second.get(i));
+			m.setMatrixElement(row2, i, first.get(i));
 		}
 		return m;
 	}

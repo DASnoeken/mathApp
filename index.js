@@ -502,6 +502,10 @@ function checkMatrixErrors() {
     xhr.send();
 }
 function printMatrix(id) {
+    if(isNaN(id)){
+        document.getElementById("response").innerHTML = "ID has to be a number!";
+        return;
+    }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
