@@ -560,3 +560,17 @@ function multiplyMatrix(ID1, ID2) {
     xhr.open("GET","http://localhost:8082/LinAlg/Operations/multiply/"+ID1+"/"+ID2);
     xhr.send();
 }
+function transposeMatrix(ID){
+    if(isNaN(ID)){
+        document.getElementById("response").innerHTML = "Only use numbers for the ID!";
+        return;
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if(this.readyState==4){
+            document.getElementById("response").innerHTML = this.responseText;
+        }
+    }
+    xhr.open("GET","http://localhost:8082/LinAlg/Operations/transpose/"+ID);
+    xhr.send();
+}

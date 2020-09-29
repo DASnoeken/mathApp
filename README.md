@@ -12,3 +12,4 @@ Currently, the app contains the following:
 - Randomly generated math problems to work on your ability to solve systems of equations.
 - An actual calculator that requires a string as input.
 - Currency converter that's automatically updated.
+- Basic linear algebra.

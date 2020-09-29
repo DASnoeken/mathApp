@@ -129,7 +129,7 @@ public class LinearAlgebraEndpoint {
 				+ "<td class=\"MatrixEquationColumn\">" + m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
 		return ans;
 	}
-	
+
 	@GetMapping("/LinAlg/Operations/multiply/{id1}/{id2}")
 	public String multiplyMatrices(@PathVariable int id1, @PathVariable int id2) {
 		if (id1 >= matrices.size() || id2 >= matrices.size()) {
@@ -138,16 +138,34 @@ public class LinearAlgebraEndpoint {
 		Matrix m;
 		try {
 			m = matrices.get(id1).multiply(matrices.get(id2));
-		}catch(IllegalArgumentException iae) {
+		} catch (IllegalArgumentException iae) {
 			return iae.getMessage();
 		}
-		matrices.add(m);
 		m.setId(this.lastId);
 		this.lastId++;
+		matrices.add(m);
 		String ans = new String();
 		ans += "<table class=\"matrixEquation\">\r\n" + "<tr class=\"MatrixEquationRow\">\r\n"
 				+ "<td class=\"MatrixEquationColumn\">";
-		ans += matrices.get(id1).toHTMLString() + "</td>\r\n"+ "<td class=\"MatrixEquationColumn\">" + matrices.get(id2).toHTMLString()
+		ans += matrices.get(id1).toHTMLString() + "</td>\r\n" + "<td class=\"MatrixEquationColumn\">"
+				+ matrices.get(id2).toHTMLString() + "</td class=\"MatrixEquationColumn\">\r\n" + "<td> = </td>\r\n"
+				+ "<td class=\"MatrixEquationColumn\">" + m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
+		return ans;
+	}
+
+	@GetMapping("/LinAlg/Operations/transpose/{id}")
+	public String transposeMatrix(@PathVariable int id) {
+		if (id >= matrices.size()) {
+			return "ID not found!";
+		}
+		String ans = new String();
+		Matrix m = matrices.get(id).transposeMatrix();
+		m.setId(this.lastId);
+		this.lastId++;
+		matrices.add(m);
+		ans += "<table class=\"matrixEquation\">\r\n" + "<tr class=\"MatrixEquationRow\">\r\n"
+				+ "<td class=\"MatrixEquationColumn\">";
+		ans += matrices.get(id).toHTMLString() + "<sup>T</sup></td>\r\n" + "<td class=\"MatrixEquationColumn\">"
 				+ "</td class=\"MatrixEquationColumn\">\r\n" + "<td> = </td>\r\n"
 				+ "<td class=\"MatrixEquationColumn\">" + m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
 		return ans;

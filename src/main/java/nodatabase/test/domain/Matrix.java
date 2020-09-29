@@ -8,6 +8,11 @@ public class Matrix {
 	private Vector<Vector<Double>> matrix;
 	private String errormessage;
 	private int id;
+	private String inputString;
+
+	public String getInputString() {
+		return inputString;
+	}
 
 	public int getId() {
 		return id;
@@ -40,6 +45,7 @@ public class Matrix {
 	}
 
 	public void stringToMatrix(String s) {
+		this.inputString = s;
 		String[] rows = s.split(";");
 		for (int i = 0; i < rows.length; i++) {
 			String[] elements = rows[i].split(",");
@@ -106,6 +112,30 @@ public class Matrix {
 		return ans;
 	}
 
+	public Matrix transposeMatrix() {
+		Matrix m = new Matrix(this.columnsCount, this.rowsCount);
+		if (this.getInputString() != null) {
+			String newInputString = this.getInputString();
+			if (newInputString.contains(",")) {
+				newInputString = this.getInputString().replace(',', '*');
+			}
+			if (newInputString.contains(";")) {
+				newInputString = newInputString.replace(';', ',');
+			}
+			if (newInputString.contains("*")) {
+				newInputString = newInputString.replace('*', ';');
+			}
+			m.stringToMatrix(newInputString);
+		}else {
+			for(int i=0;i<getRowsCount();i++) {
+				for(int j=0;j<getColumnsCount();j++) {
+					m.setMatrixElement(j, i, this.matrix.get(i).get(j));
+				}
+			}
+		}
+		return m;
+	}
+
 	public Vector<Vector<Double>> getMatrix() {
 		return matrix;
 	}
@@ -134,9 +164,9 @@ public class Matrix {
 		String ans = new String();
 		for (int i = 0; i < rowsCount; i++) {
 			for (int j = 0; j < columnsCount; j++) {
-				if(j==columnsCount-1) {
+				if (j == columnsCount - 1) {
 					ans += this.matrix.get(i).get(j);
-				}else {
+				} else {
 					ans += (this.matrix.get(i).get(j) + ", ");
 				}
 			}
@@ -147,15 +177,15 @@ public class Matrix {
 
 	public String toHTMLString() {
 		String ans = new String();
-		ans+="<table class=matrix>";
+		ans += "<table class=matrix>";
 		for (int i = 0; i < rowsCount; i++) {
 			ans += "<tr>";
 			for (int j = 0; j < columnsCount; j++) {
-				ans += ("<td class=matrixColumn>"+this.matrix.get(i).get(j) + "</td>");
+				ans += ("<td class=matrixColumn>" + this.matrix.get(i).get(j) + "</td>");
 			}
 			ans += "</tr>";
 		}
-		ans+="</table>";
+		ans += "</table>";
 		return ans;
 	}
 }
