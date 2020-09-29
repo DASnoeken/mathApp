@@ -114,23 +114,9 @@ public class Matrix {
 
 	public Matrix transposeMatrix() {
 		Matrix m = new Matrix(this.columnsCount, this.rowsCount);
-		if (this.getInputString() != null) {
-			String newInputString = this.getInputString();
-			if (newInputString.contains(",")) {
-				newInputString = this.getInputString().replace(',', '*');
-			}
-			if (newInputString.contains(";")) {
-				newInputString = newInputString.replace(';', ',');
-			}
-			if (newInputString.contains("*")) {
-				newInputString = newInputString.replace('*', ';');
-			}
-			m.stringToMatrix(newInputString);
-		}else {
-			for(int i=0;i<getRowsCount();i++) {
-				for(int j=0;j<getColumnsCount();j++) {
-					m.setMatrixElement(j, i, this.matrix.get(i).get(j));
-				}
+		for (int i = 0; i < getRowsCount(); i++) {
+			for (int j = 0; j < getColumnsCount(); j++) {
+				m.setMatrixElement(j, i, this.matrix.get(i).get(j));
 			}
 		}
 		return m;

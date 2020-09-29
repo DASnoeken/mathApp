@@ -52,11 +52,14 @@ public class LinearAlgebraEndpoint {
 
 	@GetMapping("/LinAlg/getAllMatrixStrings")
 	public String getAllMatrixStrings() {
-		String ans = new String();
+		String ans = "<table class=\"matrixEquation\">\r\n";
 		for (Matrix m : this.matrices) {
-			ans += "Matrix(id = " + m.getId() + ") = ";
-			ans += m.toHTMLString() + "<br>";
+			ans += "<tr class=\"MatrixEquationRow\">\r\n" + "<td class=\"MatrixEquationColumn\">" + "Matrix(id = "
+					+ m.getId()
+					+ ")</td><td class=\"MatrixEquationColumn\"> = </td><td class=\"MatrixEquationColumn\">";
+			ans += m.toHTMLString() + "</td></tr>";
 		}
+		ans += "</td>\r\n" + "</tr>\r\n" + "</table>";
 		if (!ans.equals(""))
 			return ans;
 		else
@@ -165,7 +168,7 @@ public class LinearAlgebraEndpoint {
 		matrices.add(m);
 		ans += "<table class=\"matrixEquation\">\r\n" + "<tr class=\"MatrixEquationRow\">\r\n"
 				+ "<td class=\"MatrixEquationColumn\">";
-		ans += matrices.get(id).toHTMLString() + "<sup>T</sup></td>\r\n" + "<td class=\"MatrixEquationColumn\">"
+		ans += matrices.get(id).toHTMLString() + "</td><td>T</td>\r\n" + "<td class=\"MatrixEquationColumn\">"
 				+ "</td class=\"MatrixEquationColumn\">\r\n" + "<td> = </td>\r\n"
 				+ "<td class=\"MatrixEquationColumn\">" + m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
 		return ans;

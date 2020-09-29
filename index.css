@@ -23,6 +23,7 @@
 
 .matrixEquation{
     width:auto;
+    display: inline-block;
 }
 
 .MatrixEquationRow{
