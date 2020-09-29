@@ -186,7 +186,7 @@ function gotoLinAlg() {
     document.getElementById("LinAlgOperationsScreen").hidden = true;
     document.getElementById("response").innerHTML = "Response area";
 }
-function gotoLinAlgOperations(){
+function gotoLinAlgOperations() {
     document.getElementById("input").hidden = true;
     document.getElementById("Gamescreen").hidden = true;
     document.getElementById("UnitConversionDiv").hidden = true;
@@ -525,20 +525,38 @@ function printAllMatrices() {
 function clearAllMatrices() {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
-        if(this.readyState == 4){
+        if (this.readyState == 4) {
             document.getElementById("response").innerHTML = "Memory cleared!";
         }
     }
-    xhr.open("DELETE","http://localhost:8082/LinAlg/clearMatrices");
+    xhr.open("DELETE", "http://localhost:8082/LinAlg/clearMatrices");
     xhr.send();
 }
-function addMatrix(ID1,ID2){
+function addMatrix(ID1, ID2) {
+    if(isNaN(ID1) || isNaN(ID2)){
+        document.getElementById("response").innerHTML = "Only use numbers for the ID's!";
+        return;
+    }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
-        if(this.readyState == 4){
+        if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET","http://localhost:8082/LinAlg/Operations/add/"+ID1+"/"+ID2);
+    xhr.open("GET", "http://localhost:8082/LinAlg/Operations/add/" + ID1 + "/" + ID2);
+    xhr.send();
+}
+function multiplyMatrix(ID1, ID2) {
+    if(isNaN(ID1) || isNaN(ID2)){
+        document.getElementById("response").innerHTML = "Only use numbers for the ID's!";
+        return;
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if(this.readyState==4){
+            document.getElementById("response").innerHTML = this.responseText;
+        }
+    }
+    xhr.open("GET","http://localhost:8082/LinAlg/Operations/multiply/"+ID1+"/"+ID2);
     xhr.send();
 }

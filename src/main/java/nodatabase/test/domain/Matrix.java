@@ -68,14 +68,10 @@ public class Matrix {
 	}
 
 	public Matrix multiply(Matrix m) {
-		try {
-			if (columnsCount != m.getRowsCount()) {
-				System.out.println("Inner dimension mismatch");
-				this.errormessage = "Inner dimension mismatch";
-				throw new IllegalArgumentException(errormessage);
-			}
-		} catch (IllegalArgumentException iae) {
-			//return iae.getMessage();
+		if (columnsCount != m.getRowsCount()) {
+			System.out.println("Inner dimension mismatch");
+			this.errormessage = "Inner dimension mismatch";
+			throw new IllegalArgumentException(errormessage);
 		}
 		Matrix ans = new Matrix(rowsCount, m.getColumnsCount());
 		Vector<Double> row = null;
