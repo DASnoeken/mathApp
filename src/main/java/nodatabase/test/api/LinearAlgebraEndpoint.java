@@ -254,4 +254,22 @@ public class LinearAlgebraEndpoint {
 				+ determinant + "</td>\r\n" + "</tr>\r\n" + "</table>";
 		return ans;
 	}
+	
+	@GetMapping("/LinAlg/Operations/ref/{id}")
+	public String getRef(@PathVariable int id) {
+		if (id >= matrices.size()) {
+			return "ID not found!";
+		}
+		String ans = new String();
+		Matrix m = matrices.get(id).ref();
+		matrices.add(m);
+		m.setId(this.lastId);
+		this.lastId++;
+		ans += "<table class=\"matrixEquation\">\r\n" + "<tr class=\"MatrixEquationRow\">\r\n"
+				+ "<td class=\"MatrixEquationColumn\">";
+		ans += "REF:</td><td class=\"MatrixEquationColumn\">" + matrices.get(id).toHTMLString()
+				+ "</td><td class=\"MatrixEquationColumn\"> = </td>\r\n" + "<td class=\"MatrixEquationColumn\">"
+				+ m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
+		return ans;
+	}
 }

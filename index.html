@@ -287,8 +287,11 @@
             onclick="multiplyMatrix(IDMatrix1Mult.value,IDMatrix2Mult.value)">Multiplication</button><br>
         <input type="text" value="ID" id="IDMatrixTrans"> <button class="buttons"
             onclick="transposeMatrix(IDMatrixTrans.value)">Transpose</button><br>
+        <input type="text" value="ID" id="IDREF"> <button class="buttons" onclick="ref(IDREF.value)">REF</button><br>
         <input type="text" value="ID" id="IDRREF"> <button class="buttons" onclick="rref(IDRREF.value)">RREF</button><br>
-        <input type="text" value="ID" id="IDdet"> <button class="buttons" onclick="determinant(IDdet.value)">Determinant</button>
+        <input type="text" value="ID" id="IDdet"> <button class="buttons" onclick="determinant(IDdet.value)">Determinant</button><br>
+
+        <button class="buttons" onclick="printAllMatrices()">Print all matrices</button>
     </div>
     <br>
     <div id="response">Response area</div>
