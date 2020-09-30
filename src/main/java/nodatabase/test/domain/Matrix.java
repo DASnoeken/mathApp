@@ -243,8 +243,6 @@ public class Matrix {
 				m.setMatrixElement(i, j, this.matrix.get(i).get(j));
 			}
 		}
-		m.printElements();
-		System.out.println("-----------------------------------------------------\n");
 		for (int rowIndex = 0; rowIndex < getRowsCount(); rowIndex++) {
 			if (m.getMatrix().get(rowIndex).get(rowIndex) == 0) {
 				if (rowIndex < getRowsCount() - 1) {
@@ -263,14 +261,10 @@ public class Matrix {
 					for (int col = 0; col < getColumnsCount(); col++) {
 						m.getMatrix().get(row).set(col, m.getMatrix().get(row).get(col)
 								- m.getMatrix().get(rowIndex).get(col) * multcol / multrow);
-						System.out.println(multcol + "/" + multrow + " = " + multcol / multrow + "\n");
-						m.printElements();
-						System.out.println("----------------------------------\n");
 					}
 				}
 			}
 		}
-		m.printElements();
 		return m;
 	}
 
