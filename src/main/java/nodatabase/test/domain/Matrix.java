@@ -1,5 +1,6 @@
 package nodatabase.test.domain;
 
+import java.math.BigDecimal;
 import java.util.Vector;
 
 public class Matrix {
@@ -10,6 +11,7 @@ public class Matrix {
 	private int id;
 	private String inputString;
 	private double rrMult; // help for determinant
+	private final double thresh = 1e-10;
 
 	public double getRrMult() {
 		return rrMult;
@@ -62,6 +64,23 @@ public class Matrix {
 
 	public void setMatrixElement(int n, int m, double value) {
 		Vector<Double> row = new Vector<>();// this.matrix.get(n);
+		
+		//First part deals with precision problems, e.g. 0.99999999999999 would show up instead of 1.0
+		if(Math.abs(value)<=thresh) {
+			value=0.0;
+		}
+		if(BigDecimal.valueOf(value).scale() > 5) {
+			Double tmp = value;
+			String tmpString = Double.toString(tmp);
+			if(tmpString.matches("\\d{0,}\\.\\d{0,3}0{3,}\\d{0,}")) {
+				tmpString = tmpString.replaceAll("0{3}[1-9]{0,}$", "");
+				value = Double.valueOf(tmpString);
+			}else if(tmpString.matches("\\d{1,}\\.9{5,}\\d{0,}")) {
+				value = Math.round(value);
+			}
+		}
+		
+		//Filling matrix element
 		for (int i = 0; i < columnsCount; i++) {
 			row.add(matrix.get(n).get(i));
 		}

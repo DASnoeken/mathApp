@@ -2,6 +2,8 @@ package nodatabase.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.math.BigDecimal;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -26,6 +28,20 @@ class TestApplicationTests {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		double value = 300052.000000009;
+		System.out.println(BigDecimal.valueOf(value).scale());
+		if(BigDecimal.valueOf(value).scale() > 5) {
+			Double tmp = value;
+			String tmpString = Double.toString(tmp);
+			if(tmpString.matches("\\d{0,}\\.\\d{0,3}0{3,}\\d{0,}")) {
+				System.out.println("jojo");
+				tmpString = tmpString.replaceAll("0{3}[1-9]{0,}$", "");
+			}
+			value = Double.valueOf(tmpString);
+		}
+		System.out.println(value);
+		
+		
 	}
 
 }
