@@ -275,6 +275,8 @@
     </div>
     <div id="LinAlgOperationsScreen" class="main" hidden>
         <button class="buttons" onclick="gotoLinAlg()">Back</button><br>
+        <input type="text" value="ID Matrix" id="IDMatrixScale"> <input type="text" value="Scalar" id="MatrixScalar">
+        <button class="buttons" onclick="scaleMatrix(IDMatrixScale.value,MatrixScalar.value)">Scale</button><br>
         <input type="text" value="ID 1" id="IDMatrix1Add"> <input type="text" value="ID 2" id="IDMatrix2Add"> <button
             class="buttons" onclick="addMatrix(IDMatrix1Add.value,IDMatrix2Add.value)">Addition</button><br>
         <input type="text" value="ID 1" id="IDMatrix1Subtract"> <input type="text" value="ID 2" id="IDMatrix2Subtract">

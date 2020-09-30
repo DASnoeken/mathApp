@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -211,6 +212,24 @@ public class LinearAlgebraEndpoint {
 		ans += "<table class=\"matrixEquation\">\r\n" + "<tr class=\"MatrixEquationRow\">\r\n"
 				+ "<td class=\"MatrixEquationColumn\">";
 		ans += "RREF:</td><td class=\"MatrixEquationColumn\">" + matrices.get(id).toHTMLString()
+				+ "</td><td class=\"MatrixEquationColumn\"> = </td>\r\n" + "<td class=\"MatrixEquationColumn\">"
+				+ m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
+		return ans;
+	}
+	
+	@GetMapping("/LinAlg/Operations/scale/{id}")
+	public String scaleMatrix(@PathVariable int id, @RequestParam Double scalar) {
+		if (id >= matrices.size()) {
+			return "ID not found!";
+		}
+		String ans = new String();
+		Matrix m = matrices.get(id).scale(scalar);
+		matrices.add(m);
+		m.setId(this.lastId);
+		this.lastId++;
+		ans += "<table class=\"matrixEquation\">\r\n" + "<tr class=\"MatrixEquationRow\">\r\n"
+				+ "<td class=\"MatrixEquationColumn\">";
+		ans += scalar+"</td><td class=\"MatrixEquationColumn\">" + matrices.get(id).toHTMLString()
 				+ "</td><td class=\"MatrixEquationColumn\"> = </td>\r\n" + "<td class=\"MatrixEquationColumn\">"
 				+ m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
 		return ans;

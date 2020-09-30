@@ -606,3 +606,17 @@ function rref(ID){
     xhr.open("GET","http://localhost:8082/LinAlg/Operations/rref/"+ID);
     xhr.send();
 }
+function scaleMatrix(ID,Scalar){
+    if(isNaN(ID) || isNaN(Scalar)){
+        document.getElementById("response").innerHTML = "Only use numbers for the ID and scalar!";
+        return;
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if(this.readyState==4){
+            document.getElementById("response").innerHTML = this.responseText;
+        }
+    }
+    xhr.open("GET","http://localhost:8082/LinAlg/Operations/scale/"+ID+"/?scalar="+Scalar);
+    xhr.send();
+}
