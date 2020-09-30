@@ -146,16 +146,20 @@ public class Matrix {
 			}
 		}
 		for (int rowIndex = 0; rowIndex < getRowsCount(); rowIndex++) {
+			if(m.getMatrix().get(rowIndex).get(rowIndex)==0) {
+				if(rowIndex<getRowsCount()-1) {
+					m=Matrix.swapRows(m, rowIndex, rowIndex+1);
+				}else {
+					m=Matrix.swapRows(m, rowIndex, rowIndex-1);
+				}
+			}
 			Vector<Double> currentRow = m.getMatrix().get(rowIndex);
 			Double divisor = currentRow.get(rowIndex);
 			for (int j = 0; j < getColumnsCount(); j++) {
 				m.setMatrixElement(rowIndex, j, currentRow.get(j) / divisor); //gets a 1 on diagonal
 			}
-			System.out.println("-----------"+rowIndex+"------------------");
-			m.printElements();
-		}
-		for (int rowIndex = 0; rowIndex < getRowsCount(); rowIndex++) {
-			for (int i = 0; i < getRowsCount(); i++) {
+			
+			for(int i=0;i<getRowsCount();i++) {
 				if (i == rowIndex) {
 					continue;
 				}
@@ -166,8 +170,34 @@ public class Matrix {
 					subtracter.set(j, rowMultiplicant * m.getMatrix().get(rowIndex).get(j));
 					m.setMatrixElement(i, j, m.getMatrix().get(i).get(j) - subtracter.get(j));
 				}
-				if(m.getMatrix().get(i).get(i)==0) {
-					m=Matrix.swapRows(m, i, i+1);
+			}
+		}
+		for (int rowIndex = 0; rowIndex < getRowsCount(); rowIndex++) {
+			if(m.getMatrix().get(rowIndex).get(rowIndex)==0) {
+				if(rowIndex<getRowsCount()-1) {
+					m=Matrix.swapRows(m, rowIndex, rowIndex+1);
+				}
+			}
+		}
+		for (int rowIndex = 0; rowIndex < getRowsCount(); rowIndex++) {
+			if(m.getMatrix().get(rowIndex).get(rowIndex)!=1 &&  m.getMatrix().get(rowIndex).get(rowIndex)!=0) {
+				Vector<Double> currentRow = m.getMatrix().get(rowIndex);
+				Double divisor = currentRow.get(rowIndex);
+				for (int j = 0; j < getColumnsCount(); j++) {
+					m.setMatrixElement(rowIndex, j, currentRow.get(j) / divisor); //gets a 1 on diagonal
+				}
+				
+				for(int i=0;i<getRowsCount();i++) {
+					if (i == rowIndex) {
+						continue;
+					}
+					Double rowMultiplicant = m.getMatrix().get(i).get(rowIndex);
+					Vector<Double> subtracter = new Vector<Double>();// m.getMatrix().get(rowIndex);
+					subtracter.setSize(getColumnsCount());
+					for (int j = 0; j < getColumnsCount(); j++) {
+						subtracter.set(j, rowMultiplicant * m.getMatrix().get(rowIndex).get(j));
+						m.setMatrixElement(i, j, m.getMatrix().get(i).get(j) - subtracter.get(j));
+					}
 				}
 			}
 		}
