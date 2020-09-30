@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import nodatabase.test.domain.Matrix;
 import nodatabase.test.domain.MatrixDimensionException;
+import nodatabase.test.domain.MatrixException;
 
 @RestController
 public class LinearAlgebraEndpoint {
@@ -268,6 +269,34 @@ public class LinearAlgebraEndpoint {
 		ans += "<table class=\"matrixEquation\">\r\n" + "<tr class=\"MatrixEquationRow\">\r\n"
 				+ "<td class=\"MatrixEquationColumn\">";
 		ans += "REF:</td><td class=\"MatrixEquationColumn\">" + matrices.get(id).toHTMLString()
+				+ "</td><td class=\"MatrixEquationColumn\"> = </td>\r\n" + "<td class=\"MatrixEquationColumn\">"
+				+ m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
+		return ans;
+	}
+	
+	@GetMapping("/LinAlg/Operations/inverse/{id}")
+	public String getInverse(@PathVariable int id) {
+		if (id >= matrices.size()) {
+			return "ID not found!";
+		}
+		String ans = new String();
+		Matrix m;
+		try {
+			m = matrices.get(id).inverse();
+		} catch (MatrixDimensionException e) {
+			return e.getMessage();
+		} catch(MatrixException e) {
+			return e.getMessage();
+		} catch(Exception e) {
+			e.printStackTrace();
+			return e.getMessage();
+		}
+		matrices.add(m);
+		m.setId(this.lastId);
+		this.lastId++;
+		ans += "<table class=\"matrixEquation\">\r\n" + "<tr class=\"MatrixEquationRow\">\r\n"
+				+ "<td class=\"MatrixEquationColumn\">";
+		ans += "inverse:</td><td class=\"MatrixEquationColumn\">" + matrices.get(id).toHTMLString()
 				+ "</td><td class=\"MatrixEquationColumn\"> = </td>\r\n" + "<td class=\"MatrixEquationColumn\">"
 				+ m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
 		return ans;

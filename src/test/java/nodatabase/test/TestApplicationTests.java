@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import nodatabase.test.api.LinearAlgebraEndpoint;
 import nodatabase.test.domain.Matrix;
 import nodatabase.test.domain.MatrixDimensionException;
+import nodatabase.test.domain.MatrixException;
 
 @SpringBootTest
 class TestApplicationTests {
@@ -15,15 +16,16 @@ class TestApplicationTests {
 	@Test
 	void contextLoads() {
 		Matrix m = new Matrix(3,3);
-		m.stringToMatrix("3,2,5;6,4,2;7,8,1");
-		double det = 0.0;
+		m.stringToMatrix("1,3,2;6,8,7;3,9,5");
 		try {
-			det = Matrix.determinant(m);
+			m.inverse();
 		} catch (MatrixDimensionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (MatrixException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		assertEquals(80, det);
 	}
 
 }

@@ -281,6 +281,36 @@ public class Matrix {
 		return ans;
 	}
 
+	public Matrix inverse() throws MatrixDimensionException, MatrixException {
+		if (getRowsCount() != getColumnsCount() || Matrix.determinant(this) == 0) {
+			throw new MatrixException("Non-invertible matrix");
+		}
+		Matrix m = new Matrix(getRowsCount(), 2 * getColumnsCount());
+		for (int i = 0; i < getRowsCount(); i++) {
+			for (int j = 0; j < getColumnsCount(); j++) {
+				m.setMatrixElement(i, j, this.getMatrix().get(i).get(j));
+			}
+			for (int j = getColumnsCount(); j < 2 * getColumnsCount(); j++) {
+				double value;
+				if (i == j-getColumnsCount()) {
+					value = 1.0;
+				} else {
+					value = 0.0;
+				}
+				m.setMatrixElement(i, j, value);
+			}
+		}
+		m.printElements();
+		m = m.rref();
+		Matrix m2 = new Matrix(getRowsCount(), getColumnsCount());
+		for (int i = 0; i < getRowsCount(); i++) {
+			for (int j = 0; j < getColumnsCount(); j++) {
+				m2.setMatrixElement(i, j, m.getMatrix().get(i).get(getColumnsCount()+j));
+			}
+		}
+		return m2;
+	}
+
 	public Vector<Vector<Double>> getMatrix() {
 		return matrix;
 	}

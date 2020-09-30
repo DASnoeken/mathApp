@@ -1,7 +1,8 @@
 package nodatabase.test.domain;
 
-@SuppressWarnings("serial")
-public class MatrixDimensionException extends Exception{
+public class MatrixDimensionException extends MatrixException{
+	private static final long serialVersionUID = 1L;
+	
 	public MatrixDimensionException(String message) {
 		super(message);
 	}

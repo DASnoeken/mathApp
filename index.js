@@ -648,3 +648,17 @@ function determinant(ID){
     xhr.open("GET","http://localhost:8082/LinAlg/Operations/determinant/"+ID);
     xhr.send();
 }
+function inverse(ID){
+    if(isNaN(ID)){
+        document.getElementById("response").innerHTML = "Only use numbers for the ID!";
+        return;
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if(this.readyState==4){
+            document.getElementById("response").innerHTML = this.responseText;
+        }
+    }
+    xhr.open("GET","http://localhost:8082/LinAlg/Operations/inverse/"+ID);
+    xhr.send();
+}
