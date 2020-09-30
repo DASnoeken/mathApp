@@ -221,7 +221,7 @@ public class Matrix {
 	}
 
 	public Matrix scale(Double scalar) {
-		Matrix m = new Matrix(this.rowsCount,this.columnsCount);
+		Matrix m = new Matrix(this.rowsCount,this.columnsCount); 
 		for(int rows=0;rows<this.rowsCount;rows++) {
 			for(int cols=0;cols<this.columnsCount;cols++) {
 				m.setMatrixElement(rows, cols, this.matrix.get(rows).get(cols)*scalar);
