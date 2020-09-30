@@ -58,7 +58,11 @@ public class Derivative {
 		}
 		specializeTerms();
 		String result = new String();
-		result = powerRule();
+		try {
+			result = powerRule();
+		} catch (MatrixDimensionException e) {
+			e.printStackTrace();
+		}
 		if(result.length()>0) {
 			result += " + ";
 		}
@@ -266,7 +270,7 @@ public class Derivative {
 		return ans;
 	}
 	
-	private String powerRule() {
+	private String powerRule() throws MatrixDimensionException {
 		StringBuilder result = new StringBuilder();
 		powerruleMatrix = new Matrix(polynomialTerms.size(),polynomialTerms.size());
 		Matrix coefficients = new Matrix(polynomialTerms.size(),1);

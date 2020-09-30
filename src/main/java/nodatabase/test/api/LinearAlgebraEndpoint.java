@@ -118,8 +118,8 @@ public class LinearAlgebraEndpoint {
 		Matrix m;
 		try {
 			m = matrices.get(id1).add(matrices.get(id2));
-		} catch (IllegalArgumentException iae) {
-			return iae.getMessage();
+		} catch (MatrixDimensionException mde) {
+			return mde.getMessage();
 		}
 		matrices.add(m);
 		m.setId(this.lastId);
@@ -142,8 +142,8 @@ public class LinearAlgebraEndpoint {
 		Matrix m;
 		try {
 			m = matrices.get(id1).multiply(matrices.get(id2));
-		} catch (IllegalArgumentException iae) {
-			return iae.getMessage();
+		} catch (MatrixDimensionException mde) {
+			return mde.getMessage();
 		}
 		m.setId(this.lastId);
 		this.lastId++;
@@ -183,8 +183,8 @@ public class LinearAlgebraEndpoint {
 		Matrix m;
 		try {
 			m = matrices.get(id1).subtract(matrices.get(id2));
-		} catch (IllegalArgumentException iae) {
-			return iae.getMessage();
+		} catch (MatrixDimensionException mde) {
+			return mde.getMessage();
 		}
 		matrices.add(m);
 		m.setId(this.lastId);
@@ -232,6 +232,26 @@ public class LinearAlgebraEndpoint {
 		ans += scalar+"</td><td class=\"MatrixEquationColumn\">" + matrices.get(id).toHTMLString()
 				+ "</td><td class=\"MatrixEquationColumn\"> = </td>\r\n" + "<td class=\"MatrixEquationColumn\">"
 				+ m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
+		return ans;
+	}
+	
+	@GetMapping("/LinAlg/Operations/determinant/{id}")
+	public String determinant(@PathVariable int id) {
+		if (id >= matrices.size()) {
+			return "ID not found!";
+		}
+		String ans = new String();
+		double determinant;
+		try {
+			determinant = Matrix.determinant(matrices.get(id));
+		}catch(MatrixDimensionException mde) {
+			return mde.getMessage();
+		}
+		ans += "<table class=\"matrixEquation\">\r\n" + "<tr class=\"MatrixEquationRow\">\r\n"
+				+ "<td class=\"MatrixEquationColumn\">";
+		ans += "det:</td><td class=\"MatrixEquationColumn\">" + matrices.get(id).toHTMLString()
+				+ "</td><td class=\"MatrixEquationColumn\"> = </td>\r\n" + "<td class=\"MatrixEquationColumn\">"
+				+ determinant + "</td>\r\n" + "</tr>\r\n" + "</table>";
 		return ans;
 	}
 }

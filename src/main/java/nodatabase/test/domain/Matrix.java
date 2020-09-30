@@ -9,6 +9,11 @@ public class Matrix {
 	private String errormessage;
 	private int id;
 	private String inputString;
+	private double rrMult; // help for determinant
+
+	public double getRrMult() {
+		return rrMult;
+	}
 
 	public String getInputString() {
 		return inputString;
@@ -73,11 +78,11 @@ public class Matrix {
 		}
 	}
 
-	public Matrix multiply(Matrix m) {
+	public Matrix multiply(Matrix m) throws MatrixDimensionException {
 		if (columnsCount != m.getRowsCount()) {
 			System.out.println("Inner dimension mismatch");
 			this.errormessage = "Inner dimension mismatch";
-			throw new IllegalArgumentException(errormessage);
+			throw new MatrixDimensionException(errormessage);
 		}
 		Matrix ans = new Matrix(rowsCount, m.getColumnsCount());
 		Vector<Double> row = null;
@@ -96,11 +101,11 @@ public class Matrix {
 		return ans;
 	}
 
-	public Matrix add(Matrix m) {
+	public Matrix add(Matrix m) throws MatrixDimensionException {
 		if (rowsCount != m.getRowsCount() || columnsCount != m.getColumnsCount()) {
 			System.out.println("Matrices need same dimensions");
 			this.errormessage = "Matrices need same dimensions";
-			throw new IllegalArgumentException("Matrices need same dimensions");
+			throw new MatrixDimensionException("Matrices need same dimensions");
 		}
 		Matrix ans = new Matrix(rowsCount, columnsCount);
 		for (int i = 0; i < rowsCount; i++) {
@@ -112,11 +117,11 @@ public class Matrix {
 		return ans;
 	}
 
-	public Matrix subtract(Matrix m) {
+	public Matrix subtract(Matrix m) throws MatrixDimensionException {
 		if (rowsCount != m.getRowsCount() || columnsCount != m.getColumnsCount()) {
 			System.out.println("Matrices need same dimensions");
 			this.errormessage = "Matrices need same dimensions";
-			throw new IllegalArgumentException("Matrices need same dimensions");
+			throw new MatrixDimensionException("Matrices need same dimensions");
 		}
 		Matrix ans = new Matrix(rowsCount, columnsCount);
 		for (int i = 0; i < rowsCount; i++) {
@@ -138,7 +143,7 @@ public class Matrix {
 		return m;
 	}
 
-	public Matrix rref() {
+	public Matrix rref() { // reduced row echelon form
 		Matrix m = new Matrix(this.rowsCount, this.columnsCount);
 		for (int i = 0; i < getRowsCount(); i++) {
 			for (int j = 0; j < getColumnsCount(); j++) {
@@ -146,20 +151,20 @@ public class Matrix {
 			}
 		}
 		for (int rowIndex = 0; rowIndex < getRowsCount(); rowIndex++) {
-			if(m.getMatrix().get(rowIndex).get(rowIndex)==0) {
-				if(rowIndex<getRowsCount()-1) {
-					m=Matrix.swapRows(m, rowIndex, rowIndex+1);
-				}else {
-					m=Matrix.swapRows(m, rowIndex, rowIndex-1);
+			if (m.getMatrix().get(rowIndex).get(rowIndex) == 0) {
+				if (rowIndex < getRowsCount() - 1) {
+					m = Matrix.swapRows(m, rowIndex, rowIndex + 1);
+				} else {
+					m = Matrix.swapRows(m, rowIndex, rowIndex - 1);
 				}
 			}
 			Vector<Double> currentRow = m.getMatrix().get(rowIndex);
 			Double divisor = currentRow.get(rowIndex);
 			for (int j = 0; j < getColumnsCount(); j++) {
-				m.setMatrixElement(rowIndex, j, currentRow.get(j) / divisor); //gets a 1 on diagonal
+				m.setMatrixElement(rowIndex, j, currentRow.get(j) / divisor); // gets a 1 on diagonal
 			}
-			
-			for(int i=0;i<getRowsCount();i++) {
+
+			for (int i = 0; i < getRowsCount(); i++) {
 				if (i == rowIndex) {
 					continue;
 				}
@@ -173,21 +178,21 @@ public class Matrix {
 			}
 		}
 		for (int rowIndex = 0; rowIndex < getRowsCount(); rowIndex++) {
-			if(m.getMatrix().get(rowIndex).get(rowIndex)==0) {
-				if(rowIndex<getRowsCount()-1) {
-					m=Matrix.swapRows(m, rowIndex, rowIndex+1);
+			if (m.getMatrix().get(rowIndex).get(rowIndex) == 0) {
+				if (rowIndex < getRowsCount() - 1) {
+					m = Matrix.swapRows(m, rowIndex, rowIndex + 1);
 				}
 			}
 		}
 		for (int rowIndex = 0; rowIndex < getRowsCount(); rowIndex++) {
-			if(m.getMatrix().get(rowIndex).get(rowIndex)!=1 &&  m.getMatrix().get(rowIndex).get(rowIndex)!=0) {
+			if (m.getMatrix().get(rowIndex).get(rowIndex) != 1 && m.getMatrix().get(rowIndex).get(rowIndex) != 0) {
 				Vector<Double> currentRow = m.getMatrix().get(rowIndex);
 				Double divisor = currentRow.get(rowIndex);
 				for (int j = 0; j < getColumnsCount(); j++) {
-					m.setMatrixElement(rowIndex, j, currentRow.get(j) / divisor); //gets a 1 on diagonal
+					m.setMatrixElement(rowIndex, j, currentRow.get(j) / divisor); // gets a 1 on diagonal
 				}
-				
-				for(int i=0;i<getRowsCount();i++) {
+
+				for (int i = 0; i < getRowsCount(); i++) {
 					if (i == rowIndex) {
 						continue;
 					}
@@ -203,17 +208,17 @@ public class Matrix {
 		}
 		return m;
 	}
-	
+
 	public static Matrix swapRows(Matrix m, int row1, int row2) {
 		Vector<Double> first = new Vector<Double>();
 		Vector<Double> second = new Vector<Double>();
 		first.setSize(m.getColumnsCount());
 		second.setSize(m.getColumnsCount());
-		for(int i=0;i<m.getColumnsCount();i++) {
+		for (int i = 0; i < m.getColumnsCount(); i++) {
 			first.set(i, m.getMatrix().get(row1).get(i));
 			second.set(i, m.getMatrix().get(row2).get(i));
 		}
-		for(int i=0;i<m.getColumnsCount();i++) {
+		for (int i = 0; i < m.getColumnsCount(); i++) {
 			m.setMatrixElement(row1, i, second.get(i));
 			m.setMatrixElement(row2, i, first.get(i));
 		}
@@ -221,15 +226,67 @@ public class Matrix {
 	}
 
 	public Matrix scale(Double scalar) {
-		Matrix m = new Matrix(this.rowsCount,this.columnsCount); 
-		for(int rows=0;rows<this.rowsCount;rows++) {
-			for(int cols=0;cols<this.columnsCount;cols++) {
-				m.setMatrixElement(rows, cols, this.matrix.get(rows).get(cols)*scalar);
+		Matrix m = new Matrix(this.rowsCount, this.columnsCount);
+		for (int rows = 0; rows < this.rowsCount; rows++) {
+			for (int cols = 0; cols < this.columnsCount; cols++) {
+				m.setMatrixElement(rows, cols, this.matrix.get(rows).get(cols) * scalar);
 			}
 		}
 		return m;
 	}
-	
+
+	public Matrix ref() {
+		this.rrMult = 1.0;
+		Matrix m = new Matrix(this.rowsCount, this.columnsCount);
+		for (int i = 0; i < getRowsCount(); i++) {
+			for (int j = 0; j < getColumnsCount(); j++) {
+				m.setMatrixElement(i, j, this.matrix.get(i).get(j));
+			}
+		}
+		m.printElements();
+		System.out.println("-----------------------------------------------------\n");
+		for (int rowIndex = 0; rowIndex < getRowsCount(); rowIndex++) {
+			if (m.getMatrix().get(rowIndex).get(rowIndex) == 0) {
+				if (rowIndex < getRowsCount() - 1) {
+					m = Matrix.swapRows(m, rowIndex, rowIndex + 1);
+					this.rrMult *= -1;
+				} else {
+					m = Matrix.swapRows(m, rowIndex, rowIndex - 1);
+					this.rrMult *= -1;
+				}
+			}
+			Vector<Double> currentRow = m.getMatrix().get(rowIndex);
+			Double multrow = currentRow.get(rowIndex);
+			if (rowIndex < getRowsCount() - 1) {
+				for (int row = rowIndex + 1; row < getRowsCount(); row++) {
+					double multcol = m.getMatrix().get(row).get(rowIndex);
+					for (int col = 0; col < getColumnsCount(); col++) {
+						m.getMatrix().get(row).set(col, m.getMatrix().get(row).get(col)
+								- m.getMatrix().get(rowIndex).get(col) * multcol / multrow);
+						System.out.println(multcol + "/" + multrow + " = " + multcol / multrow + "\n");
+						m.printElements();
+						System.out.println("----------------------------------\n");
+					}
+				}
+			}
+		}
+		m.printElements();
+		return m;
+	}
+
+	public static double determinant(Matrix m) throws MatrixDimensionException {
+		if (m.getRowsCount() != m.getColumnsCount()) {
+			throw new MatrixDimensionException("Matrix must be a square!");
+		}
+		double ans = 1.0;
+		Matrix tmp = m.ref();
+		ans *= m.getRrMult();
+		for (int i = 0; i < tmp.getRowsCount(); i++) {
+			ans *= tmp.getMatrix().get(i).get(i);
+		}
+		return ans;
+	}
+
 	public Vector<Vector<Double>> getMatrix() {
 		return matrix;
 	}
