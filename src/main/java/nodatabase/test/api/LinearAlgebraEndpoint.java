@@ -1,5 +1,6 @@
 package nodatabase.test.api;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import org.springframework.util.StringUtils;
@@ -54,6 +55,9 @@ public class LinearAlgebraEndpoint {
 
 	@GetMapping("/LinAlg/getAllMatrixStrings")
 	public String getAllMatrixStrings() {
+		if (matrices.size() == 0) {
+			return "No matrices found!";
+		}
 		String ans = "<table class=\"matrixEquation\">\r\n";
 		for (Matrix m : this.matrices) {
 			ans += "<tr class=\"MatrixEquationRow\">\r\n" + "<td class=\"MatrixEquationColumn\">" + "Matrix(id = "
@@ -62,10 +66,7 @@ public class LinearAlgebraEndpoint {
 			ans += m.toHTMLString() + "</td></tr>";
 		}
 		ans += "</td>\r\n" + "</tr>\r\n" + "</table>";
-		if (!ans.equals(""))
-			return ans;
-		else
-			return "No matrices found!";
+		return ans;
 	}
 
 	@PostMapping("/LinAlg/makeMatrix")
@@ -217,9 +218,9 @@ public class LinearAlgebraEndpoint {
 				+ m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
 		return ans;
 	}
-	
+
 	@GetMapping("/LinAlg/Operations/scale/{id}")
-	public String scaleMatrix(@PathVariable int id, @RequestParam Double scalar) {
+	public String scaleMatrix(@PathVariable int id, @RequestParam BigDecimal scalar) {
 		if (id >= matrices.size()) {
 			return "ID not found!";
 		}
@@ -230,22 +231,22 @@ public class LinearAlgebraEndpoint {
 		this.lastId++;
 		ans += "<table class=\"matrixEquation\">\r\n" + "<tr class=\"MatrixEquationRow\">\r\n"
 				+ "<td class=\"MatrixEquationColumn\">";
-		ans += scalar+"</td><td class=\"MatrixEquationColumn\">" + matrices.get(id).toHTMLString()
+		ans += scalar + "</td><td class=\"MatrixEquationColumn\">" + matrices.get(id).toHTMLString()
 				+ "</td><td class=\"MatrixEquationColumn\"> = </td>\r\n" + "<td class=\"MatrixEquationColumn\">"
 				+ m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
 		return ans;
 	}
-	
+
 	@GetMapping("/LinAlg/Operations/determinant/{id}")
 	public String determinant(@PathVariable int id) {
 		if (id >= matrices.size()) {
 			return "ID not found!";
 		}
 		String ans = new String();
-		double determinant;
+		BigDecimal determinant;
 		try {
 			determinant = Matrix.determinant(matrices.get(id));
-		}catch(MatrixDimensionException mde) {
+		} catch (MatrixDimensionException mde) {
 			return mde.getMessage();
 		}
 		ans += "<table class=\"matrixEquation\">\r\n" + "<tr class=\"MatrixEquationRow\">\r\n"
@@ -255,7 +256,7 @@ public class LinearAlgebraEndpoint {
 				+ determinant + "</td>\r\n" + "</tr>\r\n" + "</table>";
 		return ans;
 	}
-	
+
 	@GetMapping("/LinAlg/Operations/ref/{id}")
 	public String getRef(@PathVariable int id) {
 		if (id >= matrices.size()) {
@@ -273,7 +274,7 @@ public class LinearAlgebraEndpoint {
 				+ m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
 		return ans;
 	}
-	
+
 	@GetMapping("/LinAlg/Operations/inverse/{id}")
 	public String getInverse(@PathVariable int id) {
 		if (id >= matrices.size()) {
@@ -285,9 +286,9 @@ public class LinearAlgebraEndpoint {
 			m = matrices.get(id).inverse();
 		} catch (MatrixDimensionException e) {
 			return e.getMessage();
-		} catch(MatrixException e) {
+		} catch (MatrixException e) {
 			return e.getMessage();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return e.getMessage();
 		}

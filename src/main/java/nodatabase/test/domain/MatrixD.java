@@ -3,17 +3,17 @@ package nodatabase.test.domain;
 import java.math.BigDecimal;
 import java.util.Vector;
 
-public class Matrix {
+public class MatrixD {
 	private int rowsCount;
 	private int columnsCount;
-	private Vector<Vector<BigDecimal>> matrix;
+	private Vector<Vector<Double>> matrix;
 	private String errormessage;
 	private int id;
 	private String inputString;
-	private BigDecimal rrMult; // help for determinant
+	private double rrMult; // help for determinant
 	private final double thresh = 1e-10;
 
-	public BigDecimal getRrMult() {
+	public double getRrMult() {
 		return rrMult;
 	}
 
@@ -37,14 +37,14 @@ public class Matrix {
 		this.errormessage = errormessage;
 	}
 
-	public Matrix(int n, int m) {
+	public MatrixD(int n, int m) {
 		this.errormessage = "None";
 		this.rowsCount = n;
 		this.columnsCount = m;
-		this.matrix = new Vector<Vector<BigDecimal>>();
-		Vector<BigDecimal> r = new Vector<>();
+		this.matrix = new Vector<Vector<Double>>();
+		Vector<Double> r = new Vector<>();
 		for (int i = 0; i < m; i++) {
-			r.add(BigDecimal.ZERO);
+			r.add(0.0);
 		}
 		for (int i = 0; i < n; i++) {
 			this.matrix.add(r);
@@ -57,31 +57,30 @@ public class Matrix {
 		for (int i = 0; i < rows.length; i++) {
 			String[] elements = rows[i].split(",");
 			for (int j = 0; j < elements.length; j++) {
-				setMatrixElement(i, j, new BigDecimal(elements[j]));
+				setMatrixElement(i, j, Double.parseDouble(elements[j]));
 			}
 		}
 	}
 
-	public void setMatrixElement(int n, int m, BigDecimal value) {
-		Vector<BigDecimal> row = new Vector<>();// this.matrix.get(n);
-
-		// First part deals with precision problems, e.g. 0.99999999999999 would show up
-		// instead of 1.0
-		if (Math.abs(value.doubleValue()) <= thresh) {
-			value = BigDecimal.ZERO;
+	public void setMatrixElement(int n, int m, double value) {
+		Vector<Double> row = new Vector<>();// this.matrix.get(n);
+		
+		//First part deals with precision problems, e.g. 0.99999999999999 would show up instead of 1.0
+		if(Math.abs(value)<=thresh) {
+			value=0.0;
 		}
-		if (value.scale() > 5) {
-			BigDecimal tmp = value;
-			String tmpString = tmp.toString();
-			if (tmpString.matches("\\d{1,}\\.\\d{0,}0{3,}\\d{0,}")) {
+		if(BigDecimal.valueOf(value).scale() > 5) {
+			Double tmp = value;
+			String tmpString = Double.toString(tmp);
+			if(tmpString.matches("\\d{1,}\\.\\d{0,}0{3,}\\d{0,}")) {
 				tmpString = tmpString.replaceAll("0{3}[1-9]{0,}$", "");
-				value = new BigDecimal(tmpString);
-			} else if (tmpString.matches("\\d{1,}\\.9{5,}\\d{0,}")) {
-				value = new BigDecimal(Math.round(value.doubleValue()));
+				value = Double.valueOf(tmpString);
+			}else if(tmpString.matches("\\d{1,}\\.9{5,}\\d{0,}")) {
+				value = Math.round(value);
 			}
 		}
-
-		// Filling matrix element
+		
+		//Filling matrix element
 		for (int i = 0; i < columnsCount; i++) {
 			row.add(matrix.get(n).get(i));
 		}
@@ -98,22 +97,22 @@ public class Matrix {
 		}
 	}
 
-	public Matrix multiply(Matrix m) throws MatrixDimensionException {
+	public MatrixD multiply(MatrixD m) throws MatrixDimensionException {
 		if (columnsCount != m.getRowsCount()) {
 			System.out.println("Inner dimension mismatch");
 			this.errormessage = "Inner dimension mismatch";
 			throw new MatrixDimensionException(errormessage);
 		}
-		Matrix ans = new Matrix(rowsCount, m.getColumnsCount());
-		Vector<BigDecimal> row = null;
-		Vector<BigDecimal> col = null;
+		MatrixD ans = new MatrixD(rowsCount, m.getColumnsCount());
+		Vector<Double> row = null;
+		Vector<Double> col = null;
 		for (int r = 0; r < rowsCount; r++) {
 			row = this.matrix.get(r);
 			for (int c = 0; c < m.getColumnsCount(); c++) {
 				col = m.getColumn(c);
-				BigDecimal value = BigDecimal.ZERO;
+				double value = 0.0;
 				for (int i = 0; i < col.size(); i++) {
-					value = value.add(row.get(i).multiply(col.get(i)));
+					value += row.get(i) * col.get(i);
 				}
 				ans.setMatrixElement(r, c, value);
 			}
@@ -121,40 +120,40 @@ public class Matrix {
 		return ans;
 	}
 
-	public Matrix add(Matrix m) throws MatrixDimensionException {
+	public MatrixD add(MatrixD m) throws MatrixDimensionException {
 		if (rowsCount != m.getRowsCount() || columnsCount != m.getColumnsCount()) {
 			System.out.println("Matrices need same dimensions");
 			this.errormessage = "Matrices need same dimensions";
 			throw new MatrixDimensionException("Matrices need same dimensions");
 		}
-		Matrix ans = new Matrix(rowsCount, columnsCount);
+		MatrixD ans = new MatrixD(rowsCount, columnsCount);
 		for (int i = 0; i < rowsCount; i++) {
 			for (int j = 0; j < columnsCount; j++) {
-				BigDecimal value = this.matrix.get(i).get(j).add(m.getMatrix().get(i).get(j));
+				double value = this.matrix.get(i).get(j) + m.getMatrix().get(i).get(j);
 				ans.setMatrixElement(i, j, value);
 			}
 		}
 		return ans;
 	}
 
-	public Matrix subtract(Matrix m) throws MatrixDimensionException {
+	public MatrixD subtract(MatrixD m) throws MatrixDimensionException {
 		if (rowsCount != m.getRowsCount() || columnsCount != m.getColumnsCount()) {
 			System.out.println("Matrices need same dimensions");
 			this.errormessage = "Matrices need same dimensions";
 			throw new MatrixDimensionException("Matrices need same dimensions");
 		}
-		Matrix ans = new Matrix(rowsCount, columnsCount);
+		MatrixD ans = new MatrixD(rowsCount, columnsCount);
 		for (int i = 0; i < rowsCount; i++) {
 			for (int j = 0; j < columnsCount; j++) {
-				BigDecimal value = this.matrix.get(i).get(j).subtract(m.getMatrix().get(i).get(j));
+				double value = this.matrix.get(i).get(j) - m.getMatrix().get(i).get(j);
 				ans.setMatrixElement(i, j, value);
 			}
 		}
 		return ans;
 	}
 
-	public Matrix transposeMatrix() {
-		Matrix m = new Matrix(this.columnsCount, this.rowsCount);
+	public MatrixD transposeMatrix() {
+		MatrixD m = new MatrixD(this.columnsCount, this.rowsCount);
 		for (int i = 0; i < getRowsCount(); i++) {
 			for (int j = 0; j < getColumnsCount(); j++) {
 				m.setMatrixElement(j, i, this.matrix.get(i).get(j));
@@ -163,66 +162,65 @@ public class Matrix {
 		return m;
 	}
 
-	public Matrix rref() { // reduced row echelon form
-		Matrix m = new Matrix(this.rowsCount, this.columnsCount);
+	public MatrixD rref() { // reduced row echelon form
+		MatrixD m = new MatrixD(this.rowsCount, this.columnsCount);
 		for (int i = 0; i < getRowsCount(); i++) {
 			for (int j = 0; j < getColumnsCount(); j++) {
 				m.setMatrixElement(i, j, this.matrix.get(i).get(j));
 			}
 		}
 		for (int rowIndex = 0; rowIndex < getRowsCount(); rowIndex++) {
-			if (m.getMatrix().get(rowIndex).get(rowIndex).equals(BigDecimal.ZERO)) {
+			if (m.getMatrix().get(rowIndex).get(rowIndex) == 0) {
 				if (rowIndex < getRowsCount() - 1) {
-					m = Matrix.swapRows(m, rowIndex, rowIndex + 1);
+					m = MatrixD.swapRows(m, rowIndex, rowIndex + 1);
 				} else {
-					m = Matrix.swapRows(m, rowIndex, rowIndex - 1);
+					m = MatrixD.swapRows(m, rowIndex, rowIndex - 1);
 				}
 			}
-			Vector<BigDecimal> currentRow = m.getMatrix().get(rowIndex);
-			BigDecimal divisor = currentRow.get(rowIndex);
+			Vector<Double> currentRow = m.getMatrix().get(rowIndex);
+			Double divisor = currentRow.get(rowIndex);
 			for (int j = 0; j < getColumnsCount(); j++) {
-				m.setMatrixElement(rowIndex, j, currentRow.get(j).divide(divisor)); // gets a 1 on diagonal
+				m.setMatrixElement(rowIndex, j, currentRow.get(j) / divisor); // gets a 1 on diagonal
 			}
 
 			for (int i = 0; i < getRowsCount(); i++) {
 				if (i == rowIndex) {
 					continue;
 				}
-				BigDecimal rowMultiplicant = m.getMatrix().get(i).get(rowIndex);
-				Vector<BigDecimal> subtracter = new Vector<>();// m.getMatrix().get(rowIndex);
+				Double rowMultiplicant = m.getMatrix().get(i).get(rowIndex);
+				Vector<Double> subtracter = new Vector<Double>();// m.getMatrix().get(rowIndex);
 				subtracter.setSize(getColumnsCount());
 				for (int j = 0; j < getColumnsCount(); j++) {
-					subtracter.set(j, rowMultiplicant.multiply(m.getMatrix().get(rowIndex).get(j)));
-					m.setMatrixElement(i, j, m.getMatrix().get(i).get(j).subtract(subtracter.get(j)));
+					subtracter.set(j, rowMultiplicant * m.getMatrix().get(rowIndex).get(j));
+					m.setMatrixElement(i, j, m.getMatrix().get(i).get(j) - subtracter.get(j));
 				}
 			}
 		}
 		for (int rowIndex = 0; rowIndex < getRowsCount(); rowIndex++) {
-			if (m.getMatrix().get(rowIndex).get(rowIndex).equals(BigDecimal.ZERO)) {
+			if (m.getMatrix().get(rowIndex).get(rowIndex) == 0) {
 				if (rowIndex < getRowsCount() - 1) {
-					m = Matrix.swapRows(m, rowIndex, rowIndex + 1);
+					m = MatrixD.swapRows(m, rowIndex, rowIndex + 1);
 				}
 			}
 		}
 		for (int rowIndex = 0; rowIndex < getRowsCount(); rowIndex++) {
-			if (!m.getMatrix().get(rowIndex).get(rowIndex).equals(BigDecimal.ONE)
-					&& !m.getMatrix().get(rowIndex).get(rowIndex).equals(BigDecimal.ZERO)) {
-				Vector<BigDecimal> currentRow = m.getMatrix().get(rowIndex);
-				BigDecimal divisor = currentRow.get(rowIndex);
+			if (m.getMatrix().get(rowIndex).get(rowIndex) != 1 && m.getMatrix().get(rowIndex).get(rowIndex) != 0) {
+				Vector<Double> currentRow = m.getMatrix().get(rowIndex);
+				Double divisor = currentRow.get(rowIndex);
 				for (int j = 0; j < getColumnsCount(); j++) {
-					m.setMatrixElement(rowIndex, j, currentRow.get(j).divide(divisor)); // gets a 1 on diagonal
+					m.setMatrixElement(rowIndex, j, currentRow.get(j) / divisor); // gets a 1 on diagonal
 				}
 
 				for (int i = 0; i < getRowsCount(); i++) {
 					if (i == rowIndex) {
 						continue;
 					}
-					BigDecimal rowMultiplicant = m.getMatrix().get(i).get(rowIndex);
-					Vector<BigDecimal> subtracter = new Vector<>();// m.getMatrix().get(rowIndex);
+					Double rowMultiplicant = m.getMatrix().get(i).get(rowIndex);
+					Vector<Double> subtracter = new Vector<Double>();// m.getMatrix().get(rowIndex);
 					subtracter.setSize(getColumnsCount());
 					for (int j = 0; j < getColumnsCount(); j++) {
-						subtracter.set(j, rowMultiplicant.multiply(m.getMatrix().get(rowIndex).get(j)));
-						m.setMatrixElement(i, j, m.getMatrix().get(i).get(j).subtract(subtracter.get(j)));
+						subtracter.set(j, rowMultiplicant * m.getMatrix().get(rowIndex).get(j));
+						m.setMatrixElement(i, j, m.getMatrix().get(i).get(j) - subtracter.get(j));
 					}
 				}
 			}
@@ -230,9 +228,9 @@ public class Matrix {
 		return m;
 	}
 
-	public static Matrix swapRows(Matrix m, int row1, int row2) {
-		Vector<BigDecimal> first = new Vector<>();
-		Vector<BigDecimal> second = new Vector<>();
+	public static MatrixD swapRows(MatrixD m, int row1, int row2) {
+		Vector<Double> first = new Vector<Double>();
+		Vector<Double> second = new Vector<Double>();
 		first.setSize(m.getColumnsCount());
 		second.setSize(m.getColumnsCount());
 		for (int i = 0; i < m.getColumnsCount(); i++) {
@@ -246,42 +244,42 @@ public class Matrix {
 		return m;
 	}
 
-	public Matrix scale(BigDecimal scalar) {
-		Matrix m = new Matrix(this.rowsCount, this.columnsCount);
+	public MatrixD scale(Double scalar) {
+		MatrixD m = new MatrixD(this.rowsCount, this.columnsCount);
 		for (int rows = 0; rows < this.rowsCount; rows++) {
 			for (int cols = 0; cols < this.columnsCount; cols++) {
-				m.setMatrixElement(rows, cols, this.matrix.get(rows).get(cols).multiply(scalar));
+				m.setMatrixElement(rows, cols, this.matrix.get(rows).get(cols) * scalar);
 			}
 		}
 		return m;
 	}
 
-	public Matrix ref() {
-		this.rrMult = BigDecimal.ONE;
-		Matrix m = new Matrix(this.rowsCount, this.columnsCount);
+	public MatrixD ref() {
+		this.rrMult = 1.0;
+		MatrixD m = new MatrixD(this.rowsCount, this.columnsCount);
 		for (int i = 0; i < getRowsCount(); i++) {
 			for (int j = 0; j < getColumnsCount(); j++) {
 				m.setMatrixElement(i, j, this.matrix.get(i).get(j));
 			}
 		}
 		for (int rowIndex = 0; rowIndex < getRowsCount(); rowIndex++) {
-			if (m.getMatrix().get(rowIndex).get(rowIndex).equals(BigDecimal.ZERO)) {
+			if (m.getMatrix().get(rowIndex).get(rowIndex) == 0) {
 				if (rowIndex < getRowsCount() - 1) {
-					m = Matrix.swapRows(m, rowIndex, rowIndex + 1);
-					this.rrMult = rrMult.multiply(new BigDecimal(-1.0));
+					m = MatrixD.swapRows(m, rowIndex, rowIndex + 1);
+					this.rrMult *= -1;
 				} else {
-					m = Matrix.swapRows(m, rowIndex, rowIndex - 1);
-					this.rrMult = rrMult.multiply(new BigDecimal(-1.0));
+					m = MatrixD.swapRows(m, rowIndex, rowIndex - 1);
+					this.rrMult *= -1;
 				}
 			}
-			Vector<BigDecimal> currentRow = m.getMatrix().get(rowIndex);
-			BigDecimal multrow = currentRow.get(rowIndex);
+			Vector<Double> currentRow = m.getMatrix().get(rowIndex);
+			Double multrow = currentRow.get(rowIndex);
 			if (rowIndex < getRowsCount() - 1) {
 				for (int row = rowIndex + 1; row < getRowsCount(); row++) {
-					BigDecimal multcol = m.getMatrix().get(row).get(rowIndex);
+					double multcol = m.getMatrix().get(row).get(rowIndex);
 					for (int col = 0; col < getColumnsCount(); col++) {
 						m.getMatrix().get(row).set(col, m.getMatrix().get(row).get(col)
-								.subtract(m.getMatrix().get(rowIndex).get(col).multiply(multcol).divide(multrow)));
+								- m.getMatrix().get(rowIndex).get(col) * multcol / multrow);
 					}
 				}
 			}
@@ -289,57 +287,57 @@ public class Matrix {
 		return m;
 	}
 
-	public static BigDecimal determinant(Matrix m) throws MatrixDimensionException {
+	public static double determinant(MatrixD m) throws MatrixDimensionException {
 		if (m.getRowsCount() != m.getColumnsCount()) {
 			throw new MatrixDimensionException("Matrix must be a square!");
 		}
-		BigDecimal ans = new BigDecimal(1.0);
-		Matrix tmp = m.ref();
-		ans = ans.multiply(m.getRrMult());
+		double ans = 1.0;
+		MatrixD tmp = m.ref();
+		ans *= m.getRrMult();
 		for (int i = 0; i < tmp.getRowsCount(); i++) {
-			ans = ans.multiply(tmp.getMatrix().get(i).get(i));
+			ans *= tmp.getMatrix().get(i).get(i);
 		}
 		return ans;
 	}
 
-	public Matrix inverse() throws MatrixDimensionException, MatrixException {
-		if (getRowsCount() != getColumnsCount() || Matrix.determinant(this).equals(BigDecimal.ZERO)) {
+	public MatrixD inverse() throws MatrixDimensionException, MatrixException {
+		if (getRowsCount() != getColumnsCount() || MatrixD.determinant(this) == 0) {
 			throw new MatrixException("Non-invertible matrix");
 		}
-		Matrix m = new Matrix(getRowsCount(), 2 * getColumnsCount());
+		MatrixD m = new MatrixD(getRowsCount(), 2 * getColumnsCount());
 		for (int i = 0; i < getRowsCount(); i++) {
 			for (int j = 0; j < getColumnsCount(); j++) {
 				m.setMatrixElement(i, j, this.getMatrix().get(i).get(j));
 			}
 			for (int j = getColumnsCount(); j < 2 * getColumnsCount(); j++) {
-				BigDecimal value;
-				if (i == j - getColumnsCount()) {
-					value = new BigDecimal(1.0);
+				double value;
+				if (i == j-getColumnsCount()) {
+					value = 1.0;
 				} else {
-					value = new BigDecimal(0.0);
+					value = 0.0;
 				}
 				m.setMatrixElement(i, j, value);
 			}
 		}
 		m = m.rref();
-		Matrix m2 = new Matrix(getRowsCount(), getColumnsCount());
+		MatrixD m2 = new MatrixD(getRowsCount(), getColumnsCount());
 		for (int i = 0; i < getRowsCount(); i++) {
 			for (int j = 0; j < getColumnsCount(); j++) {
-				m2.setMatrixElement(i, j, m.getMatrix().get(i).get(getColumnsCount() + j));
+				m2.setMatrixElement(i, j, m.getMatrix().get(i).get(getColumnsCount()+j));
 			}
 		}
 		return m2;
 	}
 
-	public Vector<Vector<BigDecimal>> getMatrix() {
+	public Vector<Vector<Double>> getMatrix() {
 		return matrix;
 	}
 
-	public Vector<BigDecimal> getColumn(int n) {
+	public Vector<Double> getColumn(int n) {
 		if (n > columnsCount) {
 			throw new IllegalArgumentException();
 		}
-		Vector<BigDecimal> ans = new Vector<>();
+		Vector<Double> ans = new Vector<>();
 		for (int i = 0; i < rowsCount; i++) {
 			ans.add(matrix.get(i).elementAt(n));
 		}

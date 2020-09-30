@@ -14,7 +14,7 @@ public class Derivative {
 	private ArrayList<String> chainRuleTerms;
 	private ArrayList<String> logTerms;
 	private StringBuilder derivative;
-	private Matrix powerruleMatrix;
+	private MatrixD powerruleMatrix;
 	
 	public Derivative(String function){
 		function = function.replaceAll("\\s", "");
@@ -272,8 +272,8 @@ public class Derivative {
 	
 	private String powerRule() throws MatrixDimensionException {
 		StringBuilder result = new StringBuilder();
-		powerruleMatrix = new Matrix(polynomialTerms.size(),polynomialTerms.size());
-		Matrix coefficients = new Matrix(polynomialTerms.size(),1);
+		powerruleMatrix = new MatrixD(polynomialTerms.size(),polynomialTerms.size());
+		MatrixD coefficients = new MatrixD(polynomialTerms.size(),1);
 		int count=0;
 		for(String term:polynomialTerms) {
 			String[] a_terms = term.split("x");
@@ -301,7 +301,7 @@ public class Derivative {
 			coefficients.setMatrixElement(count, 0, Double.parseDouble(a_n));
 			count++;
 		}
-		Matrix derivativeCoefficients = powerruleMatrix.multiply(coefficients);
+		MatrixD derivativeCoefficients = powerruleMatrix.multiply(coefficients);
 		for(int i = 0; i<polynomialTerms.size();i++) {
 			if(derivativeCoefficients.getMatrix().get(i).get(0)!=0.0) {
 				result.append(derivativeCoefficients.getMatrix().get(i).get(0));

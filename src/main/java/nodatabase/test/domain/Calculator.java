@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Calculator {
 	private String sum;
@@ -92,9 +93,14 @@ public class Calculator {
 
 	public void calculate() {
 		this.sum = this.sum.replaceAll("\\s", ""); // remove spaces
-		this.terms = this.sum.split("\\+|\\-"); // contains numbers
-		this.ops = this.sum.split("[\\*\\/\\^]?\\d{1,}[\\*\\/\\^]?|[a-z]{1,}\\{\\d{1,}\\.?\\d{0,}\\}|e|pi"); // contains
-																												// operations
+		this.terms = this.sum.split("(\\+|\\-)"); // contains numbers
+		this.ops = this.sum.split(
+				"\\({0,}([\\*\\/\\^]?\\d{1,}[\\*\\/\\^]?|[a-z]{1,}\\{\\d{1,}\\.?\\d{0,}\\}|e|pi|\\d{0}(?!\\-)\\d{1,})\\){0,}");
+		ArrayList<String> list = new ArrayList<String>(Arrays.asList(this.terms));
+		list.remove("");
+		if (this.terms.length != list.size()) {
+			this.terms = list.toArray(new String[0]);
+		}
 		this.addsubTerms = new ArrayList<BigDecimal>();
 		boolean test = Arrays.stream(ops).anyMatch(""::equals);
 		if (test) { // Remove annoying empty strings
@@ -117,6 +123,11 @@ public class Calculator {
 			String[] termsI = terms[i].split("\\*|\\/|\\^");
 			String[] opsI = terms[i].split("\\d{1,}\\.?\\d{0,}|[a-z]{1,}\\{\\d{1,}\\}|pi|e");
 			for (int j = 0; j < termsI.length; j++) {
+				if(termsI[j].contains("neg")) {
+					String[] termsIp = termsI[j].split("\\{");
+					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
+					termsI[j] = new BigDecimal(-1*(Double.valueOf(termsIp[1]))).toString();
+				}
 				if (termsI[j].equalsIgnoreCase("pi")) {
 					termsI[j] = new BigDecimal(Math.PI).toString();
 				}
@@ -214,8 +225,9 @@ public class Calculator {
 					finalValue = finalValue.multiply(new BigDecimal(termsI[j + 1]));// Double.parseDouble(termsI[j +
 																					// 1]);
 				} else if (opsI[j].equals("/")) {
-					finalValue = finalValue.divide(new BigDecimal(termsI[j + 1]), this.mc);// Double.parseDouble(termsI[j +
-																						// 1]);
+					finalValue = finalValue.divide(new BigDecimal(termsI[j + 1]), this.mc);// Double.parseDouble(termsI[j
+																							// +
+																							// 1]);
 				}
 			}
 			addsubTerms.add(finalValue);
@@ -235,21 +247,45 @@ public class Calculator {
 			ops = help.toArray(ops);
 		}
 		// add and subtract everything
-		this.answer = this.answer.add(addsubTerms.get(0));
-		for (int i = 0; i < ops.length; i++) {
-			if (ops[i].equals("+")) {
-				this.answer = this.answer.add(addsubTerms.get(i + 1));
-			} else if (ops[i].equals("-")) {
-				this.answer = this.answer.subtract(addsubTerms.get(i + 1));
+		
+		if (ops.length == addsubTerms.size() - 1) {
+			this.answer = this.answer.add(addsubTerms.get(0));
+			for (int i = 0; i < ops.length; i++) {
+				if (ops[i].equals("+")) {
+					this.answer = this.answer.add(addsubTerms.get(i + 1));
+				} else if (ops[i].equals("-")) {
+					this.answer = this.answer.subtract(addsubTerms.get(i + 1));
+				}
+			}
+		}else {
+			for (int i = 0; i < ops.length; i++) {
+				if (ops[i].equals("+")) {
+					this.answer = this.answer.add(addsubTerms.get(i));
+				} else if (ops[i].equals("-")) {
+					this.answer = this.answer.subtract(addsubTerms.get(i));
+				}
 			}
 		}
 	}
 
 	public BigDecimal calculate(String subsum) {
 		subsum = subsum.replace("\\s", ""); // remove spaces
-		String[] terms = subsum.split("\\+|\\-"); // contains numbers
-		String[] ops = subsum.split("[\\*\\/\\^]?\\d{1,}[\\*\\/\\^]?|[a-z]{1,}\\{\\d{1,}\\}|pi|e"); // contains
-																									// operations
+		if(subsum.charAt(0)=='-') {
+			subsum = "0"+subsum;
+		}
+		this.terms = subsum.split("(\\+|\\-)(?!\\d{0}(\\+|\\-))"); // contains numbers
+		this.ops = subsum.split(
+				"\\({0,}([\\*\\/\\^]?\\d{1,}[\\*\\/\\^]?|[a-z]{1,}\\{\\d{1,}\\.?\\d{0,}\\}|e|pi|\\d{0}(?!\\-)\\d{1,})\\){0,}");
+
+		ArrayList<String> list = new ArrayList<String>(Arrays.asList(this.terms));
+		list.remove("");
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).contains("("))
+				list.set(i, list.get(i).replace("(", ""));
+			if (list.get(i).contains(")"))
+				list.set(i, list.get(i).replace(")", ""));
+		}
+		this.terms = list.toArray(new String[0]);
 		ArrayList<BigDecimal> addsubTerms = new ArrayList<BigDecimal>();
 		BigDecimal answer = BigDecimal.ZERO;
 		boolean test = Arrays.stream(ops).anyMatch(""::equals);
@@ -272,6 +308,11 @@ public class Calculator {
 			String[] termsI = terms[i].split("\\*|\\/|\\^");
 			String[] opsI = terms[i].split("\\d{1,}\\.?\\d{0,}|[a-z]{1,}\\{\\d{1,}\\}|pi|e");
 			for (int j = 0; j < termsI.length; j++) {
+				if(termsI[j].contains("neg")) {
+					String[] termsIp = termsI[j].split("\\{");
+					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
+					termsI[j] = new BigDecimal(-1*(Double.valueOf(termsIp[1]))).toString();
+				}
 				if (termsI[j].equalsIgnoreCase("pi")) {
 					termsI[j] = new BigDecimal(Math.PI).toString();
 				}
@@ -369,8 +410,9 @@ public class Calculator {
 					finalValue = finalValue.multiply(new BigDecimal(termsI[j + 1]));// Double.parseDouble(termsI[j +
 																					// 1]);
 				} else if (opsI[j].equals("/")) {
-					finalValue = finalValue.divide(new BigDecimal(termsI[j + 1]), this.mc);// Double.parseDouble(termsI[j +
-																						// 1]);
+					finalValue = finalValue.divide(new BigDecimal(termsI[j + 1]), this.mc);// Double.parseDouble(termsI[j
+																							// +
+																							// 1]);
 				}
 			}
 			addsubTerms.add(finalValue);
@@ -425,7 +467,7 @@ public class Calculator {
 	private boolean checkSpecialFunction(String input) {
 		if (input.contains("sqrt") || input.contains("sin") || input.contains("cos") || input.contains("tan")
 				|| input.contains("cbrt") || input.contains("sinh") || input.contains("cosh") || input.contains("tanh")
-				|| input.contains("exp")) {
+				|| input.contains("exp") || input.contains("neg")) {
 			return true;
 		} else {
 			return false;
