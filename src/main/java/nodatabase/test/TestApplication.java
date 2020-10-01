@@ -18,13 +18,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @EnableSwagger2
 public class TestApplication {
-	
-	@RequestMapping(value = "/ex/foos", method = RequestMethod.GET)
-    @ResponseBody
-    String home() {
-      return "Hello World!";
-    }
-
 	public static void main(String[] args) {
 		SpringApplication.run(TestApplication.class, args);
 	}
