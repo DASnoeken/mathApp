@@ -13,7 +13,7 @@ function getSum(begin, end) {
             document.getElementById("response").innerHTML = respons;
         }
     }
-    xhr.open("GET", "https://daansmathapp.herokuapp.com/sum/" + begin + "/" + end);
+    xhr.open("GET", "http://localhost:8082/sum/" + begin + "/" + end);
     xhr.send();
 }
 function factorial(num) {
@@ -31,7 +31,7 @@ function factorial(num) {
             document.getElementById("response").innerHTML = respons;
         }
     }
-    xhr.open("GET", "https://daansmathapp.herokuapp.com/factorial/" + num);
+    xhr.open("GET", "http://localhost:8082/factorial/" + num);
     xhr.send();
 }
 function geometric(num) {
@@ -46,7 +46,7 @@ function geometric(num) {
             document.getElementById("response").innerHTML = respons;
         }
     }
-    xhr.open("GET", "https://daansmathapp.herokuapp.com/series/geometric/" + num);
+    xhr.open("GET", "http://localhost:8082/series/geometric/" + num);
     xhr.send();
 }
 function getE(num) {
@@ -62,7 +62,7 @@ function getE(num) {
             document.getElementById("response").innerHTML = respons;
         }
     }
-    xhr.open("GET", "https://daansmathapp.herokuapp.com/getNumber/e/" + num);
+    xhr.open("GET", "http://localhost:8082/getNumber/e/" + num);
     xhr.send();
 }
 function getDer(func) {
@@ -78,7 +78,7 @@ function getDer(func) {
             document.getElementById("response").innerHTML += "Derivative: " + respons;
         }
     }
-    xhr.open("GET", "https://daansmathapp.herokuapp.com/get/derivative/" + func);
+    xhr.open("GET", "http://localhost:8082/get/derivative/" + func);
     xhr.send();
 }
 function getEncryption(s, order) {
@@ -97,7 +97,7 @@ function getEncryption(s, order) {
             document.getElementById("response").innerHTML = respons;
         }
     }
-    xhr.open("GET", "https://daansmathapp.herokuapp.com/Encrypt/" + s + "/" + order);
+    xhr.open("GET", "http://localhost:8082/Encrypt/" + s + "/" + order);
     xhr.send();
 }
 function getDecryption(num) {
@@ -112,7 +112,7 @@ function getDecryption(num) {
             document.getElementById("response").innerHTML = respons;
         }
     }
-    xhr.open("GET", "https://daansmathapp.herokuapp.com/Decrypt/" + num);
+    xhr.open("GET", "http://localhost:8082/Decrypt/" + num);
     xhr.send();
 }
 function getUnitConversion() {
@@ -211,7 +211,7 @@ function inchToCmCalculate(foot, inch) {
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET", "https://daansmathapp.herokuapp.com/Units/inchToCm/" + foot + "/" + inch);
+    xhr.open("GET", "http://localhost:8082/Units/inchToCm/" + foot + "/" + inch);
     xhr.send();
 }
 function cmToInchCalculate(val) {
@@ -229,7 +229,7 @@ function cmToInchCalculate(val) {
             document.getElementById("response").innerHTML = respons;
         }
     }
-    xhr.open("GET", "https://daansmathapp.herokuapp.com/Units/cmToInch/" + val);
+    xhr.open("GET", "http://localhost:8082/Units/cmToInch/" + val);
     xhr.send();
 }
 function cTofCalculate(val) {
@@ -244,7 +244,7 @@ function cTofCalculate(val) {
             document.getElementById("response").innerHTML = respons;
         }
     }
-    xhr.open("GET", "https://daansmathapp.herokuapp.com/Units/ctof/" + val);
+    xhr.open("GET", "http://localhost:8082/Units/ctof/" + val);
     xhr.send();
 }
 function fTocCalculate(val) {
@@ -259,7 +259,7 @@ function fTocCalculate(val) {
             document.getElementById("response").innerHTML = respons;
         }
     }
-    xhr.open("GET", "https://daansmathapp.herokuapp.com/Units/ftoc/" + val);
+    xhr.open("GET", "http://localhost:8082/Units/ftoc/" + val);
     xhr.send();
 }
 function kgToLbsCalculate(val) {
@@ -277,7 +277,7 @@ function kgToLbsCalculate(val) {
             document.getElementById("response").innerHTML = respons;
         }
     }
-    xhr.open("GET", "https://daansmathapp.herokuapp.com/Units/kgToLbs/" + val);
+    xhr.open("GET", "http://localhost:8082/Units/kgToLbs/" + val);
     xhr.send();
 }
 function lbsToKgCalculate(val) {
@@ -295,7 +295,7 @@ function lbsToKgCalculate(val) {
             document.getElementById("response").innerHTML = respons;
         }
     }
-    xhr.open("GET", "https://daansmathapp.herokuapp.com/Units/lbsToKg/" + val);
+    xhr.open("GET", "http://localhost:8082/Units/lbsToKg/" + val);
     xhr.send();
 }
 function milesToKmCalculate(val) {
@@ -312,7 +312,7 @@ function milesToKmCalculate(val) {
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET", "https://daansmathapp.herokuapp.com/Units/milesToKm/" + val);
+    xhr.open("GET", "http://localhost:8082/Units/milesToKm/" + val);
     xhr.send();
 }
 function kmToMilesCalculate(val) {
@@ -329,7 +329,7 @@ function kmToMilesCalculate(val) {
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET", "https://daansmathapp.herokuapp.com/Units/kmToMiles/" + val);
+    xhr.open("GET", "http://localhost:8082/Units/kmToMiles/" + val);
     xhr.send();
 }
 function gameStart() {
@@ -374,7 +374,7 @@ function setDegree(deg) {
             document.getElementById("Gamescreen2").innerHTML += "   <button class=\"buttons\" id=\"submitGame\" onclick=\"submitGame(degreeInput.value)\">Submit</button>";
         }
     }
-    xhr.open("GET", "https://daansmathapp.herokuapp.com/game/getpolynomial/" + deg);
+    xhr.open("GET", "http://localhost:8082/game/getpolynomial/" + deg);
     xhr.send();
 }
 function submitGame(deg) {
@@ -393,7 +393,7 @@ function submitGame(deg) {
             getAnswer();
         }
     }
-    xhr.open("POST", "https://daansmathapp.herokuapp.com/game/submitAnswer");
+    xhr.open("POST", "http://localhost:8082/game/submitAnswer");
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(JSON.stringify(arr));
 
@@ -406,7 +406,7 @@ function getAnswer() {
             document.getElementById("response").innerHTML = respons;
         }
     }
-    xhr2.open("GET", "https://daansmathapp.herokuapp.com/game/checkAnswer");
+    xhr2.open("GET", "http://localhost:8082/game/checkAnswer");
     xhr2.send();
     document.getElementById("setDegreeButton").disabled = false;
 }
@@ -429,7 +429,7 @@ function calculator(sum) {
             calculatorAnswer();
         }
     }
-    xhr.open("POST", "https://daansmathapp.herokuapp.com/calculator/setCalculation/?trigState=" + trigState);
+    xhr.open("POST", "http://localhost:8082/calculator/setCalculation/?trigState=" + trigState);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(sum);
 }
@@ -440,7 +440,7 @@ function calculatorAnswer() {
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET", "https://daansmathapp.herokuapp.com/calculator/getAnswer");
+    xhr.open("GET", "http://localhost:8082/calculator/getAnswer");
     xhr.send();
 }
 function currConversion(from, to, value) {
@@ -465,7 +465,7 @@ function currConversion(from, to, value) {
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET", "https://daansmathapp.herokuapp.com/currency/" + from + "/" + to + "/" + value);
+    xhr.open("GET", "http://localhost:8082/currency/" + from + "/" + to + "/" + value);
     xhr.send();
 }
 function reEnable() {
@@ -486,7 +486,7 @@ function sendMatrix(matrixInput) {
             checkMatrixErrors();
         }
     }
-    xhr.open("POST", "https://daansmathapp.herokuapp.com//LinAlg/makeMatrix");
+    xhr.open("POST", "http://localhost:8082//LinAlg/makeMatrix");
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(matrixInput);
 }
@@ -501,7 +501,7 @@ function checkMatrixErrors() {
             }
         }
     }
-    xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/getErrorMessage");
+    xhr.open("GET", "http://localhost:8082/LinAlg/getErrorMessage");
     xhr.send();
 }
 function printMatrix(id) {
@@ -516,7 +516,7 @@ function printMatrix(id) {
 
         }
     }
-    xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/getMatrixString/" + id)
+    xhr.open("GET", "http://localhost:8082/LinAlg/getMatrixString/" + id)
     xhr.send();
 }
 function printAllMatrices() {
@@ -526,7 +526,7 @@ function printAllMatrices() {
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/getAllMatrixStrings")
+    xhr.open("GET", "http://localhost:8082/LinAlg/getAllMatrixStrings")
     xhr.send();
 }
 function deleteMatrixById(ID){
@@ -536,7 +536,7 @@ function deleteMatrixById(ID){
             document.getElementById("response").innerHTML = "Matrix with ID "+ID+" removed!";
         }
     }
-    xhr.open("DELETE", "https://daansmathapp.herokuapp.com/LinAlg/deleteById/"+ID);
+    xhr.open("DELETE", "http://localhost:8082/LinAlg/deleteById/"+ID);
     xhr.send();
 }
 function clearAllMatrices() {
@@ -546,7 +546,7 @@ function clearAllMatrices() {
             document.getElementById("response").innerHTML = "Memory cleared!";
         }
     }
-    xhr.open("DELETE", "https://daansmathapp.herokuapp.com/LinAlg/clearMatrices");
+    xhr.open("DELETE", "http://localhost:8082/LinAlg/clearMatrices");
     xhr.send();
 }
 function addMatrix(ID1, ID2) {
@@ -560,7 +560,7 @@ function addMatrix(ID1, ID2) {
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/Operations/add/" + ID1 + "/" + ID2);
+    xhr.open("GET", "http://localhost:8082/LinAlg/Operations/add/" + ID1 + "/" + ID2);
     xhr.send();
 }
 function multiplyMatrix(ID1, ID2) {
@@ -574,7 +574,7 @@ function multiplyMatrix(ID1, ID2) {
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/LinAlg/Operations/multiply/"+ID1+"/"+ID2);
+    xhr.open("GET","http://localhost:8082/LinAlg/Operations/multiply/"+ID1+"/"+ID2);
     xhr.send();
 }
 function transposeMatrix(ID){
@@ -588,7 +588,7 @@ function transposeMatrix(ID){
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/LinAlg/Operations/transpose/"+ID);
+    xhr.open("GET","http://localhost:8082/LinAlg/Operations/transpose/"+ID);
     xhr.send();
 }
 function subtractMatrix(ID1,ID2){
@@ -602,7 +602,7 @@ function subtractMatrix(ID1,ID2){
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/LinAlg/Operations/subtract/"+ID1+"/"+ID2);
+    xhr.open("GET","http://localhost:8082/LinAlg/Operations/subtract/"+ID1+"/"+ID2);
     xhr.send();
 }
 function ref(ID){
@@ -616,7 +616,7 @@ function ref(ID){
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/LinAlg/Operations/ref/"+ID);
+    xhr.open("GET","http://localhost:8082/LinAlg/Operations/ref/"+ID);
     xhr.send();
 }
 function rref(ID){
@@ -630,7 +630,7 @@ function rref(ID){
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/LinAlg/Operations/rref/"+ID);
+    xhr.open("GET","http://localhost:8082/LinAlg/Operations/rref/"+ID);
     xhr.send();
 }
 function scaleMatrix(ID,Scalar){
@@ -644,7 +644,7 @@ function scaleMatrix(ID,Scalar){
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/LinAlg/Operations/scale/"+ID+"/?scalar="+Scalar);
+    xhr.open("GET","http://localhost:8082/LinAlg/Operations/scale/"+ID+"/?scalar="+Scalar);
     xhr.send();
 }
 function determinant(ID){
@@ -658,7 +658,7 @@ function determinant(ID){
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/LinAlg/Operations/determinant/"+ID);
+    xhr.open("GET","http://localhost:8082/LinAlg/Operations/determinant/"+ID);
     xhr.send();
 }
 function inverse(ID){
@@ -672,6 +672,6 @@ function inverse(ID){
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/LinAlg/Operations/inverse/"+ID);
+    xhr.open("GET","http://localhost:8082/LinAlg/Operations/inverse/"+ID);
     xhr.send();
 }

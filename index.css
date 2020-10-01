@@ -1,0 +1,145 @@
+.main {
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    width: 70%;
+    margin: auto;
+    padding: 10px;
+    font-size: x-large;
+}
+
+.matrix{
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    width:auto;
+    padding: 2px;
+    display: inline-block;
+    border-radius: 20px;
+}
+
+.matrixColumn{
+    padding:3px;
+}
+
+.matrixEquation{
+    width:auto;
+    display: inline-block;
+}
+
+.MatrixEquationRow{
+    padding:3px;
+}
+
+.MatrixEquationColumn{
+    padding:6px;
+}
+
+.welcome {
+    width: 40%;
+    margin: auto;
+    padding: 6px;
+    text-align: center;
+    font-size: x-large;
+    transition: 0.5s;
+    border-radius: 10px;
+}
+
+#mathapp{
+    cursor: default;
+}
+
+#response {
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    width: 70%;
+    margin: auto;
+    padding: 10px;
+    font-size: x-large;
+    overflow-x:auto;
+}
+
+input {
+    font-size: larger;
+}
+
+.buttons {
+    background-color: rgb(0, 204, 255);
+    color: black;
+    border-color: rgb(0, 204, 255);
+    transition: 0.5s;
+    font-size: 22px;
+    border-radius: 1px;
+}
+
+.buttons:disabled {
+    background-color: grey;
+    color: black;
+    border-color: grey;
+    transition: 0.5s;
+    font-size: 22px;
+    border-radius: 1px;
+}
+
+.buttons:disabled:hover {
+    background-color: grey;
+    color: black;
+    border-color: grey;
+    transition: 0.5s;
+    font-size: 22px;
+    cursor: not-allowed;
+}
+
+.buttons:hover {
+    background-color: white;
+    color: rgb(247, 22, 67);
+    border-color: rgb(0, 204, 255);
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 4px 4px 6px black;
+}
+
+td {
+    padding: 1px;
+}
+
+table {
+    width: 90%;
+    margin: auto;
+}
+
+h1 {
+    color: rgb(247, 22, 67);
+    text-shadow: -1px 0 rgb(20, 0, 255), 0 1px rgb(20, 0, 255), 1px 0 rgb(20, 0, 255), 0 -1px rgb(20, 0, 255);
+}
+
+#author{
+    color: rgb(210,10,20);
+    text-shadow: -1px 0 rgba(21, 0, 255, 0.5), 0 1px rgba(20, 0, 255, 0.5), 1px 0 rgba(20, 0, 255, 0.5), 0 -1px rgba(20, 0, 255, 0.5);
+}
+
+.welcome:hover {
+    background-color: lightblue;
+    border-radius: 20px;
+}
+
+select {
+    font-size: larger;
+}
+
+#authorbutton{
+    background-color: rgb(247, 22, 67);
+    border-color: rgba(21, 0, 255, 0.5);
+    color: white;
+    transition: 0.5s;
+    font-size: 22px;
+    border-radius: 1px;
+}
+#authorbutton:hover{
+    background-color: white;
+    color: rgb(247, 22, 67);
+    border-color: rgb(0, 204, 255);
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 4px 4px 6px black;
+}
