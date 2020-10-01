@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -18,7 +19,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class TestApplication {
 	
-	@RequestMapping("/")
+	@RequestMapping(value = "/ex/foos", method = RequestMethod.GET)
     @ResponseBody
     String home() {
       return "Hello World!";
