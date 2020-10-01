@@ -1,6 +1,8 @@
 package nodatabase.test.domain;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.Vector;
 
 public class Matrix {
@@ -11,7 +13,8 @@ public class Matrix {
 	private int id;
 	private String inputString;
 	private BigDecimal rrMult; // help for determinant
-	private final double thresh = 1e-10;
+	private final double thresh = 1e-8;
+	private final MathContext mc = new MathContext(5, RoundingMode.HALF_UP) ;
 
 	public BigDecimal getRrMult() {
 		return rrMult;
@@ -181,7 +184,7 @@ public class Matrix {
 			Vector<BigDecimal> currentRow = m.getMatrix().get(rowIndex);
 			BigDecimal divisor = currentRow.get(rowIndex);
 			for (int j = 0; j < getColumnsCount(); j++) {
-				m.setMatrixElement(rowIndex, j, currentRow.get(j).divide(divisor)); // gets a 1 on diagonal
+				m.setMatrixElement(rowIndex, j, currentRow.get(j).divide(divisor,mc)); // gets a 1 on diagonal
 			}
 
 			for (int i = 0; i < getRowsCount(); i++) {
@@ -210,7 +213,7 @@ public class Matrix {
 				Vector<BigDecimal> currentRow = m.getMatrix().get(rowIndex);
 				BigDecimal divisor = currentRow.get(rowIndex);
 				for (int j = 0; j < getColumnsCount(); j++) {
-					m.setMatrixElement(rowIndex, j, currentRow.get(j).divide(divisor)); // gets a 1 on diagonal
+					m.setMatrixElement(rowIndex, j, currentRow.get(j).divide(divisor,mc)); // gets a 1 on diagonal
 				}
 
 				for (int i = 0; i < getRowsCount(); i++) {
@@ -281,7 +284,7 @@ public class Matrix {
 					BigDecimal multcol = m.getMatrix().get(row).get(rowIndex);
 					for (int col = 0; col < getColumnsCount(); col++) {
 						m.getMatrix().get(row).set(col, m.getMatrix().get(row).get(col)
-								.subtract(m.getMatrix().get(rowIndex).get(col).multiply(multcol).divide(multrow)));
+								.subtract(m.getMatrix().get(rowIndex).get(col).multiply(multcol).divide(multrow,mc)));
 					}
 				}
 			}
