@@ -13,7 +13,7 @@ public class Matrix {
 	private int id;
 	private String inputString;
 	private BigDecimal rrMult; // help for determinant
-	private final static double thresh = 1e-8;
+	private final static double thresh = 1e-6;
 	private final MathContext mc = MathContext.UNLIMITED ;
 	private final MathContext mc2 = new MathContext(8,RoundingMode.HALF_UP);
 
@@ -78,7 +78,7 @@ public class Matrix {
 			BigDecimal tmp = value;
 			String tmpString = tmp.toPlainString();
 			if (tmpString.matches("\\d{1,}\\.\\d{0,}0{3,}\\d{0,}")) {
-				tmpString = tmpString.replaceAll("0{3}[1-9]{0,}$", "");
+				tmpString = tmpString.replaceAll("0{1,}[1-9]{0,}0{0,}$", "");
 				value = new BigDecimal(tmpString);
 			} else if (tmpString.matches("\\d{1,}\\.9{5,}\\d{0,}")) {
 				value = new BigDecimal(Double.toString(Math.round(value.doubleValue())));
