@@ -14,7 +14,7 @@ public class Matrix {
 	private String inputString;
 	private BigDecimal rrMult; // help for determinant
 	private final double thresh = 1e-8;
-	private final MathContext mc = new MathContext(5, RoundingMode.HALF_UP) ;
+	private final MathContext mc = MathContext.UNLIMITED ;
 
 	public BigDecimal getRrMult() {
 		return rrMult;
@@ -75,12 +75,12 @@ public class Matrix {
 		}
 		if (value.scale() > 5) {
 			BigDecimal tmp = value;
-			String tmpString = tmp.toString();
+			String tmpString = tmp.toPlainString();
 			if (tmpString.matches("\\d{1,}\\.\\d{0,}0{3,}\\d{0,}")) {
 				tmpString = tmpString.replaceAll("0{3}[1-9]{0,}$", "");
 				value = new BigDecimal(tmpString);
 			} else if (tmpString.matches("\\d{1,}\\.9{5,}\\d{0,}")) {
-				value = new BigDecimal(Math.round(value.doubleValue()));
+				value = new BigDecimal(Double.toString(Math.round(value.doubleValue())));
 			}
 		}
 

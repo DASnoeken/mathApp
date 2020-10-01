@@ -95,7 +95,7 @@ public class Calculator {
 		this.sum = this.sum.replaceAll("\\s", ""); // remove spaces
 		this.terms = this.sum.split("(\\+|\\-)"); // contains numbers
 		this.ops = this.sum.split(
-				"\\({0,}([\\*\\/\\^]?\\d{1,}[\\*\\/\\^]?|[a-z]{1,}\\{\\d{1,}\\.?\\d{0,}\\}|e|pi|\\d{0}(?!\\-)\\d{1,})\\){0,}");
+				"\\({0,}([\\*\\/\\^]?\\d{1,}[\\*\\/\\^]?|[a-z]{1,}\\{\\d{1,}\\.?\\d{0,}\\}|e|pi|phi|\\d{0}(?!\\-)\\d{1,})\\){0,}");
 		ArrayList<String> list = new ArrayList<String>(Arrays.asList(this.terms));
 		list.remove("");
 		if (this.terms.length != list.size()) {
@@ -123,16 +123,19 @@ public class Calculator {
 			String[] termsI = terms[i].split("\\*|\\/|\\^");
 			String[] opsI = terms[i].split("\\d{1,}\\.?\\d{0,}|[a-z]{1,}\\{\\d{1,}\\}|pi|e");
 			for (int j = 0; j < termsI.length; j++) {
-				if(termsI[j].contains("neg")) {
+				if (termsI[j].contains("neg")) {
 					String[] termsIp = termsI[j].split("\\{");
 					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
-					termsI[j] = new BigDecimal(-1*(Double.valueOf(termsIp[1]))).toString();
+					termsI[j] = new BigDecimal(-1 * (Double.valueOf(termsIp[1]))).toString();
 				}
 				if (termsI[j].equalsIgnoreCase("pi")) {
 					termsI[j] = new BigDecimal(Math.PI).toString();
 				}
 				if (termsI[j].equalsIgnoreCase("e")) {
 					termsI[j] = new BigDecimal(Math.E).toString();
+				}
+				if (termsI[j].equalsIgnoreCase("phi")) { // Golden Ratio
+					termsI[j] = new BigDecimal(0.5 + Math.sqrt(5.0) / 2.0).toString();
 				}
 				if (termsI[j].contains("exp")) {
 					String[] termsIp = termsI[j].split("\\{");
@@ -247,7 +250,6 @@ public class Calculator {
 			ops = help.toArray(ops);
 		}
 		// add and subtract everything
-		
 		if (ops.length == addsubTerms.size() - 1) {
 			this.answer = this.answer.add(addsubTerms.get(0));
 			for (int i = 0; i < ops.length; i++) {
@@ -257,7 +259,7 @@ public class Calculator {
 					this.answer = this.answer.subtract(addsubTerms.get(i + 1));
 				}
 			}
-		}else {
+		} else {
 			for (int i = 0; i < ops.length; i++) {
 				if (ops[i].equals("+")) {
 					this.answer = this.answer.add(addsubTerms.get(i));
@@ -270,8 +272,8 @@ public class Calculator {
 
 	public BigDecimal calculate(String subsum) {
 		subsum = subsum.replace("\\s", ""); // remove spaces
-		if(subsum.charAt(0)=='-') {
-			subsum = "0"+subsum;
+		if (subsum.charAt(0) == '-') {
+			subsum = "0" + subsum;
 		}
 		this.terms = subsum.split("(\\+|\\-)(?!\\d{0}(\\+|\\-))"); // contains numbers
 		this.ops = subsum.split(
@@ -308,16 +310,19 @@ public class Calculator {
 			String[] termsI = terms[i].split("\\*|\\/|\\^");
 			String[] opsI = terms[i].split("\\d{1,}\\.?\\d{0,}|[a-z]{1,}\\{\\d{1,}\\}|pi|e");
 			for (int j = 0; j < termsI.length; j++) {
-				if(termsI[j].contains("neg")) {
+				if (termsI[j].contains("neg")) {
 					String[] termsIp = termsI[j].split("\\{");
 					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
-					termsI[j] = new BigDecimal(-1*(Double.valueOf(termsIp[1]))).toString();
+					termsI[j] = new BigDecimal(-1 * (Double.valueOf(termsIp[1]))).toString();
 				}
 				if (termsI[j].equalsIgnoreCase("pi")) {
 					termsI[j] = new BigDecimal(Math.PI).toString();
 				}
 				if (termsI[j].equalsIgnoreCase("e")) {
 					termsI[j] = new BigDecimal(Math.E).toString();
+				}
+				if (termsI[j].equalsIgnoreCase("phi")) { // Golden Ratio
+					termsI[j] = new BigDecimal(0.5 + Math.sqrt(5.0) / 2.0).toString();
 				}
 				if (termsI[j].contains("exp")) {
 					String[] termsIp = termsI[j].split("\\{");
@@ -475,7 +480,7 @@ public class Calculator {
 	}
 
 	private boolean checkSpecialNumber(String input) {
-		if (input.equalsIgnoreCase("pi") || input.equalsIgnoreCase("e")) {
+		if (input.equalsIgnoreCase("pi") || input.equalsIgnoreCase("e") || input.equalsIgnoreCase("phi")) {
 			return true;
 		} else {
 			return false;

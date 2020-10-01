@@ -17,31 +17,13 @@ class TestApplicationTests {
 
 	@Test
 	void contextLoads() {
-		Matrix m = new Matrix(3,3);
-		m.stringToMatrix("1,3,2;6,8,7;3,9,5");
-		try {
-			m.inverse();
-		} catch (MatrixDimensionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (MatrixException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		double value = 300052.000000009;
-		System.out.println(BigDecimal.valueOf(value).scale());
-		if(BigDecimal.valueOf(value).scale() > 5) {
-			Double tmp = value;
-			String tmpString = Double.toString(tmp);
-			if(tmpString.matches("\\d{0,}\\.\\d{0,3}0{3,}\\d{0,}")) {
-				System.out.println("jojo");
-				tmpString = tmpString.replaceAll("0{3}[1-9]{0,}$", "");
-			}
-			value = Double.valueOf(tmpString);
-		}
-		System.out.println(value);
-		
-		
+		LinearAlgebraEndpoint lae = new LinearAlgebraEndpoint();
+		lae.addMatrix("1,77,5929,456533,28336469843682946767622927812837181147274107593648231414240931644147610718669975713910152064993746351682; 1,-187,34969,-6539203,-408735462557927650339400560330659144340016392982577536241338445928381240821190816416592077233705170823926; 1,130,16900,2197000,136668114539641278629106114138225262067202482378369379411481087861061406576458969648275435558113374153419; 1,160,25600,4096000,254945761247487018912237740721991634311257072292837498926860370957629645522137375270502659371694705375489;");
+		System.out.println();
+		lae.getMatrix(0).ref().printElements();
+		System.out.println();
+		lae.getMatrix(0).rref().printElements();
+		System.out.println();
 	}
 
 }
