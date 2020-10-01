@@ -526,6 +526,16 @@ function printAllMatrices() {
     xhr.open("GET", "http://localhost:8082/LinAlg/getAllMatrixStrings")
     xhr.send();
 }
+function deleteMatrixById(ID){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            document.getElementById("response").innerHTML = "Matrix with ID "+ID+" removed!";
+        }
+    }
+    xhr.open("DELETE", "http://localhost:8082/LinAlg/deleteById/"+ID);
+    xhr.send();
+}
 function clearAllMatrices() {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {

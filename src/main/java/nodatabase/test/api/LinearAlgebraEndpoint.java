@@ -34,6 +34,15 @@ public class LinearAlgebraEndpoint {
 		this.matrices.clear();
 		lastId = 0;
 	}
+	
+	@DeleteMapping("/LinAlg/deleteById/{id}")
+	public void deleteMatrixById(@PathVariable int id) {
+		this.matrices.remove(id);
+		this.lastId--;
+		for(int i=0;i<this.matrices.size();i++) {
+			this.matrices.get(i).setId(i);
+		}
+	}
 
 	@GetMapping("/LinAlg/getMatrix/{id}")
 	public Matrix getMatrix(@PathVariable int id) {
