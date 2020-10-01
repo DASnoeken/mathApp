@@ -11,13 +11,13 @@ public class EncryptionEndpoint {
 	@GetMapping("/Encrypt/{s}/{order}")
 	public String getEncryptedString(@PathVariable String s, @PathVariable String order) {
 		int orderI = Integer.parseInt(order);
-		if(orderI > 8) {
+		if(orderI > 7) {
 			String returnString = new String();
-			int j = orderI/8;
-			if(orderI%8!=0) {
+			int j = orderI/7;
+			if(orderI%7!=0) {
 				j++;
 			}
-			returnString+="Sorry, but something goes wrong for order > 8.<br>"
+			returnString+="Sorry, but something goes wrong for order > 7.<br>"
 					+ "Try to cut your input into " + j + " pieces and encrypt these separately.";
 			String newInput = new String();
 			int lastIndex = s.length()/j;
@@ -33,11 +33,11 @@ public class EncryptionEndpoint {
 			returnString += "<br>Use: "+newInput;
 			String orderString = new String();
 			orderString += "With example orders: || ";
-			for(int i=0;i<orderI/8;i++) {
-				orderString += 8+" || ";
+			for(int i=0;i<orderI/7;i++) {
+				orderString += 7+" || ";
 			}
-			if(orderI%8!=0) {
-				orderString += orderI%8;
+			if(orderI%7!=0) {
+				orderString += orderI%7;
 			}
 			returnString +="<br>"+orderString;
 			return returnString;

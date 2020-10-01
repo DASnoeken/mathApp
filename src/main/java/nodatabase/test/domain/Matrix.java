@@ -15,6 +15,7 @@ public class Matrix {
 	private BigDecimal rrMult; // help for determinant
 	private final double thresh = 1e-8;
 	private final MathContext mc = MathContext.UNLIMITED ;
+	private final MathContext mc2 = new MathContext(8,RoundingMode.HALF_UP);
 
 	public BigDecimal getRrMult() {
 		return rrMult;
@@ -184,7 +185,11 @@ public class Matrix {
 			Vector<BigDecimal> currentRow = m.getMatrix().get(rowIndex);
 			BigDecimal divisor = currentRow.get(rowIndex);
 			for (int j = 0; j < getColumnsCount(); j++) {
-				m.setMatrixElement(rowIndex, j, currentRow.get(j).divide(divisor,mc)); // gets a 1 on diagonal
+				try {
+					m.setMatrixElement(rowIndex, j, currentRow.get(j).divide(divisor,mc)); // gets a 1 on diagonal
+				}catch(ArithmeticException ae) {
+					m.setMatrixElement(rowIndex, j, currentRow.get(j).divide(divisor,mc2));
+				}
 			}
 
 			for (int i = 0; i < getRowsCount(); i++) {
