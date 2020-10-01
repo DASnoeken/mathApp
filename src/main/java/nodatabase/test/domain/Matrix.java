@@ -13,7 +13,7 @@ public class Matrix {
 	private int id;
 	private String inputString;
 	private BigDecimal rrMult; // help for determinant
-	private final double thresh = 1e-8;
+	private final static double thresh = 1e-8;
 	private final MathContext mc = MathContext.UNLIMITED ;
 	private final MathContext mc2 = new MathContext(8,RoundingMode.HALF_UP);
 
@@ -184,9 +184,19 @@ public class Matrix {
 			}
 			Vector<BigDecimal> currentRow = m.getMatrix().get(rowIndex);
 			BigDecimal divisor = currentRow.get(rowIndex);
+			int count=0;
 			for (int j = 0; j < getColumnsCount(); j++) {
 				try {
-					m.setMatrixElement(rowIndex, j, currentRow.get(j).divide(divisor,mc)); // gets a 1 on diagonal
+					if(!divisor.equals(BigDecimal.ZERO)) {
+						m.setMatrixElement(rowIndex, j, currentRow.get(j).divide(divisor,mc)); // gets a 1 on diagonal
+					}else {
+						count++;
+						if(rowIndex+count>=getColumnsCount()) {
+							continue;
+						}else {
+							m.setMatrixElement(rowIndex, j, currentRow.get(rowIndex+count));
+						}
+					}
 				}catch(ArithmeticException ae) {
 					m.setMatrixElement(rowIndex, j, currentRow.get(j).divide(divisor,mc2));
 				}
@@ -273,26 +283,81 @@ public class Matrix {
 			}
 		}
 		for (int rowIndex = 0; rowIndex < getRowsCount(); rowIndex++) {
-			if (m.getMatrix().get(rowIndex).get(rowIndex).equals(BigDecimal.ZERO)) {
-				if (rowIndex < getRowsCount() - 1) {
-					m = Matrix.swapRows(m, rowIndex, rowIndex + 1);
-					this.rrMult = rrMult.multiply(new BigDecimal(-1.0));
-				} else {
-					m = Matrix.swapRows(m, rowIndex, rowIndex - 1);
-					this.rrMult = rrMult.multiply(new BigDecimal(-1.0));
-				}
-			}
-			Vector<BigDecimal> currentRow = m.getMatrix().get(rowIndex);
-			BigDecimal multrow = currentRow.get(rowIndex);
-			if (rowIndex < getRowsCount() - 1) {
-				for (int row = rowIndex + 1; row < getRowsCount(); row++) {
-					BigDecimal multcol = m.getMatrix().get(row).get(rowIndex);
-					for (int col = 0; col < getColumnsCount(); col++) {
-						m.getMatrix().get(row).set(col, m.getMatrix().get(row).get(col)
-								.subtract(m.getMatrix().get(rowIndex).get(col).multiply(multcol).divide(multrow,mc)));
+			if(m.getRowsCount()<=m.getColumnsCount()) {
+				if (m.getMatrix().get(rowIndex).get(rowIndex).equals(BigDecimal.ZERO)) {
+					if (rowIndex < getRowsCount() - 1) {
+						m = Matrix.swapRows(m, rowIndex, rowIndex + 1);
+						this.rrMult = rrMult.multiply(new BigDecimal(-1.0));
+					} else {
+						m = Matrix.swapRows(m, rowIndex, rowIndex - 1);
+						this.rrMult = rrMult.multiply(new BigDecimal(-1.0));
 					}
 				}
-			}
+				Vector<BigDecimal> currentRow = m.getMatrix().get(rowIndex);
+				BigDecimal multrow = currentRow.get(rowIndex);
+				if (rowIndex < getRowsCount() - 1) {
+					for (int row = rowIndex + 1; row < getRowsCount(); row++) {
+						BigDecimal multcol = m.getMatrix().get(row).get(rowIndex);
+						int count = 0;
+						for (int col = 0; col < getColumnsCount(); col++) {
+							if(!multrow.equals(BigDecimal.ZERO)) {
+								try {
+									m.getMatrix().get(row).set(col, m.getMatrix().get(row).get(col)
+											.subtract(m.getMatrix().get(rowIndex).get(col).multiply(multcol).divide(multrow,mc)));
+								}catch(ArithmeticException ae) {
+									m.getMatrix().get(row).set(col, m.getMatrix().get(row).get(col)
+											.subtract(m.getMatrix().get(rowIndex).get(col).multiply(multcol).divide(multrow,mc2)));
+								}
+							}else {
+								count++;
+								if(rowIndex+count>=getColumnsCount()) {
+									continue;
+								}else {
+									multcol = m.getMatrix().get(row).get(rowIndex+count);
+								}
+							}
+						}
+					}
+				}
+			}else{
+				for(int col=0;col<m.getColumnsCount();col++) {
+					if (m.getMatrix().get(col).get(col).equals(BigDecimal.ZERO)) {
+						if (rowIndex < getRowsCount() - 1) {
+							m = Matrix.swapRows(m, rowIndex, rowIndex + 1);
+							this.rrMult = rrMult.multiply(new BigDecimal(-1.0));
+						} else {
+							m = Matrix.swapRows(m, rowIndex, rowIndex - 1);
+							this.rrMult = rrMult.multiply(new BigDecimal(-1.0));
+						}
+					}
+					Vector<BigDecimal> currentRow = m.getMatrix().get(rowIndex);
+					BigDecimal multrow = currentRow.get(col);
+					if (rowIndex < getRowsCount() - 1) {
+						for (int row = rowIndex + 1; row < getRowsCount(); row++) {
+							BigDecimal multcol = m.getMatrix().get(row).get(rowIndex);
+							int count = 0;
+							for (int col2 = 0; col2 < getColumnsCount(); col2++) {
+								if(!multrow.equals(BigDecimal.ZERO)) {
+									try {
+										m.getMatrix().get(row).set(col2, m.getMatrix().get(row).get(col2)
+												.subtract(m.getMatrix().get(rowIndex).get(col2).multiply(multcol).divide(multrow,mc)));
+									}catch(ArithmeticException ae) {
+										m.getMatrix().get(row).set(col2, m.getMatrix().get(row).get(col2)
+												.subtract(m.getMatrix().get(rowIndex).get(col2).multiply(multcol).divide(multrow,mc2)));
+									}
+								}else {
+									count++;
+									if(rowIndex+count>=getColumnsCount()) {
+										continue;
+									}else {
+										multcol = m.getMatrix().get(row).get(rowIndex+count);
+									}
+								}
+							}
+						}
+					}
+				}
+			}			
 		}
 		return m;
 	}
@@ -306,6 +371,9 @@ public class Matrix {
 		ans = ans.multiply(m.getRrMult());
 		for (int i = 0; i < tmp.getRowsCount(); i++) {
 			ans = ans.multiply(tmp.getMatrix().get(i).get(i));
+		}
+		if(ans.abs().compareTo(new BigDecimal(Double.toString(thresh)))==-1) {
+			ans = BigDecimal.ZERO;
 		}
 		return ans;
 	}

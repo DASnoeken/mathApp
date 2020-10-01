@@ -1,16 +1,9 @@
 package nodatabase.test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.math.BigDecimal;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import nodatabase.test.api.LinearAlgebraEndpoint;
-import nodatabase.test.domain.Matrix;
-import nodatabase.test.domain.MatrixDimensionException;
-import nodatabase.test.domain.MatrixException;
 
 @SpringBootTest
 class TestApplicationTests {
