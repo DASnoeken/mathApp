@@ -126,3 +126,20 @@ h1 {
 select {
     font-size: larger;
 }
+
+#authorbutton{
+    background-color: rgb(247, 22, 67);
+    border-color: rgba(21, 0, 255, 0.5);
+    color: white;
+    transition: 0.5s;
+    font-size: 22px;
+    border-radius: 1px;
+}
+#authorbutton:hover{
+    background-color: white;
+    color: rgb(247, 22, 67);
+    border-color: rgb(0, 204, 255);
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 4px 4px 6px black;
+}

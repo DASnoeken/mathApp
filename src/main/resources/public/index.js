@@ -1,3 +1,6 @@
+function gotoCV(){
+    window.location.replace("https://daanscv.herokuapp.com/");
+}
 function getSum(begin, end) {
     if (isNaN(begin) || isNaN(end)) {
         document.getElementById("response").innerHTML = "Not a Number";
