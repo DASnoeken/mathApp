@@ -80,14 +80,6 @@ public class Encryption {
 		for (int i = 0; i < outNumbers.size(); i++) {
 			output += "" + (i + 1) + ": (" + xar.get(i) + ", " + outNumbers.get(i) + ");<br>";
 		}
-		output += "<h3>Printed on single line:</h3>";
-		for (int i = 0; i < outNumbers.size(); i++) {
-			if (i < outNumbers.size() - 1)
-				output += "(" + xar.get(i) + ", " + outNumbers.get(i) + "), ";
-			else
-				output += "(" + xar.get(i) + ", " + outNumbers.get(i) + ")";
-		}
-
 		output += "<h3>Python Script:</h3># import sympy  <br>" + "from sympy import * <br>" + "M = Matrix([";
 		for (int i = 0; i < outNumbers.size(); i++) {
 			if (i < outNumbers.size() - 1) {
@@ -127,7 +119,7 @@ public class Encryption {
 					if (j < encryptionOrder - 1)
 						output += ",";
 					else
-						output += "," + outNumbers.get(i) + ";";
+						output += "," + outNumbers.get(i) + ";<br>";
 				} else {
 					String sum = "neg{" + (xar.get(i) * -1) + "}^" + j;
 					Calculator calc = new Calculator(sum, "DEG");
@@ -135,7 +127,7 @@ public class Encryption {
 					if (j < encryptionOrder - 1)
 						output += ",";
 					else
-						output += "," + outNumbers.get(i) + ";";
+						output += "," + outNumbers.get(i) + ";<br>";
 				}
 			}
 		}
