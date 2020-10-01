@@ -107,7 +107,7 @@ public class Encryption {
 		output += "# Use sympy.rref() method  <br>" + "M_rref = M.rref()<br>";
 		output += "print(\"The Row echelon form of matrix M and the pivot columns : {}\".format(M_rref))<br>";
 		output += "print(\"Your number of interest should be : {}\".format(M_rref[0][" + (encryptionOrder)
-				+ "]))<br><br>";
+				+ "]))<br>input(\"Press ENTER to quit!\")<br><br>";
 		output += "<h3>Inhouse Decryptor</h3>Use the following string to create a matrix and then use rref to find your number:<br>";
 		for (int i = 0; i < outNumbers.size(); i++) {
 			output += "1,";
