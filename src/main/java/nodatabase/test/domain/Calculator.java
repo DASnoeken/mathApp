@@ -59,9 +59,9 @@ public class Calculator {
 			}
 			if (syntaxCheck() && this.errorMessage.equals("None")) {
 				calculate();
-			} else if(!syntaxCheck()){
+			} else if (!syntaxCheck()) {
 				throw new CalculatorSyntaxException("Syntax error!");
-			}else if(!this.errorMessage.equals("None")) {
+			} else if (!this.errorMessage.equals("None")) {
 				return;
 			}
 		} catch (CalculatorSyntaxException cse) {
@@ -159,11 +159,11 @@ public class Calculator {
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 						try {
 							termsI[j] = new BigDecimal(Math.sin(Double.valueOf(termsIp[1]))).toString();
-						}catch(NumberFormatException nfe) {
-							if(termsIp[1].equals("pi")) {
+						} catch (NumberFormatException nfe) {
+							if (termsIp[1].equals("pi")) {
 								termsI[j] = new BigDecimal(Math.sin(Math.PI)).toString();
-							}else {
-								this.errorMessage =  "Unknown input! "+ nfe.getMessage();
+							} else {
+								this.errorMessage = "Unknown input! " + nfe.getMessage();
 								return;
 							}
 						}
@@ -171,10 +171,11 @@ public class Calculator {
 						String[] termsIp = termsI[j].split("\\{");
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 						try {
-							termsI[j] = new BigDecimal(Math.sin(Double.valueOf(termsIp[1]) * Math.PI / 180.0)).toString();
-						}catch(NumberFormatException nfe) {
-							this.errorMessage =  "Unknown input! "+ nfe.getMessage();
-							if(termsIp[1].equals("pi")) {
+							termsI[j] = new BigDecimal(Math.sin(Double.valueOf(termsIp[1]) * Math.PI / 180.0))
+									.toString();
+						} catch (NumberFormatException nfe) {
+							this.errorMessage = "Unknown input! " + nfe.getMessage();
+							if (termsIp[1].equals("pi")) {
 								this.errorMessage += "<br>Note that calculator is set to degrees instead of radians!";
 							}
 							return;
@@ -187,11 +188,11 @@ public class Calculator {
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 						try {
 							termsI[j] = new BigDecimal(Math.cos(Double.valueOf(termsIp[1]))).toString();
-						}catch(NumberFormatException nfe) {
-							if(termsIp[1].equals("pi")) {
+						} catch (NumberFormatException nfe) {
+							if (termsIp[1].equals("pi")) {
 								termsI[j] = new BigDecimal(Math.cos(Math.PI)).toString();
-							}else {
-								this.errorMessage =  "Unknown input! "+ nfe.getMessage();
+							} else {
+								this.errorMessage = "Unknown input! " + nfe.getMessage();
 								return;
 							}
 						}
@@ -199,10 +200,11 @@ public class Calculator {
 						String[] termsIp = termsI[j].split("\\{");
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 						try {
-							termsI[j] = new BigDecimal(Math.cos(Double.valueOf(termsIp[1]) * Math.PI / 180.0)).toString();
-						}catch(NumberFormatException nfe) {
-							this.errorMessage =  "Unknown input! "+ nfe.getMessage();
-							if(termsIp[1].equals("pi")) {
+							termsI[j] = new BigDecimal(Math.cos(Double.valueOf(termsIp[1]) * Math.PI / 180.0))
+									.toString();
+						} catch (NumberFormatException nfe) {
+							this.errorMessage = "Unknown input! " + nfe.getMessage();
+							if (termsIp[1].equals("pi")) {
 								this.errorMessage += "<br>Note that calculator is set to degrees instead of radians!";
 							}
 							return;
@@ -214,37 +216,81 @@ public class Calculator {
 						String[] termsIp = termsI[j].split("\\{");
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 						try {
-							if(Math.abs(Math.cos(Double.valueOf(termsIp[1]))) <= thresh.doubleValue()) {
+							if (Math.abs(Math.cos(Double.valueOf(termsIp[1]))) <= thresh.doubleValue()) {
 								throw new ArithmeticException("Division by zero error!");
 							}
 							termsI[j] = new BigDecimal(Math.tan(Double.valueOf(termsIp[1]))).toString();
-						}catch(NumberFormatException nfe) {
-							if(termsIp[1].equals("pi")) {
+						} catch (NumberFormatException nfe) {
+							if (termsIp[1].equals("pi")) {
 								termsI[j] = new BigDecimal(Math.tan(Math.PI)).toString();
-							}else {
-								this.errorMessage =  "Unknown input! "+ nfe.getMessage();
+							} else {
+								this.errorMessage = "Unknown input! " + nfe.getMessage();
 								return;
 							}
-						}catch(ArithmeticException ae) {
-							this.errorMessage = ae.getMessage()+"<br>cos{"+termsIp[1]+"} = 0";
+						} catch (ArithmeticException ae) {
+							this.errorMessage = ae.getMessage() + "<br>cos{" + termsIp[1] + "} = 0";
 							return;
 						}
 					} else {
 						String[] termsIp = termsI[j].split("\\{");
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 						try {
-							if(Math.abs(Math.cos(Double.valueOf(termsIp[1]) * Math.PI / 180.0)) <= thresh.doubleValue()) {
+							if (Math.abs(Math.cos(Double.valueOf(termsIp[1]) * Math.PI / 180.0)) <= thresh
+									.doubleValue()) {
 								throw new ArithmeticException("Division by zero error!");
 							}
-							termsI[j] = new BigDecimal(Math.tan(Double.valueOf(termsIp[1]) * Math.PI / 180.0)).toString();
-						}catch(NumberFormatException nfe) {
-							this.errorMessage =  "Unknown input! "+ nfe.getMessage();
-							if(termsIp[1].equals("pi")) {
+							termsI[j] = new BigDecimal(Math.tan(Double.valueOf(termsIp[1]) * Math.PI / 180.0))
+									.toString();
+						} catch (NumberFormatException nfe) {
+							this.errorMessage = "Unknown input! " + nfe.getMessage();
+							if (termsIp[1].equals("pi")) {
 								this.errorMessage += "<br>Note that calculator is set to degrees instead of radians!";
 							}
 							return;
-						}catch(ArithmeticException ae) {
-							this.errorMessage = ae.getMessage()+"<br>cos{"+termsIp[1]+"} = 0";
+						} catch (ArithmeticException ae) {
+							this.errorMessage = ae.getMessage() + "<br>cos{" + termsIp[1] + "} = 0";
+							return;
+						}
+					}
+				}
+				if (termsI[j].contains("sec")) {
+					if (this.trigState.equals("radians")) {
+						String[] termsIp = termsI[j].split("\\{");
+						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
+						try {
+							if (Math.abs(Math.cos(Double.valueOf(termsIp[1]))) <= thresh.doubleValue()) {
+								throw new ArithmeticException("Division by zero error!");
+							}
+							termsI[j] = new BigDecimal(1.0 / Math.cos(Double.valueOf(termsIp[1]))).toString();
+						} catch (NumberFormatException nfe) {
+							if (termsIp[1].equals("pi")) {
+								termsI[j] = new BigDecimal(-1.0).toString();
+							} else {
+								this.errorMessage = "Unknown input! " + nfe.getMessage();
+								return;
+							}
+						} catch (ArithmeticException ae) {
+							this.errorMessage = ae.getMessage() + "<br>cos{" + termsIp[1] + "} = 0";
+							return;
+						}
+					} else {
+						String[] termsIp = termsI[j].split("\\{");
+						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
+						try {
+							if (Math.abs(Math.cos(Double.valueOf(termsIp[1]) * Math.PI / 180.0)) <= thresh
+									.doubleValue()) {
+								throw new ArithmeticException("Division by zero error!");
+							}
+							termsI[j] = new BigDecimal(1.0 / Math.cos(Double.valueOf(termsIp[1]) * Math.PI / 180.0))
+									.toString();
+						} catch (NumberFormatException nfe) {
+							this.errorMessage = "Unknown input! " + nfe.getMessage();
+							if (termsIp[1].equals("pi")) {
+								this.errorMessage += "<br>Note that calculator is set to degrees instead of radians!";
+							}
+							return;
+						} catch (ArithmeticException ae) {
+							this.errorMessage = ae.getMessage() + "<br>cos{" + termsIp[1] + "} = 0";
 							return;
 						}
 					}
@@ -303,11 +349,12 @@ public class Calculator {
 		boolean test3 = Arrays.stream(ops).anyMatch("/"::equals);
 		boolean test4 = Arrays.stream(ops).anyMatch("."::equals);
 		boolean test5 = Arrays.stream(ops).anyMatch("^"::equals);
+		boolean test6 = Arrays.stream(ops).anyMatch("}"::contains);
 		// remove *, . and / from ops
-		if (test2 || test3 || test4 || test5) {
+		if (test2 || test3 || test4 || test5 || test6) {
 			ArrayList<String> help = new ArrayList<>();
 			for (int i = 0; i < ops.length; i++) {
-				if (!ops[i].equals("*") && !ops[i].equals("/") && !ops[i].equals(".") && !ops[i].equals("^"))
+				if (ops[i].equals("+") || ops[i].equals("-"))
 					help.add(ops[i]);
 			}
 			ops = new String[help.size()];
@@ -409,11 +456,11 @@ public class Calculator {
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 						try {
 							termsI[j] = new BigDecimal(Math.sin(Double.valueOf(termsIp[1]))).toString();
-						}catch(NumberFormatException nfe) {
-							if(termsIp[1].equals("pi")) {
+						} catch (NumberFormatException nfe) {
+							if (termsIp[1].equals("pi")) {
 								termsI[j] = new BigDecimal(Math.sin(Math.PI)).toString();
-							}else {
-								this.errorMessage =  "Unknown input! "+ nfe.getMessage();
+							} else {
+								this.errorMessage = "Unknown input! " + nfe.getMessage();
 								return new BigDecimal(0.0);
 							}
 						}
@@ -421,10 +468,11 @@ public class Calculator {
 						String[] termsIp = termsI[j].split("\\{");
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 						try {
-							termsI[j] = new BigDecimal(Math.sin(Double.valueOf(termsIp[1]) * Math.PI / 180.0)).toString();
-						}catch(NumberFormatException nfe) {
-							this.errorMessage =  "Unknown input! "+ nfe.getMessage();
-							if(termsIp[1].equals("pi")) {
+							termsI[j] = new BigDecimal(Math.sin(Double.valueOf(termsIp[1]) * Math.PI / 180.0))
+									.toString();
+						} catch (NumberFormatException nfe) {
+							this.errorMessage = "Unknown input! " + nfe.getMessage();
+							if (termsIp[1].equals("pi")) {
 								this.errorMessage += "<br>Note that calculator is set to degrees instead of radians!";
 							}
 							return new BigDecimal(0.0);
@@ -437,22 +485,23 @@ public class Calculator {
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 						try {
 							termsI[j] = new BigDecimal(Math.cos(Double.valueOf(termsIp[1]))).toString();
-						}catch(NumberFormatException nfe) {
-							if(termsIp[1].equals("pi")) {
+						} catch (NumberFormatException nfe) {
+							if (termsIp[1].equals("pi")) {
 								termsI[j] = new BigDecimal(Math.cos(Math.PI)).toString();
-							}else {
-								this.errorMessage =  "Unknown input! "+ nfe.getMessage();
+							} else {
+								this.errorMessage = "Unknown input! " + nfe.getMessage();
 								return new BigDecimal(0.0);
-							} 
+							}
 						}
 					} else {
 						String[] termsIp = termsI[j].split("\\{");
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 						try {
-							termsI[j] = new BigDecimal(Math.cos(Double.valueOf(termsIp[1]) * Math.PI / 180.0)).toString();
-						}catch(NumberFormatException nfe) {
-							this.errorMessage =  "Unknown input! "+ nfe.getMessage();
-							if(termsIp[1].equals("pi")) {
+							termsI[j] = new BigDecimal(Math.cos(Double.valueOf(termsIp[1]) * Math.PI / 180.0))
+									.toString();
+						} catch (NumberFormatException nfe) {
+							this.errorMessage = "Unknown input! " + nfe.getMessage();
+							if (termsIp[1].equals("pi")) {
 								this.errorMessage += "<br>Note that calculator is set to degrees instead of radians!";
 							}
 							return new BigDecimal(0.0);
@@ -464,37 +513,39 @@ public class Calculator {
 						String[] termsIp = termsI[j].split("\\{");
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 						try {
-							if(Math.abs(Math.cos(Double.valueOf(termsIp[1]))) <= thresh.doubleValue()) {
+							if (Math.abs(Math.cos(Double.valueOf(termsIp[1]))) <= thresh.doubleValue()) {
 								throw new ArithmeticException("Division by zero error!");
 							}
 							termsI[j] = new BigDecimal(Math.tan(Double.valueOf(termsIp[1]))).toString();
-						}catch(NumberFormatException nfe) {
-							if(termsIp[1].equals("pi")) {
+						} catch (NumberFormatException nfe) {
+							if (termsIp[1].equals("pi")) {
 								termsI[j] = new BigDecimal(Math.tan(Math.PI)).toString();
-							}else {
-								this.errorMessage =  "Unknown input! "+ nfe.getMessage();
+							} else {
+								this.errorMessage = "Unknown input! " + nfe.getMessage();
 								return new BigDecimal(0.0);
 							}
-						}catch(ArithmeticException ae) {
-							this.errorMessage = ae.getMessage()+"<br>cos{"+termsIp[1]+"} = 0";
+						} catch (ArithmeticException ae) {
+							this.errorMessage = ae.getMessage() + "<br>cos{" + termsIp[1] + "} = 0";
 							return new BigDecimal(0.0);
 						}
 					} else {
 						String[] termsIp = termsI[j].split("\\{");
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 						try {
-							if(Math.abs(Math.cos(Double.valueOf(termsIp[1]) * Math.PI / 180.0)) <= thresh.doubleValue()) {
+							if (Math.abs(Math.cos(Double.valueOf(termsIp[1]) * Math.PI / 180.0)) <= thresh
+									.doubleValue()) {
 								throw new ArithmeticException("Division by zero error!");
 							}
-							termsI[j] = new BigDecimal(Math.tan(Double.valueOf(termsIp[1]) * Math.PI / 180.0)).toString();
-						}catch(NumberFormatException nfe) {
-							this.errorMessage =  "Unknown input! "+ nfe.getMessage();
-							if(termsIp[1].equals("pi")) {
+							termsI[j] = new BigDecimal(Math.tan(Double.valueOf(termsIp[1]) * Math.PI / 180.0))
+									.toString();
+						} catch (NumberFormatException nfe) {
+							this.errorMessage = "Unknown input! " + nfe.getMessage();
+							if (termsIp[1].equals("pi")) {
 								this.errorMessage += "<br>Note that calculator is set to degrees instead of radians!";
 							}
 							return new BigDecimal(0.0);
-						}catch(ArithmeticException ae) {
-							this.errorMessage = ae.getMessage()+"<br>cos{"+termsIp[1]+"} = 0";
+						} catch (ArithmeticException ae) {
+							this.errorMessage = ae.getMessage() + "<br>cos{" + termsIp[1] + "} = 0";
 							return new BigDecimal(0.0);
 						}
 					}
@@ -553,11 +604,12 @@ public class Calculator {
 		boolean test3 = Arrays.stream(ops).anyMatch("/"::equals);
 		boolean test4 = Arrays.stream(ops).anyMatch("."::equals);
 		boolean test5 = Arrays.stream(ops).anyMatch("^"::equals);
+		boolean test6 = Arrays.stream(ops).anyMatch("}"::contains);
 		// remove *, . and / from ops
-		if (test2 || test3 || test4 || test5) {
+		if (test2 || test3 || test4 || test5 || test6) {
 			ArrayList<String> help = new ArrayList<>();
 			for (int i = 0; i < ops.length; i++) {
-				if (!ops[i].equals("*") && !ops[i].equals("/") && !ops[i].equals(".") && !ops[i].equals("^"))
+				if (ops[i].equals("+") || ops[i].equals("-"))
 					help.add(ops[i]);
 			}
 			ops = new String[help.size()];
@@ -599,7 +651,7 @@ public class Calculator {
 	private boolean checkSpecialFunction(String input) {
 		if (input.contains("sqrt") || input.contains("sin") || input.contains("cos") || input.contains("tan")
 				|| input.contains("cbrt") || input.contains("sinh") || input.contains("cosh") || input.contains("tanh")
-				|| input.contains("exp") || input.contains("neg")) {
+				|| input.contains("exp") || input.contains("neg") || input.contains("sec")) {
 			return true;
 		} else {
 			return false;
