@@ -14,6 +14,7 @@ public class Calculator {
 	private ArrayList<BigDecimal> addsubTerms;
 	private String trigState;
 	private MathContext mc;
+	private final BigDecimal thresh = new BigDecimal("1E-10");
 
 	public String getTrigState() {
 		return trigState;
@@ -36,7 +37,6 @@ public class Calculator {
 	}
 
 	public BigDecimal getAnswer() {
-		BigDecimal thresh = new BigDecimal("1E-10");
 		if (this.answer.compareTo(thresh) == -1 && this.answer.compareTo(thresh.multiply(new BigDecimal("-1"))) == 1) {
 			return BigDecimal.ZERO;
 		} else {
@@ -155,33 +155,96 @@ public class Calculator {
 					if (this.trigState.equals("radians")) {
 						String[] termsIp = termsI[j].split("\\{");
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
-						termsI[j] = new BigDecimal(Math.sin(Double.valueOf(termsIp[1]))).toString();
+						try {
+							termsI[j] = new BigDecimal(Math.sin(Double.valueOf(termsIp[1]))).toString();
+						}catch(NumberFormatException nfe) {
+							if(termsIp[1].equals("pi")) {
+								termsI[j] = new BigDecimal(Math.sin(Math.PI)).toString();
+							}else {
+								this.errorMessage =  "Unknown input! "+ nfe.getMessage();
+								return;
+							}
+						}
 					} else {
 						String[] termsIp = termsI[j].split("\\{");
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
-						termsI[j] = new BigDecimal(Math.sin(Double.valueOf(termsIp[1]) * Math.PI / 180.0)).toString();
+						try {
+							termsI[j] = new BigDecimal(Math.sin(Double.valueOf(termsIp[1]) * Math.PI / 180.0)).toString();
+						}catch(NumberFormatException nfe) {
+							this.errorMessage =  "Unknown input! "+ nfe.getMessage();
+							if(termsIp[1].equals("pi")) {
+								this.errorMessage += "<br>Note that calculator is set to degrees instead of radians!";
+							}
+							return;
+						}
 					}
 				}
 				if (termsI[j].contains("cos") && !termsI[j].contains("cosh")) {
 					if (this.trigState.equals("radians")) {
 						String[] termsIp = termsI[j].split("\\{");
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
-						termsI[j] = new BigDecimal(Math.cos(Double.valueOf(termsIp[1]))).toString();
+						try {
+							termsI[j] = new BigDecimal(Math.cos(Double.valueOf(termsIp[1]))).toString();
+						}catch(NumberFormatException nfe) {
+							if(termsIp[1].equals("pi")) {
+								termsI[j] = new BigDecimal(Math.cos(Math.PI)).toString();
+							}else {
+								this.errorMessage =  "Unknown input! "+ nfe.getMessage();
+								return;
+							}
+						}
 					} else {
 						String[] termsIp = termsI[j].split("\\{");
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
-						termsI[j] = new BigDecimal(Math.cos(Double.valueOf(termsIp[1]) * Math.PI / 180.0)).toString();
+						try {
+							termsI[j] = new BigDecimal(Math.cos(Double.valueOf(termsIp[1]) * Math.PI / 180.0)).toString();
+						}catch(NumberFormatException nfe) {
+							this.errorMessage =  "Unknown input! "+ nfe.getMessage();
+							if(termsIp[1].equals("pi")) {
+								this.errorMessage += "<br>Note that calculator is set to degrees instead of radians!";
+							}
+							return;
+						}
 					}
 				}
 				if (termsI[j].contains("tan") && !termsI[j].contains("tanh")) {
 					if (this.trigState.equals("radians")) {
 						String[] termsIp = termsI[j].split("\\{");
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
-						termsI[j] = new BigDecimal(Math.tan(Double.valueOf(termsIp[1]))).toString();
+						try {
+							if(Math.abs(Math.cos(Double.valueOf(termsIp[1]))) <= thresh.doubleValue()) {
+								throw new ArithmeticException("Division by zero error!");
+							}
+							termsI[j] = new BigDecimal(Math.tan(Double.valueOf(termsIp[1]))).toString();
+						}catch(NumberFormatException nfe) {
+							if(termsIp[1].equals("pi")) {
+								termsI[j] = new BigDecimal(Math.tan(Math.PI)).toString();
+							}else {
+								this.errorMessage =  "Unknown input! "+ nfe.getMessage();
+								return;
+							}
+						}catch(ArithmeticException ae) {
+							this.errorMessage = ae.getMessage()+"<br>cos{"+termsIp[1]+"} = 0";
+							return;
+						}
 					} else {
 						String[] termsIp = termsI[j].split("\\{");
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
-						termsI[j] = new BigDecimal(Math.tan(Double.valueOf(termsIp[1]) * Math.PI / 180.0)).toString();
+						try {
+							if(Math.abs(Math.cos(Double.valueOf(termsIp[1]) * Math.PI / 180.0)) <= thresh.doubleValue()) {
+								throw new ArithmeticException("Division by zero error!");
+							}
+							termsI[j] = new BigDecimal(Math.tan(Double.valueOf(termsIp[1]) * Math.PI / 180.0)).toString();
+						}catch(NumberFormatException nfe) {
+							this.errorMessage =  "Unknown input! "+ nfe.getMessage();
+							if(termsIp[1].equals("pi")) {
+								this.errorMessage += "<br>Note that calculator is set to degrees instead of radians!";
+							}
+							return;
+						}catch(ArithmeticException ae) {
+							this.errorMessage = ae.getMessage()+"<br>cos{"+termsIp[1]+"} = 0";
+							return;
+						}
 					}
 				}
 				if (termsI[j].contains("sinh")) { // hyperbolic functions
