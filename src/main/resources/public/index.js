@@ -1,6 +1,9 @@
 function gotoCV(){
     window.location.replace("https://daanscv.herokuapp.com/");
 }
+function reportBug(){
+    window.location.href = "mailto:d.a.snoeken@protonmail.com?Subject=MathApp Bug Report";
+}
 function getSum(begin, end) {
     if (isNaN(begin) || isNaN(end)) {
         document.getElementById("response").innerHTML = "Not a Number";

@@ -35,7 +35,7 @@
 }
 
 .welcome {
-    width: 40%;
+    width: 60%;
     margin: auto;
     padding: 6px;
     text-align: center;
@@ -127,7 +127,7 @@ select {
     font-size: larger;
 }
 
-#authorbutton{
+.topButtons{
     background-color: rgb(247, 22, 67);
     border-color: rgba(21, 0, 255, 0.5);
     color: white;
@@ -135,7 +135,7 @@ select {
     font-size: 22px;
     border-radius: 1px;
 }
-#authorbutton:hover{
+.topButtons:hover{
     background-color: white;
     color: rgb(247, 22, 67);
     border-color: rgb(0, 204, 255);
