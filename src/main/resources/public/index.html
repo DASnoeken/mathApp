@@ -7,7 +7,8 @@
     <script>
         MathJax = {
             tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']]
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                tags: 'ams'
             }
         };
     </script>
@@ -313,7 +314,8 @@
         <button class="buttons" onclick="printAllMatrices()">Print all matrices</button>
     </div>
     <br>
-    <div id="response">Response area</div>
+    <div id="response">Response area</div><br>
+    <div id="help" hidden></div>
 </body>
 
 </html>

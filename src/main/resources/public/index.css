@@ -48,7 +48,24 @@
     cursor: default;
 }
 
+#myname{
+    color: rgb(0,0,0);
+    text-align: center;
+    margin: auto;
+    padding: 3px;
+}
+
 #response {
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    width: 70%;
+    margin: auto;
+    padding: 10px;
+    font-size: x-large;
+    overflow-x:auto;
+}
+#help{
     border-style: solid;
     border-color: black;
     border-width: 2px;
