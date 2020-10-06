@@ -153,7 +153,7 @@ public class Calculator {
 					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 					termsI[j] = new BigDecimal(Math.cbrt(Double.valueOf(termsIp[1]))).toString();
 				}
-				if (termsI[j].contains("sin") && !termsI[j].contains("sinh")) { // trigonometry
+				if (termsI[j].contains("sin") && !termsI[j].contains("sinh") && !termsI[j].contains("asin")) { // trigonometry
 					if (this.trigState.equals("radians")) {
 						String[] termsIp = termsI[j].split("\\{");
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
@@ -182,7 +182,7 @@ public class Calculator {
 						}
 					}
 				}
-				if (termsI[j].contains("cos") && !termsI[j].contains("cosh")) {
+				if (termsI[j].contains("cos") && !termsI[j].contains("cosh") && !termsI[j].contains("acos")) {
 					if (this.trigState.equals("radians")) {
 						String[] termsIp = termsI[j].split("\\{");
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
@@ -211,7 +211,7 @@ public class Calculator {
 						}
 					}
 				}
-				if (termsI[j].contains("tan") && !termsI[j].contains("tanh")) {
+				if (termsI[j].contains("tan") && !termsI[j].contains("tanh") && !termsI[j].contains("atan")) {
 					if (this.trigState.equals("radians")) {
 						String[] termsIp = termsI[j].split("\\{");
 						termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
@@ -379,6 +379,33 @@ public class Calculator {
 							this.errorMessage = ae.getMessage() + "<br>sin{" + termsIp[1] + "} = 0";
 							return;
 						}
+					}
+				}
+				if (termsI[j].contains("asin")) {
+					String[] termsIp = termsI[j].split("\\{");
+					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
+					if (this.trigState.equals("radians")) {
+						termsI[j] = new BigDecimal(Math.asin(Double.valueOf(termsIp[1]))).toString();
+					} else {
+						termsI[j] = new BigDecimal(Math.asin(Double.valueOf(termsIp[1]) * Math.PI / 180.0)).toString();
+					}
+				}
+				if (termsI[j].contains("acos")) {
+					String[] termsIp = termsI[j].split("\\{");
+					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
+					if (this.trigState.equals("radians")) {
+						termsI[j] = new BigDecimal(Math.acos(Double.valueOf(termsIp[1]))).toString();
+					} else {
+						termsI[j] = new BigDecimal(Math.acos(Double.valueOf(termsIp[1]) * Math.PI / 180.0)).toString();
+					}
+				}
+				if (termsI[j].contains("atan")) {
+					String[] termsIp = termsI[j].split("\\{");
+					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
+					if(this.trigState.equals("radians")) {
+						termsI[j] = new BigDecimal(Math.atan(Double.valueOf(termsIp[1]))).toString();
+					}else {
+						termsI[j] = new BigDecimal(Math.atan(Double.valueOf(termsIp[1]) * Math.PI / 180.0)).toString();
 					}
 				}
 				if (termsI[j].contains("sinh")) { // hyperbolic functions
@@ -764,6 +791,33 @@ public class Calculator {
 						}
 					}
 				}
+				if (termsI[j].contains("asin")) {
+					String[] termsIp = termsI[j].split("\\{");
+					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
+					if (this.trigState.equals("radians")) {
+						termsI[j] = new BigDecimal(Math.asin(Double.valueOf(termsIp[1]))).toString();
+					} else {
+						termsI[j] = new BigDecimal(Math.asin(Double.valueOf(termsIp[1]) * Math.PI / 180.0)).toString();
+					}
+				}
+				if (termsI[j].contains("acos")) {
+					String[] termsIp = termsI[j].split("\\{");
+					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
+					if (this.trigState.equals("radians")) {
+						termsI[j] = new BigDecimal(Math.acos(Double.valueOf(termsIp[1]))).toString();
+					} else {
+						termsI[j] = new BigDecimal(Math.acos(Double.valueOf(termsIp[1]) * Math.PI / 180.0)).toString();
+					}
+				}
+				if (termsI[j].contains("atan")) {
+					String[] termsIp = termsI[j].split("\\{");
+					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
+					if(this.trigState.equals("radians")) {
+						termsI[j] = new BigDecimal(Math.atan(Double.valueOf(termsIp[1]))).toString();
+					}else {
+						termsI[j] = new BigDecimal(Math.atan(Double.valueOf(termsIp[1]) * Math.PI / 180.0)).toString();
+					}
+				}
 				if (termsI[j].contains("sinh")) { // hyperbolic functions
 					String[] termsIp = termsI[j].split("\\{");
 					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
@@ -866,7 +920,8 @@ public class Calculator {
 		if (input.contains("sqrt") || input.contains("sin") || input.contains("cos") || input.contains("tan")
 				|| input.contains("cbrt") || input.contains("sinh") || input.contains("cosh") || input.contains("tanh")
 				|| input.contains("exp") || input.contains("neg") || input.contains("sec") || input.contains("csc")
-				|| input.contains("cot")) {
+				|| input.contains("cot") || input.contains("asin") || input.contains("acos")
+				|| input.contains("atan")) {
 			return true;
 		} else {
 			return false;
