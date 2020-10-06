@@ -1,5 +1,5 @@
 function gotoCV(){
-    window.location.replace("https://daanscv.herokuapp.com/");
+    window.location.href = "https://daanscv.herokuapp.com/";
 }
 function getEncryptionHelp(){
     window.location.href = "assets/Encryption.pdf";
