@@ -1,6 +1,9 @@
 function gotoCV(){
     window.location.replace("https://daanscv.herokuapp.com/");
 }
+function getEncryptionHelp(){
+    window.location.href = "../../../../Encryption.pdf";
+}
 function reportBug(){
     window.location.href = "mailto:d.a.snoeken@protonmail.com?Subject=MathApp Bug Report";
 }
