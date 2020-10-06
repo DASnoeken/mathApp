@@ -2,7 +2,8 @@ function gotoCV(){
     window.location.replace("https://daanscv.herokuapp.com/");
 }
 function getEncryptionHelp(){
-    var xhr = new XMLHttpRequest();
+    window.location.href = "assets/Encryption.pdf";
+    /*var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if(this.readyState==4){
             document.getElementById("help").hidden = false;
@@ -11,7 +12,7 @@ function getEncryptionHelp(){
         }
     }
     xhr.open("GET","https://daansmathapp.herokuapp.com/help/Encryption");
-    xhr.send();
+    xhr.send();*/
 }
 function reportBug(){
     window.location.href = "mailto:d.a.snoeken@protonmail.com?Subject=MathApp Bug Report";
