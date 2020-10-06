@@ -94,9 +94,10 @@ public class Calculator {
 
 	public void calculate() {
 		this.sum = this.sum.replaceAll("\\s", ""); // remove spaces
-		this.terms = this.sum.split("(\\+|\\-)"); // contains numbers
+		this.terms = this.sum.split("(\\+|\\-\\-)"); // contains numbers
 		this.ops = this.sum.split(
 				"\\({0,}([\\*\\/\\^]?\\d{1,}[\\*\\/\\^]?|[a-z]{1,}\\{\\d{1,}\\.?\\d{0,}\\}|(?i)e|(?i)pi|(?i)phi|\\d{0}(?!\\-)\\d{1,})\\){0,}");
+		
 		ArrayList<String> list = new ArrayList<String>(Arrays.asList(this.terms));
 		list.remove("");
 		if (this.terms.length != list.size()) {
@@ -467,7 +468,7 @@ public class Calculator {
 		if (test2 || test3 || test4 || test5 || test6) {
 			ArrayList<String> help = new ArrayList<>();
 			for (int i = 0; i < ops.length; i++) {
-				if (ops[i].equals("+") || ops[i].equals("-"))
+				if (ops[i].equals("+") || ops[i].equals("--"))
 					help.add(ops[i]);
 			}
 			ops = new String[help.size()];
@@ -479,7 +480,7 @@ public class Calculator {
 			for (int i = 0; i < ops.length; i++) {
 				if (ops[i].equals("+")) {
 					this.answer = this.answer.add(addsubTerms.get(i + 1));
-				} else if (ops[i].equals("-")) {
+				} else if (ops[i].equals("--")) {
 					this.answer = this.answer.subtract(addsubTerms.get(i + 1));
 				}
 			}
@@ -487,7 +488,7 @@ public class Calculator {
 			for (int i = 0; i < ops.length; i++) {
 				if (ops[i].equals("+")) {
 					this.answer = this.answer.add(addsubTerms.get(i));
-				} else if (ops[i].equals("-")) {
+				} else if (ops[i].equals("--")) {
 					this.answer = this.answer.subtract(addsubTerms.get(i));
 				}
 			}
@@ -499,7 +500,7 @@ public class Calculator {
 		if (subsum.charAt(0) == '-') {
 			subsum = "0" + subsum;
 		}
-		this.terms = subsum.split("(\\+|\\-)(?!\\d{0}(\\+|\\-))"); // contains numbers
+		this.terms = subsum.split("(\\+|\\-\\-)"); // contains numbers
 		this.ops = subsum.split(
 				"\\({0,}([\\*\\/\\^]?\\d{1,}[\\*\\/\\^]?|[a-z]{1,}\\{\\d{1,}\\.?\\d{0,}\\}|(?i)e|(?i)pi|(?i)phi|\\d{0}(?!\\-)\\d{1,})\\){0,}");
 
@@ -877,7 +878,7 @@ public class Calculator {
 		if (test2 || test3 || test4 || test5 || test6) {
 			ArrayList<String> help = new ArrayList<>();
 			for (int i = 0; i < ops.length; i++) {
-				if (ops[i].equals("+") || ops[i].equals("-"))
+				if (ops[i].equals("+") || ops[i].equals("--"))
 					help.add(ops[i]);
 			}
 			ops = new String[help.size()];
@@ -888,7 +889,7 @@ public class Calculator {
 		for (int i = 0; i < ops.length; i++) {
 			if (ops[i].equals("+")) {
 				answer = answer.add(addsubTerms.get(i + 1));
-			} else if (ops[i].equals("-")) {
+			} else if (ops[i].equals("--")) {
 				answer = answer.subtract(addsubTerms.get(i + 1));
 			}
 		}
@@ -896,7 +897,7 @@ public class Calculator {
 	}
 
 	private boolean syntaxCheck() {
-		if (this.sum.contains("**") || this.sum.contains("//") || this.sum.contains("++") || this.sum.contains("--")) {
+		if (this.sum.contains("**") || this.sum.contains("//") || this.sum.contains("++")) {
 			return false;
 		}
 		if (countCharOcc(this.sum, '(') != countCharOcc(this.sum, ')')) {
