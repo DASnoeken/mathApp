@@ -12,23 +12,34 @@ import nodatabase.test.domain.Factorize;
 public class FactorizeEndpoint {
 	@GetMapping("/Factorize/getPrimeFactorization/{num}")
 	public String getPrimeFactorization(@PathVariable String num) {
+		num = num.strip().replaceAll("\\s", "");
+		if (num.equals("1")) {
+			return "1 is not prime.";
+		} else if (num.equals("0")) {
+			return "0 is not prime.";
+		} else if (num.charAt(0) == '-') {
+			return "Negative numbers are not allowed!";
+		} else if (num.contains(".") || num.contains(",")) {
+			return "Only integers are allowed!";
+		}
 		BigInteger bi = new BigInteger(num);
 		Factorize f = new Factorize(bi);
 		f.factorizeNumber();
 		String ans = new String();
 		if (f.getFactors().size() > 2) {
 			ans += "Prime factors are: ";
-			for (int i = 0; i < f.getFactors().size()-3; i++) {
-				if(f.getPowers().get(i).equals(BigInteger.ONE))
+			for (int i = 0; i < f.getFactors().size() - 3; i++) {
+				if (f.getPowers().get(i).equals(BigInteger.ONE))
 					ans += f.getFactors().get(i) + ", ";
 				else
 					ans += f.getFactors().get(i) + "^" + f.getPowers().get(i) + ", ";
 			}
-			if(f.getPowers().get(f.getFactors().size()-3).equals(BigInteger.ONE))
-				ans += f.getFactors().get(f.getFactors().size()-3);
+			if (f.getPowers().get(f.getFactors().size() - 3).equals(BigInteger.ONE))
+				ans += f.getFactors().get(f.getFactors().size() - 3);
 			else
-				ans += f.getFactors().get(f.getFactors().size()-3) + "^" + f.getPowers().get(f.getFactors().size()-3);
-			
+				ans += f.getFactors().get(f.getFactors().size() - 3) + "^"
+						+ f.getPowers().get(f.getFactors().size() - 3);
+
 		} else {
 			return "Number is prime";
 		}
