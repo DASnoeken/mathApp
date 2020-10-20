@@ -681,3 +681,17 @@ function inverse(ID){
     xhr.open("GET","https://daansmathapp.herokuapp.com/LinAlg/Operations/inverse/"+ID);
     xhr.send();
 }
+function factorize(num){
+    if(isNaN(num)){
+        document.getElementById("response").innerHTML = "Only numbers allowed!";
+        return;
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if(this.readyState == 4){
+            document.getElementById("response").innerHTML = this.responseText;
+        }
+    }
+    xhr.open("GET","https://daansmathapp.herokuapp.com/Factorize/getPrimeFactorization/"+num);
+    xhr.send();
+}
