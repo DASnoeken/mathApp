@@ -28,7 +28,7 @@ public class Factorize {
 			resultAndRemainder = localNumber.divideAndRemainder(BigInteger.TEN);
 			lastDigit = Math.abs(resultAndRemainder[1].intValue());
 		}
-		BigInteger limit = localNumber.sqrt();
+		BigInteger limit = sqrt(localNumber);
 		BigInteger[] remainder;
 		for (BigInteger i = new BigInteger("3"); i.compareTo(limit) < 0; i = i.add(new BigInteger("2"))) {
 			remainder = localNumber.divideAndRemainder(i);
@@ -74,6 +74,20 @@ public class Factorize {
 
 	public ArrayList<BigInteger> getPowers() {
 		return powers;
+	}
+	
+	private BigInteger sqrt(BigInteger x) {
+	    BigInteger div = BigInteger.ZERO.setBit(x.bitLength()/2);
+	    BigInteger div2 = div;
+	    // Loop until we hit the same value twice in a row, or wind
+	    // up alternating.
+	    for(;;) {
+	        BigInteger y = div.add(x.divide(div)).shiftRight(1);
+	        if (y.equals(div) || y.equals(div2))
+	            return y;
+	        div2 = div;
+	        div = y;
+	    }
 	}
 
 	private ArrayList<BigInteger> powers;
