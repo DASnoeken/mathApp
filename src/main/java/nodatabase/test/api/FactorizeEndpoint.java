@@ -12,7 +12,7 @@ import nodatabase.test.domain.Factorize;
 public class FactorizeEndpoint {
 	@GetMapping("/Factorize/getPrimeFactorization/{num}")
 	public String getPrimeFactorization(@PathVariable String num) {
-		num = num.strip().replaceAll("\\s", "");
+		num = num.replaceAll("\\s", "");
 		if (num.equals("1")) {
 			return "1 is not prime.";
 		} else if (num.equals("0")) {
