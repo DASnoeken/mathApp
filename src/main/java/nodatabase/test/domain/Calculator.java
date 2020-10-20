@@ -1,6 +1,7 @@
 package nodatabase.test.domain;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -94,10 +95,13 @@ public class Calculator {
 
 	public void calculate() {
 		this.sum = this.sum.replaceAll("\\s", ""); // remove spaces
-		this.terms = this.sum.split("(\\+|\\-\\-)"); // contains numbers
+		if (this.sum.charAt(0) == '-') {
+			this.sum = "0" + this.sum;
+		}
+		this.terms = this.sum.split("(\\+|\\-)"); // contains numbers
 		this.ops = this.sum.split(
 				"\\({0,}([\\*\\/\\^]?\\d{1,}[\\*\\/\\^]?|[a-z]{1,}\\{\\d{1,}\\.?\\d{0,}\\}|(?i)e|(?i)pi|(?i)phi|\\d{0}(?!\\-)\\d{1,})\\){0,}");
-		
+
 		ArrayList<String> list = new ArrayList<String>(Arrays.asList(this.terms));
 		list.remove("");
 		if (this.terms.length != list.size()) {
@@ -153,6 +157,10 @@ public class Calculator {
 					String[] termsIp = termsI[j].split("\\{");
 					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 					termsI[j] = new BigDecimal(Math.cbrt(Double.valueOf(termsIp[1]))).toString();
+				}
+				if (termsI[j].contains("!")) {
+					String[] termsIp = termsI[j].split("!");
+					termsI[j] = new BigDecimal(factorial(new BigInteger(termsIp[0])).toString()).toString();
 				}
 				if (termsI[j].contains("sin") && !termsI[j].contains("sinh") && !termsI[j].contains("asin")) { // trigonometry
 					if (this.trigState.equals("radians")) {
@@ -403,9 +411,9 @@ public class Calculator {
 				if (termsI[j].contains("atan")) {
 					String[] termsIp = termsI[j].split("\\{");
 					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
-					if(this.trigState.equals("radians")) {
+					if (this.trigState.equals("radians")) {
 						termsI[j] = new BigDecimal(Math.atan(Double.valueOf(termsIp[1]))).toString();
-					}else {
+					} else {
 						termsI[j] = new BigDecimal(Math.atan(Double.valueOf(termsIp[1]) * Math.PI / 180.0)).toString();
 					}
 				}
@@ -464,11 +472,12 @@ public class Calculator {
 		boolean test4 = Arrays.stream(ops).anyMatch("."::equals);
 		boolean test5 = Arrays.stream(ops).anyMatch("^"::equals);
 		boolean test6 = Arrays.stream(ops).anyMatch("}"::contains);
+		boolean test7 = Arrays.stream(ops).anyMatch("!"::equals);
 		// remove *, . and / from ops
-		if (test2 || test3 || test4 || test5 || test6) {
+		if (test2 || test3 || test4 || test5 || test6 || test7) {
 			ArrayList<String> help = new ArrayList<>();
 			for (int i = 0; i < ops.length; i++) {
-				if (ops[i].equals("+") || ops[i].equals("--"))
+				if (ops[i].equals("+") || ops[i].equals("-"))
 					help.add(ops[i]);
 			}
 			ops = new String[help.size()];
@@ -480,7 +489,7 @@ public class Calculator {
 			for (int i = 0; i < ops.length; i++) {
 				if (ops[i].equals("+")) {
 					this.answer = this.answer.add(addsubTerms.get(i + 1));
-				} else if (ops[i].equals("--")) {
+				} else if (ops[i].equals("-")) {
 					this.answer = this.answer.subtract(addsubTerms.get(i + 1));
 				}
 			}
@@ -488,7 +497,7 @@ public class Calculator {
 			for (int i = 0; i < ops.length; i++) {
 				if (ops[i].equals("+")) {
 					this.answer = this.answer.add(addsubTerms.get(i));
-				} else if (ops[i].equals("--")) {
+				} else if (ops[i].equals("-")) {
 					this.answer = this.answer.subtract(addsubTerms.get(i));
 				}
 			}
@@ -563,6 +572,10 @@ public class Calculator {
 					String[] termsIp = termsI[j].split("\\{");
 					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 					termsI[j] = new BigDecimal(Math.cbrt(Double.valueOf(termsIp[1]))).toString();
+				}
+				if (termsI[j].contains("!")) {
+					String[] termsIp = termsI[j].split("!");
+					termsI[j] = new BigDecimal(factorial(new BigInteger(termsIp[0])).toString()).toString();
 				}
 				if (termsI[j].contains("sin") && !termsI[j].contains("sinh")) { // trigonometry
 					if (this.trigState.equals("radians")) {
@@ -813,9 +826,9 @@ public class Calculator {
 				if (termsI[j].contains("atan")) {
 					String[] termsIp = termsI[j].split("\\{");
 					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
-					if(this.trigState.equals("radians")) {
+					if (this.trigState.equals("radians")) {
 						termsI[j] = new BigDecimal(Math.atan(Double.valueOf(termsIp[1]))).toString();
-					}else {
+					} else {
 						termsI[j] = new BigDecimal(Math.atan(Double.valueOf(termsIp[1]) * Math.PI / 180.0)).toString();
 					}
 				}
@@ -874,11 +887,12 @@ public class Calculator {
 		boolean test4 = Arrays.stream(ops).anyMatch("."::equals);
 		boolean test5 = Arrays.stream(ops).anyMatch("^"::equals);
 		boolean test6 = Arrays.stream(ops).anyMatch("}"::contains);
+		boolean test7 = Arrays.stream(ops).anyMatch("!"::equals);
 		// remove *, . and / from ops
-		if (test2 || test3 || test4 || test5 || test6) {
+		if (test2 || test3 || test4 || test5 || test6 || test7) {
 			ArrayList<String> help = new ArrayList<>();
 			for (int i = 0; i < ops.length; i++) {
-				if (ops[i].equals("+") || ops[i].equals("--"))
+				if (ops[i].equals("+") || ops[i].equals("-"))
 					help.add(ops[i]);
 			}
 			ops = new String[help.size()];
@@ -889,7 +903,7 @@ public class Calculator {
 		for (int i = 0; i < ops.length; i++) {
 			if (ops[i].equals("+")) {
 				answer = answer.add(addsubTerms.get(i + 1));
-			} else if (ops[i].equals("--")) {
+			} else if (ops[i].equals("-")) {
 				answer = answer.subtract(addsubTerms.get(i + 1));
 			}
 		}
@@ -917,12 +931,20 @@ public class Calculator {
 		return ans;
 	}
 
+	public BigInteger factorial(BigInteger num) {
+		BigInteger ans = BigInteger.ONE;
+		for (BigInteger i = num; i.compareTo(BigInteger.ONE) > 0; i = i.subtract(BigInteger.ONE)) {
+			ans = ans.multiply(i);
+		}
+		return ans;
+	}
+
 	private boolean checkSpecialFunction(String input) {
 		if (input.contains("sqrt") || input.contains("sin") || input.contains("cos") || input.contains("tan")
 				|| input.contains("cbrt") || input.contains("sinh") || input.contains("cosh") || input.contains("tanh")
 				|| input.contains("exp") || input.contains("neg") || input.contains("sec") || input.contains("csc")
-				|| input.contains("cot") || input.contains("asin") || input.contains("acos")
-				|| input.contains("atan")) {
+				|| input.contains("cot") || input.contains("asin") || input.contains("acos") || input.contains("atan")
+				|| input.contains("!")) {
 			return true;
 		} else {
 			return false;
