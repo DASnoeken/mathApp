@@ -12,26 +12,25 @@ public class Factorize {
 
 	public void factorizeNumber() {
 		BigInteger localNumber = new BigInteger(this.number.toString());
-		// BigInteger t = limit.divideAndRemainder(new BigInteger("3"))[1];
 		BigInteger[] resultAndRemainder;
 		resultAndRemainder = localNumber.divideAndRemainder(BigInteger.TEN);
 		int lastDigit = Math.abs(resultAndRemainder[1].intValue());
 		if(lastDigit%2 ==0) {
 			powers.add(BigInteger.ONE);
-			factors.add(BigInteger.TWO);
-			localNumber = localNumber.divide(BigInteger.TWO);
+			factors.add(new BigInteger("2"));
+			localNumber = localNumber.divide(new BigInteger("2"));
 			resultAndRemainder = localNumber.divideAndRemainder(BigInteger.TEN);
 			lastDigit = Math.abs(resultAndRemainder[1].intValue());
 		}
 		while (lastDigit % 2 == 0) {
 			powers.set(0,powers.get(0).add(BigInteger.ONE));
-			localNumber = localNumber.divide(BigInteger.TWO);
+			localNumber = localNumber.divide(new BigInteger("2"));
 			resultAndRemainder = localNumber.divideAndRemainder(BigInteger.TEN);
 			lastDigit = Math.abs(resultAndRemainder[1].intValue());
 		}
 		BigInteger limit = localNumber.sqrt();
 		BigInteger[] remainder;
-		for (BigInteger i = new BigInteger("3"); i.compareTo(limit) < 0; i = i.add(BigInteger.TWO)) {
+		for (BigInteger i = new BigInteger("3"); i.compareTo(limit) < 0; i = i.add(new BigInteger("2"))) {
 			remainder = localNumber.divideAndRemainder(i);
 			if (remainder[1].equals(BigInteger.ZERO)) {
 				factors.add(i);
