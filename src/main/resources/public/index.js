@@ -3,16 +3,6 @@ function gotoCV(){
 }
 function getEncryptionHelp(){
     window.location.href = "assets/Encryption.pdf";
-    /*var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-        if(this.readyState==4){
-            document.getElementById("help").hidden = false;
-            document.getElementById("help").innerHTML = this.responseText;
-            MathJax.typeset();
-        }
-    }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/help/Encryption");
-    xhr.send();*/
 }
 function reportBug(){
     window.location.href = "mailto:d.a.snoeken@protonmail.com?Subject=MathApp Bug Report";
