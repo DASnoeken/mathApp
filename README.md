@@ -13,3 +13,4 @@ Currently, the app contains the following:
 - An actual calculator that requires a string as input.
 - Currency converter that's automatically updated.
 - Basic linear algebra.
+- Factorize numbers into prime factors.

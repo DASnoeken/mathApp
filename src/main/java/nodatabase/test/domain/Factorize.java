@@ -44,14 +44,14 @@ public class Factorize {
 			resultAndRemainder = localNumber.divideAndRemainder(BigInteger.TEN);
 			lastDigit = Math.abs(resultAndRemainder[1].intValue());
 		}
-		if (lastDigit % 5 == 0) {
+		if (lastDigit == 5 || lastDigit == 0) {
 			powers.add(BigInteger.ONE);
 			factors.add(five);
 			localNumber = localNumber.divide(five);
 			resultAndRemainder = localNumber.divideAndRemainder(BigInteger.TEN);
 			lastDigit = Math.abs(resultAndRemainder[1].intValue());
 		}
-		while (lastDigit % 5 == 0) {
+		while (lastDigit == 5 || lastDigit == 0) {
 			powers.set(0, powers.get(0).add(BigInteger.ONE));
 			localNumber = localNumber.divide(five);
 			resultAndRemainder = localNumber.divideAndRemainder(BigInteger.TEN);
