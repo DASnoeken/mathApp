@@ -23,7 +23,7 @@ public class Factorize {
 			localNumber = localNumber.divide(three);
 			digSum = digitSum(localNumber.toString());
 		}
-		while(digSum % 3 == 0) {
+		while (digSum % 3 == 0) {
 			localNumber = localNumber.divide(three);
 			powers.set(0, powers.get(0).add(BigInteger.ONE));
 			digSum = digitSum(localNumber.toString());
@@ -59,7 +59,20 @@ public class Factorize {
 		}
 		BigInteger limit = sqrt(localNumber);
 		BigInteger[] remainder;
+
+		// Working loop
+		int count5 = 1;
+		int count3 = 1;
+		int count3Pattern = 1;
 		for (BigInteger i = new BigInteger("7"); i.compareTo(limit) < 0; i = i.add(two)) {
+			if (count5 == 5) { // Fastest way to skip i == multiple of 5
+				count5 = 1;
+				continue;
+			} else if (check3Pattern(count3, count3Pattern)) {	//Fastest way to skip i == multiple of 3
+				count3 = 1;
+				count3Pattern = 1;
+				continue;
+			}
 			remainder = localNumber.divideAndRemainder(i);
 			if (remainder[1].equals(BigInteger.ZERO)) {
 				factors.add(i);
@@ -72,7 +85,11 @@ public class Factorize {
 					remainder = localNumber.divideAndRemainder(i);
 				}
 			}
+			count5++;
+			count3++;
+			count3Pattern++;
 		}
+
 		while (!localNumber.equals(BigInteger.ONE)) {
 			localNumber = new BigInteger(this.number.toString());
 			BigInteger totalFactor = BigInteger.ONE;
@@ -125,6 +142,18 @@ public class Factorize {
 			ans += Long.parseLong(Character.toString(s.charAt(i)));
 		}
 		return ans;
+	}
+
+	private boolean check3Pattern(int counter, int patternIndex) {
+		if (counter == 5 && patternIndex == 1) {
+			return true;
+		} else if (counter == 2 && (patternIndex == 2 || patternIndex == 4)) {
+			return true;
+		} else if (counter == 3 && patternIndex == 3) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	private ArrayList<BigInteger> powers;
