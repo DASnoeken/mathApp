@@ -11,34 +11,63 @@ public class Factorize {
 	}
 
 	public void factorizeNumber() {
-		BigInteger localNumber = new BigInteger(this.number.toString());
+		String numstring = this.number.toString();
+		BigInteger localNumber = new BigInteger(numstring);
+		BigInteger two = new BigInteger("2");
+		BigInteger three = new BigInteger("3");
+		BigInteger five = new BigInteger("5");
+		long digSum = digitSum(numstring);
+		if (digSum % 3 == 0) {
+			powers.add(BigInteger.ONE);
+			factors.add(three);
+			localNumber = localNumber.divide(three);
+			digSum = digitSum(localNumber.toString());
+		}
+		while(digSum % 3 == 0) {
+			localNumber = localNumber.divide(three);
+			powers.set(0, powers.get(0).add(BigInteger.ONE));
+			digSum = digitSum(localNumber.toString());
+		}
 		BigInteger[] resultAndRemainder;
 		resultAndRemainder = localNumber.divideAndRemainder(BigInteger.TEN);
 		int lastDigit = Math.abs(resultAndRemainder[1].intValue());
-		if(lastDigit%2 ==0) {
+		if (lastDigit % 2 == 0) {
 			powers.add(BigInteger.ONE);
-			factors.add(new BigInteger("2"));
-			localNumber = localNumber.divide(new BigInteger("2"));
+			factors.add(two);
+			localNumber = localNumber.divide(two);
 			resultAndRemainder = localNumber.divideAndRemainder(BigInteger.TEN);
 			lastDigit = Math.abs(resultAndRemainder[1].intValue());
 		}
 		while (lastDigit % 2 == 0) {
-			powers.set(0,powers.get(0).add(BigInteger.ONE));
-			localNumber = localNumber.divide(new BigInteger("2"));
+			powers.set(0, powers.get(0).add(BigInteger.ONE));
+			localNumber = localNumber.divide(two);
+			resultAndRemainder = localNumber.divideAndRemainder(BigInteger.TEN);
+			lastDigit = Math.abs(resultAndRemainder[1].intValue());
+		}
+		if (lastDigit % 5 == 0) {
+			powers.add(BigInteger.ONE);
+			factors.add(five);
+			localNumber = localNumber.divide(five);
+			resultAndRemainder = localNumber.divideAndRemainder(BigInteger.TEN);
+			lastDigit = Math.abs(resultAndRemainder[1].intValue());
+		}
+		while (lastDigit % 5 == 0) {
+			powers.set(0, powers.get(0).add(BigInteger.ONE));
+			localNumber = localNumber.divide(five);
 			resultAndRemainder = localNumber.divideAndRemainder(BigInteger.TEN);
 			lastDigit = Math.abs(resultAndRemainder[1].intValue());
 		}
 		BigInteger limit = sqrt(localNumber);
 		BigInteger[] remainder;
-		for (BigInteger i = new BigInteger("3"); i.compareTo(limit) < 0; i = i.add(new BigInteger("2"))) {
+		for (BigInteger i = new BigInteger("7"); i.compareTo(limit) < 0; i = i.add(two)) {
 			remainder = localNumber.divideAndRemainder(i);
 			if (remainder[1].equals(BigInteger.ZERO)) {
 				factors.add(i);
 				powers.add(BigInteger.ONE);
 				localNumber = remainder[0];
 				remainder = localNumber.divideAndRemainder(i);
-				while(remainder[1].equals(BigInteger.ZERO)) {
-					powers.set(powers.size()-1, powers.get(powers.size()-1).add(BigInteger.ONE));
+				while (remainder[1].equals(BigInteger.ZERO)) {
+					powers.set(powers.size() - 1, powers.get(powers.size() - 1).add(BigInteger.ONE));
 					localNumber = remainder[0];
 					remainder = localNumber.divideAndRemainder(i);
 				}
@@ -56,10 +85,10 @@ public class Factorize {
 			factors.add(localNumber);
 			powers.add(BigInteger.ONE);
 		}
-		if(!factors.contains(BigInteger.ONE)) {
+		if (!factors.contains(BigInteger.ONE)) {
 			factors.add(BigInteger.ONE);
 		}
-		if(!factors.contains(this.number)) {
+		if (!factors.contains(this.number)) {
 			factors.add(this.number);
 		}
 	}
@@ -75,19 +104,27 @@ public class Factorize {
 	public ArrayList<BigInteger> getPowers() {
 		return powers;
 	}
-	
+
 	private BigInteger sqrt(BigInteger x) {
-	    BigInteger div = BigInteger.ZERO.setBit(x.bitLength()/2);
-	    BigInteger div2 = div;
-	    // Loop until we hit the same value twice in a row, or wind
-	    // up alternating.
-	    for(;;) {
-	        BigInteger y = div.add(x.divide(div)).shiftRight(1);
-	        if (y.equals(div) || y.equals(div2))
-	            return y;
-	        div2 = div;
-	        div = y;
-	    }
+		BigInteger div = BigInteger.ZERO.setBit(x.bitLength() / 2);
+		BigInteger div2 = div;
+		// Loop until we hit the same value twice in a row, or wind
+		// up alternating.
+		for (;;) {
+			BigInteger y = div.add(x.divide(div)).shiftRight(1);
+			if (y.equals(div) || y.equals(div2))
+				return y;
+			div2 = div;
+			div = y;
+		}
+	}
+
+	private long digitSum(String s) {
+		long ans = 0;
+		for (int i = 0; i < s.length(); i++) {
+			ans += Long.parseLong(Character.toString(s.charAt(i)));
+		}
+		return ans;
 	}
 
 	private ArrayList<BigInteger> powers;
