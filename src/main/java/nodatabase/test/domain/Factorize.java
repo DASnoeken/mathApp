@@ -145,11 +145,11 @@ public class Factorize {
 	}
 
 	private boolean check3Pattern(int counter, int patternIndex) {
-		if (counter == 5 && patternIndex == 1) {
+		if (counter == 5 && patternIndex == 2) {
 			return true;
-		} else if (counter == 2 && (patternIndex == 2 || patternIndex == 4)) {
+		} else if (counter == 2 && (patternIndex == 3 || patternIndex == 1)) {
 			return true;
-		} else if (counter == 3 && patternIndex == 3) {
+		} else if (counter == 3 && patternIndex == 4) {
 			return true;
 		} else {
 			return false;
