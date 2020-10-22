@@ -18,7 +18,7 @@ public class Factorize {
 		BigInteger three = new BigInteger("3");
 		BigInteger five = new BigInteger("5");
 		BigInteger seven = new BigInteger("7");
-		long digSum7 = digitSum(octalNum);	//The digitsum thing works for 7 in base 8
+		long digSum7 = digitSum(octalNum);	//The digit sum thing works for 7 in base 8
 		if (digSum7 % 7 == 0) {
 			powers.add(BigInteger.ONE);
 			factors.add(seven);
@@ -43,7 +43,6 @@ public class Factorize {
 			powers.set(powers.size()-1, powers.get(powers.size()-1).add(BigInteger.ONE));
 			digSum = digitSum(localNumber.toString());
 		}
-		System.out.println(powers.get(0));
 		BigInteger[] resultAndRemainder;
 		resultAndRemainder = localNumber.divideAndRemainder(BigInteger.TEN);
 		int lastDigit = Math.abs(resultAndRemainder[1].intValue());
@@ -57,11 +56,9 @@ public class Factorize {
 		while (lastDigit % 2 == 0) {
 			powers.set(powers.size()-1, powers.get(powers.size()-1).add(BigInteger.ONE));
 			localNumber = localNumber.divide(two);
-			System.out.println(localNumber);
 			resultAndRemainder = localNumber.divideAndRemainder(BigInteger.TEN);
 			lastDigit = Math.abs(resultAndRemainder[1].intValue());
 		}
-		System.out.println(powers.get(1));
 		if (lastDigit == 5 || lastDigit == 0) {
 			powers.add(BigInteger.ONE);
 			factors.add(five);
@@ -167,18 +164,6 @@ public class Factorize {
 			ans += Long.parseLong(Character.toString(s.charAt(i)));
 		}
 		return ans;
-	}
-
-	private boolean check3Pattern(int counter, int patternIndex) {
-		if (counter == 5 && patternIndex == 2) {
-			return true;
-		} else if (counter == 2 && (patternIndex == 3 || patternIndex == 1)) {
-			return true;
-		} else if (counter == 3 && patternIndex == 4) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 
 	private String toOctal(BigInteger b) {
