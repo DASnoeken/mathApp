@@ -13,10 +13,25 @@ public class Factorize {
 	public void factorizeNumber() {
 		String numstring = this.number.toString();
 		BigInteger localNumber = new BigInteger(numstring);
+		String octalNum = toOctal(localNumber);
 		BigInteger two = new BigInteger("2");
 		BigInteger three = new BigInteger("3");
 		BigInteger five = new BigInteger("5");
-		long digSum = digitSum(numstring);
+		BigInteger seven = new BigInteger("7");
+		long digSum7 = digitSum(octalNum);	//The digitsum thing works for 7 in base 8
+		if (digSum7 % 7 == 0) {
+			powers.add(BigInteger.ONE);
+			factors.add(seven);
+			localNumber = localNumber.divide(seven);
+			digSum7 = digitSum(toOctal(localNumber));
+		}
+		while (digSum7 % 7 == 0) {
+			localNumber = localNumber.divide(seven);
+			powers.set(0, powers.get(0).add(BigInteger.ONE));
+			digSum7 = digitSum(toOctal(localNumber));
+		}
+
+		long digSum = digitSum(localNumber.toString());
 		if (digSum % 3 == 0) {
 			powers.add(BigInteger.ONE);
 			factors.add(three);
@@ -63,16 +78,24 @@ public class Factorize {
 		// Working loop
 		int count5 = 1;
 		int count3 = 1;
-		int count3Pattern = 1;
-		for (BigInteger i = new BigInteger("7"); i.compareTo(limit) < 0; i = i.add(two)) {
+		int[] Pattern3 = { 2, 5, 2, 3 };
+		int count3index = 0;
+		int count3Pattern = Pattern3[count3index];
+		for (BigInteger i = seven; i.compareTo(limit) <= 0; i = i.add(two)) { // leave start at 7
 			if (count5 == 5) { // Fastest way to skip i == multiple of 5
 				count5 = 1;
 				continue;
-			} else if (check3Pattern(count3, count3Pattern)) {	//Fastest way to skip i == multiple of 3
+			}else if (count3 == count3Pattern) { // Fastest way to skip i == multiple of 3
 				count3 = 1;
-				count3Pattern = 1;
+				count5++;
+				if (count3index < Pattern3.length-1)
+					count3index++;
+				else
+					count3index = 0;
+				count3Pattern = Pattern3[count3index];
 				continue;
-			}
+			} //Unfortunately I cannot repeat this trick for factors of 7, because this would require me to find *THE* pattern in prime numbers.
+			
 			remainder = localNumber.divideAndRemainder(i);
 			if (remainder[1].equals(BigInteger.ZERO)) {
 				factors.add(i);
@@ -87,7 +110,6 @@ public class Factorize {
 			}
 			count5++;
 			count3++;
-			count3Pattern++;
 		}
 
 		while (!localNumber.equals(BigInteger.ONE)) {
@@ -154,6 +176,10 @@ public class Factorize {
 		} else {
 			return false;
 		}
+	}
+
+	private String toOctal(BigInteger b) {
+		return b.toString(8);
 	}
 
 	private ArrayList<BigInteger> powers;
