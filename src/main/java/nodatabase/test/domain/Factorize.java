@@ -27,7 +27,7 @@ public class Factorize {
 		}
 		while (digSum7 % 7 == 0) {
 			localNumber = localNumber.divide(seven);
-			powers.set(0, powers.get(0).add(BigInteger.ONE));
+			powers.set(powers.size()-1, powers.get(powers.size()-1).add(BigInteger.ONE));
 			digSum7 = digitSum(toOctal(localNumber));
 		}
 
@@ -40,9 +40,10 @@ public class Factorize {
 		}
 		while (digSum % 3 == 0) {
 			localNumber = localNumber.divide(three);
-			powers.set(0, powers.get(0).add(BigInteger.ONE));
+			powers.set(powers.size()-1, powers.get(powers.size()-1).add(BigInteger.ONE));
 			digSum = digitSum(localNumber.toString());
 		}
+		System.out.println(powers.get(0));
 		BigInteger[] resultAndRemainder;
 		resultAndRemainder = localNumber.divideAndRemainder(BigInteger.TEN);
 		int lastDigit = Math.abs(resultAndRemainder[1].intValue());
@@ -54,11 +55,13 @@ public class Factorize {
 			lastDigit = Math.abs(resultAndRemainder[1].intValue());
 		}
 		while (lastDigit % 2 == 0) {
-			powers.set(0, powers.get(0).add(BigInteger.ONE));
+			powers.set(powers.size()-1, powers.get(powers.size()-1).add(BigInteger.ONE));
 			localNumber = localNumber.divide(two);
+			System.out.println(localNumber);
 			resultAndRemainder = localNumber.divideAndRemainder(BigInteger.TEN);
 			lastDigit = Math.abs(resultAndRemainder[1].intValue());
 		}
+		System.out.println(powers.get(1));
 		if (lastDigit == 5 || lastDigit == 0) {
 			powers.add(BigInteger.ONE);
 			factors.add(five);
@@ -67,7 +70,7 @@ public class Factorize {
 			lastDigit = Math.abs(resultAndRemainder[1].intValue());
 		}
 		while (lastDigit == 5 || lastDigit == 0) {
-			powers.set(0, powers.get(0).add(BigInteger.ONE));
+			powers.set(powers.size()-1, powers.get(powers.size()-1).add(BigInteger.ONE));
 			localNumber = localNumber.divide(five);
 			resultAndRemainder = localNumber.divideAndRemainder(BigInteger.TEN);
 			lastDigit = Math.abs(resultAndRemainder[1].intValue());
@@ -144,7 +147,7 @@ public class Factorize {
 		return powers;
 	}
 
-	private BigInteger sqrt(BigInteger x) {
+	private BigInteger sqrt(BigInteger x) {	//https://stackoverflow.com/questions/4407839/how-can-i-find-the-square-root-of-a-java-biginteger/ Thanks to: Edward Falk. I needed this because Heroku needs to update its Java version.
 		BigInteger div = BigInteger.ZERO.setBit(x.bitLength() / 2);
 		BigInteger div2 = div;
 		// Loop until we hit the same value twice in a row, or wind
