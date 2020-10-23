@@ -90,6 +90,10 @@ public class Binomial {
 			powerx = this.power - k;
 			powery = k;
 			long nk = noverk2(this.power,k);
+			if(this.power == 1) {
+				this.solution += "x + y";
+				break;
+			}
 			if (powerx != 0 && powery != 0 && powerx != 1 && powery != 1) {
 				if(nk!=1.0) {
 					this.solution += nk + "x^" + "{" + powerx + "}" + "y^" + "{" + powery + "}" + " + ";
@@ -114,13 +118,13 @@ public class Binomial {
 				}else {
 					this.solution += "x" + "y" + " + ";
 				}
-			} else if(powery == 1) {
+			} else if(powery == 1 && powerx != 1) {
 				if(nk!=1.0) {
 					this.solution += nk + "x^" + "{" + powerx + "}" + "y" + " + ";
 				}else {
 					this.solution += "x^" + "{" + powerx + "}" + "y" + " + ";
 				}
-			}else if(powerx == 1) {
+			}else if(powerx == 1 && powery != 1) {
 				if(nk!=1.0) {
 					this.solution += nk + "x" + "y^" + "{" + powery + "}" + " + ";
 				}else {
