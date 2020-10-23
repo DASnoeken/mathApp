@@ -33,10 +33,10 @@ public class TestEndPoint {
 		} else if (num.contains(".")) {
 			return "Only integers!";
 		}
-		BigInteger ans = new BigInteger("1");
+		BigInteger ans = BigInteger.ONE;
 		BigInteger initNum = new BigInteger(num);
-		for (BigInteger i = BigInteger.valueOf(1l); i.compareTo(initNum) == -1
-				|| i.compareTo(initNum) == 0; i = i.add(BigInteger.valueOf(1l))) {
+		for (BigInteger i = BigInteger.ONE; i.compareTo(initNum) == -1
+				|| i.compareTo(initNum) == 0; i = i.add(BigInteger.ONE)) {
 			ans = ans.multiply(i);
 		}
 		String strAns = new String();
