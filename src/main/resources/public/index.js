@@ -695,3 +695,19 @@ function factorize(num){
     xhr.open("GET","https://daansmathapp.herokuapp.com/Factorize/getPrimeFactorization/"+num);
     xhr.send();
 }
+function binomial(pow){
+    if(isNaN(pow)){
+        document.getElementById("response").innerHTML = "Only numbers allowed!";
+        return;
+    }
+    pow = Math.floor(pow);
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if(this.readyState == 4){
+            document.getElementById("response").innerHTML = this.responseText;
+            MathJax.typeset();
+        }
+    }
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/Binomial/get/"+pow);
+    xhr.send();
+}

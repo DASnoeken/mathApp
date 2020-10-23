@@ -60,6 +60,32 @@ public class TestEndPoint {
 		}
 	}
 
+	/*@GetMapping("/getNumber/e/{np}") tried this, but is very slow
+	public String gete(@PathVariable String np) {
+		BigInteger n = new BigInteger(np);
+		if (n.equals(BigInteger.ZERO)) {
+			return "ILLEGAL VALUE!";
+		} else if (n.compareTo(BigInteger.ZERO) < 0) {
+			n = n.abs();
+		}
+		BigDecimal largeE = new BigDecimal("1.0");
+		BigDecimal largeE2 = BigDecimal.ONE.divide(new BigDecimal(n));
+		BigDecimal largeE3 = largeE.add(largeE2);
+		largeE3 = power(largeE3,n);
+		String ans = largeE3.toString();
+		if (ans.length() > 200)
+			ans = ans.substring(0, 200);
+		return ans;
+	}
+	private BigDecimal power(BigDecimal bd, BigInteger bi) {
+		BigDecimal ans = BigDecimal.ONE;
+		for(BigInteger i = BigInteger.ZERO;i.compareTo(bi)<0;i=i.add(BigInteger.ONE)) {
+			ans = ans.multiply(bd);
+		}
+		return ans;
+	}
+	*/
+	
 	@GetMapping("/getNumber/e/{n}")
 	public String gete(@PathVariable long n) {
 		if (n == 0) {
