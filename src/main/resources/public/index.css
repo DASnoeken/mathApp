@@ -37,7 +37,7 @@
 .welcome {
     width: 60%;
     margin: auto;
-    padding: 6px;
+    padding: 0px;
     text-align: center;
     font-size: x-large;
     transition: 0.5s;

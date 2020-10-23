@@ -102,20 +102,7 @@
             </tr>
             <tr>
                 <td>
-                    <input type="text" id="factorizationInput">
-                </td>
-                <td></td>
-                <td>
-                    <button class="buttons" onclick="factorize(factorizationInput.value)">Factorize</button>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="text" id="binomialInput">
-                </td>
-                <td>$(x+y)^n = \sum_{k=0}^n\binom{n}{k}x^{n-k}y^k$</td>
-                <td>
-                    <button class="buttons" onclick="binomial(binomialInput.value)">Binomial</button>
+                    <button class="buttons" onclick="toFactorizations()">Factorizations</button>
                 </td>
             </tr>
             <tr>
@@ -127,6 +114,31 @@
                 <td><button class="buttons" onclick="gotoLinAlg()">Linear Algebra</button></td>
             </tr>
 
+        </table>
+    </div>
+    <div id="FactorizationDiv" class="main" hidden>
+        <button class="buttons" id="backButton" onclick="backToInput()">Back</button><br>
+        <table>
+            <tr>
+                <tr>
+                    <td>
+                        <input type="text" id="factorizationInput">
+                    </td>
+                    <td>Prime factorization</td>
+                    <td>
+                        <button class="buttons" onclick="factorize(factorizationInput.value)">Factorize</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" id="binomialInput">
+                    </td>
+                    <td>$(x+y)^n = \sum_{k=0}^n\binom{n}{k}x^{n-k}y^k$</td>
+                    <td>
+                        <button class="buttons" onclick="binomial(binomialInput.value)">Binomial</button>
+                    </td>
+                </tr>
+            </tr>
         </table>
     </div>
     <div id="UnitConversionDiv" class="main" hidden>

@@ -14,3 +14,4 @@ Currently, the app contains the following:
 - Currency converter that's automatically updated.
 - Basic linear algebra.
 - Factorize numbers into prime factors.
+- Calculate binomial coefficients.

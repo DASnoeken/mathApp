@@ -1,10 +1,10 @@
-function gotoCV(){
+function gotoCV() {
     window.location.href = "https://daanscv.herokuapp.com/";
 }
-function getEncryptionHelp(){
+function getEncryptionHelp() {
     window.location.href = "assets/Encryption.pdf";
 }
-function reportBug(){
+function reportBug() {
     window.location.href = "mailto:d.a.snoeken@protonmail.com?Subject=MathApp Bug Report";
 }
 function getSum(begin, end) {
@@ -140,6 +140,7 @@ function backToInput() {
     document.getElementById("Gamescreen").hidden = true;
     document.getElementById("UnitConversionDiv").hidden = true;
     document.getElementById("LinAlgScreen").hidden = true;
+    document.getElementById("FactorizationDiv").hidden = true;
     document.getElementById("response").innerHTML = "Response area";
 }
 function inchToCm() {
@@ -202,6 +203,10 @@ function gotoLinAlgOperations() {
     document.getElementById("LinAlgScreen").hidden = true;
     document.getElementById("LinAlgOperationsScreen").hidden = false;
     document.getElementById("response").innerHTML = "Response area";
+}
+function toFactorizations() {
+    document.getElementById("input").hidden = true;
+    document.getElementById("FactorizationDiv").hidden = false;
 }
 function inchToCmCalculate(foot, inch) {
     if (isNaN(foot) || isNaN(inch)) {
@@ -511,7 +516,7 @@ function checkMatrixErrors() {
     xhr.send();
 }
 function printMatrix(id) {
-    if(isNaN(id)){
+    if (isNaN(id)) {
         document.getElementById("response").innerHTML = "ID has to be a number!";
         return;
     }
@@ -535,14 +540,14 @@ function printAllMatrices() {
     xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/getAllMatrixStrings")
     xhr.send();
 }
-function deleteMatrixById(ID){
+function deleteMatrixById(ID) {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
-            document.getElementById("response").innerHTML = "Matrix with ID "+ID+" removed!";
+            document.getElementById("response").innerHTML = "Matrix with ID " + ID + " removed!";
         }
     }
-    xhr.open("DELETE", "https://daansmathapp.herokuapp.com/LinAlg/deleteById/"+ID);
+    xhr.open("DELETE", "https://daansmathapp.herokuapp.com/LinAlg/deleteById/" + ID);
     xhr.send();
 }
 function clearAllMatrices() {
@@ -556,7 +561,7 @@ function clearAllMatrices() {
     xhr.send();
 }
 function addMatrix(ID1, ID2) {
-    if(isNaN(ID1) || isNaN(ID2)){
+    if (isNaN(ID1) || isNaN(ID2)) {
         document.getElementById("response").innerHTML = "Only use numbers for the ID's!";
         return;
     }
@@ -570,144 +575,144 @@ function addMatrix(ID1, ID2) {
     xhr.send();
 }
 function multiplyMatrix(ID1, ID2) {
-    if(isNaN(ID1) || isNaN(ID2)){
+    if (isNaN(ID1) || isNaN(ID2)) {
         document.getElementById("response").innerHTML = "Only use numbers for the ID's!";
         return;
     }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
-        if(this.readyState==4){
+        if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/LinAlg/Operations/multiply/"+ID1+"/"+ID2);
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/Operations/multiply/" + ID1 + "/" + ID2);
     xhr.send();
 }
-function transposeMatrix(ID){
-    if(isNaN(ID)){
+function transposeMatrix(ID) {
+    if (isNaN(ID)) {
         document.getElementById("response").innerHTML = "Only use numbers for the ID!";
         return;
     }
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if(this.readyState==4){
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/LinAlg/Operations/transpose/"+ID);
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/Operations/transpose/" + ID);
     xhr.send();
 }
-function subtractMatrix(ID1,ID2){
-    if(isNaN(ID1) || isNaN(ID2)){
+function subtractMatrix(ID1, ID2) {
+    if (isNaN(ID1) || isNaN(ID2)) {
         document.getElementById("response").innerHTML = "Only use numbers for the ID's!";
         return;
     }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
-        if(this.readyState==4){
+        if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/LinAlg/Operations/subtract/"+ID1+"/"+ID2);
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/Operations/subtract/" + ID1 + "/" + ID2);
     xhr.send();
 }
-function ref(ID){
-    if(isNaN(ID)){
+function ref(ID) {
+    if (isNaN(ID)) {
         document.getElementById("response").innerHTML = "Only use numbers for the ID!";
         return;
     }
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if(this.readyState==4){
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/LinAlg/Operations/ref/"+ID);
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/Operations/ref/" + ID);
     xhr.send();
 }
-function rref(ID){
-    if(isNaN(ID)){
+function rref(ID) {
+    if (isNaN(ID)) {
         document.getElementById("response").innerHTML = "Only use numbers for the ID!";
         return;
     }
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if(this.readyState==4){
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/LinAlg/Operations/rref/"+ID);
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/Operations/rref/" + ID);
     xhr.send();
 }
-function scaleMatrix(ID,Scalar){
-    if(isNaN(ID) || isNaN(Scalar)){
+function scaleMatrix(ID, Scalar) {
+    if (isNaN(ID) || isNaN(Scalar)) {
         document.getElementById("response").innerHTML = "Only use numbers for the ID and scalar!";
         return;
     }
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if(this.readyState==4){
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/LinAlg/Operations/scale/"+ID+"/?scalar="+Scalar);
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/Operations/scale/" + ID + "/?scalar=" + Scalar);
     xhr.send();
 }
-function determinant(ID){
-    if(isNaN(ID)){
+function determinant(ID) {
+    if (isNaN(ID)) {
         document.getElementById("response").innerHTML = "Only use numbers for the ID!";
         return;
     }
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if(this.readyState==4){
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/LinAlg/Operations/determinant/"+ID);
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/Operations/determinant/" + ID);
     xhr.send();
 }
-function inverse(ID){
-    if(isNaN(ID)){
+function inverse(ID) {
+    if (isNaN(ID)) {
         document.getElementById("response").innerHTML = "Only use numbers for the ID!";
         return;
     }
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if(this.readyState==4){
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/LinAlg/Operations/inverse/"+ID);
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/Operations/inverse/" + ID);
     xhr.send();
 }
-function factorize(num){
-    if(isNaN(num)){
+function factorize(num) {
+    if (isNaN(num)) {
         document.getElementById("response").innerHTML = "Only numbers allowed!";
         return;
     }
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if(this.readyState == 4){
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/Factorize/getPrimeFactorization/"+num);
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/Factorize/getPrimeFactorization/" + num);
     xhr.send();
 }
-function binomial(pow){
-    if(isNaN(pow)){
+function binomial(pow) {
+    if (isNaN(pow)) {
         document.getElementById("response").innerHTML = "Only numbers allowed!";
         return;
     }
     pow = Math.floor(pow);
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if(this.readyState == 4){
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
             MathJax.typeset();
         }
     }
-    xhr.open("GET", "https://daansmathapp.herokuapp.com/Binomial/get/"+pow);
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/Binomial/get/" + pow);
     xhr.send();
 }
