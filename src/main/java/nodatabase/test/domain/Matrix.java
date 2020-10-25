@@ -388,7 +388,17 @@ public class Matrix {
 		}
 		return ans;
 	}
-
+	
+	public Matrix power(double power) {
+		Matrix m = this;
+		for(int i = 0; i<power;i++) {
+			try {
+				m = m.multiply(this);
+			} catch (MatrixDimensionException e) {e.printStackTrace();}
+		}
+		return m;
+	}
+	
 	public Matrix inverse() throws MatrixDimensionException, MatrixException {
 		if (getRowsCount() != getColumnsCount() || Matrix.determinant(this).equals(BigDecimal.ZERO)) {
 			throw new MatrixException("Non-invertible matrix");

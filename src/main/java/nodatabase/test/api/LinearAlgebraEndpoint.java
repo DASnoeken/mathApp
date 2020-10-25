@@ -34,12 +34,12 @@ public class LinearAlgebraEndpoint {
 		this.matrices.clear();
 		lastId = 0;
 	}
-	
+
 	@DeleteMapping("/LinAlg/deleteById/{id}")
 	public void deleteMatrixById(@PathVariable int id) {
 		this.matrices.remove(id);
 		this.lastId--;
-		for(int i=0;i<this.matrices.size();i++) {
+		for (int i = 0; i < this.matrices.size(); i++) {
 			this.matrices.get(i).setId(i);
 		}
 	}
@@ -311,7 +311,7 @@ public class LinearAlgebraEndpoint {
 				+ m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
 		return ans;
 	}
-	
+
 	@GetMapping("/LinAlg/Operations/Trace/{id}")
 	public String getTrace(@PathVariable int id) {
 		if (id >= matrices.size()) {
@@ -321,9 +321,26 @@ public class LinearAlgebraEndpoint {
 		BigDecimal ans;
 		try {
 			ans = Matrix.trace(m);
-		}catch(MatrixDimensionException mde) {
+		} catch (MatrixDimensionException mde) {
 			return mde.getMessage();
 		}
 		return ans.toString();
+	}
+
+	@GetMapping("/LinAlg/Operations/Power/{id}")
+	public String getPower(@PathVariable int id, @RequestParam double power) {
+		if (id >= matrices.size()) {
+			return "ID not found!";
+		}
+		Matrix ans = matrices.get(id).power(power);
+		this.matrices.add(ans);
+		ans.setId(this.lastId);
+		this.lastId++;
+		String ansString = "<table class=\"matrixEquation\">\r\n" + "<tr class=\"MatrixEquationRow\">\r\n"
+				+ "<td class=\"MatrixEquationColumn\">";
+		ansString += matrices.get(id).toHTMLString() + "</td><td class=\"MatrixEquationColumn\">";
+		ansString += "^ " + power + "</td><td class=\"MatrixEquationColumn\"> = </td><td class=\"MatrixEquationColumn\">"
+				+ ans.toHTMLString() + "</td>";
+		return ansString;
 	}
 }

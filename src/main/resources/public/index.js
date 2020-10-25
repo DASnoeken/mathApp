@@ -588,6 +588,21 @@ function multiplyMatrix(ID1, ID2) {
     xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/Operations/multiply/" + ID1 + "/" + ID2);
     xhr.send();
 }
+function matrixPower(ID, pow) {
+    if (isNaN(ID) || isNaN(pow)) {
+        document.getElementById("response").innerHTML = "Only use numbers as input!";
+        return;
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            document.getElementById("response").innerHTML = this.responseText;
+            MathJax.typeset();
+        }
+    }
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/Operations/Power/" + ID + "?power=" + pow);
+    xhr.send();
+}
 function transposeMatrix(ID) {
     if (isNaN(ID)) {
         document.getElementById("response").innerHTML = "Only use numbers for the ID!";
@@ -672,7 +687,7 @@ function determinant(ID) {
     xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/Operations/determinant/" + ID);
     xhr.send();
 }
-function trace(ID){
+function trace(ID) {
     if (isNaN(ID)) {
         document.getElementById("response").innerHTML = "Only use numbers for the ID!";
         return;

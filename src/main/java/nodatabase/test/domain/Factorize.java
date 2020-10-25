@@ -111,13 +111,15 @@ public class Factorize {
 			count5++;
 			count3++;
 		}
-
+		
 		while (!localNumber.equals(BigInteger.ONE)) {
 			localNumber = new BigInteger(this.number.toString());
 			BigInteger totalFactor = BigInteger.ONE;
+			BigInteger localFactor;
 			int powindex = 0;
 			for (BigInteger factor : factors) {
-				totalFactor = totalFactor.multiply(factor).pow(powers.get(powindex).intValue());
+				localFactor = (factor).pow(powers.get(powindex).intValue());
+				totalFactor = totalFactor.multiply(localFactor);
 				powindex++;
 			}
 			localNumber = localNumber.divide(totalFactor);
