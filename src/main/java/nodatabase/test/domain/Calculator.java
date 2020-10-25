@@ -452,8 +452,7 @@ public class Calculator {
 							finalValue = finalValue.multiply(new BigDecimal(termsI[j]));// Double.parseDouble(termsI[j]);
 						}
 					} else {
-						finalValue = finalValue.pow((int) power)
-								.multiply(new BigDecimal(Math.pow(Double.valueOf(finalValue.toString()), power)));// Math.pow(Double.parseDouble(termsI[j]),
+						finalValue = new BigDecimal(Math.pow(Double.valueOf(finalValue.toString()), power));// Math.pow(Double.parseDouble(termsI[j]),
 																													// power);
 					}
 				} else if (opsI[j].equals("*")) {

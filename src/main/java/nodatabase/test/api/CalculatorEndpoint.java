@@ -22,12 +22,16 @@ public class CalculatorEndpoint {
 	public String getAnswer() {
 		if(c.getErrorMessage().equals("None")) {
 			String ans = c.getAnswer().toString();
+			int decimalpointIndex = ans.indexOf('.');
 			String strAns = new String();
 			String tmp = ans.toString();
 			for (int i = 1; i < tmp.length()+1; i++) {
 				strAns += tmp.charAt(i-1);
 				if (i % 80 == 0 && i != 0) {
 					strAns += "<br>";
+				}
+				if(i==decimalpointIndex+15) {
+					break;
 				}
 			}
 			return strAns;
