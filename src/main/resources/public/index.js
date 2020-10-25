@@ -672,6 +672,20 @@ function determinant(ID) {
     xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/Operations/determinant/" + ID);
     xhr.send();
 }
+function trace(ID){
+    if (isNaN(ID)) {
+        document.getElementById("response").innerHTML = "Only use numbers for the ID!";
+        return;
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            document.getElementById("response").innerHTML = this.responseText;
+        }
+    }
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/Operations/Trace/" + ID);
+    xhr.send();
+}
 function inverse(ID) {
     if (isNaN(ID)) {
         document.getElementById("response").innerHTML = "Only use numbers for the ID!";

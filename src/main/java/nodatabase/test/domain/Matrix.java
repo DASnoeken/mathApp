@@ -377,6 +377,17 @@ public class Matrix {
 		}
 		return ans;
 	}
+	
+	public static BigDecimal trace(Matrix m) throws MatrixDimensionException{
+		if(m.getRowsCount() != m.getColumnsCount()) {
+			throw new MatrixDimensionException("Matrix must be a square!");
+		}
+		BigDecimal ans = BigDecimal.ZERO;
+		for(int i = 0; i<m.getRowsCount();i++) {
+			ans = ans.add(m.getMatrix().get(i).get(i));
+		}
+		return ans;
+	}
 
 	public Matrix inverse() throws MatrixDimensionException, MatrixException {
 		if (getRowsCount() != getColumnsCount() || Matrix.determinant(this).equals(BigDecimal.ZERO)) {

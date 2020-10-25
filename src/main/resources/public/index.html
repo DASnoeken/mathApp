@@ -120,24 +120,24 @@
         <button class="buttons" id="backButton" onclick="backToInput()">Back</button><br>
         <table>
             <tr>
-                <tr>
-                    <td>
-                        <input type="text" id="factorizationInput" value="Number (integer)">
-                    </td>
-                    <td>Prime factorization</td>
-                    <td>
-                        <button class="buttons" onclick="factorize(factorizationInput.value)">Factorize</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="text" id="binomialInput" value="Number (integer)">
-                    </td>
-                    <td>$(x+y)^n = \sum_{k=0}^n\binom{n}{k}x^{n-k}y^k$</td>
-                    <td>
-                        <button class="buttons" onclick="binomial(binomialInput.value)">Binomial</button>
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    <input type="text" id="factorizationInput" value="Number (integer)">
+                </td>
+                <td>Prime factorization</td>
+                <td>
+                    <button class="buttons" onclick="factorize(factorizationInput.value)">Factorize</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" id="binomialInput" value="Number (integer)">
+                </td>
+                <td>$(x+y)^n = \sum_{k=0}^n\binom{n}{k}x^{n-k}y^k$</td>
+                <td>
+                    <button class="buttons" onclick="binomial(binomialInput.value)">Binomial</button>
+                </td>
+            </tr>
             </tr>
         </table>
     </div>
@@ -337,6 +337,7 @@
             onclick="rref(IDRREF.value)">RREF</button><br>
         <input type="text" value="ID" id="IDdet"> <button class="buttons"
             onclick="determinant(IDdet.value)">Determinant</button><br>
+        <input type="text" value="ID" id="IDtr"> <button class="buttons" onclick="trace(IDtr.value)">Trace</button><br>
         <input type="text" value="ID" id="IDinv"> <button class="buttons"
             onclick="inverse(IDinv.value)">Inverse</button><br>
 

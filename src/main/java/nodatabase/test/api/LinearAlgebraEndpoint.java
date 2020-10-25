@@ -311,4 +311,19 @@ public class LinearAlgebraEndpoint {
 				+ m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
 		return ans;
 	}
+	
+	@GetMapping("/LinAlg/Operations/Trace/{id}")
+	public String getTrace(@PathVariable int id) {
+		if (id >= matrices.size()) {
+			return "ID not found!";
+		}
+		Matrix m = matrices.get(id);
+		BigDecimal ans;
+		try {
+			ans = Matrix.trace(m);
+		}catch(MatrixDimensionException mde) {
+			return mde.getMessage();
+		}
+		return ans.toString();
+	}
 }
