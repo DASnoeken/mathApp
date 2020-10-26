@@ -1,6 +1,12 @@
 function gotoCV() {
     window.location.href = "https://daanscv.herokuapp.com/";
 }
+function gotoGitHub(){
+    window.location.href = "https://github.com/DASnoeken/mathApp";
+}
+function getHelp(){
+    window.location.href = "assets/MathApp_documentation.pdf";
+}
 function getEncryptionHelp() {
     window.location.href = "assets/Encryption.pdf";
 }

@@ -21,7 +21,8 @@
         <table>
             <tr>
                 <td>
-                    <button id="authorbutton" class="topButtons" onclick="gotoCV()">Developer</button>
+                    <button id="authorbutton" class="topButtons" onclick="gotoCV()">Developer</button><br><br>
+                    <button id="GitHubButton" class="topButtons" onclick="gotoGitHub()">GitHub</button>
                 </td>
                 <td>
                     $$e^{i\pi}+1=0$$
@@ -34,7 +35,8 @@
                     $$\sum_{n=1}^{\infty} \frac{1}{n^2} = \frac{\pi^2}{6}$$
                 </td>
                 <td>
-                    <button id="bugreport" class="topButtons" onclick="reportBug()">Report bug</button>
+                    <button id="bugreport" class="topButtons" onclick="reportBug()">Report bug</button><br><br>
+                    <button id="bugreport" class="topButtons" onclick="getHelp()">Documentation</button>
                 </td>
             </tr>
         </table>
@@ -54,8 +56,8 @@
                         onclick="factorial(factorialInput.value)">Factorial</button></td>
             </tr>
             <tr>
-                <td> <input type="text" id="geometricInput" value="Value of x"></td>
-                <td>$\sum_{k=0}^\infty x^k$</td>
+                <td> <input type="text" id="geometricInput" value="Value of r"></td>
+                <td>$\sum_{k=0}^\infty r^k$</td>
                 <td><button id="geometricButton" class="buttons" onclick="geometric(geometricInput.value)">Geometric
                         series</button></td>
             </tr>
@@ -69,7 +71,7 @@
                 <td>
                     <input type="text" id="derInput" value="Function f(x)">
                 </td>
-                <td>$f'(x) = \mathrm{lim}_{h\rightarrow0}\frac{f(x)-f(x+h)}{h}$</td>
+                <td>$f'(x) = \mathrm{lim}_{h\rightarrow0}\frac{f(x+h)-f(x)}{h}$</td>
                 <td><button id="derbutton" class="buttons" onclick="getDer(derInput.value)">Get
                         derivative</button></td>
             </tr>

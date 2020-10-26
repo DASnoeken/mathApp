@@ -146,6 +146,7 @@ select {
 
 .topButtons{
     background-color: rgb(247, 22, 67);
+    width: 100%;
     border-color: rgba(21, 0, 255, 0.5);
     color: white;
     transition: 0.5s;
