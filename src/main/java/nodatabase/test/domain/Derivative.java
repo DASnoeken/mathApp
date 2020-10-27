@@ -139,6 +139,9 @@ public class Derivative {
 		for(String term:productRuleTerms) {
 			String[] tmp = term.split("[*]");
 			for(int i =0;i<tmp.length;i++) {
+				if(!tmp[i].contains("x")) {		//numbers have derivative 0
+					continue;
+				}
 				if(!tmp[i].matches("\\d{1,}"))
 					ans+=singleTerm(tmp[i])+"*";
 				else
@@ -182,6 +185,8 @@ public class Derivative {
 			case "-cos(x)": {ans+="sin(x)";break;}
 			case "tan(x)": {ans+="sec(x)*sec(x)";break;}
 			case "sec(x)": {ans+="tan(x)*sec(x)";break;}
+			case "csc(x)": {ans+="-cot(x)*csc(x) + ";break;}
+			case "cot(x)": {ans+="-csc(x)*csc(x) = ";break;}
 			case "x^x": {ans+="x^x*(ln(x)+1)";break;}
 			}
 		}
@@ -239,6 +244,8 @@ public class Derivative {
 			case "-cos(x)": {ans+="sin(x) + ";break;}
 			case "tan(x)": {ans+="sec(x)*sec(x) + ";break;}
 			case "sec(x)": {ans+="tan(x)*sec(x) + ";break;}
+			case "csc(x)": {ans+="-cot(x)*csc(x) + ";break;}
+			case "cot(x)": {ans+="-csc(x)*csc(x) = ";break;}
 			case "x^x": {ans+="x^x*(ln(x)+1)";break;}
 			}
 		}
