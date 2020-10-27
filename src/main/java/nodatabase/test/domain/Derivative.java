@@ -353,11 +353,24 @@ public class Derivative {
 						terms.add(termF[i]);
 				}
 				termF=null;
+			}else if(term.matches(".*[\\*]\\(.*")) {
+				termF = term.split("\\*");
+				for(int i=0;i<termF.length;i++) {
+					if(!term.equals("0") && !term.equals("-0"))
+						if(termF[i].matches("\\(.*\\)")) {
+							termF[i] = termF[i].substring(1, termF[i].length()-1);
+						}
+						terms.add(termF[i]);
+				}
+				termF=null;
 			}else {
-				if(!term.equals("0") && !term.equals("-0"))
+				if(!term.equals("0") && !term.equals("-0")){
 					terms.add(term);
+				}
 			}
-			
+		}
+		for(String term:terms) {
+			System.out.println(term);
 		}
 	}
 	
