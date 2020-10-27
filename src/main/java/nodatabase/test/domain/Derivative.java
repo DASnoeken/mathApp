@@ -92,11 +92,12 @@ public class Derivative {
 				if (matcher.find()){
 					extractedTerm = matcher.group(0).substring(1, matcher.group(0).length()-1);
 					outerDerivative = outerDerivative.replaceAll("\\(u\\)", "({"+extractedTerm+"})");
-					ans+=outerDerivative+"*";
+					outerDerivative.trim();
+					ans+=outerDerivative+" * ";
 				}	
 				try {
 					Derivative d = new Derivative(extractedTerm);
-					ans+=d.derive();
+					ans+="("+d.derive().trim()+")";
 				}catch(Exception e) {
 					e.printStackTrace();
 				}
@@ -338,7 +339,7 @@ public class Derivative {
 		terms = new ArrayList<String>();
 		String[] termF;
 		for(String term:terms_P) {
-			if(term.contains("+")) {
+			if(term.contains("+") && !term.matches(".*\\{.*[\\+-].*\\}.*")) {
 				termF = term.split("[+]");
 				for(int i=0;i<termF.length;i++) {
 					if(!term.equals("0") && !term.equals("-0"))
