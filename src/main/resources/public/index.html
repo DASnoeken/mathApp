@@ -86,7 +86,7 @@
                 <td>
                     <input type="text" id="decInput" value="Number to decrypt">
                 </td>
-                <td><button class="buttons" onclick="getEncryptionHelp()">Encryption Help</button></td>
+                <td><button class="buttons" onclick="getEncryptionHelp()" hidden>Encryption Help</button></td>
                 <td>
                     <button class="buttons" id="decButton" onclick="getDecryption(decInput.value)">Get
                         decryption</button>
@@ -148,10 +148,10 @@
         <table>
             <tr>
                 <td>
-                    <button class="buttons" id="C-to-F" onclick="cTof()">Celcius to Fahrenheit</button>
+                    <button class="buttons" id="C-to-F" onclick="cTof()">Celsius to Fahrenheit</button>
                 </td>
                 <td><button class="buttons" onclick="fToc()">Fahrenheit to
-                        Celcius</button>
+                        Celsius</button>
                 </td>
             </tr>
             <tr>
@@ -184,13 +184,13 @@
             onclick="cmToInchCalculate(CentimeterInput.value)">Calculate</button>
     </div>
     <div id="c-to-f" class="main" hidden>
-        Celcius to Fahrenheit calculation<br>
+        Celsius to Fahrenheit calculation<br>
         <button class="buttons" onclick="getUnitConversion()">Back</button><br>
-        <input type="text" id="celciusInput"><button class="buttons"
-            onclick="cTofCalculate(celciusInput.value)">Calculate</button>
+        <input type="text" id="CelsiusInput"><button class="buttons"
+            onclick="cTofCalculate(CelsiusInput.value)">Calculate</button>
     </div>
     <div id="f-to-c" class="main" hidden>
-        Fahrenheit to Celcius calculation<br>
+        Fahrenheit to Celsius calculation<br>
         <button class="buttons" onclick="getUnitConversion()">Back</button><br>
         <input type="text" id="fahrenheitInput"><button class="buttons"
             onclick="fTocCalculate(fahrenheitInput.value)">Calculate</button>
