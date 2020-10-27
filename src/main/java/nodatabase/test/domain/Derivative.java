@@ -87,11 +87,11 @@ public class Derivative {
 			String outerTerm = term.replaceAll("\\{.*\\}", "u");
 			Derivative d_outer = new Derivative(outerTerm);
 			String outerDerivative = d_outer.derive();
-			outerDerivative = outerDerivative.replaceAll("\\(x\\)","(u)");
+			outerDerivative = outerDerivative.replaceAll("x","u");
 			do {
 				if (matcher.find()){
 					extractedTerm = matcher.group(0).substring(1, matcher.group(0).length()-1);
-					outerDerivative = outerDerivative.replaceAll("\\(u\\)", "({"+extractedTerm+"})");
+					outerDerivative = outerDerivative.replaceAll("u", "({"+extractedTerm+"})");
 					outerDerivative.trim();
 					ans+=outerDerivative+" * ";
 				}	
@@ -327,7 +327,7 @@ public class Derivative {
 	}
 	
 	private void breakIntoTerms() {
-		String[] terms_P = function.split("(?<!\\^|\\{)-");
+		String[] terms_P = function.split("(?<!\\^)-(?!.*\\})"); //(?<!\\^|\\{)-
 		if (terms_P[0].equals("")) {
 			for(int i = 0;i<terms_P.length-1;i++) {
 				terms_P[i]=terms_P[i+1];
