@@ -38,7 +38,7 @@ public class Calculator {
 	}
 
 	public BigDecimal getAnswer() {
-		if (this.answer.compareTo(thresh) == -1 && this.answer.compareTo(thresh.multiply(new BigDecimal("-1"))) == 1) {
+		if (this.answer.abs().compareTo(thresh) == -1 ) {	//&& this.answer.compareTo(thresh.multiply(new BigDecimal("-1"))) == 1) {
 			return BigDecimal.ZERO;
 		} else {
 			return answer;
@@ -143,6 +143,19 @@ public class Calculator {
 				if (termsI[j].equalsIgnoreCase("phi")) { // Golden Ratio
 					termsI[j] = new BigDecimal(0.5 + Math.sqrt(5.0) / 2.0).toString();
 				}
+				if(termsI[j].contains("fac2")) {
+					String[] termsIp = termsI[j].split("\\{");
+					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
+					BigInteger ans = new BigInteger(termsIp[1]);
+					BigInteger two = new BigInteger("2");
+					BigInteger[] divrem = ans.divideAndRemainder(two);
+					long count = 0;
+					while(divrem[1].equals(BigInteger.ZERO)) {
+						divrem = divrem[0].divideAndRemainder(two);
+						++count;
+					}
+					termsI[j] = Long.toString(count);
+				}
 				if (termsI[j].contains("exp")) {
 					String[] termsIp = termsI[j].split("\\{");
 					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
@@ -161,6 +174,11 @@ public class Calculator {
 				if (termsI[j].contains("!")) {
 					String[] termsIp = termsI[j].split("!");
 					termsI[j] = new BigDecimal(factorial(new BigInteger(termsIp[0])).toString()).toString();
+				}
+				if(termsI[j].contains("ln")) {
+					String[] termsIp = termsI[j].split("\\{");
+					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
+					termsI[j] = new BigDecimal(Math.log(Double.valueOf(termsIp[1]))).toString();
 				}
 				if (termsI[j].contains("sin") && !termsI[j].contains("sinh") && !termsI[j].contains("asin")) { // trigonometry
 					if (this.trigState.equals("radians")) {
@@ -557,6 +575,19 @@ public class Calculator {
 				if (termsI[j].equalsIgnoreCase("phi")) { // Golden Ratio
 					termsI[j] = new BigDecimal(0.5 + Math.sqrt(5.0) / 2.0).toString();
 				}
+				if(termsI[j].contains("fac2")) {
+					String[] termsIp = termsI[j].split("\\{");
+					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
+					BigInteger ans = new BigInteger(termsIp[1]);
+					BigInteger two = new BigInteger("2");
+					BigInteger[] divrem = ans.divideAndRemainder(two);
+					long count = 0;
+					while(divrem[1].equals(BigInteger.ZERO)) {
+						divrem = divrem[0].divideAndRemainder(two);
+						++count;
+					}
+					termsI[j] = Long.toString(count);
+				}
 				if (termsI[j].contains("exp")) {
 					String[] termsIp = termsI[j].split("\\{");
 					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
@@ -931,11 +962,10 @@ public class Calculator {
 	}
 
 	public BigInteger factorial(BigInteger num) {
-		BigInteger ans = BigInteger.ONE;
-		for (BigInteger i = num; i.compareTo(BigInteger.ONE) > 0; i = i.subtract(BigInteger.ONE)) {
-			ans = ans.multiply(i);
+		for (BigInteger i = num.subtract(BigInteger.ONE); i.compareTo(BigInteger.ONE) > 0; i = i.subtract(BigInteger.ONE)) {
+			num = num.multiply(i);
 		}
-		return ans;
+		return num;
 	}
 
 	private boolean checkSpecialFunction(String input) {
@@ -943,7 +973,7 @@ public class Calculator {
 				|| input.contains("cbrt") || input.contains("sinh") || input.contains("cosh") || input.contains("tanh")
 				|| input.contains("exp") || input.contains("neg") || input.contains("sec") || input.contains("csc")
 				|| input.contains("cot") || input.contains("asin") || input.contains("acos") || input.contains("atan")
-				|| input.contains("!")) {
+				|| input.contains("!") || input.contains("ln") || input.contains("fac2")) {
 			return true;
 		} else {
 			return false;

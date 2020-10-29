@@ -30,7 +30,7 @@ public class CalculatorEndpoint {
 				if (i % 80 == 0 && i != 0) {
 					strAns += "<br>";
 				}
-				if(i==decimalpointIndex+15) {
+				if(decimalpointIndex!=-1 && i==decimalpointIndex+15) {
 					break;
 				}
 			}
