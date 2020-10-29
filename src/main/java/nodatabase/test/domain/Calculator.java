@@ -962,6 +962,7 @@ public class Calculator {
 	}
 
 	public BigInteger factorial(BigInteger num) {
+		
 		for (BigInteger i = num.subtract(BigInteger.ONE); i.compareTo(BigInteger.ONE) > 0; i = i.subtract(BigInteger.ONE)) {
 			num = num.multiply(i);
 		}
