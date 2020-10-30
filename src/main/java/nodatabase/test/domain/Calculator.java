@@ -55,6 +55,20 @@ public class Calculator {
 			if ((countCharOcc(this.sum, '(') != countCharOcc(this.sum, ')'))) {
 				throw new CalculatorSyntaxException("Syntax error! Parenthesis error!");
 			}
+			if(this.sum.contains("!")) {		//surround factorial with parenthesis
+				int countFactorial = countCharOcc(this.sum, '!');
+				this.sum = this.sum.replaceAll("\\!", "!)");
+				int index = 0;
+				for(int i = 0;i<countFactorial;++i) {
+					index = this.sum.indexOf("!",index+1);
+					index--;
+					while(index>0 && Character.isDigit(this.sum.charAt(index-1))) {
+						index--;
+					}
+					this.sum = addChar(this.sum, '(', index);
+					index = this.sum.indexOf("!",index);
+				}
+			}
 			while (this.sum.contains("(") && (countCharOcc(this.sum, '(') == countCharOcc(this.sum, ')'))) {
 				solveParenthesis();
 			}
@@ -988,4 +1002,9 @@ public class Calculator {
 			return false;
 		}
 	}
+	
+	private String addChar(String str, char ch, int position) {
+	    return str.substring(0, position) + ch + str.substring(position);
+	}
+	
 }
