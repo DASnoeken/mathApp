@@ -27,18 +27,19 @@ public class FactorizeEndpoint {
 		f.factorizeNumber();
 		String ans = new String();
 		if (f.getFactors().size() > 2) {
-			ans += "Prime factors are: ";
+			ans += "Prime factors are: $";
 			for (int i = 0; i < f.getFactors().size() - 3; i++) {
 				if (f.getPowers().get(i).equals(BigInteger.ONE))
 					ans += f.getFactors().get(i) + ", ";
 				else
-					ans += f.getFactors().get(i) + "^" + f.getPowers().get(i) + ", ";
+					ans += f.getFactors().get(i) + "^{" + f.getPowers().get(i) + "}, ";
 			}
 			if (f.getPowers().get(f.getFactors().size() - 3).equals(BigInteger.ONE))
 				ans += f.getFactors().get(f.getFactors().size() - 3);
 			else
-				ans += f.getFactors().get(f.getFactors().size() - 3) + "^"
-						+ f.getPowers().get(f.getFactors().size() - 3);
+				ans += f.getFactors().get(f.getFactors().size() - 3) + "^{"
+						+ f.getPowers().get(f.getFactors().size() - 3) + "}";
+			ans+="$";
 
 		} else {
 			return "Number is prime";

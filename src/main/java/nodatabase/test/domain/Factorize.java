@@ -14,11 +14,7 @@ public class Factorize {
 		String numstring = this.number.toString();
 		BigInteger localNumber = new BigInteger(numstring);
 		String octalNum = toOctal(localNumber);
-		BigInteger two = new BigInteger("2");
-		BigInteger three = new BigInteger("3");
-		BigInteger five = new BigInteger("5");
-		BigInteger seven = new BigInteger("7");
-		long digSum7 = digitSum(octalNum);	//The digit sum thing works for 7 in base 8
+		long digSum7 = digitSum(octalNum); // The digit sum thing works for 7 in base 8
 		if (digSum7 % 7 == 0) {
 			powers.add(BigInteger.ONE);
 			factors.add(seven);
@@ -27,7 +23,7 @@ public class Factorize {
 		}
 		while (digSum7 % 7 == 0) {
 			localNumber = localNumber.divide(seven);
-			powers.set(powers.size()-1, powers.get(powers.size()-1).add(BigInteger.ONE));
+			powers.set(powers.size() - 1, powers.get(powers.size() - 1).add(BigInteger.ONE));
 			digSum7 = digitSum(toOctal(localNumber));
 		}
 
@@ -40,7 +36,7 @@ public class Factorize {
 		}
 		while (digSum % 3 == 0) {
 			localNumber = localNumber.divide(three);
-			powers.set(powers.size()-1, powers.get(powers.size()-1).add(BigInteger.ONE));
+			powers.set(powers.size() - 1, powers.get(powers.size() - 1).add(BigInteger.ONE));
 			digSum = digitSum(localNumber.toString());
 		}
 		BigInteger[] resultAndRemainder;
@@ -54,7 +50,7 @@ public class Factorize {
 			lastDigit = Math.abs(resultAndRemainder[1].intValue());
 		}
 		while (lastDigit % 2 == 0) {
-			powers.set(powers.size()-1, powers.get(powers.size()-1).add(BigInteger.ONE));
+			powers.set(powers.size() - 1, powers.get(powers.size() - 1).add(BigInteger.ONE));
 			localNumber = localNumber.divide(two);
 			resultAndRemainder = localNumber.divideAndRemainder(BigInteger.TEN);
 			lastDigit = Math.abs(resultAndRemainder[1].intValue());
@@ -67,7 +63,7 @@ public class Factorize {
 			lastDigit = Math.abs(resultAndRemainder[1].intValue());
 		}
 		while (lastDigit == 5 || lastDigit == 0) {
-			powers.set(powers.size()-1, powers.get(powers.size()-1).add(BigInteger.ONE));
+			powers.set(powers.size() - 1, powers.get(powers.size() - 1).add(BigInteger.ONE));
 			localNumber = localNumber.divide(five);
 			resultAndRemainder = localNumber.divideAndRemainder(BigInteger.TEN);
 			lastDigit = Math.abs(resultAndRemainder[1].intValue());
@@ -85,17 +81,18 @@ public class Factorize {
 			if (count5 == 5) { // Fastest way to skip i == multiple of 5
 				count5 = 1;
 				continue;
-			}else if (count3 == count3Pattern) { // Fastest way to skip i == multiple of 3
+			} else if (count3 == count3Pattern) { // Fastest way to skip i == multiple of 3
 				count3 = 1;
 				count5++;
-				if (count3index < Pattern3.length-1)
+				if (count3index < Pattern3.length - 1)
 					count3index++;
 				else
 					count3index = 0;
 				count3Pattern = Pattern3[count3index];
 				continue;
-			} //Unfortunately I cannot repeat this trick for factors of 7, because this would require me to find *THE* pattern in prime numbers.
-			
+			} // Unfortunately I cannot repeat this trick for factors of 7, because this would
+				// require me to find *THE* pattern in prime numbers.
+
 			remainder = localNumber.divideAndRemainder(i);
 			if (remainder[1].equals(BigInteger.ZERO)) {
 				factors.add(i);
@@ -111,7 +108,7 @@ public class Factorize {
 			count5++;
 			count3++;
 		}
-		
+
 		while (!localNumber.equals(BigInteger.ONE)) {
 			localNumber = new BigInteger(this.number.toString());
 			BigInteger totalFactor = BigInteger.ONE;
@@ -128,10 +125,13 @@ public class Factorize {
 		}
 		if (!factors.contains(BigInteger.ONE)) {
 			factors.add(BigInteger.ONE);
+			powers.add(BigInteger.ONE);
 		}
 		if (!factors.contains(this.number)) {
 			factors.add(this.number);
+			powers.add(BigInteger.ONE);
 		}
+		organize();
 	}
 
 	public ArrayList<BigInteger> getFactors() {
@@ -146,7 +146,9 @@ public class Factorize {
 		return powers;
 	}
 
-	private BigInteger sqrt(BigInteger x) {	//https://stackoverflow.com/questions/4407839/how-can-i-find-the-square-root-of-a-java-biginteger/ Thanks to: Edward Falk. I needed this because Heroku needs to update its Java version.
+	private BigInteger sqrt(BigInteger x) { // https://stackoverflow.com/questions/4407839/how-can-i-find-the-square-root-of-a-java-biginteger/
+											// Thanks to: Edward Falk. I needed this because Heroku needs to update its
+											// Java version.
 		BigInteger div = BigInteger.ZERO.setBit(x.bitLength() / 2);
 		BigInteger div2 = div;
 		// Loop until we hit the same value twice in a row, or wind
@@ -172,7 +174,46 @@ public class Factorize {
 		return b.toString(8);
 	}
 
+	private void organize() {		//Just to help the answer look nicer.
+		ArrayList<BigInteger> tmp = new ArrayList<BigInteger>();
+		ArrayList<BigInteger> tmp2 = new ArrayList<BigInteger>();
+		int index2 = this.factors.indexOf(two);
+		int index3 = this.factors.indexOf(three);
+		int index5 = this.factors.indexOf(five);
+		int index7 = this.factors.indexOf(seven);
+		if (index2 != -1) {
+			tmp.add(this.factors.get(index2));
+			tmp2.add(this.powers.get(index2));
+		}
+		if (index3 != -1) {
+			tmp.add(this.factors.get(index3));
+			tmp2.add(this.powers.get(index3));
+		}
+		if (index5 != -1) {
+			tmp.add(this.factors.get(index5));
+			tmp2.add(this.powers.get(index5));
+		}
+		if (index7 != -1) {
+			tmp.add(this.factors.get(index7));
+			tmp2.add(this.powers.get(index7));
+		}
+		for (int i = 0; i < this.factors.size(); i++) {
+			if (this.factors.get(i).equals(two) || this.factors.get(i).equals(three) || this.factors.get(i).equals(five)
+					|| this.factors.get(i).equals(seven)) {
+				continue;
+			}
+			tmp.add(this.factors.get(i));
+			tmp2.add(this.powers.get(i));
+		}
+		this.factors = tmp;
+		this.powers = tmp2;
+	}
+
 	private ArrayList<BigInteger> powers;
 	private ArrayList<BigInteger> factors;
+	private final BigInteger two = new BigInteger("2");
+	private final BigInteger three = new BigInteger("3");
+	private final BigInteger five = new BigInteger("5");
+	private final BigInteger seven = new BigInteger("7");
 	private BigInteger number;
 }

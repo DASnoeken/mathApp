@@ -730,6 +730,7 @@ function factorize(num) {
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
+            MathJax.typeset();
         }
     }
     xhr.open("GET", "https://daansmathapp.herokuapp.com/Factorize/getPrimeFactorization/" + num);
@@ -741,6 +742,10 @@ function binomial(pow) {
         return;
     }
     pow = Math.floor(pow);
+    if(pow<=0){
+        document.getElementById("response").innerHTML = "Only integers > 0 are allowed!";
+        return;
+    }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
