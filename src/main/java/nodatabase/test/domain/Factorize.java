@@ -8,6 +8,7 @@ public class Factorize {
 		this.number = bi;
 		this.factors = new ArrayList<BigInteger>();
 		this.powers = new ArrayList<BigInteger>();
+		this.prime = true;
 	}
 
 	public void factorizeNumber() {
@@ -208,6 +209,68 @@ public class Factorize {
 		this.factors = tmp;
 		this.powers = tmp2;
 	}
+	
+	public void checkPrime() {
+		String numstring = this.number.toString();
+		BigInteger localNumber = new BigInteger(numstring);
+		String octalNum = toOctal(localNumber);
+		long digSum7 = digitSum(octalNum); // The digit sum thing works for 7 in base 8
+		if (digSum7 % 7 == 0 && !localNumber.equals(seven)) {
+			this.prime=false;
+			return;
+		}
+		long digSum = digitSum(localNumber.toString());
+		if (digSum % 3 == 0 && !localNumber.equals(three)) {
+			this.prime=false;
+			return;
+		}
+		BigInteger[] resultAndRemainder = localNumber.divideAndRemainder(BigInteger.TEN);
+		int lastDigit = Math.abs(resultAndRemainder[1].intValue());
+		if (lastDigit % 2 == 0 && !localNumber.equals(two)) {
+			this.prime=false;
+			return;
+		}
+		if ((lastDigit == 5 || lastDigit == 0) && !localNumber.equals(five)) {
+			this.prime=false;
+			return;
+		}
+		BigInteger limit = sqrt(localNumber);
+		BigInteger[] remainder;
+		
+		int count5 = 1;
+		int count3 = 1;
+		int[] Pattern3 = { 2, 5, 2, 3 };
+		int count3index = 0;
+		int count3Pattern = Pattern3[count3index];
+		for (BigInteger i = seven; i.compareTo(limit) <= 0; i = i.add(two)) { // leave start at 7
+			if (count5 == 5) { // Fastest way to skip i == multiple of 5
+				count5 = 1;
+				continue;
+			} else if (count3 == count3Pattern) { // Fastest way to skip i == multiple of 3
+				count3 = 1;
+				count5++;
+				if (count3index < Pattern3.length - 1)
+					count3index++;
+				else
+					count3index = 0;
+				count3Pattern = Pattern3[count3index];
+				continue;
+			} // Unfortunately I cannot repeat this trick for factors of 7, because this would
+				// require me to find *THE* pattern in prime numbers.
+
+			remainder = localNumber.divideAndRemainder(i);
+			if (remainder[1].equals(BigInteger.ZERO)) {
+				this.prime=false;
+				return;
+			}
+			count5++;
+			count3++;
+		}
+	}
+
+	public boolean isPrime() {
+		return prime;
+	}
 
 	private ArrayList<BigInteger> powers;
 	private ArrayList<BigInteger> factors;
@@ -215,5 +278,6 @@ public class Factorize {
 	private final BigInteger three = new BigInteger("3");
 	private final BigInteger five = new BigInteger("5");
 	private final BigInteger seven = new BigInteger("7");
+	private boolean prime;
 	private BigInteger number;
 }

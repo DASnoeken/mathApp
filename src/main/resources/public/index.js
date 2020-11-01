@@ -726,6 +726,10 @@ function factorize(num) {
         document.getElementById("response").innerHTML = "Only numbers allowed!";
         return;
     }
+    if(num<=0){
+        document.getElementById("response").innerHTML = "Only integers > 0 are allowed!";
+        return;
+    }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
@@ -754,5 +758,23 @@ function binomial(pow) {
         }
     }
     xhr.open("GET", "https://daansmathapp.herokuapp.com/Binomial/get/" + pow);
+    xhr.send();
+}
+function isPrime(num){
+    if (isNaN(num)) {
+        document.getElementById("response").innerHTML = "Only numbers allowed!";
+        return;
+    }
+    if(num<=0){
+        document.getElementById("response").innerHTML = "Only integers > 0 are allowed!";
+        return;
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            document.getElementById("response").innerHTML = this.responseText;
+        }
+    }
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/Factorize/isPrime/" + num);
     xhr.send();
 }

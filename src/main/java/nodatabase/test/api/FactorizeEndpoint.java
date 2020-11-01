@@ -46,4 +46,16 @@ public class FactorizeEndpoint {
 		}
 		return ans;
 	}
+	
+	@GetMapping("/Factorize/isPrime/{num}")
+	public String isPrime(@PathVariable String num) {
+		BigInteger b = new BigInteger(num);
+		Factorize f = new Factorize(b);
+		f.checkPrime();
+		if(f.isPrime()) {
+			return "Number "+num+" is prime.";
+		}else {
+			return "Number "+num+" is not prime";
+		}
+	}
 }
