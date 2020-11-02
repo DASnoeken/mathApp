@@ -6,12 +6,12 @@ import java.util.ArrayList;
 public class Factorize {
 	public Factorize(BigInteger bi) {
 		this.number = bi;
-		this.factors = new ArrayList<BigInteger>();
-		this.powers = new ArrayList<BigInteger>();
 		this.prime = true;
 	}
 
 	public void factorizeNumber() {
+		this.factors = new ArrayList<BigInteger>();
+		this.powers = new ArrayList<BigInteger>();
 		String numstring = this.number.toString();
 		BigInteger localNumber = new BigInteger(numstring);
 		String octalNum = toOctal(localNumber);

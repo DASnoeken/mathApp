@@ -213,6 +213,7 @@ function gotoLinAlgOperations() {
 function toFactorizations() {
     document.getElementById("input").hidden = true;
     document.getElementById("FactorizationDiv").hidden = false;
+    document.getElementById("response").innerHTML = "Response area";
 }
 function inchToCmCalculate(foot, inch) {
     if (isNaN(foot) || isNaN(inch)) {
@@ -352,6 +353,7 @@ function kmToMilesCalculate(val) {
 function gameStart() {
     document.getElementById("Gamescreen").hidden = false;
     document.getElementById("input").hidden = true;
+    document.getElementById("response").innerHTML = "Response area";
 }
 function setDegree(deg) {
     document.getElementById("response").innerHTML = "Response area";
