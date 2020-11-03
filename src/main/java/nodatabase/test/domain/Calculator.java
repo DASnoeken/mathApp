@@ -15,65 +15,13 @@ public class Calculator {
 	private ArrayList<BigDecimal> addsubTerms;
 	private String trigState;
 	private MathContext mc;
-	private final BigDecimal thresh = new BigDecimal("1E-10");
-
-	public String getTrigState() {
-		return trigState;
-	}
-
-	public void setTrigState(String trigState) {
-		this.trigState = trigState;
-	}
-
-	public String getSum() {
-		return sum;
-	}
+	private String in;
+	private static final BigDecimal thresh = new BigDecimal("1E-10");
 	
-	public String texify() {
-		String ans = new String(this.sum);
-		ans=ans.replace('{', '(').replace('}', ')');
-		for(int i = 0;i<ans.length();i++) {
-			if(ans.charAt(i)=='^') {
-				ans=addChar(ans, '{', i+1);
-				i+=2;
-				while(i<ans.length() && Character.isDigit(ans.charAt(i))) {
-					i++;
-				}
-				ans=addChar(ans, '}', i);
-			}
-			if(ans.charAt(i)=='p' && ans.charAt(i+1)=='i') {
-				ans = addChar(ans, '\\', i);
-				i+=3;
-			}
-			if( ( (int)ans.charAt(i)>=65 && (int)ans.charAt(i)<=90 ) || ( (int) ans.charAt(i) >= 97 && (int) ans.charAt(i) <= 122 ) ) { //is letter
-				StringBuilder sb = new StringBuilder(ans);
-				sb.replace(i, i+1, "\\text{"+ans.charAt(i)+"}");
-				i+=7;
-				ans=sb.toString();
-			}
-		}
-		return ans;
-	}
-
-	public String getErrorMessage() {
-		return errorMessage;
-	}
-
-	public void setSum(String sum) {
-		this.sum = sum;
-	}
-
-	public BigDecimal getAnswer() {
-		if (this.answer.abs().compareTo(thresh) == -1 ) {	//&& this.answer.compareTo(thresh.multiply(new BigDecimal("-1"))) == 1) {
-			return BigDecimal.ZERO;
-		} else {
-			return answer;
-		}
-	}
-
 	public Calculator(String input, String trigStateInput) {
 		this.trigState = trigStateInput;
 		this.sum = input;
+		this.in = input;
 		this.mc = new MathContext(50);
 		this.errorMessage = "None";
 		this.answer = BigDecimal.ZERO;
@@ -81,18 +29,18 @@ public class Calculator {
 			if ((countCharOcc(this.sum, '(') != countCharOcc(this.sum, ')'))) {
 				throw new CalculatorSyntaxException("Syntax error! Parenthesis error!");
 			}
-			if(this.sum.contains("!")) {		//surround factorial with parenthesis
+			if (this.sum.contains("!")) { // surround factorial with parenthesis
 				int countFactorial = countCharOcc(this.sum, '!');
 				this.sum = this.sum.replaceAll("\\!", "!)");
 				int index = 0;
-				for(int i = 0;i<countFactorial;++i) {
-					index = this.sum.indexOf("!",index+1);
+				for (int i = 0; i < countFactorial; ++i) {
+					index = this.sum.indexOf("!", index + 1);
 					index--;
-					while(index>0 && Character.isDigit(this.sum.charAt(index-1))) {
+					while (index > 0 && Character.isDigit(this.sum.charAt(index - 1))) {
 						index--;
 					}
 					this.sum = addChar(this.sum, '(', index);
-					index = this.sum.indexOf("!",index);
+					index = this.sum.indexOf("!", index);
 				}
 			}
 			while (this.sum.contains("(") && (countCharOcc(this.sum, '(') == countCharOcc(this.sum, ')'))) {
@@ -110,6 +58,75 @@ public class Calculator {
 		} catch (Exception e) {
 			this.errorMessage = "ERROR: " + e.getMessage();
 			e.printStackTrace();
+		}
+	}
+
+	public String getIn() {
+		return in;
+	}
+
+	public String getTrigState() {
+		return trigState;
+	}
+
+	public void setTrigState(String trigState) {
+		this.trigState = trigState;
+	}
+
+	public String getSum() {
+		return sum;
+	}
+
+	public String texify() {
+		String ans = new String(this.in);
+		ans = ans.replace('{', '(').replace('}', ')');
+		for (int i = 0; i < ans.length(); i++) {
+			if (ans.charAt(i) == '^' && Character.isDigit(ans.charAt(i+1))) {
+				ans = addChar(ans, '{', i + 1);
+				i += 2;
+				while (i < ans.length() && Character.isDigit(ans.charAt(i))) {
+					i++;
+				}
+				ans = addChar(ans, '}', i);
+			}
+			if (ans.charAt(i) == 'p' && ans.charAt(i + 1) == 'i') {
+				boolean pipower = false;
+				if (i > 0 && ans.charAt(i - 1) == '^') {
+					ans = addChar(ans, '{', i);
+					i++;
+					pipower = true;
+				}
+				ans = addChar(ans, '\\', i);
+				i += 3;
+				if (pipower) {
+					ans = addChar(ans, '}', i);
+					i++;
+				}
+			} else if (((int) ans.charAt(i) >= 65 && (int) ans.charAt(i) <= 90)
+					|| ((int) ans.charAt(i) >= 97 && (int) ans.charAt(i) <= 122)) { // is letter
+				StringBuilder sb = new StringBuilder(ans);
+				sb.replace(i, i + 1, "\\text{" + ans.charAt(i) + "}");
+				i += 7;
+				ans = sb.toString();
+			}
+		}
+		return ans;
+	}
+
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	public void setSum(String sum) {
+		this.sum = sum;
+	}
+
+	public BigDecimal getAnswer() {
+		if (this.answer.abs().compareTo(thresh) == -1) { // && this.answer.compareTo(thresh.multiply(new
+															// BigDecimal("-1"))) == 1) {
+			return BigDecimal.ZERO;
+		} else {
+			return answer;
 		}
 	}
 
@@ -183,14 +200,14 @@ public class Calculator {
 				if (termsI[j].equalsIgnoreCase("phi")) { // Golden Ratio
 					termsI[j] = new BigDecimal(0.5 + Math.sqrt(5.0) / 2.0).toString();
 				}
-				if(termsI[j].contains("fac2")) {
+				if (termsI[j].contains("fac2")) {
 					String[] termsIp = termsI[j].split("\\{");
 					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 					BigInteger ans = new BigInteger(termsIp[1]);
 					BigInteger two = new BigInteger("2");
 					BigInteger[] divrem = ans.divideAndRemainder(two);
 					long count = 0;
-					while(divrem[1].equals(BigInteger.ZERO)) {
+					while (divrem[1].equals(BigInteger.ZERO)) {
 						divrem = divrem[0].divideAndRemainder(two);
 						++count;
 					}
@@ -215,7 +232,7 @@ public class Calculator {
 					String[] termsIp = termsI[j].split("!");
 					termsI[j] = new BigDecimal(factorial(new BigInteger(termsIp[0])).toString()).toString();
 				}
-				if(termsI[j].contains("ln")) {
+				if (termsI[j].contains("ln")) {
 					String[] termsIp = termsI[j].split("\\{");
 					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 					termsI[j] = new BigDecimal(Math.log(Double.valueOf(termsIp[1]))).toString();
@@ -511,7 +528,7 @@ public class Calculator {
 						}
 					} else {
 						finalValue = new BigDecimal(Math.pow(Double.valueOf(finalValue.toString()), power));// Math.pow(Double.parseDouble(termsI[j]),
-																													// power);
+																											// power);
 					}
 				} else if (opsI[j].equals("*")) {
 					finalValue = finalValue.multiply(new BigDecimal(termsI[j + 1]));// Double.parseDouble(termsI[j +
@@ -566,10 +583,9 @@ public class Calculator {
 		if (subsum.charAt(0) == '-') {
 			subsum = "0" + subsum;
 		}
-		this.terms = subsum.split("(\\+|\\-\\-)"); // contains numbers
+		this.terms = subsum.split("(\\+|\\-)"); // contains numbers
 		this.ops = subsum.split(
 				"\\({0,}([\\*\\/\\^]?\\d{1,}[\\*\\/\\^]?|[a-z]{1,}\\{\\d{1,}\\.?\\d{0,}\\}|(?i)e|(?i)pi|(?i)phi|\\d{0}(?!\\-)\\d{1,})\\){0,}");
-
 		ArrayList<String> list = new ArrayList<String>(Arrays.asList(this.terms));
 		list.remove("");
 		for (int i = 0; i < list.size(); i++) {
@@ -615,14 +631,14 @@ public class Calculator {
 				if (termsI[j].equalsIgnoreCase("phi")) { // Golden Ratio
 					termsI[j] = new BigDecimal(0.5 + Math.sqrt(5.0) / 2.0).toString();
 				}
-				if(termsI[j].contains("fac2")) {
+				if (termsI[j].contains("fac2")) {
 					String[] termsIp = termsI[j].split("\\{");
 					termsIp[1] = termsIp[1].substring(0, termsIp[1].length() - 1);
 					BigInteger ans = new BigInteger(termsIp[1]);
 					BigInteger two = new BigInteger("2");
 					BigInteger[] divrem = ans.divideAndRemainder(two);
 					long count = 0;
-					while(divrem[1].equals(BigInteger.ZERO)) {
+					while (divrem[1].equals(BigInteger.ZERO)) {
 						divrem = divrem[0].divideAndRemainder(two);
 						++count;
 					}
@@ -937,9 +953,7 @@ public class Calculator {
 							finalValue = finalValue.multiply(new BigDecimal(termsI[j]));// Double.parseDouble(termsI[j]);
 						}
 					} else {
-						finalValue = finalValue.pow((int) power)
-								.multiply(new BigDecimal(Math.pow(Double.valueOf(finalValue.toString()), power)));// Math.pow(Double.parseDouble(termsI[j]),
-																													// power);
+						finalValue = new BigDecimal(Math.pow(Double.valueOf(finalValue.toString()), power));// Math.pow(Double.parseDouble(termsI[j]),																					// power);
 					}
 				} else if (opsI[j].equals("*")) {
 					finalValue = finalValue.multiply(new BigDecimal(termsI[j + 1]));// Double.parseDouble(termsI[j +
@@ -1002,8 +1016,9 @@ public class Calculator {
 	}
 
 	public BigInteger factorial(BigInteger num) {
-		
-		for (BigInteger i = num.subtract(BigInteger.ONE); i.compareTo(BigInteger.ONE) > 0; i = i.subtract(BigInteger.ONE)) {
+
+		for (BigInteger i = num.subtract(BigInteger.ONE); i.compareTo(BigInteger.ONE) > 0; i = i
+				.subtract(BigInteger.ONE)) {
 			num = num.multiply(i);
 		}
 		return num;
@@ -1028,13 +1043,13 @@ public class Calculator {
 			return false;
 		}
 	}
-	
+
 	private String addChar(String str, char ch, int position) {
-		if(position>=str.length()) {
-			return str+ch;
-		}else {
-	    	return str.substring(0, position) + ch + str.substring(position);
+		if (position >= str.length()) {
+			return str + ch;
+		} else {
+			return str.substring(0, position) + ch + str.substring(position);
 		}
 	}
-	
+
 }
