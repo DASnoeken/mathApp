@@ -17,7 +17,7 @@ public class Calculator {
 	private MathContext mc;
 	private String in;
 	private static final BigDecimal thresh = new BigDecimal("1E-10");
-	
+
 	public Calculator(String input, String trigStateInput) {
 		this.trigState = trigStateInput;
 		this.sum = input;
@@ -39,7 +39,7 @@ public class Calculator {
 					while (index > 0 && Character.isDigit(this.sum.charAt(index - 1))) {
 						index--;
 					}
-					this.sum = addChar(this.sum, '(', index);
+					this.sum = addChar(this.sum, "(", index);
 					index = this.sum.indexOf("!", index);
 				}
 			}
@@ -81,25 +81,67 @@ public class Calculator {
 		String ans = new String(this.in);
 		ans = ans.replace('{', '(').replace('}', ')');
 		for (int i = 0; i < ans.length(); i++) {
-			if (ans.charAt(i) == '^' && Character.isDigit(ans.charAt(i+1))) {
-				ans = addChar(ans, '{', i + 1);
+			if (ans.charAt(i) == '/') {
+				int iorig = i;
+				i--;
+				if (ans.charAt(i) == ')') {
+					i--;
+					while (i > 0 && ans.charAt(i) != '(') {
+						i--;
+					}
+				} else {
+					while (i > 0
+							&& (Character.isDigit(ans.charAt(i)) || ans.charAt(i) == '^' || ans.charAt(i) == '*')) {
+						i--;
+					}
+				}
+				ans = addChar(ans, "\\frac{", i);
+				i = iorig + 6;
+				ans = replaceCharAt(ans, "}{", i);
+				i += 2;
+				if (ans.charAt(i) == '(') {
+					while (i < ans.length() && ans.charAt(i) != ')') {
+						i++;
+					}
+					i++;
+					ans = addChar(ans, "}", i);
+				} else {
+					while (i < ans.length()
+							&& (Character.isDigit(ans.charAt(i)) || ans.charAt(i) == '^' || ans.charAt(i) == '/')) {
+						i++;
+					}
+					i++;
+					ans = addChar(ans, "}", i);
+				}
+			}
+		}
+		for (int i = 0; i < ans.length(); i++) {
+			if (ans.charAt(i) == '\\') { // skips TeX functions
+				i++;
+				while (((int) ans.charAt(i) >= 65 && (int) ans.charAt(i) <= 90)
+						|| ((int) ans.charAt(i) >= 97 && (int) ans.charAt(i) <= 122)) {
+					i++;
+				}
+			}
+			if (ans.charAt(i) == '^' && Character.isDigit(ans.charAt(i + 1))) {
+				ans = addChar(ans, "{", i + 1);
 				i += 2;
 				while (i < ans.length() && Character.isDigit(ans.charAt(i))) {
 					i++;
 				}
-				ans = addChar(ans, '}', i);
+				ans = addChar(ans, "}", i);
 			}
 			if (ans.charAt(i) == 'p' && ans.charAt(i + 1) == 'i') {
 				boolean pipower = false;
 				if (i > 0 && ans.charAt(i - 1) == '^') {
-					ans = addChar(ans, '{', i);
+					ans = addChar(ans, "{", i);
 					i++;
 					pipower = true;
 				}
-				ans = addChar(ans, '\\', i);
+				ans = addChar(ans, "\\", i);
 				i += 3;
 				if (pipower) {
-					ans = addChar(ans, '}', i);
+					ans = addChar(ans, "}", i);
 					i++;
 				}
 			} else if (((int) ans.charAt(i) >= 65 && (int) ans.charAt(i) <= 90)
@@ -953,7 +995,9 @@ public class Calculator {
 							finalValue = finalValue.multiply(new BigDecimal(termsI[j]));// Double.parseDouble(termsI[j]);
 						}
 					} else {
-						finalValue = new BigDecimal(Math.pow(Double.valueOf(finalValue.toString()), power));// Math.pow(Double.parseDouble(termsI[j]),																					// power);
+						finalValue = new BigDecimal(Math.pow(Double.valueOf(finalValue.toString()), power));// Math.pow(Double.parseDouble(termsI[j]),
+																											// //
+																											// power);
 					}
 				} else if (opsI[j].equals("*")) {
 					finalValue = finalValue.multiply(new BigDecimal(termsI[j + 1]));// Double.parseDouble(termsI[j +
@@ -1044,12 +1088,19 @@ public class Calculator {
 		}
 	}
 
-	private String addChar(String str, char ch, int position) {
+	private String addChar(String str, String ch, int position) {
 		if (position >= str.length()) {
 			return str + ch;
 		} else {
 			return str.substring(0, position) + ch + str.substring(position);
 		}
+	}
+
+	private String replaceCharAt(String str, String replacement, int index) {
+		String ans = new String(str.substring(0, index));
+		ans += replacement;
+		ans += str.substring(index + 1, str.length());
+		return ans;
 	}
 
 }
