@@ -55,7 +55,7 @@
     padding: 3px;
 }
 
-#response {
+.responseAndHelp{
     border-style: solid;
     border-color: black;
     border-width: 2px;
@@ -65,13 +65,12 @@
     font-size: x-large;
     overflow-x:auto;
 }
-#help{
-    border-style: solid;
-    border-color: black;
-    border-width: 2px;
-    width: 70%;
+
+#copybutton{
+    width: 20%;
+    float: left;
     margin: auto;
-    padding: 10px;
+    padding: 0px;
     font-size: x-large;
     overflow-x:auto;
 }

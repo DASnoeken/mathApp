@@ -20,6 +20,7 @@ public class CalculatorEndpoint {
 	
 	@GetMapping("/calculator/getAnswer")
 	public String getAnswer() {
+		String sum = c.texify();
 		if(c.getErrorMessage().equals("None")) {
 			String ans = c.getAnswer().toString();
 			int decimalpointIndex = ans.indexOf('.');
@@ -34,7 +35,7 @@ public class CalculatorEndpoint {
 					break;
 				}
 			}
-			return strAns;
+			return "$$"+sum+" = "+strAns+"$$ " + "<div id=\"copybutton\"><button class=\"topButtons\" onclick=\"calculatorCopyClipboard()\">Copy answer</button></div>";
 		}else {
 			return c.getErrorMessage();
 		}

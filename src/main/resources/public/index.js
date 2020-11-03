@@ -1,10 +1,10 @@
 function gotoCV() {
     window.location.href = "https://daanscv.herokuapp.com/";
 }
-function gotoGitHub(){
+function gotoGitHub() {
     window.location.href = "https://github.com/DASnoeken/mathApp";
 }
-function getHelp(){
+function getHelp() {
     window.location.href = "assets/MathApp_documentation.pdf";
 }
 function getEncryptionHelp() {
@@ -457,10 +457,20 @@ function calculatorAnswer() {
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
+            MathJax.typeset();
+            setCopy(this.responseText);
         }
     }
     xhr.open("GET", "https://daansmathapp.herokuapp.com/calculator/getAnswer");
     xhr.send();
+}
+function setCopy(string){
+    var eqsign = string.indexOf("=");
+    var res = string.slice(eqsign+1,string.length);
+    var dolsign = res.indexOf("$$");
+    res = res.slice(0,dolsign);
+    res=res.replace(/\s/g,'');
+    document.getElementById("copytext").value = res;
 }
 function currConversion(from, to, value) {
     if (isNaN(value) || value == "") {
@@ -728,7 +738,7 @@ function factorize(num) {
         document.getElementById("response").innerHTML = "Only numbers allowed!";
         return;
     }
-    if(num<=0){
+    if (num <= 0) {
         document.getElementById("response").innerHTML = "Only integers > 0 are allowed!";
         return;
     }
@@ -748,8 +758,9 @@ function binomial(pow) {
         return;
     }
     pow = Math.floor(pow);
-    if(pow<=0){
-        document.getElementById("response").innerHTML = "Only integers > 0 are allowed!";
+    if (pow <= 0) {
+        document.getElementById("response").innerHTML = "Only integers > 0 are allowed!<br>Reasoning is given in the documentation! " +
+            "Check out the chapter on binomial coefficients.";
         return;
     }
     var xhr = new XMLHttpRequest();
@@ -762,12 +773,12 @@ function binomial(pow) {
     xhr.open("GET", "https://daansmathapp.herokuapp.com/Binomial/get/" + pow);
     xhr.send();
 }
-function isPrime(num){
+function isPrime(num) {
     if (isNaN(num)) {
         document.getElementById("response").innerHTML = "Only numbers allowed!";
         return;
     }
-    if(num<=0){
+    if (num <= 0) {
         document.getElementById("response").innerHTML = "Only integers > 0 are allowed!";
         return;
     }
@@ -779,4 +790,13 @@ function isPrime(num){
     }
     xhr.open("GET", "https://daansmathapp.herokuapp.com/Factorize/isPrime/" + num);
     xhr.send();
+}
+function calculatorCopyClipboard(){
+    document.getElementById("help").hidden=false;
+    var copyText = document.getElementById("copytext");
+    copyText.select();
+    document.execCommand("copy");
+    document.getElementById("help").hidden=true;
+    /* Alert the copied text */
+    alert("Copied the text: \"" + copyText.value+"\"");
 }

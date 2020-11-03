@@ -28,6 +28,32 @@ public class Calculator {
 	public String getSum() {
 		return sum;
 	}
+	
+	public String texify() {
+		String ans = new String(this.sum);
+		ans=ans.replace('{', '(').replace('}', ')');
+		for(int i = 0;i<ans.length();i++) {
+			if(ans.charAt(i)=='^') {
+				ans=addChar(ans, '{', i+1);
+				i+=2;
+				while(i<ans.length() && Character.isDigit(ans.charAt(i))) {
+					i++;
+				}
+				ans=addChar(ans, '}', i);
+			}
+			if(ans.charAt(i)=='p' && ans.charAt(i+1)=='i') {
+				ans = addChar(ans, '\\', i);
+				i+=3;
+			}
+			if( ( (int)ans.charAt(i)>=65 && (int)ans.charAt(i)<=90 ) || ( (int) ans.charAt(i) >= 97 && (int) ans.charAt(i) <= 122 ) ) { //is letter
+				StringBuilder sb = new StringBuilder(ans);
+				sb.replace(i, i+1, "\\text{"+ans.charAt(i)+"}");
+				i+=7;
+				ans=sb.toString();
+			}
+		}
+		return ans;
+	}
 
 	public String getErrorMessage() {
 		return errorMessage;
@@ -1004,7 +1030,11 @@ public class Calculator {
 	}
 	
 	private String addChar(String str, char ch, int position) {
-	    return str.substring(0, position) + ch + str.substring(position);
+		if(position>=str.length()) {
+			return str+ch;
+		}else {
+	    	return str.substring(0, position) + ch + str.substring(position);
+		}
 	}
 	
 }
