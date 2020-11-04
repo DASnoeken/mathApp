@@ -14,13 +14,9 @@ class TestApplicationTests {
 
 	@Test
 	void contextLoads() {
-		String num = "5623";
-		Factorize f = new Factorize(new BigInteger(num));
-		f.factorizeNumber();
-		for(BigInteger bi:f.getFactors()) {
-			System.out.println(bi);
-		}
-		FactorizeEndpoint fe = new FactorizeEndpoint();
-		System.out.println(fe.getPrimeFactorization(num));
+		LinearAlgebraEndpoint lae = new LinearAlgebraEndpoint();
+		lae.addMatrix("1,2,3");
+		lae.addMatrix("2,1,6");
+		lae.getCrossProduct(0, 1);
 	}
 }

@@ -464,12 +464,12 @@ function calculatorAnswer() {
     xhr.open("GET", "https://daansmathapp.herokuapp.com/calculator/getAnswer");
     xhr.send();
 }
-function setCopy(string){
+function setCopy(string) {
     var eqsign = string.indexOf("=");
-    var res = string.slice(eqsign+1,string.length);
+    var res = string.slice(eqsign + 1, string.length);
     var dolsign = res.indexOf("$$");
-    res = res.slice(0,dolsign);
-    res=res.replace(/\s/g,'');
+    res = res.slice(0, dolsign);
+    res = res.replace(/\s/g, '');
     document.getElementById("copytext").value = res;
 }
 function currConversion(from, to, value) {
@@ -542,7 +542,7 @@ function printMatrix(id) {
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
-
+            MathJax.typeset();
         }
     }
     xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/getMatrixString/" + id)
@@ -553,6 +553,7 @@ function printAllMatrices() {
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
+            MathJax.typeset();
         }
     }
     xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/getAllMatrixStrings")
@@ -587,6 +588,7 @@ function addMatrix(ID1, ID2) {
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
+            MathJax.typeset();
         }
     }
     xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/Operations/add/" + ID1 + "/" + ID2);
@@ -601,6 +603,7 @@ function multiplyMatrix(ID1, ID2) {
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
+            MathJax.typeset();
         }
     }
     xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/Operations/multiply/" + ID1 + "/" + ID2);
@@ -630,6 +633,7 @@ function transposeMatrix(ID) {
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
+            MathJax.typeset();
         }
     }
     xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/Operations/transpose/" + ID);
@@ -644,6 +648,7 @@ function subtractMatrix(ID1, ID2) {
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
+            MathJax.typeset();
         }
     }
     xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/Operations/subtract/" + ID1 + "/" + ID2);
@@ -658,6 +663,7 @@ function ref(ID) {
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
+            MathJax.typeset();
         }
     }
     xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/Operations/ref/" + ID);
@@ -672,6 +678,7 @@ function rref(ID) {
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
+            MathJax.typeset();
         }
     }
     xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/Operations/rref/" + ID);
@@ -686,6 +693,7 @@ function scaleMatrix(ID, Scalar) {
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
+            MathJax.typeset();
         }
     }
     xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/Operations/scale/" + ID + "/?scalar=" + Scalar);
@@ -700,6 +708,7 @@ function determinant(ID) {
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
+            MathJax.typeset();
         }
     }
     xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/Operations/determinant/" + ID);
@@ -714,6 +723,7 @@ function trace(ID) {
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
+            MathJax.typeset();
         }
     }
     xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/Operations/Trace/" + ID);
@@ -728,6 +738,7 @@ function inverse(ID) {
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
+            MathJax.typeset();
         }
     }
     xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/Operations/inverse/" + ID);
@@ -791,12 +802,27 @@ function isPrime(num) {
     xhr.open("GET", "https://daansmathapp.herokuapp.com/Factorize/isPrime/" + num);
     xhr.send();
 }
-function calculatorCopyClipboard(){
-    document.getElementById("help").hidden=false;
+function calculatorCopyClipboard() {
+    document.getElementById("help").hidden = false;
     var copyText = document.getElementById("copytext");
     copyText.select();
     document.execCommand("copy");
-    document.getElementById("help").hidden=true;
+    document.getElementById("help").hidden = true;
     /* Alert the copied text */
-    alert("Copied the text: \"" + copyText.value+"\"");
+    alert("Copied the text: \"" + copyText.value + "\"");
+}
+function NcrossM(idn, idm) {
+    if (isNaN(idn) || isNaN(idm)) {
+        document.getElementById("response").innerHTML = "Input can only be a number!";
+        return;
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if(this.readyState==4){
+            document.getElementById("response").innerHTML = this.responseText;
+            MathJax.typeset();
+        }
+    }
+    xhr.open("GET","https://daansmathapp.herokuapp.com/LinAlg/Operations/Cross/?idM="+idm+"&idN="+idn);
+    xhr.send();
 }

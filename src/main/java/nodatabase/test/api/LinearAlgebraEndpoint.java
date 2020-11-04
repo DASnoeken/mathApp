@@ -56,7 +56,7 @@ public class LinearAlgebraEndpoint {
 	@GetMapping("/LinAlg/getMatrixString/{id}")
 	public String getMatrixString(@PathVariable int id) {
 		try {
-			return matrices.get(id).toHTMLString();
+			return "$$" + matrices.get(id).toTexString() + "$$";
 		} catch (IndexOutOfBoundsException ioobe) {
 			return "Matrix not found!";
 		}
@@ -72,7 +72,7 @@ public class LinearAlgebraEndpoint {
 			ans += "<tr class=\"MatrixEquationRow\">\r\n" + "<td class=\"MatrixEquationColumn\">" + "Matrix(id = "
 					+ m.getId()
 					+ ")</td><td class=\"MatrixEquationColumn\"> = </td><td class=\"MatrixEquationColumn\">";
-			ans += m.toHTMLString() + "</td></tr>";
+			ans += "$$" + m.toTexString() + "$$" + "</td></tr>";
 		}
 		ans += "</td>\r\n" + "</tr>\r\n" + "</table>";
 		return ans;
@@ -136,12 +136,8 @@ public class LinearAlgebraEndpoint {
 		m.setId(this.lastId);
 		this.lastId++;
 		String ans = new String();
-		ans += "<table class=\"matrixEquation\">\r\n" + "<tr class=\"MatrixEquationRow\">\r\n"
-				+ "<td class=\"MatrixEquationColumn\">";
-		ans += matrices.get(id1).toHTMLString() + "</td>\r\n" + "<td class=\"MatrixEquationColumn\">+</td>\r\n"
-				+ "<td class=\"MatrixEquationColumn\">" + matrices.get(id2).toHTMLString()
-				+ "</td class=\"MatrixEquationColumn\">\r\n" + "<td> = </td>\r\n"
-				+ "<td class=\"MatrixEquationColumn\">" + m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
+		ans += "$$" + matrices.get(id1).toTexString() + "+" + matrices.get(id2).toTexString() + " = " + m.toTexString()
+				+ "$$";
 		return ans;
 	}
 
@@ -160,11 +156,8 @@ public class LinearAlgebraEndpoint {
 		this.lastId++;
 		matrices.add(m);
 		String ans = new String();
-		ans += "<table class=\"matrixEquation\">\r\n" + "<tr class=\"MatrixEquationRow\">\r\n"
-				+ "<td class=\"MatrixEquationColumn\">";
-		ans += matrices.get(id1).toHTMLString() + "</td>\r\n" + "<td class=\"MatrixEquationColumn\">"
-				+ matrices.get(id2).toHTMLString() + "</td class=\"MatrixEquationColumn\">\r\n" + "<td> = </td>\r\n"
-				+ "<td class=\"MatrixEquationColumn\">" + m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
+		ans += "$$";
+		ans += matrices.get(id1).toTexString() + matrices.get(id2).toTexString() + " = " + m.toTexString() + "$$";
 		return ans;
 	}
 
@@ -178,11 +171,8 @@ public class LinearAlgebraEndpoint {
 		m.setId(this.lastId);
 		this.lastId++;
 		matrices.add(m);
-		ans += "<table class=\"matrixEquation\">\r\n" + "<tr class=\"MatrixEquationRow\">\r\n"
-				+ "<td class=\"MatrixEquationColumn\">";
-		ans += matrices.get(id).toHTMLString() + "</td><td>T</td>\r\n" + "<td class=\"MatrixEquationColumn\">"
-				+ "</td class=\"MatrixEquationColumn\">\r\n" + "<td> = </td>\r\n"
-				+ "<td class=\"MatrixEquationColumn\">" + m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
+		ans += "$$";
+		ans += matrices.get(id).toTexString() + "^T" + " = " + m.toTexString() + "$$";
 		return ans;
 	}
 
@@ -201,12 +191,9 @@ public class LinearAlgebraEndpoint {
 		m.setId(this.lastId);
 		this.lastId++;
 		String ans = new String();
-		ans += "<table class=\"matrixEquation\">\r\n" + "<tr class=\"MatrixEquationRow\">\r\n"
-				+ "<td class=\"MatrixEquationColumn\">";
-		ans += matrices.get(id1).toHTMLString() + "</td>\r\n" + "<td class=\"MatrixEquationColumn\">-</td>\r\n"
-				+ "<td class=\"MatrixEquationColumn\">" + matrices.get(id2).toHTMLString() + "</td>\r\n"
-				+ "<td class=\"MatrixEquationColumn\"> = </td>\r\n" + "<td class=\"MatrixEquationColumn\">"
-				+ m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
+		ans += "$$";
+		ans += matrices.get(id1).toTexString() + " - " + matrices.get(id2).toTexString() + " = " + m.toTexString()
+				+ "$$";
 		return ans;
 	}
 
@@ -220,11 +207,8 @@ public class LinearAlgebraEndpoint {
 		matrices.add(m);
 		m.setId(this.lastId);
 		this.lastId++;
-		ans += "<table class=\"matrixEquation\">\r\n" + "<tr class=\"MatrixEquationRow\">\r\n"
-				+ "<td class=\"MatrixEquationColumn\">";
-		ans += "RREF:</td><td class=\"MatrixEquationColumn\">" + matrices.get(id).toHTMLString()
-				+ "</td><td class=\"MatrixEquationColumn\"> = </td>\r\n" + "<td class=\"MatrixEquationColumn\">"
-				+ m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
+		ans += "$$";
+		ans += "\\text{RREF}" + matrices.get(id).toTexString() + " = " + m.toTexString() + "$$";
 		return ans;
 	}
 
@@ -238,11 +222,8 @@ public class LinearAlgebraEndpoint {
 		matrices.add(m);
 		m.setId(this.lastId);
 		this.lastId++;
-		ans += "<table class=\"matrixEquation\">\r\n" + "<tr class=\"MatrixEquationRow\">\r\n"
-				+ "<td class=\"MatrixEquationColumn\">";
-		ans += scalar + "</td><td class=\"MatrixEquationColumn\">" + matrices.get(id).toHTMLString()
-				+ "</td><td class=\"MatrixEquationColumn\"> = </td>\r\n" + "<td class=\"MatrixEquationColumn\">"
-				+ m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
+		ans += "$$";
+		ans += scalar + matrices.get(id).toTexString() + " = " + m.toTexString() + "$$";
 		return ans;
 	}
 
@@ -258,11 +239,8 @@ public class LinearAlgebraEndpoint {
 		} catch (MatrixDimensionException mde) {
 			return mde.getMessage();
 		}
-		ans += "<table class=\"matrixEquation\">\r\n" + "<tr class=\"MatrixEquationRow\">\r\n"
-				+ "<td class=\"MatrixEquationColumn\">";
-		ans += "det:</td><td class=\"MatrixEquationColumn\">" + matrices.get(id).toHTMLString()
-				+ "</td><td class=\"MatrixEquationColumn\"> = </td>\r\n" + "<td class=\"MatrixEquationColumn\">"
-				+ determinant + "</td>\r\n" + "</tr>\r\n" + "</table>";
+		ans += "$$";
+		ans += "\\text{det}" + matrices.get(id).toTexString() + " = " + determinant + "$$";
 		return ans;
 	}
 
@@ -276,11 +254,8 @@ public class LinearAlgebraEndpoint {
 		matrices.add(m);
 		m.setId(this.lastId);
 		this.lastId++;
-		ans += "<table class=\"matrixEquation\">\r\n" + "<tr class=\"MatrixEquationRow\">\r\n"
-				+ "<td class=\"MatrixEquationColumn\">";
-		ans += "REF:</td><td class=\"MatrixEquationColumn\">" + matrices.get(id).toHTMLString()
-				+ "</td><td class=\"MatrixEquationColumn\"> = </td>\r\n" + "<td class=\"MatrixEquationColumn\">"
-				+ m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
+		ans += "$$";
+		ans += "\\text{REF}" + matrices.get(id).toTexString() + " = " + m.toTexString() + "$$";
 		return ans;
 	}
 
@@ -304,11 +279,8 @@ public class LinearAlgebraEndpoint {
 		matrices.add(m);
 		m.setId(this.lastId);
 		this.lastId++;
-		ans += "<table class=\"matrixEquation\">\r\n" + "<tr class=\"MatrixEquationRow\">\r\n"
-				+ "<td class=\"MatrixEquationColumn\">";
-		ans += "inverse:</td><td class=\"MatrixEquationColumn\">" + matrices.get(id).toHTMLString()
-				+ "</td><td class=\"MatrixEquationColumn\"> = </td>\r\n" + "<td class=\"MatrixEquationColumn\">"
-				+ m.toHTMLString() + "</td>\r\n" + "</tr>\r\n" + "</table>";
+		ans += "$$";
+		ans += matrices.get(id).toTexString() + "^{-1}" + " = " + m.toTexString() + "$$";
 		return ans;
 	}
 
@@ -324,7 +296,9 @@ public class LinearAlgebraEndpoint {
 		} catch (MatrixDimensionException mde) {
 			return mde.getMessage();
 		}
-		return ans.toString();
+		String ansstring = "$$\\text{tr}";
+		ansstring += m.toTexString() + " = " + ans.toString() + "$$";
+		return ansstring;
 	}
 
 	@GetMapping("/LinAlg/Operations/Power/{id}")
@@ -336,11 +310,30 @@ public class LinearAlgebraEndpoint {
 		this.matrices.add(ans);
 		ans.setId(this.lastId);
 		this.lastId++;
-		String ansString = "<table class=\"matrixEquation\">\r\n" + "<tr class=\"MatrixEquationRow\">\r\n"
-				+ "<td class=\"MatrixEquationColumn\">";
-		ansString += matrices.get(id).toHTMLString() + "</td><td class=\"MatrixEquationColumn\">";
-		ansString += "^ " + power + "</td><td class=\"MatrixEquationColumn\"> = </td><td class=\"MatrixEquationColumn\">"
-				+ ans.toHTMLString() + "</td>";
+		String ansString = "$$";
+		ansString += matrices.get(id).toTexString();
+		ansString += "^{" + power + "}" + " = " + ans.toTexString() + "$$";
 		return ansString;
+	}
+
+	@GetMapping("/LinAlg/Operations/Cross/")
+	public String getCrossProduct(@RequestParam int idN, @RequestParam int idM) {
+		if (idN >= matrices.size() || idM >= matrices.size()) {
+			return "ID not found!";
+		}
+		String ans = new String("$$");
+		ans += this.matrices.get(idN).toTexString() + " \\times " + this.matrices.get(idM).toTexString() + " = ";
+		Matrix a;
+		try {
+			a = Matrix.crossProduct(this.matrices.get(idN), this.matrices.get(idM));
+		} catch (MatrixDimensionException mde) {
+			return mde.getMessage();
+		}
+		ans += a.transposeMatrix().toTexString();
+		a.setId(lastId);
+		this.matrices.add(a);
+		lastId++;
+		ans += "$$";
+		return ans;
 	}
 }

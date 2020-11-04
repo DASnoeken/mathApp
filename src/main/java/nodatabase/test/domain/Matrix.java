@@ -17,6 +17,20 @@ public class Matrix {
 	private final MathContext mc = MathContext.UNLIMITED ;
 	private final MathContext mc2 = new MathContext(8,RoundingMode.HALF_UP);
 
+	public Matrix(int n, int m) {
+		this.errormessage = "None";
+		this.rowsCount = n;
+		this.columnsCount = m;
+		this.matrix = new Vector<Vector<BigDecimal>>();
+		Vector<BigDecimal> r = new Vector<>();
+		for (int i = 0; i < m; i++) {
+			r.add(BigDecimal.ZERO);
+		}
+		for (int i = 0; i < n; i++) {
+			this.matrix.add(r);
+		}
+	}
+	
 	public BigDecimal getRrMult() {
 		return rrMult;
 	}
@@ -39,20 +53,6 @@ public class Matrix {
 
 	public void setErrormessage(String errormessage) {
 		this.errormessage = errormessage;
-	}
-
-	public Matrix(int n, int m) {
-		this.errormessage = "None";
-		this.rowsCount = n;
-		this.columnsCount = m;
-		this.matrix = new Vector<Vector<BigDecimal>>();
-		Vector<BigDecimal> r = new Vector<>();
-		for (int i = 0; i < m; i++) {
-			r.add(BigDecimal.ZERO);
-		}
-		for (int i = 0; i < n; i++) {
-			this.matrix.add(r);
-		}
 	}
 
 	public void stringToMatrix(String s) {
@@ -427,6 +427,34 @@ public class Matrix {
 		}
 		return m2;
 	}
+	
+	public static Matrix crossProduct(Matrix n,Matrix m) throws MatrixDimensionException { //Calculates n x m, the cross product between vectors n and m
+		Matrix ans = new Matrix(1, 3);	//Final answer is a vector of length 3
+		if(n.getRowsCount()>n.getColumnsCount()) {
+			n=n.transposeMatrix();
+		}
+		if(m.getRowsCount()>m.getColumnsCount())
+			m=m.transposeMatrix();
+		if(!(n.getRowsCount()==1 && n.getColumnsCount()==3) && !(m.getRowsCount()==1 && m.getColumnsCount()==3)) {
+			throw new MatrixDimensionException("Only vectors of length 3 allowed!");
+		}
+		BigDecimal ex = new BigDecimal("1");
+		ex=ex.multiply(n.getMatrix().get(0).get(1)).multiply(m.getMatrix().get(0).get(2));
+		ex=ex.subtract(m.getMatrix().get(0).get(1).multiply(n.getMatrix().get(0).get(2)));
+		ans.setMatrixElement(0, 0, ex);
+		
+		BigDecimal ey = new BigDecimal("1");
+		//Note that the order here is flipped because the sign of this element will technically be -1
+		ey=ey.multiply(m.getMatrix().get(0).get(0).multiply(n.getMatrix().get(0).get(2)));
+		ey=ey.subtract(n.getMatrix().get(0).get(0).multiply(m.getMatrix().get(0).get(2)));
+		ans.setMatrixElement(0, 1, ey);
+		
+		BigDecimal ez = new BigDecimal("1");
+		ez=ez.multiply(n.getMatrix().get(0).get(0)).multiply(m.getMatrix().get(0).get(1));
+		ez=ez.subtract(m.getMatrix().get(0).get(0).multiply(n.getMatrix().get(0).get(1)));
+		ans.setMatrixElement(0, 2, ez);
+		return ans;
+	}
 
 	public Vector<Vector<BigDecimal>> getMatrix() {
 		return matrix;
@@ -478,6 +506,23 @@ public class Matrix {
 			ans += "</tr>";
 		}
 		ans += "</table>";
+		return ans;
+	}
+	
+	public String toTexString() {
+		String ans = new String();
+		ans+="\\begin{pmatrix}";
+		for(int i = 0;i<this.rowsCount;i++) {
+			for(int j = 0;j<this.columnsCount;j++) {
+				if(j<this.columnsCount-1)
+					ans+=this.matrix.get(i).get(j) + " & ";
+				else
+					ans+=this.matrix.get(i).get(j);
+			}
+			if(i<this.rowsCount-1)
+				ans+="\\\\";
+		}
+		ans+="\\end{pmatrix}";
 		return ans;
 	}
 }
