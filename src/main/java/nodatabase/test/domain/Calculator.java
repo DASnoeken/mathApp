@@ -144,7 +144,20 @@ public class Calculator {
 					ans = addChar(ans, "}", i);
 					i++;
 				}
-			} else if (((int) ans.charAt(i) >= 65 && (int) ans.charAt(i) <= 90)
+			}else if(ans.charAt(i) == 'p' && ans.charAt(i+1) == 'h' && ans.charAt(i + 2) == 'i') {
+				boolean phipower = false;
+				if (i > 0 && ans.charAt(i - 1) == '^') {
+					ans = addChar(ans, "{", i);
+					i++;
+					phipower = true;
+				}
+				ans = addChar(ans, "\\", i);
+				i += 4;
+				if (phipower) {
+					ans = addChar(ans, "}", i);
+					i++;
+				}
+			}else if (((int) ans.charAt(i) >= 65 && (int) ans.charAt(i) <= 90)
 					|| ((int) ans.charAt(i) >= 97 && (int) ans.charAt(i) <= 122)) { // is letter
 				StringBuilder sb = new StringBuilder(ans);
 				sb.replace(i, i + 1, "\\text{" + ans.charAt(i) + "}");
