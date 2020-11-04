@@ -127,18 +127,18 @@ function getDecryption(num) {
     xhr.open("GET", "https://daansmathapp.herokuapp.com/Decrypt/" + num);
     xhr.send();
 }
-function decryptPoints(decp){
+function decryptPoints(decp) {
     var xhr = new XMLHttpRequest();
-    decp=decp.replaceAll(":","%3A");
-    decp=decp.replaceAll(" ","%20");
-    decp=decp.replaceAll(";","%3B");
+    decp = decp.replaceAll(":", "%3A");
+    decp = decp.replaceAll(" ", "%20");
+    decp = decp.replaceAll(";", "%3B");
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
             var respons = this.responseText;
             document.getElementById("response").innerHTML = respons;
         }
     }
-    xhr.open("GET", "https://daansmathapp.herokuapp.com/Decrypt/points/"+decp);
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/Decrypt/points/" + decp);
     xhr.send();
 }
 function getUnitConversion() {
@@ -230,7 +230,7 @@ function toFactorizations() {
     document.getElementById("FactorizationDiv").hidden = false;
     document.getElementById("response").innerHTML = "Response area";
 }
-function toEncryption(){
+function toEncryption() {
     document.getElementById("input").hidden = true;
     document.getElementById("EncryptionScreen").hidden = false;
     document.getElementById("response").innerHTML = "Response area";
@@ -838,11 +838,36 @@ function NcrossM(idn, idm) {
     }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
-        if(this.readyState==4){
+        if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
             MathJax.typeset();
         }
     }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/LinAlg/Operations/Cross/?idM="+idm+"&idN="+idn);
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/LinAlg/Operations/Cross/?idM=" + idm + "&idN=" + idn);
     xhr.send();
 }
+function fullscreenMode() {
+    /* When the openFullscreen() function is executed, open the video in fullscreen.
+    Note that we must include prefixes for different browsers, as they don't support the requestFullscreen method yet */
+    var elem = document.getElementById("body");
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+    } else if (elem.webkitRequestFullscreen) { /* Safari */
+        elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) { /* IE11 */
+        elem.msRequestFullscreen();
+    }
+    document.getElementById("fullscreenbutton").onclick = closeFullscreen();
+}
+
+function closeFullscreen() {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) { /* Safari */
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) { /* IE11 */
+      document.msExitFullscreen();
+    }
+    document.getElementById("fullscreenbutton").onclick = fullscreenMode();
+
+  } 
