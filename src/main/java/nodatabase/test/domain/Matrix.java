@@ -31,6 +31,22 @@ public class Matrix {
 		}
 	}
 	
+	public Matrix(String input) {
+		this.errormessage = "None";
+		this.rowsCount = countCharOcc(input, ';');
+		String singleRow = input.split(";")[0];
+		this.columnsCount = countCharOcc(singleRow, ',')+1;
+		this.matrix = new Vector<Vector<BigDecimal>>();
+		Vector<BigDecimal> r = new Vector<>();
+		for (int i = 0; i < this.columnsCount; i++) {
+			r.add(BigDecimal.ZERO);
+		}
+		for (int i = 0; i < this.rowsCount; i++) {
+			this.matrix.add(r);
+		}
+		stringToMatrix(input);
+	}
+	
 	public BigDecimal getRrMult() {
 		return rrMult;
 	}
@@ -272,6 +288,10 @@ public class Matrix {
 			}
 		}
 		return m;
+	}
+	
+	public BigDecimal getElement(int i,int j) {
+		return this.getMatrix().get(i-1).get(j-1);
 	}
 
 	public Matrix ref() {
@@ -523,6 +543,17 @@ public class Matrix {
 				ans+="\\\\";
 		}
 		ans+="\\end{pmatrix}";
+		return ans;
+	}
+	
+	private int countCharOcc(String s, char c) {
+		char[] scarr = s.toCharArray();
+		int ans = 0;
+		for (int i = 0; i < scarr.length; i++) {
+			if (scarr[i] == c) {
+				ans++;
+			}
+		}
 		return ans;
 	}
 }

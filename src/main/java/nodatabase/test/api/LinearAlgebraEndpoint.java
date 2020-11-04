@@ -321,14 +321,14 @@ public class LinearAlgebraEndpoint {
 		if (idN >= matrices.size() || idM >= matrices.size()) {
 			return "ID not found!";
 		}
-		String ans = new String("$$");
-		ans += this.matrices.get(idN).toTexString() + " \\times " + this.matrices.get(idM).toTexString() + " = ";
 		Matrix a;
 		try {
 			a = Matrix.crossProduct(this.matrices.get(idN), this.matrices.get(idM));
 		} catch (MatrixDimensionException mde) {
 			return mde.getMessage();
 		}
+		String ans = new String("$$");
+		ans += this.matrices.get(idN).toTexString() + " \\times " + this.matrices.get(idM).toTexString() + " = ";
 		ans += a.transposeMatrix().toTexString();
 		a.setId(lastId);
 		this.matrices.add(a);

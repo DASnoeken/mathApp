@@ -75,23 +75,7 @@
                 <td><button id="derbutton" class="buttons" onclick="getDer(derInput.value)">Get
                         derivative</button></td>
             </tr>
-            <tr>
-                <td><input type="text" value="Secret message" id="encInput"></td>
-                <td><input type="text" value="Degree (integer)" id="encOrder"></td>
-                <td><button id="encButton" class="buttons" onclick="getEncryption(encInput.value,encOrder.value)">Get
-                        encryption</button>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="text" id="decInput" value="Number to decrypt">
-                </td>
-                <td><button class="buttons" onclick="getEncryptionHelp()" hidden>Encryption Help</button></td>
-                <td>
-                    <button class="buttons" id="decButton" onclick="getDecryption(decInput.value)">Get
-                        decryption</button>
-                </td>
-            </tr>
+
             <tr>
                 <td>
                     <input type="text" id="calculatorInput" value="Calculator">
@@ -105,6 +89,9 @@
             <tr>
                 <td>
                     <button class="buttons" onclick="toFactorizations()">Factorizations</button>
+                </td>
+                <td>
+                    <button class="buttons" onclick="toEncryption()">Encryption</button>
                 </td>
             </tr>
             <tr>
@@ -359,6 +346,35 @@
             onclick="inverse(IDinv.value)">Inverse</button><br>
 
         <button class="buttons" onclick="printAllMatrices()">Print all matrices</button>
+    </div>
+    <div id="EncryptionScreen" class="main" hidden>
+        <button class="buttons" onclick="backToInput()">Back</button><br>
+        <table>
+            <tr>
+                <td><input type="text" value="Secret message" id="encInput"></td>
+                <td><input type="text" value="Degree (integer)" id="encOrder"></td>
+                <td><button id="encButton" class="buttons" onclick="getEncryption(encInput.value,encOrder.value)">Get
+                        encryption</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" value="point" id="decpoints">
+                </td>
+                <td>Syntax = "point: (xvalue,yvalue);..."</td>
+                <td><button class="buttons" onclick="decryptPoints(decpoints.value)">Decrypt</button></td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" id="decInput" value="Number to decrypt">
+                </td>
+                <td></td>
+                <td>
+                    <button class="buttons" id="decButton" onclick="getDecryption(decInput.value)">Get
+                        message</button>
+                </td>
+            </tr>
+        </table>
     </div>
     <br>
     <div id="response" class="responseAndHelp">Response area</div><br>

@@ -24,6 +24,43 @@ public class Encryption {
 	public String getOutput() {
 		return output;
 	}
+	
+	public static String decryptPoints(String s) { //Input: "point: (xvalue,yvalue);"
+		String matrixInput = new String();
+		ArrayList<Long> xar = new ArrayList<>();
+		ArrayList<BigInteger> outNumbers = new ArrayList<>();
+		String[] points = s.split(";");
+		for(String point:points) {
+			String coordinates = point.split(":")[1].trim().replaceAll("\\(", "").replaceAll("\\)", "");
+			String[] xandy = coordinates.split(",");
+			xar.add(Long.parseLong(xandy[0].trim()));
+			outNumbers.add(new BigInteger(xandy[1].trim()));
+		}
+		int encryptionOrder = xar.size();
+		for (int i = 0; i < outNumbers.size(); i++) {
+			matrixInput += "1,";
+			for (int j = 1; j < encryptionOrder; j++) {
+				if (xar.get(i) > 0) {
+					String sum = "" + xar.get(i) + "^" + j;
+					Calculator calc = new Calculator(sum, "DEG");
+					matrixInput += calc.getAnswer();
+					if (j < encryptionOrder - 1)
+						matrixInput += ",";
+					else
+						matrixInput += "," + outNumbers.get(i) + ";";
+				} else {
+					String sum = "neg{" + (xar.get(i) * -1) + "}^" + j;
+					Calculator calc = new Calculator(sum, "DEG");
+					matrixInput += calc.getAnswer();
+					if (j < encryptionOrder - 1)
+						matrixInput += ",";
+					else
+						matrixInput += "," + outNumbers.get(i) + ";";
+				}
+			}
+		}
+		return matrixInput;
+	}
 
 	private void decrypt() {
 		output = new String();

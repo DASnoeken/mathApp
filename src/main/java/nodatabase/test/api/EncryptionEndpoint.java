@@ -1,10 +1,13 @@
 package nodatabase.test.api;
 
+import java.math.BigDecimal;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import nodatabase.test.domain.Encryption;
+import nodatabase.test.domain.Matrix;
 
 @RestController
 public class EncryptionEndpoint {
@@ -45,9 +48,19 @@ public class EncryptionEndpoint {
 		Encryption e = new Encryption(s,orderI);
 		return e.getOutput();
 	}
-	@GetMapping("Decrypt/{s}")
+	
+	@GetMapping("/Decrypt/{s}")
 	public String getDecryptedNumber(@PathVariable String s) {
 		Encryption d = new Encryption(s);
 		return d.getOutput();
+	}
+	
+	@GetMapping("/Decrypt/points/{s}")
+	public String decryptPoints(@PathVariable String s) {
+		String matrixInput = Encryption.decryptPoints(s);
+		Matrix m = new Matrix(matrixInput);
+		Matrix rrefM = m.rref();
+		BigDecimal ans = rrefM.getElement(1, rrefM.getColumnsCount());
+		return "Your number is: "+ans.toString();
 	}
 }

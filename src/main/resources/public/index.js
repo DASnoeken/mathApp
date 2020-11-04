@@ -127,6 +127,20 @@ function getDecryption(num) {
     xhr.open("GET", "https://daansmathapp.herokuapp.com/Decrypt/" + num);
     xhr.send();
 }
+function decryptPoints(decp){
+    var xhr = new XMLHttpRequest();
+    decp=decp.replaceAll(":","%3A");
+    decp=decp.replaceAll(" ","%20");
+    decp=decp.replaceAll(";","%3B");
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            var respons = this.responseText;
+            document.getElementById("response").innerHTML = respons;
+        }
+    }
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/Decrypt/points/"+decp);
+    xhr.send();
+}
 function getUnitConversion() {
     document.getElementById("input").hidden = true;
     document.getElementById("c-to-f").hidden = true;
@@ -147,6 +161,7 @@ function backToInput() {
     document.getElementById("UnitConversionDiv").hidden = true;
     document.getElementById("LinAlgScreen").hidden = true;
     document.getElementById("FactorizationDiv").hidden = true;
+    document.getElementById("EncryptionScreen").hidden = true;
     document.getElementById("response").innerHTML = "Response area";
 }
 function inchToCm() {
@@ -213,6 +228,11 @@ function gotoLinAlgOperations() {
 function toFactorizations() {
     document.getElementById("input").hidden = true;
     document.getElementById("FactorizationDiv").hidden = false;
+    document.getElementById("response").innerHTML = "Response area";
+}
+function toEncryption(){
+    document.getElementById("input").hidden = true;
+    document.getElementById("EncryptionScreen").hidden = false;
     document.getElementById("response").innerHTML = "Response area";
 }
 function inchToCmCalculate(foot, inch) {
