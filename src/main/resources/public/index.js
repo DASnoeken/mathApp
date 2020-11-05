@@ -847,27 +847,86 @@ function NcrossM(idn, idm) {
     xhr.send();
 }
 function fullscreenMode() {
-    /* When the openFullscreen() function is executed, open the video in fullscreen.
-    Note that we must include prefixes for different browsers, as they don't support the requestFullscreen method yet */
-    var elem = document.getElementById("body");
-    if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-    } else if (elem.webkitRequestFullscreen) { /* Safari */
-        elem.webkitRequestFullscreen();
-    } else if (elem.msRequestFullscreen) { /* IE11 */
-        elem.msRequestFullscreen();
+    var element = document.documentElement;
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    }
+    else if (element.msRequestFullscreen) {
+        if (element === document.documentElement) { //check element
+            element = document.body; //overwrite the element (for IE)
+        }
+        element.msRequestFullscreen();
+    }
+    else if (element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+    }
+    else if (element.webkitRequestFullScreen) {
+        element.webkitRequestFullScreen();
+    }
+    else {
+        return; //if none are supported do not show message
     }
     document.getElementById("fullscreenbutton").onclick = closeFullscreen();
 }
-
 function closeFullscreen() {
     if (document.exitFullscreen) {
-      document.exitFullscreen();
+        document.exitFullscreen();
     } else if (document.webkitExitFullscreen) { /* Safari */
-      document.webkitExitFullscreen();
+        document.webkitExitFullscreen();
     } else if (document.msExitFullscreen) { /* IE11 */
-      document.msExitFullscreen();
+        document.msExitFullscreen();
     }
     document.getElementById("fullscreenbutton").onclick = fullscreenMode();
+} 
+function darkmode(){
+    if(document.getElementById("input").className == "main"){
+        /*document.getElementById("input").classList.remove("main");
+        document.getElementById("input").classList.add("main-dark");
+        document.getElementById("FactorizationDiv").classList.remove("main");
+        document.getElementById("FactorizationDiv").classList.add("main-dark");
+        document.getElementById("UnitConversionDiv").classList.add("main-dark");
+        document.getElementById("UnitConversionDiv").classList.remove("main");
+        document.getElementById("welcome").classList.remove("welcome");
+        document.getElementById("welcome").classList.add("welcome-dark");
+        document.getElementById("response").classList.remove("responseAndHelp");
+        document.getElementById("response").classList.add("responseAndHelp-dark");*/
+        var mains = document.getElementsByClassName("main");
+        var rah = document.getElementsByClassName("responseAndHelp");
+        var wel = document.getElementsByClassName("welcome");
+        document.body.style.backgroundColor = "#000000";
+        while(mains.length>0){
+            document.getElementById(mains[0].id).className = "main-dark";
+        }
+        while(rah.length>0){
+            document.getElementById(rah[0].id).className = "responseAndHelp-dark";
+        }
+        while(wel.length>0){
+            document.getElementById(wel[0].id).className = "welcome-dark";
+        }
 
-  } 
+    }else{
+        /*document.getElementById("input").classList.remove("main-dark");
+        document.getElementById("input").classList.add("main");
+        document.getElementById("FactorizationDiv").classList.add("main");
+        document.getElementById("FactorizationDiv").classList.remove("main-dark");
+        document.getElementById("UnitConversionDiv").classList.remove("main-dark");
+        document.getElementById("UnitConversionDiv").classList.add("main");
+        document.getElementById("welcome").classList.add("welcome");
+        document.getElementById("welcome").classList.remove("welcome-dark");
+        document.getElementById("response").classList.add("responseAndHelp");
+        document.getElementById("response").classList.remove("responseAndHelp-dark");*/
+        var mains = document.getElementsByClassName("main-dark");
+        var rah = document.getElementsByClassName("responseAndHelp-dark");
+        var wel = document.getElementsByClassName("welcome-dark");
+        document.body.style.backgroundColor = "#660000";
+        while(mains.length>0){
+            document.getElementById(mains[0].id).className = "main";
+        }
+        while(rah.length>0){
+            document.getElementById(rah[0].id).className = "responseAndHelp";
+        }
+        while(wel.length>0){
+            document.getElementById(wel[0].id).className = "welcome";
+        }
+    }
+}
