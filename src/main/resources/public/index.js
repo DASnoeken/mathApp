@@ -588,10 +588,20 @@ function printAllMatrices() {
     xhr.send();
 }
 function deleteMatrixById(ID) {
+    if(isNaN(ID)){
+        document.getElementById("response").innerHTML = "ID has to be a number!";
+        return;
+    }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
-            document.getElementById("response").innerHTML = "Matrix with ID " + ID + " removed!";
+            if(this.status==200){
+                document.getElementById("response").innerHTML = "Matrix with ID " + ID + " removed!";
+            }else if(this.status==500){
+                document.getElementById("response").innerHTML = "Matrix with ID " + ID + " not found!";
+            }else{
+                document.getElementById("response").innerHTML = "Error!";
+            }
         }
     }
     xhr.open("DELETE", "https://daansmathapp.herokuapp.com/LinAlg/deleteById/" + ID);
