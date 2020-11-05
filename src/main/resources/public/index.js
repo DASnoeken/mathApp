@@ -102,6 +102,10 @@ function getEncryption(s, order) {
         document.getElementById("response").innerHTML = "You need to insert the order up there!";
         return;
     }
+    if(isNaN(order)){
+        document.getElementById("response").innerHTML = "Only numbers allowed for order!";
+        return;
+    }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
@@ -115,6 +119,10 @@ function getEncryption(s, order) {
 function getDecryption(num) {
     if (num.length == 0) {
         document.getElementById("response").innerHTML = "I would enter a number in that field there, mate!";
+        return;
+    }
+    if(isNaN(num)){
+        document.getElementById("response").innerHTML = "Only numbers are allowed!";
         return;
     }
     var xhr = new XMLHttpRequest();
@@ -886,6 +894,7 @@ function darkmode(){
         var buttons = document.getElementsByClassName("buttons");
         var textinput = document.getElementsByClassName("textinput");
         var selectboxes = document.getElementsByClassName("select-css");
+        var tops = document.getElementsByClassName("topButtons");
         document.body.style.backgroundColor = "#000000";
         while(mains.length>0){
             document.getElementById(mains[0].id).className = "main-dark";
@@ -905,6 +914,9 @@ function darkmode(){
         while(selectboxes.length>0){
             selectboxes[0].className = "select-css-dark";
         }
+        while(tops.length>0){
+            tops[0].className = "topButtons-dark";
+        }
 
     }else{
         var mains = document.getElementsByClassName("main-dark");
@@ -913,6 +925,7 @@ function darkmode(){
         var buttons = document.getElementsByClassName("buttons-dark");
         var textinput = document.getElementsByClassName("textinput-dark");
         var selectboxes = document.getElementsByClassName("select-css-dark");
+        var tops = document.getElementsByClassName("topButtons-dark");
         document.body.style.backgroundColor = "#660000";
         while(mains.length>0){
             document.getElementById(mains[0].id).className = "main";
@@ -931,6 +944,9 @@ function darkmode(){
         }
         while(selectboxes.length>0){
             selectboxes[0].className = "select-css";
+        }
+        while(tops.length>0){
+            tops[0].className = "topButtons";
         }
     }
 }

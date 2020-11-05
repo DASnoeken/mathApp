@@ -35,7 +35,7 @@ public class CalculatorEndpoint {
 					break;
 				}
 			}
-			return "$$"+sum+" = "+strAns+"$$ " + "<div id=\"copybutton\"><button class=\"topButtons\" onclick=\"calculatorCopyClipboard()\">Copy answer</button></div>";
+			return "$$"+sum+" = "+strAns+"$$ " + "<div id=\"copybutton\"><button class=\"buttons-dark\" onclick=\"calculatorCopyClipboard()\">Copy answer</button></div>";
 		}else {
 			return c.getErrorMessage();
 		}

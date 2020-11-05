@@ -57,7 +57,12 @@ public class EncryptionEndpoint {
 	
 	@GetMapping("/Decrypt/points/{s}")
 	public String decryptPoints(@PathVariable String s) {
-		String matrixInput = Encryption.decryptPoints(s);
+		String matrixInput;
+		try {
+			matrixInput = Encryption.decryptPoints(s);
+		}catch(Exception e) {
+			return e.getMessage();
+		}
 		Matrix m = new Matrix(matrixInput);
 		Matrix rrefM = m.rref();
 		BigDecimal ans = rrefM.getElement(1, rrefM.getColumnsCount());

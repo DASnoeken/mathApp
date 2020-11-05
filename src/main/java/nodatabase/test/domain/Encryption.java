@@ -25,13 +25,18 @@ public class Encryption {
 		return output;
 	}
 	
-	public static String decryptPoints(String s) { //Input: "point: (xvalue,yvalue);"
+	public static String decryptPoints(String s) throws Exception { //Input: "point: (xvalue,yvalue);"
 		String matrixInput = new String();
 		ArrayList<Long> xar = new ArrayList<>();
 		ArrayList<BigInteger> outNumbers = new ArrayList<>();
 		String[] points = s.split(";");
 		for(String point:points) {
-			String coordinates = point.split(":")[1].trim().replaceAll("\\(", "").replaceAll("\\)", "");
+			String coordinates;
+			try {
+				coordinates = point.split(":")[1].trim().replaceAll("\\(", "").replaceAll("\\)", "");
+			}catch(Exception e) {
+				throw new Exception("Syntax error in encryption!");
+			}
 			String[] xandy = coordinates.split(",");
 			xar.add(Long.parseLong(xandy[0].trim()));
 			outNumbers.add(new BigInteger(xandy[1].trim()));
