@@ -1,1 +1,1 @@
- - Dividing by a negative number is a serious issue. Will fix ASAP!
+ - Dividing by a negative number is a serious issue. FIXED!

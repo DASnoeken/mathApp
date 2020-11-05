@@ -123,10 +123,10 @@ public class Calculator {
 					i++;
 				}
 			}
-			if (ans.charAt(i) == '^' && Character.isDigit(ans.charAt(i + 1))) {
+			if (ans.charAt(i) == '^' && (Character.isDigit(ans.charAt(i + 1)) || ans.charAt(i+1) == '-') ) {
 				ans = addChar(ans, "{", i + 1);
 				i += 2;
-				while (i < ans.length() && Character.isDigit(ans.charAt(i))) {
+				while (i < ans.length() && (Character.isDigit(ans.charAt(i))|| ans.charAt(i) == '-' )) {
 					i++;
 				}
 				ans = addChar(ans, "}", i);
@@ -210,6 +210,56 @@ public class Calculator {
 		if (this.sum.charAt(0) == '-') {
 			this.sum = "0" + this.sum;
 		}
+		if(this.sum.contains("/-")) {
+			for(int i=0;i<this.sum.length();i++) {
+				if(this.sum.charAt(i)=='/' && this.sum.charAt(i+1)=='-') {
+					int j=i-1;
+					while(j>0 && Character.isDigit(this.sum.charAt(j))) {
+						j--;
+					}
+					this.sum = addChar(this.sum, "-", j);
+					i++;
+				}
+			}
+			this.sum=this.sum.replaceAll("\\/-", "/");
+		}
+		if(this.sum.contains("*-")) {
+			for(int i=0;i<this.sum.length();i++) {
+				if(this.sum.charAt(i)=='*' && this.sum.charAt(i+1)=='-') {
+					int j=i-1;
+					while(j>0 && Character.isDigit(this.sum.charAt(j))) {
+						j--;
+					}
+					this.sum = addChar(this.sum, "-", j);
+					i++;
+				}
+			}
+			this.sum=this.sum.replaceAll("\\*-", "*");
+		}
+		if(this.sum.contains("^-")) {
+			for(int i=0;i<this.sum.length();i++) {
+				if(this.sum.charAt(i)=='^' && this.sum.charAt(i+1)=='-') {
+					int j=i-1;
+					while(j>0 && Character.isDigit(this.sum.charAt(j))) {
+						j--;
+					}
+					this.sum = addChar(this.sum, "1/(", j);
+					i+=3;
+					while(i<this.sum.length() && (this.sum.charAt(i)=='^' || (this.sum.charAt(i)=='-' && this.sum.charAt(i-1) == '^') || Character.isDigit(this.sum.charAt(i))) ) {
+						i++;
+					}
+					this.sum = addChar(this.sum, ")", i);
+					i++;
+				}
+			}
+			this.sum=this.sum.replaceAll("\\^-", "^");
+			try {
+				solveParenthesis();
+			} catch (CalculatorSyntaxException e) {
+				e.printStackTrace();
+			}
+		}
+		this.sum = this.sum.replaceAll("\\+-", "-");
 		this.terms = this.sum.split("(\\+|\\-)"); // contains numbers
 		this.ops = this.sum.split(
 				"\\({0,}([\\*\\/\\^]?\\d{1,}[\\*\\/\\^]?|[a-z]{1,}\\{\\d{1,}\\.?\\d{0,}\\}|(?i)e|(?i)pi|(?i)phi|\\d{0}(?!\\-)\\d{1,})\\){0,}");
