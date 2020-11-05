@@ -43,35 +43,36 @@
             </tr>
         </table>
     </div>
+    <br>
     <div id="input" class="main">
         <table>
             <tr>
-                <td><input type="text" value="Start (integer)" id="begin"></td>
-                <td><input type="text" value="End (integer)" id="end"></td>
+                <td><input type="text" class="textinput" value="Start (integer)" id="begin"></td>
+                <td><input type="text" class="textinput" value="End (integer)" id="end"></td>
                 <td><button id="naturalNumbersSum" class="buttons" onclick="getSum(begin.value,end.value)">Sum</button>
                 </td>
             </tr>
             <tr>
-                <td><input type="text" id="factorialInput" value="Factorial (integer)"></td>
+                <td><input type="text" class="textinput" id="factorialInput" value="Factorial (integer)"></td>
                 <td>$n!=n(n-1)(n-2)...3\cdot2$</td>
                 <td><button id="factorialButton" class="buttons"
                         onclick="factorial(factorialInput.value)">Factorial</button></td>
             </tr>
             <tr>
-                <td> <input type="text" id="geometricInput" value="Value of r"></td>
+                <td> <input type="text" class="textinput" id="geometricInput" value="Value of r"></td>
                 <td>$\sum_{k=0}^\infty r^k$</td>
                 <td><button id="geometricButton" class="buttons" onclick="geometric(geometricInput.value)">Geometric
                         series</button></td>
             </tr>
             <tr>
-                <td><input type="text" id="eInput" value="Value of n (integer)"></td>
+                <td><input type="text" class="textinput" id="eInput" value="Value of n (integer)"></td>
                 <td>$e=\mathrm{lim}_{n\rightarrow\infty}(1+\frac{1}{n})^n$</td>
                 <td><button id="ebutton" class="buttons" onclick="getE(eInput.value)">Get
                         e</button></td>
             </tr>
             <tr>
                 <td>
-                    <input type="text" id="derInput" value="Function f(x)">
+                    <input type="text" class="textinput" id="derInput" value="Function f(x)">
                 </td>
                 <td>$f'(x) = \mathrm{lim}_{h\rightarrow0}\frac{f(x+h)-f(x)}{h}$</td>
                 <td><button id="derbutton" class="buttons" onclick="getDer(derInput.value)">Get
@@ -80,7 +81,7 @@
 
             <tr>
                 <td>
-                    <input type="text" id="calculatorInput" value="Calculator">
+                    <input type="text" class="textinput" class="textinput" id="calculatorInput" value="Calculator">
                 </td>
                 <td><input type="radio" id="degrees" name="trig" value="degrees" checked>DEG</input><input type="radio"
                         id="radians" name="trig" value="radians">RAD</input></td>
@@ -113,7 +114,7 @@
             <tr>
             <tr>
                 <td>
-                    <input type="text" id="factorizationInput" value="Number (integer)">
+                    <input type="text" class="textinput" id="factorizationInput" value="Number (integer)">
                 </td>
                 <td>Prime factorization</td>
                 <td>
@@ -122,7 +123,7 @@
             </tr>
             <tr>
                 <td>
-                    <input type="text" id="isPrimeInput" value="Number (integer)">
+                    <input type="text" class="textinput" id="isPrimeInput" value="Number (integer)">
                 </td>
                 <td>
                     Check if number is prime.
@@ -133,7 +134,7 @@
             </tr>
             <tr>
                 <td>
-                    <input type="text" id="binomialInput" value="Number (integer)">
+                    <input type="text" class="textinput" id="binomialInput" value="Number (integer)">
                 </td>
                 <td>$(x+y)^n = \sum_{k=0}^n\binom{n}{k}x^{n-k}y^k$</td>
                 <td>
@@ -174,58 +175,58 @@
     <div id="inch-to-cm" class="main" hidden>
         feet and inch to Centimeter calculation.<br>
         <button class="buttons" onclick="getUnitConversion()">Back</button><br>
-        <input type="text" id="FootInput">' <input type="text" id="InchInput">'' <button class="buttons"
+        <input type="text" class="textinput" id="FootInput">' <input type="text" class="textinput" id="InchInput">'' <button class="buttons"
             onclick="inchToCmCalculate(FootInput.value,InchInput.value)">Calculate</button>
     </div>
     <div id="cm-to-inch" class="main" hidden>
         Centimeter to feet and inch calculation.<br>
         <button class="buttons" onclick="getUnitConversion()">Back</button><br>
-        <input type="text" id="CentimeterInput"><button class="buttons"
+        <input type="text" class="textinput" id="CentimeterInput"><button class="buttons"
             onclick="cmToInchCalculate(CentimeterInput.value)">Calculate</button>
     </div>
     <div id="c-to-f" class="main" hidden>
         Celsius to Fahrenheit calculation<br>
         <button class="buttons" onclick="getUnitConversion()">Back</button><br>
-        <input type="text" id="CelsiusInput"><button class="buttons"
+        <input type="text" class="textinput" id="CelsiusInput"><button class="buttons"
             onclick="cTofCalculate(CelsiusInput.value)">Calculate</button>
     </div>
     <div id="f-to-c" class="main" hidden>
         Fahrenheit to Celsius calculation<br>
         <button class="buttons" onclick="getUnitConversion()">Back</button><br>
-        <input type="text" id="fahrenheitInput"><button class="buttons"
+        <input type="text" class="textinput" id="fahrenheitInput"><button class="buttons"
             onclick="fTocCalculate(fahrenheitInput.value)">Calculate</button>
     </div>
     <div id="kg-to-lbs" class="main" hidden>
         Kilograms to pounds calculation<br>
         <button class="buttons" onclick="getUnitConversion()">Back</button><br>
-        <input type="text" id="kgInput"><button class="buttons"
+        <input type="text" class="textinput" id="kgInput"><button class="buttons"
             onclick="kgToLbsCalculate(kgInput.value)">Calculate</button>
     </div>
     <div id="lbs-to-kg" class="main" hidden>
         Pounds to kilograms calculation<br>
         <button class="buttons" onclick="getUnitConversion()">Back</button><br>
-        <input type="text" id="lbsInput"><button class="buttons"
+        <input type="text" class="textinput" id="lbsInput"><button class="buttons"
             onclick="lbsToKgCalculate(lbsInput.value)">Calculate</button>
     </div>
     <div id="miles-to-km" class="main" hidden>
         Miles to kilometer calculation<br>
         <button class="buttons" onclick="getUnitConversion()">Back</button><br>
-        <input type="text" id="milesInput"><button class="buttons"
+        <input type="text" class="textinput" id="milesInput"><button class="buttons"
             onclick="milesToKmCalculate(milesInput.value)">Calculate</button>
     </div>
     <div id="km-to-miles" class="main" hidden>
         Kilometer to miles calculation<br>
         <button class="buttons" onclick="getUnitConversion()">Back</button><br>
-        <input type="text" id="kmInput"><button class="buttons"
+        <input type="text" class="textinput" id="kmInput"><button class="buttons"
             onclick="kmToMilesCalculate(kmInput.value)">Calculate</button>
     </div>
     <div id="currencies" class="main" hidden>
         Convert currencies<br>
         Conversion factors taken from: <a href="https://themoneyconverter.com">The Money Converter</a><br>
         <button class="buttons" onclick="getUnitConversion()">Back</button><br>
-        <input type="text" id="fromCurrencyInput"><br>
+        <input type="text" class="textinput" id="fromCurrencyInput"><br>
         <label for="from">From currency: </label>
-        <select name="from" id="fromCurrency">
+        <select name="from" id="fromCurrency" class="select-css">
             <option selected value="EUR">EUR - Euro</option>
             <option value="USD">USD - US Dollar</option>
             <option value="AUD">AUD - Australian Dollar</option>
@@ -245,7 +246,7 @@
             <option value="SEK">SEK - Swedish Krona</option>
         </select><br>
         <label for="to">To currency: </label>
-        <select name="to" id="toCurrency">
+        <select name="to" id="toCurrency" class="select-css">
             <option value="EUR">EUR - Euro</option>
             <option selected value="USD">USD - US Dollar</option>
             <option value="AUD">AUD - Australian Dollar</option>
@@ -270,7 +271,7 @@
     </div>
     <div id="Gamescreen" class="main" hidden>
         <button class="buttons" onclick="backToInput()">Back</button><br>
-        <input type="text" id="degreeInput"><button class="buttons" id="setDegreeButton"
+        <input type="text" class="textinput" id="degreeInput"><button class="buttons" id="setDegreeButton"
             onclick="setDegree(degreeInput.value)">Set
             Degree</button><br>
         <div id="Gamescreen2"></div>
@@ -280,7 +281,7 @@
         <table>
             <tr>
                 <td>
-                    <input type="text" id="MatrixInput" value="Matrix">
+                    <input type="text" class="textinput" id="MatrixInput" value="Matrix">
                 </td>
                 <td>
                     <button id="MatrixInputButton" class="buttons" onclick="sendMatrix(MatrixInput.value)">Set
@@ -290,7 +291,7 @@
             </tr>
             <tr>
                 <td>
-                    <input type="text" id="MatrixIdInput" value="ID to print">
+                    <input type="text" class="textinput" id="MatrixIdInput" value="ID to print">
                 </td>
                 <td>
                     <button id="MatrixPrintButton" class="buttons" onclick="printMatrix(MatrixIdInput.value)">Print
@@ -300,7 +301,7 @@
             </tr>
             <tr>
                 <td>
-                    <input type="text" id="MatrixIdDelete" value="ID to delete">
+                    <input type="text" class="textinput" id="MatrixIdDelete" value="ID to delete">
                 </td>
                 <td>
                     <button id="MatrixDeleteByIdButton" class="buttons"
@@ -322,29 +323,29 @@
     </div>
     <div id="LinAlgOperationsScreen" class="main" hidden>
         <button class="buttons" onclick="gotoLinAlg()">Back</button><br>
-        <input type="text" value="ID Matrix" id="IDMatrixScale"> <input type="text" value="Scalar" id="MatrixScalar">
+        <input type="text" class="textinput" value="ID Matrix" id="IDMatrixScale"> <input type="text" class="textinput" value="Scalar" id="MatrixScalar">
         <button class="buttons" onclick="scaleMatrix(IDMatrixScale.value,MatrixScalar.value)">Scale</button><br>
-        <input type="text" value="ID 1" id="IDMatrix1Add"> <input type="text" value="ID 2" id="IDMatrix2Add"> <button
+        <input type="text" class="textinput" value="ID 1" id="IDMatrix1Add"> <input type="text" class="textinput" value="ID 2" id="IDMatrix2Add"> <button
             class="buttons" onclick="addMatrix(IDMatrix1Add.value,IDMatrix2Add.value)">Addition</button><br>
-        <input type="text" value="ID 1" id="IDMatrix1Subtract"> <input type="text" value="ID 2" id="IDMatrix2Subtract">
+        <input type="text" class="textinput" value="ID 1" id="IDMatrix1Subtract"> <input type="text" class="textinput" value="ID 2" id="IDMatrix2Subtract">
         <button class="buttons"
             onclick="subtractMatrix(IDMatrix1Subtract.value,IDMatrix2Subtract.value)">Subtraction</button><br>
-        <input type="text" value="ID 1" id="IDMatrix1Mult"> <input type="text" value="ID 2" id="IDMatrix2Mult"> <button
+        <input type="text" class="textinput" value="ID 1" id="IDMatrix1Mult"> <input type="text" class="textinput" value="ID 2" id="IDMatrix2Mult"> <button
             class="buttons"
             onclick="multiplyMatrix(IDMatrix1Mult.value,IDMatrix2Mult.value)">Multiplication</button><br>
-        <input type="text" value="ID 1" id="IDMatrixPow"> <input type="text" value="power" id="IDpower"> <button
+        <input type="text" class="textinput" value="ID 1" id="IDMatrixPow"> <input type="text" class="textinput" value="power" id="IDpower"> <button
             class="buttons" onclick="matrixPower(IDMatrixPow.value,IDpower.value)">Power</button><br>
-        <input type="text" value="ID 1" id="IDCrossN"> <input type="text" value="ID 2" id="IDCrossM"> <button
+        <input type="text" class="textinput" value="ID 1" id="IDCrossN"> <input type="text" class="textinput" value="ID 2" id="IDCrossM"> <button
             class="buttons" onclick="NcrossM(IDCrossN.value,IDCrossM.value)">Cross Product</button>
-        <input type="text" value="ID" id="IDMatrixTrans"> <button class="buttons"
+        <input type="text" class="textinput" value="ID" id="IDMatrixTrans"> <button class="buttons"
             onclick="transposeMatrix(IDMatrixTrans.value)">Transpose</button><br>
-        <input type="text" value="ID" id="IDREF"> <button class="buttons" onclick="ref(IDREF.value)">REF</button><br>
-        <input type="text" value="ID" id="IDRREF"> <button class="buttons"
+        <input type="text" class="textinput" value="ID" id="IDREF"> <button class="buttons" onclick="ref(IDREF.value)">REF</button><br>
+        <input type="text" class="textinput" value="ID" id="IDRREF"> <button class="buttons"
             onclick="rref(IDRREF.value)">RREF</button><br>
-        <input type="text" value="ID" id="IDdet"> <button class="buttons"
+        <input type="text" class="textinput" value="ID" id="IDdet"> <button class="buttons"
             onclick="determinant(IDdet.value)">Determinant</button><br>
-        <input type="text" value="ID" id="IDtr"> <button class="buttons" onclick="trace(IDtr.value)">Trace</button><br>
-        <input type="text" value="ID" id="IDinv"> <button class="buttons"
+        <input type="text" class="textinput" value="ID" id="IDtr"> <button class="buttons" onclick="trace(IDtr.value)">Trace</button><br>
+        <input type="text" class="textinput" value="ID" id="IDinv"> <button class="buttons"
             onclick="inverse(IDinv.value)">Inverse</button><br>
 
         <button class="buttons" onclick="printAllMatrices()">Print all matrices</button>
@@ -353,22 +354,22 @@
         <button class="buttons" onclick="backToInput()">Back</button><br>
         <table>
             <tr>
-                <td><input type="text" value="Secret message" id="encInput"></td>
-                <td><input type="text" value="Degree (integer)" id="encOrder"></td>
+                <td><input type="text" class="textinput" value="Secret message" id="encInput"></td>
+                <td><input type="text" class="textinput" value="Degree (integer)" id="encOrder"></td>
                 <td><button id="encButton" class="buttons" onclick="getEncryption(encInput.value,encOrder.value)">Get
                         encryption</button>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input type="text" value="point" id="decpoints">
+                    <input type="text" class="textinput" value="point" id="decpoints">
                 </td>
                 <td>Syntax = "point: (xvalue,yvalue);..."</td>
                 <td><button class="buttons" onclick="decryptPoints(decpoints.value)">Decrypt</button></td>
             </tr>
             <tr>
                 <td>
-                    <input type="text" id="decInput" value="Number to decrypt">
+                    <input type="text" class="textinput" id="decInput" value="Number to decrypt">
                 </td>
                 <td></td>
                 <td>
@@ -380,7 +381,7 @@
     </div>
     <br>
     <div id="response" class="responseAndHelp">Response area</div><br>
-    <div class="responseAndHelp" id="help" hidden><input type="text" id="copytext"></div>
+    <div class="responseAndHelp" id="help" hidden><input type="text" class="textinput" id="copytext"></div>
 </body>
 
 </html>

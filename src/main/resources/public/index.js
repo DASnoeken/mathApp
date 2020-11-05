@@ -880,19 +880,12 @@ function closeFullscreen() {
 } 
 function darkmode(){
     if(document.getElementById("input").className == "main"){
-        /*document.getElementById("input").classList.remove("main");
-        document.getElementById("input").classList.add("main-dark");
-        document.getElementById("FactorizationDiv").classList.remove("main");
-        document.getElementById("FactorizationDiv").classList.add("main-dark");
-        document.getElementById("UnitConversionDiv").classList.add("main-dark");
-        document.getElementById("UnitConversionDiv").classList.remove("main");
-        document.getElementById("welcome").classList.remove("welcome");
-        document.getElementById("welcome").classList.add("welcome-dark");
-        document.getElementById("response").classList.remove("responseAndHelp");
-        document.getElementById("response").classList.add("responseAndHelp-dark");*/
         var mains = document.getElementsByClassName("main");
         var rah = document.getElementsByClassName("responseAndHelp");
         var wel = document.getElementsByClassName("welcome");
+        var buttons = document.getElementsByClassName("buttons");
+        var textinput = document.getElementsByClassName("textinput");
+        var selectboxes = document.getElementsByClassName("select-css");
         document.body.style.backgroundColor = "#000000";
         while(mains.length>0){
             document.getElementById(mains[0].id).className = "main-dark";
@@ -903,21 +896,23 @@ function darkmode(){
         while(wel.length>0){
             document.getElementById(wel[0].id).className = "welcome-dark";
         }
+        while(buttons.length>0){
+            buttons[0].className = "buttons-dark";
+        }
+        while(textinput.length>0){
+            textinput[0].className = "textinput-dark";
+        }
+        while(selectboxes.length>0){
+            selectboxes[0].className = "select-css-dark";
+        }
 
     }else{
-        /*document.getElementById("input").classList.remove("main-dark");
-        document.getElementById("input").classList.add("main");
-        document.getElementById("FactorizationDiv").classList.add("main");
-        document.getElementById("FactorizationDiv").classList.remove("main-dark");
-        document.getElementById("UnitConversionDiv").classList.remove("main-dark");
-        document.getElementById("UnitConversionDiv").classList.add("main");
-        document.getElementById("welcome").classList.add("welcome");
-        document.getElementById("welcome").classList.remove("welcome-dark");
-        document.getElementById("response").classList.add("responseAndHelp");
-        document.getElementById("response").classList.remove("responseAndHelp-dark");*/
         var mains = document.getElementsByClassName("main-dark");
         var rah = document.getElementsByClassName("responseAndHelp-dark");
         var wel = document.getElementsByClassName("welcome-dark");
+        var buttons = document.getElementsByClassName("buttons-dark");
+        var textinput = document.getElementsByClassName("textinput-dark");
+        var selectboxes = document.getElementsByClassName("select-css-dark");
         document.body.style.backgroundColor = "#660000";
         while(mains.length>0){
             document.getElementById(mains[0].id).className = "main";
@@ -927,6 +922,15 @@ function darkmode(){
         }
         while(wel.length>0){
             document.getElementById(wel[0].id).className = "welcome";
+        }
+        while(buttons.length>0){
+            buttons[0].className = "buttons";
+        }
+        while(textinput.length>0){
+            textinput[0].className = "textinput";
+        }
+        while(selectboxes.length>0){
+            selectboxes[0].className = "select-css";
         }
     }
 }
