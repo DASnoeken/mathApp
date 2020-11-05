@@ -15,7 +15,7 @@ Currently, the app contains the following:
 - Basic linear algebra.
 - Factorize numbers into prime factors.
 - Calculate binomial coefficients.
-##Future plans
+## Future plans
 Here is a list of things I wish to implement in the future.
 - Implement MathJax for the derivative function.
 - Implement eigenvalue and eigenvector calculation for linear algebra.
