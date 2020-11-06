@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 public class Derivative {
 	private String function;
+	private String result;
 	private ArrayList<String> terms;
 	private ArrayList<String> specialTerms;
 	private ArrayList<String> polynomialTerms;
@@ -60,7 +61,7 @@ public class Derivative {
 			}
 		}
 		specializeTerms();
-		String result = new String();
+		result = new String();
 		try {
 			result = powerRule();
 		} catch (MatrixDimensionException e) {
@@ -93,9 +94,9 @@ public class Derivative {
 					continue;
 				}
 				if (!tmp[i].matches("\\d{1,}"))
-					if(tmp[i].contains("{") && tmp[i].contains("}")) {
-						ans += "("+chainRule(tmp[i]) + ")*";
-					}else {	
+					if (tmp[i].contains("{") && tmp[i].contains("}")) {
+						ans += "(" + chainRule(tmp[i]) + ")*";
+					} else {
 						ans += singleTerm(tmp[i]) + "*";
 					}
 				else
@@ -480,8 +481,81 @@ public class Derivative {
 		}
 	}
 
+	public void texify() { // Texifies the result
+		this.function = this.function.trim();
+		this.result = this.result.trim();
+		this.function = this.function.replaceAll("\\s", "").replaceAll("\\(\\(", "(").replaceAll("\\)\\)", ")");
+		this.result = this.result.replaceAll("\\s", "").replaceAll("\\(\\(", "(").replaceAll("\\)\\)", ")");
+		for (int i = 0; i < this.result.length(); i++) {
+			if (this.result.charAt(i) == '^') {
+				i++;
+				this.result = addChar(this.result, "{", i);
+				i++;
+				while (i < this.result.length() && (Character.isDigit(this.result.charAt(i))
+						|| this.result.charAt(i) == 'x' || this.result.charAt(i) == '(' || this.result.charAt(i) == ')'
+						|| this.result.charAt(i) == '{' || this.result.charAt(i) == '}' || this.result.charAt(i) == '.'
+						|| (this.result.charAt(i) == '-' && this.result.charAt(i - 1) == '^'))) {
+					i++;
+				}
+				this.result = addChar(this.result, "}", i++);
+			}
+			if (checkSubstring(this.result, "cos", i) || checkSubstring(this.result, "sin", i)
+					|| checkSubstring(this.result, "sec", i) || checkSubstring(this.result, "tan", i)
+					|| checkSubstring(this.result, "csc", i)) {
+				this.result = addChar(this.result, "\\text{", i);
+				i += 9;
+				this.result = addChar(this.result, "}", i);
+				i++;
+			}
+		}
+		for (int i = 0; i < this.function.length(); i++) {
+			if (this.function.charAt(i) == '^') {
+				i++;
+				this.function = addChar(this.function, "{", i);
+				i++;
+				while (i < this.function.length() && (Character.isDigit(this.function.charAt(i))
+						|| this.function.charAt(i) == 'x' || this.function.charAt(i) == '('
+						|| this.function.charAt(i) == ')' || this.function.charAt(i) == '{'
+						|| this.function.charAt(i) == '}' || this.function.charAt(i) == '.'
+						|| (this.function.charAt(i) == '-' && this.result.charAt(i - 1) == '^'))) {
+					i++;
+				}
+				this.function = addChar(this.function, "}", i++);
+			}
+			if (checkSubstring(this.function, "cos", i) || checkSubstring(this.function, "sin", i)
+					|| checkSubstring(this.function, "sec", i) || checkSubstring(this.function, "tan", i)
+					|| checkSubstring(this.function, "csc", i)) {
+				this.function = addChar(this.function, "\\text{", i);
+				i += 9;
+				this.function = addChar(this.function, "}", i);
+				i++;
+			}
+		}
+	}
+
+	private boolean checkSubstring(String str, String substr, int position) {
+		for (int i = 0; i < substr.length(); i++) {
+			if (i + position >= str.length() || (str.charAt(i + position) != substr.charAt(i))) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private String addChar(String str, String ch, int position) {
+		if (position >= str.length()) {
+			return str + ch;
+		} else {
+			return str.substring(0, position) + ch + str.substring(position);
+		}
+	}
+
 	public String getFunction() {
 		return function;
+	}
+
+	public String getResult() {
+		return result;
 	}
 
 	public void setFunction(String function) {

@@ -5,6 +5,7 @@ then
 	exit 1
 fi
 ./Change.sh ld			#used for heroku
+git pull
 git add .
 git commit -am "$1"
 git push

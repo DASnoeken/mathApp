@@ -86,8 +86,9 @@ function getDer(func) {
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
             var respons = this.responseText;
-            document.getElementById("response").innerHTML = "Original: " + func + "<br>";
-            document.getElementById("response").innerHTML += "Derivative: " + respons;
+            document.getElementById("response").innerHTML = respons;
+            console.log(respons);
+            MathJax.typeset();
         }
     }
     xhr.open("GET", "https://daansmathapp.herokuapp.com/get/derivative/" + func);
@@ -102,7 +103,7 @@ function getEncryption(s, order) {
         document.getElementById("response").innerHTML = "You need to insert the order up there!";
         return;
     }
-    if(isNaN(order)){
+    if (isNaN(order)) {
         document.getElementById("response").innerHTML = "Only numbers allowed for order!";
         return;
     }
@@ -121,7 +122,7 @@ function getDecryption(num) {
         document.getElementById("response").innerHTML = "I would enter a number in that field there, mate!";
         return;
     }
-    if(isNaN(num)){
+    if (isNaN(num)) {
         document.getElementById("response").innerHTML = "Only numbers are allowed!";
         return;
     }
@@ -588,18 +589,18 @@ function printAllMatrices() {
     xhr.send();
 }
 function deleteMatrixById(ID) {
-    if(isNaN(ID)){
+    if (isNaN(ID)) {
         document.getElementById("response").innerHTML = "ID has to be a number!";
         return;
     }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
-            if(this.status==200){
+            if (this.status == 200) {
                 document.getElementById("response").innerHTML = "Matrix with ID " + ID + " removed!";
-            }else if(this.status==500){
+            } else if (this.status == 500) {
                 document.getElementById("response").innerHTML = "Matrix with ID " + ID + " not found!";
-            }else{
+            } else {
                 document.getElementById("response").innerHTML = "Error!";
             }
         }
@@ -895,9 +896,9 @@ function closeFullscreen() {
         document.msExitFullscreen();
     }
     document.getElementById("fullscreenbutton").onclick = fullscreenMode();
-} 
-function darkmode(){
-    if(document.getElementById("input").className == "main"){
+}
+function darkmode() {
+    if (document.getElementById("input").className == "main") {
         var mains = document.getElementsByClassName("main");
         var rah = document.getElementsByClassName("responseAndHelp");
         var wel = document.getElementsByClassName("welcome");
@@ -906,29 +907,29 @@ function darkmode(){
         var selectboxes = document.getElementsByClassName("select-css");
         var tops = document.getElementsByClassName("topButtons");
         document.body.style.backgroundColor = "#000000";
-        while(mains.length>0){
+        while (mains.length > 0) {
             document.getElementById(mains[0].id).className = "main-dark";
         }
-        while(rah.length>0){
+        while (rah.length > 0) {
             document.getElementById(rah[0].id).className = "responseAndHelp-dark";
         }
-        while(wel.length>0){
+        while (wel.length > 0) {
             document.getElementById(wel[0].id).className = "welcome-dark";
         }
-        while(buttons.length>0){
+        while (buttons.length > 0) {
             buttons[0].className = "buttons-dark";
         }
-        while(textinput.length>0){
+        while (textinput.length > 0) {
             textinput[0].className = "textinput-dark";
         }
-        while(selectboxes.length>0){
+        while (selectboxes.length > 0) {
             selectboxes[0].className = "select-css-dark";
         }
-        while(tops.length>0){
+        while (tops.length > 0) {
             tops[0].className = "topButtons-dark";
         }
 
-    }else{
+    } else {
         var mains = document.getElementsByClassName("main-dark");
         var rah = document.getElementsByClassName("responseAndHelp-dark");
         var wel = document.getElementsByClassName("welcome-dark");
@@ -937,25 +938,25 @@ function darkmode(){
         var selectboxes = document.getElementsByClassName("select-css-dark");
         var tops = document.getElementsByClassName("topButtons-dark");
         document.body.style.backgroundColor = "#660000";
-        while(mains.length>0){
+        while (mains.length > 0) {
             document.getElementById(mains[0].id).className = "main";
         }
-        while(rah.length>0){
+        while (rah.length > 0) {
             document.getElementById(rah[0].id).className = "responseAndHelp";
         }
-        while(wel.length>0){
+        while (wel.length > 0) {
             document.getElementById(wel[0].id).className = "welcome";
         }
-        while(buttons.length>0){
+        while (buttons.length > 0) {
             buttons[0].className = "buttons";
         }
-        while(textinput.length>0){
+        while (textinput.length > 0) {
             textinput[0].className = "textinput";
         }
-        while(selectboxes.length>0){
+        while (selectboxes.length > 0) {
             selectboxes[0].className = "select-css";
         }
-        while(tops.length>0){
+        while (tops.length > 0) {
             tops[0].className = "topButtons";
         }
     }
