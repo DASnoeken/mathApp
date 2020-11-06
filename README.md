@@ -17,7 +17,7 @@ Currently, the app contains the following:
 - Calculate binomial coefficients.
 ## Future plans
 Here is a list of things I wish to implement in the future.
-- Implement MathJax for the derivative function. (In progress!)
+- Implement MathJax for the derivative function. (Testing!)
 - Implement eigenvalue and eigenvector calculation for linear algebra.
 - Implement Newton's method for finding roots of a polynomial.
 - Basic numerical integration.

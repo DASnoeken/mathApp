@@ -499,6 +499,7 @@ function setCopy(string) {
     var dolsign = res.indexOf("$$");
     res = res.slice(0, dolsign);
     res = res.replace(/\s/g, '');
+    res = res.replace(/<br\s*\/?>/gi,'');
     document.getElementById("copytext").value = res;
 }
 function currConversion(from, to, value) {
