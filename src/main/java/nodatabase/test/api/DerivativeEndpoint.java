@@ -15,7 +15,7 @@ public class DerivativeEndpoint {
 		try {
 			d.derive();
 			d.texify();
-			derivative = "Original: $$"+d.getFunction()+"$$"+"Derivative: $$"+d.getResult()+"$$";
+			derivative = "Original: $$"+d.getFunction()+"$$ Derivative: $$"+d.getResult()+"$$";
 		}catch(Exception e) {
 			e.printStackTrace();
 			derivative = "INPUT ERROR!";

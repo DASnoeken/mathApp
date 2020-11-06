@@ -258,7 +258,7 @@ public class Derivative {
 				break;
 			}
 			case "cot(x)": {
-				ans += "-csc(x)*csc(x) = ";
+				ans += "-csc(x)*csc(x) + ";
 				break;
 			}
 			case "x^x": {
@@ -353,7 +353,7 @@ public class Derivative {
 				break;
 			}
 			case "cot(x)": {
-				ans += "-csc(x)*csc(x) = ";
+				ans += "-csc(x)*csc(x) + ";
 				break;
 			}
 			case "x^x": {
@@ -485,7 +485,8 @@ public class Derivative {
 		this.function = this.function.trim();
 		this.result = this.result.trim();
 		this.function = this.function.replaceAll("\\s", "").replaceAll("\\(\\(", "(").replaceAll("\\)\\)", ")");
-		this.result = this.result.replaceAll("\\s", "").replaceAll("\\(\\(", "(").replaceAll("\\)\\)", ")");
+		this.result = this.result.replaceAll("\\s", "").replaceAll("\\(\\(", "(").replaceAll("\\)\\)", ")")
+				.replaceAll("1\\/\\(x\\)\\*x(?!\\^)", "1").replaceAll("1\\*", "").replaceAll("\\+\\-", "-");
 		for (int i = 0; i < this.result.length(); i++) {
 			if (this.result.charAt(i) == '^') {
 				i++;
@@ -494,16 +495,22 @@ public class Derivative {
 				while (i < this.result.length() && (Character.isDigit(this.result.charAt(i))
 						|| this.result.charAt(i) == 'x' || this.result.charAt(i) == '(' || this.result.charAt(i) == ')'
 						|| this.result.charAt(i) == '{' || this.result.charAt(i) == '}' || this.result.charAt(i) == '.'
-						|| (this.result.charAt(i) == '-' && this.result.charAt(i - 1) == '^'))) {
+						|| (this.result.charAt(i) == '-' && this.result.charAt(i - 2) == '^'))) {
 					i++;
 				}
 				this.result = addChar(this.result, "}", i++);
 			}
 			if (checkSubstring(this.result, "cos", i) || checkSubstring(this.result, "sin", i)
 					|| checkSubstring(this.result, "sec", i) || checkSubstring(this.result, "tan", i)
-					|| checkSubstring(this.result, "csc", i)) {
+					|| checkSubstring(this.result, "csc", i) || checkSubstring(this.result,"cot",i)) {
 				this.result = addChar(this.result, "\\text{", i);
 				i += 9;
+				this.result = addChar(this.result, "}", i);
+				i++;
+			}
+			if (checkSubstring(this.result, "ln", i)) {
+				this.result = addChar(this.result, "\\text{", i);
+				i += 8;
 				this.result = addChar(this.result, "}", i);
 				i++;
 			}
@@ -517,16 +524,22 @@ public class Derivative {
 						|| this.function.charAt(i) == 'x' || this.function.charAt(i) == '('
 						|| this.function.charAt(i) == ')' || this.function.charAt(i) == '{'
 						|| this.function.charAt(i) == '}' || this.function.charAt(i) == '.'
-						|| (this.function.charAt(i) == '-' && this.result.charAt(i - 1) == '^'))) {
+						|| (this.function.charAt(i) == '-' && this.result.charAt(i - 2) == '^'))) {
 					i++;
 				}
 				this.function = addChar(this.function, "}", i++);
 			}
 			if (checkSubstring(this.function, "cos", i) || checkSubstring(this.function, "sin", i)
 					|| checkSubstring(this.function, "sec", i) || checkSubstring(this.function, "tan", i)
-					|| checkSubstring(this.function, "csc", i)) {
+					|| checkSubstring(this.function, "csc", i) || checkSubstring(this.function, "cot", i)) {
 				this.function = addChar(this.function, "\\text{", i);
 				i += 9;
+				this.function = addChar(this.function, "}", i);
+				i++;
+			}
+			if (checkSubstring(this.function, "ln", i)) {
+				this.function = addChar(this.function, "\\text{", i);
+				i += 8;
 				this.function = addChar(this.function, "}", i);
 				i++;
 			}
