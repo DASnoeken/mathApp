@@ -96,6 +96,9 @@
                 <td>
                     <button class="buttons" onclick="toEncryption()">Encryption</button>
                 </td>
+                <td>
+                    <button class="buttons" onclick="toPolynomials()">Polynomials</button>
+                </td>
             </tr>
             <tr>
                 <td>
@@ -375,6 +378,28 @@
                 <td>
                     <button class="buttons" id="decButton" onclick="getDecryption(decInput.value)">Get
                         message</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="polynomialScreen" class="main" hidden>
+        <button class="buttons" onclick="backToInput()">Back</button><br>
+        <table>
+            <tr>
+                <td>
+                    <input type="text" style="width: 70%;" class="textinput" id="polynomialInput" value="f(x)">
+                </td>
+                <td>
+                    <input type="text" style="width: 70%;" class="textinput" id="rootxmin" value="x_min">
+                </td>
+                <td>
+                    <input type="text" style="width: 70%;" class="textinput" id="rootxmax" value="x_max">
+                </td>
+                <td>
+                    Find all $x \in [\text{xmin},\text{xmax}]$, such that $f(x)=0$.
+                </td>
+                <td>
+                    <button class="buttons" onclick="getRoots(polynomialInput.value,rootxmin.value,rootxmax.value)">Get Roots</button>
                 </td>
             </tr>
         </table>

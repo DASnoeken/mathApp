@@ -56,58 +56,39 @@ public class Root {
 		this.totalSignFlips = signflips;
 		//System.out.println("totalsf = "+totalSignFlips);
 	}
+	
+	private void addToRoots(int i) {
+		if(xgrid.get(i).abs().compareTo(thresh)<=0) {
+			xgrid.set(i, BigDecimal.ZERO);
+		}
+		roots.add(xgrid.get(i));
+		if(roots.size()==this.totalSignFlips) {
+			return;
+		}else {
+			this.x_min=roots.get(roots.size()-1).add(new BigDecimal("0.1"));
+			this.delta = new BigDecimal("0.5");
+			this.x_max = this.x_maxOrig;
+			this.xgrid.clear();
+			this.yval.clear();
+			setGrid();
+		}
+	}
 
 	private void findSignFlips() {
+		if(roots.size()==this.totalSignFlips) {
+			return;
+		}
 		int sign = yval.get(0).signum();
 		if (sign == 0) {
-			if(xgrid.get(0).abs().compareTo(thresh)<=0) {
-				xgrid.set(0, BigDecimal.ZERO);
-			}
-			roots.add(xgrid.get(0));
-			if(roots.size()==this.totalSignFlips) {
-				return;
-			}else {
-				this.x_min=roots.get(roots.size()-1).add(new BigDecimal("0.1"));
-				this.delta = new BigDecimal("0.5");
-				this.x_max = this.x_maxOrig;
-				this.xgrid.clear();
-				this.yval.clear();
-				setGrid();
-			}
+			addToRoots(0);
 		}
 		for (int i = 1; i < xgrid.size(); i++) {
 			int sign2 = yval.get(i).signum();
 			if (yval.get(i).abs().compareTo(thresh) < 0) {
-				if(xgrid.get(i).abs().compareTo(thresh)<=0) {
-					xgrid.set(i, BigDecimal.ZERO);
-				}
-				roots.add(xgrid.get(i));
-				if(roots.size()==this.totalSignFlips) {
-					return;
-				}else {
-					this.x_min=roots.get(roots.size()-1).add(new BigDecimal("0.1"));
-					this.delta = new BigDecimal("0.5");
-					this.x_max = this.x_maxOrig;
-					this.xgrid.clear();
-					this.yval.clear();
-					setGrid();
-				}
+				addToRoots(i);
 			} else {
 				if (sign2 == 0) {
-					if(xgrid.get(i).abs().compareTo(thresh)<=0) {
-						xgrid.set(i, BigDecimal.ZERO);
-					}
-					roots.add(xgrid.get(i));
-					if(roots.size()==this.totalSignFlips) {
-						return;
-					}else {
-						this.x_min=roots.get(roots.size()-1).add(new BigDecimal("0.1"));
-						this.delta = new BigDecimal("0.5");
-						this.x_max = this.x_maxOrig;
-						this.xgrid.clear();
-						this.yval.clear();
-						setGrid();
-					}
+					addToRoots(i);
 				} else if (sign2 != sign) {
 					this.delta = this.delta.divide(new BigDecimal("2"));
 					this.x_min = xgrid.get(i - 1);
@@ -121,6 +102,9 @@ public class Root {
 	}
 
 	private void calculateYvals() {
+		if(roots.size()==this.totalSignFlips) {
+			return;
+		}
 		for (BigDecimal xval : xgrid) {
 			BigDecimal y = new BigDecimal("0");
 			for (int i = 0; i < this.powers.size(); i++) {
@@ -136,6 +120,9 @@ public class Root {
 	}
 
 	private void setGrid() {
+		if(roots.size()==this.totalSignFlips) {
+			return;
+		}
 		xgrid.add(x_min);
 		BigDecimal element = this.x_min;
 		do {
@@ -158,6 +145,7 @@ public class Root {
 				terms[i] = "1"+terms[i];
 			}
 		}
+		
 		ArrayList<String> coefPow = new ArrayList<String>();
 		for (String term : terms) {
 			String sign = "";

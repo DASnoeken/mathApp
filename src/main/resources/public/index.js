@@ -166,6 +166,7 @@ function getUnitConversion() {
 }
 function backToInput() {
     document.getElementById("input").hidden = false;
+    document.getElementById("polynomialScreen").hidden=true;
     document.getElementById("Gamescreen").hidden = true;
     document.getElementById("UnitConversionDiv").hidden = true;
     document.getElementById("LinAlgScreen").hidden = true;
@@ -961,4 +962,25 @@ function darkmode() {
             tops[0].className = "topButtons";
         }
     }
+}
+function toPolynomials(){
+    document.getElementById("input").hidden=true;
+    document.getElementById("polynomialScreen").hidden=false;
+}
+function getRoots(pol,xmin,xmax){
+    if(isNaN(xmin) || isNaN(xmax)){
+        document.getElementById("response").innerHTML = "ERROR! xmin and xmax must be numbers!";
+        return;
+    }
+    pol = pol.replaceAll("^","%5E");
+    pol = pol.replaceAll("+","%2B");
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if(this.readyState==4){
+            document.getElementById("response").innerHTML = this.responseText;
+            MathJax.typeset();
+        }
+    }
+    xhr.open("GET","https://daansmathapp.herokuapp.com/Root/getRoot/?polynomial="+pol+"&xmax="+xmax+"&xmin="+xmin);
+    xhr.send();
 }
