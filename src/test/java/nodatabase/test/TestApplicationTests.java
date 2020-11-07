@@ -17,10 +17,10 @@ class TestApplicationTests {
 
 	@Test
 	void contextLoads() {
-		Root r = new Root("x^3-x",-2,2,1);
+		Root r = new Root("x^5-5x^3+4x",-3,3);
 		ArrayList<BigDecimal> roots = r.getRoots();
 		for(BigDecimal root:roots) {
-			System.out.println(root);
+			System.out.println("found root: "+root);
 		}
 	}
 }

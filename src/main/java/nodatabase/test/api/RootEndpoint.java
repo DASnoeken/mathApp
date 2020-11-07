@@ -10,13 +10,9 @@ import nodatabase.test.domain.Root;
 @RestController
 public class RootEndpoint {
 	@GetMapping("Root/getRoot/")
-	public String getRoot(@RequestParam String polynomial, @RequestParam long x_min, @RequestParam long x_max,
-			@RequestParam int delta) {
-		if(delta==0) {
-			delta=1;
-		}
-		Root r = new Root(polynomial,x_min,x_max,delta);
-
+	public String getRoot(@RequestParam String polynomial, @RequestParam long x_min, @RequestParam long x_max) {
+		Root r = new Root(polynomial,x_min,x_max);
+		
 		return null;
 	}
 }
