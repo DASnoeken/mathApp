@@ -13,11 +13,15 @@ import nodatabase.test.domain.Root;
 public class RootEndpoint {
 	@GetMapping("Root/getRoot/")
 	public String getRoot(@RequestParam String polynomial, @RequestParam long xmin, @RequestParam long xmax) {
-		System.out.println(polynomial);
 		Root r = new Root(polynomial,xmin,xmax);
+		r.roundRoots();
 		String ans = new String("Found roots at: ");
-		for(BigDecimal root:r.getRoots()) {
-			ans+="$$x = "+root+"$$<br>";
+		if(r.getRoots().size()>0) {
+			for(BigDecimal root:r.getRoots()) {
+				ans+="$$x = "+root+"$$<br>";
+			}
+		}else {
+			ans+="<br> No real roots found!";
 		}
 		return ans;
 	}
