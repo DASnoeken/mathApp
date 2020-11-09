@@ -43,7 +43,7 @@ public class TestEndPoint {
 		String tmp = ans.toString();
 		for (int i = 1; i < tmp.length()+1; i++) {
 			strAns += tmp.charAt(i-1);
-			if (i % 80 == 0 && i != 0) {
+			if (i % 78 == 0 && i != 0) {
 				strAns += "<br>";
 			}
 		}
