@@ -145,7 +145,6 @@ public class Root {
 				terms[i] = "1" + terms[i];
 			}
 		}
-
 		ArrayList<String> coefPow = new ArrayList<String>();
 		for (String term : terms) {
 			String sign = "";

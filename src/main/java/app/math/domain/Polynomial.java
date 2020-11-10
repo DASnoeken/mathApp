@@ -18,7 +18,7 @@ public class Polynomial {
 		Polynomial der = new Polynomial(d.getResult());
 		der.setPolynomial(der.getPolynomial().replaceAll("\\s", ""));
 		der.setPolynomial(der.getPolynomial().replaceAll("\\+\\-", "-"));
-		System.out.println(der.getPolynomial());
+		der.setPolynomial(Helper.integerPolynomial(der.getPolynomial()));
 		Root derRoots = new Root(der.getPolynomial(),xmin,xmax);
 		this.xOfMinMax = derRoots.getRoots();
 		return xOfMinMax;
