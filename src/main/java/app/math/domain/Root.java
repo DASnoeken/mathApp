@@ -2,8 +2,6 @@ package app.math.domain;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 
 public class Root {
@@ -19,7 +17,7 @@ public class Root {
 	private int totalSignFlips;
 
 	public Root(String inPol, long x_min, long x_max) {
-		this.polynomial = inPol;
+		this.polynomial = inPol.trim().replaceAll("\\s", "");
 		if (this.polynomial.charAt(0) == '-') {
 			this.polynomial = "0" + this.polynomial;
 		}
@@ -228,7 +226,8 @@ public class Root {
 	public void newton() {
 		Polynomial p = new Polynomial(this.polynomial);
 		p.setXgrid(this.x_min, this.x_max, this.delta);
-		ArrayList<BigDecimal> minmax = p.getMinMax(this.x_min.longValue(), this.x_max.longValue());boolean worthit = false;
+		ArrayList<BigDecimal> minmax = p.getMinMax(this.x_min.longValue(), this.x_max.longValue());
+		boolean worthit = false;
 		for (BigDecimal x : minmax) {
 			if (p.get(x).compareTo(BigDecimal.ONE) < 0) { // See if there is a p(x) < 1
 				worthit = true;

@@ -15,7 +15,8 @@ public class Polynomial {
 	private ArrayList<BigDecimal> ydata;
 	
 	public Polynomial(String input) {
-		this.polynomial = input;
+		this.polynomial = input.trim().replaceAll("\\s", "");
+		this.polynomial = this.polynomial.replace("-", "+-").replace("++", "+");
 		this.xOfMinMax=new ArrayList<BigDecimal>();
 		this.xgrid= new ArrayList<BigDecimal>();
 		this.ydata = new ArrayList<BigDecimal>();
