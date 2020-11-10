@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import nodatabase.test.api.FactorizeEndpoint;
-import nodatabase.test.api.LinearAlgebraEndpoint;
-import nodatabase.test.domain.Factorize;
-import nodatabase.test.domain.Root;
+import app.math.api.FactorizeEndpoint;
+import app.math.api.LinearAlgebraEndpoint;
+import app.math.domain.Factorize;
+import app.math.domain.Root;
 
 @SpringBootTest
 class TestApplicationTests {

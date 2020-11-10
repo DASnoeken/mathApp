@@ -981,6 +981,6 @@ function getRoots(pol,xmin,xmax){
             MathJax.typeset();
         }
     }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/Root/getRoot/?polynomial="+pol+"&xmax="+xmax+"&xmin="+xmin);
+    xhr.open("GET","https://daansmathapp.herokuapp.com/Polynomial/getRoot/?polynomial="+pol+"&xmax="+xmax+"&xmin="+xmin);
     xhr.send();
 }
