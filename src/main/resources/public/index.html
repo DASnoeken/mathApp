@@ -402,6 +402,23 @@
                     <button class="buttons" onclick="getRoots(polynomialInput.value,rootxmin.value,rootxmax.value)">Get Roots</button>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <input type="text" style="width: 70%;" class="textinput" id="maxInput" value="f(x)">
+                </td>
+                <td>
+                    <input type="text" style="width: 70%;" class="textinput" id="maxxmin" value="x_min">
+                </td>
+                <td>
+                    <input type="text" style="width: 70%;" class="textinput" id="maxxmax" value="x_max">
+                </td>
+                <td>
+                    Find all $x \in [\text{xmin},\text{xmax}]$, such that $f'(x)=0$.
+                </td>
+                <td>
+                    <button class="buttons" onclick="getMinMaxPolynomial(maxInput.value,maxxmin.value,maxxmax.value)">Get Max/Min</button>
+                </td>
+            </tr>
         </table>
     </div>
     <br>

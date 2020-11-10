@@ -14,15 +14,15 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableSwagger2
-public class TestApplication {
+public class MathApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(TestApplication.class, args);
+		SpringApplication.run(MathApplication.class, args);
 	}
 	@Bean
 	public Docket swaggerConfiguration() {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.select()
-				.apis(RequestHandlerSelectors.basePackage("nodatabase"))
+				.apis(RequestHandlerSelectors.basePackage("app"))
 				.build()
 				.apiInfo(apiDetails());
 	}

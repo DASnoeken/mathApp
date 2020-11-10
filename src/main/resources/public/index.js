@@ -984,3 +984,20 @@ function getRoots(pol,xmin,xmax){
     xhr.open("GET","https://daansmathapp.herokuapp.com/Polynomial/getRoot/?polynomial="+pol+"&xmax="+xmax+"&xmin="+xmin);
     xhr.send();
 }
+function getMinMaxPolynomial(pol,xmin,xmax){
+    if(isNaN(xmin) || isNaN(xmax)){
+        document.getElementById("response").innerHTML = "ERROR! xmin and xmax must be numbers!";
+        return;
+    }
+    pol = pol.replaceAll("^","%5E");
+    pol = pol.replaceAll("+","%2B");
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if(this.readyState==4){
+            document.getElementById("response").innerHTML = this.responseText;
+            MathJax.typeset();
+        }
+    }
+    xhr.open("GET","https://daansmathapp.herokuapp.com/Polynomial/getMinMax/?polynomial="+pol+"&xmax="+xmax+"&xmin="+xmin);
+    xhr.send();
+}

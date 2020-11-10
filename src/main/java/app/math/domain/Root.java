@@ -169,6 +169,9 @@ public class Root {
 			if (i % 2 == 0) {
 				this.coefficients.add(new BigDecimal(coefPow.get(i)));
 			} else {
+				if(coefPow.get(i).contains(".")) {
+					coefPow.set(i, coefPow.get(i).substring(0, coefPow.get(i).indexOf('.')));
+				}
 				this.powers.add(new BigInteger(coefPow.get(i)));
 			}
 		}
