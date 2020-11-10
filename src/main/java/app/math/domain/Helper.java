@@ -56,8 +56,10 @@ public class Helper {
 	 * @return New string with the substring between start and end edited out
 	 */
 	public static String removeSubstr(String str, int start, int end) {
-		if (start < 0 || end < 0 || end <= start || start >= str.length() || end >= str.length()) {
-			throw new IllegalArgumentException("Illegal indices for end and start!");
+		if (start < 0 || end < 0 || end <= start || start >= str.length() || end > str.length()) {
+			String message = "Illegal indices for end and start! Where start = " + start + " and end = " + end
+					+ ". Also, str.length() = " + str.length();
+			throw new IllegalArgumentException(message);
 		}
 		return str.substring(0, start) + str.substring(end);
 	}
@@ -89,6 +91,7 @@ public class Helper {
 
 	/**
 	 * Turns a polynomial into a polynomial with integer coefficients and powers
+	 * 
 	 * @param polynomial The input polynomial
 	 * @return The new polynomial with integer coefficients and powers.
 	 */
@@ -97,12 +100,12 @@ public class Helper {
 			if (polynomial.charAt(i) == '.') {
 				int start = i;
 				i++;
-				while(i<polynomial.length() && Character.isDigit(polynomial.charAt(i))) {
+				while (i < polynomial.length() && Character.isDigit(polynomial.charAt(i))) {
 					i++;
 				}
 				int end = i;
 				polynomial = removeSubstr(polynomial, start, end);
-				i-=(end-start);
+				i -= (end - start);
 			}
 		}
 		return polynomial;

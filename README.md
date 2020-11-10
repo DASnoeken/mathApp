@@ -20,6 +20,7 @@ Currently, the app contains the following:
 Here is a list of things I wish to implement in the future.
 - Implement MathJax for the derivative function. (Testing!)
 - Implement eigenvalue and eigenvector calculation for linear algebra.
-- Implement Newton's method for finding roots of a polynomial. (in progress, non-Newton method basically finished)
+- Implement Newton's method for finding roots of a polynomial. (testing)
 - Basic numerical integration, for definite integrals.
 - Complex numbers
+- Implementing the ability to plot polynomials

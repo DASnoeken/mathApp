@@ -36,6 +36,12 @@ public class Root {
 		splitToTerms();
 		checkInterval();
 		setGrid();
+		if (this.roots.size() == 0) {
+			try {
+				newton();
+			} catch (ArithmeticException e) {
+			}
+		}
 	}
 
 	private void checkInterval() { // counts total number of sign flips in interval
@@ -137,7 +143,8 @@ public class Root {
 		for (int i = 0; i < terms.length; i++) {
 			if (!terms[i].contains("x")) {
 				terms[i] = terms[i] + "x^0";
-			} else if (!terms[i].contains("^") && terms[i].matches("\\d{1,}x")) {
+			} else if (!terms[i].contains("^")
+					&& (terms[i].matches("\\d{1,}x") || terms[i].matches("\\d{1,}\\.\\d{1,}x"))) {
 				terms[i] = terms[i] + "^1";
 			} else if (!terms[i].contains("^") && terms[i].matches("\\d{0}x")) {
 				terms[i] = "1" + terms[i] + "^1";
@@ -168,7 +175,7 @@ public class Root {
 			if (i % 2 == 0) {
 				this.coefficients.add(new BigDecimal(coefPow.get(i)));
 			} else {
-				if(coefPow.get(i).contains(".")) {
+				if (coefPow.get(i).contains(".")) {
 					coefPow.set(i, coefPow.get(i).substring(0, coefPow.get(i).indexOf('.')));
 				}
 				this.powers.add(new BigInteger(coefPow.get(i)));
@@ -185,7 +192,7 @@ public class Root {
 					break;
 				}
 				int count = 0;
-				if (j > 0 && j<rootString.length() && (rootString.charAt(j-1) == '.'
+				if (j > 0 && j < rootString.length() && (rootString.charAt(j - 1) == '.'
 						&& (rootString.charAt(j) == '9' || rootString.charAt(j) == '0'))) {
 					while (j < rootString.length() && rootString.charAt(j) == '9') {
 						j++;
@@ -215,6 +222,32 @@ public class Root {
 
 	public ArrayList<BigDecimal> getRoots() {
 		return roots;
+	}
+
+	// Newton's method
+	public void newton() {
+		Polynomial p = new Polynomial(this.polynomial);
+		p.setXgrid(this.x_min, this.x_max, this.delta);
+		ArrayList<BigDecimal> minmax = p.getMinMax(this.x_min.longValue(), this.x_max.longValue());boolean worthit = false;
+		for (BigDecimal x : minmax) {
+			if (p.get(x).compareTo(BigDecimal.ONE) < 0) { // See if there is a p(x) < 1
+				worthit = true;
+			}
+		}
+		if (worthit) {
+			p.setDerivative();
+			BigDecimal x0 = p.getXgrid().get((int) (p.getXgrid().size() / 2));
+			if (p.get(x0).abs().compareTo(thresh) < 0) {
+				this.roots.add(x0);
+				return;
+			}
+			BigDecimal lastxn = x0;
+			BigDecimal xn;
+			BigDecimal _1e5 = new BigDecimal("1E5");
+			do {
+				xn = lastxn.subtract(p.get(lastxn).divide(p.getDerivative().get(lastxn)));
+			} while (xn.abs().compareTo(thresh.multiply(_1e5)) >= 0);
+		}
 	}
 
 }
