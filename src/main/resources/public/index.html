@@ -79,7 +79,7 @@
                         derivative</button></td>
             </tr>
 
-            
+
             <tr>
                 <td>
                     <button class="buttons" onclick="toFactorizations()">Factorizations</button>
@@ -137,7 +137,8 @@
                     <input type="text" id="imagPart" value="Imag">
                 </td>
                 <td>
-                    <button class="buttons" onclick="setComplex(realPart.value,imagPart.value)">Set Complex Number</button>
+                    <button class="buttons" onclick="setComplex(realPart.value,imagPart.value)">Set Complex
+                        Number</button>
                 </td>
             </tr>
             <tr>
@@ -154,6 +155,41 @@
                 </td>
                 <td>
                     <button class="buttons" onclick="deleteAllComplex()">Delete all</button>
+                </td>
+                <td>
+                    <button class="buttons" onclick="toCOperations()">To Operations</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="complexOperationsDiv" class="main" hidden>
+        <button class="buttons" id="backButton" onclick="toComplex()">Back</button><br>
+        <table>
+            <tr>
+                <td>
+                    <button class="buttons" onclick="showAllComplex()">Print all</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" id="toPolarid" value="ID">
+                </td>
+                <td>
+                    Convert to polar complex number.
+                </td>
+                <td>
+                    <button class="buttons" onclick="toPolar(toPolarid.value)">To Polar</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" id="idAddComplex1" value="ID1">
+                </td>
+                <td>
+                    <input type="text" id="idAddComplex2" value="ID2">
+                </td>
+                <td>
+                    <button class="buttons" onclick="ComplexAdd(idAddComplex1.value,idAddComplex2.value)">Add</button>
                 </td>
             </tr>
         </table>
@@ -225,8 +261,8 @@
     <div id="inch-to-cm" class="main" hidden>
         feet and inch to Centimeter calculation.<br>
         <button class="buttons" onclick="getUnitConversion()">Back</button><br>
-        <input type="text" class="textinput" id="FootInput">' <input type="text" class="textinput" id="InchInput">'' <button class="buttons"
-            onclick="inchToCmCalculate(FootInput.value,InchInput.value)">Calculate</button>
+        <input type="text" class="textinput" id="FootInput">' <input type="text" class="textinput" id="InchInput">''
+        <button class="buttons" onclick="inchToCmCalculate(FootInput.value,InchInput.value)">Calculate</button>
     </div>
     <div id="cm-to-inch" class="main" hidden>
         Centimeter to feet and inch calculation.<br>
@@ -373,28 +409,35 @@
     </div>
     <div id="LinAlgOperationsScreen" class="main" hidden>
         <button class="buttons" onclick="gotoLinAlg()">Back</button><br>
-        <input type="text" class="textinput" value="ID Matrix" id="IDMatrixScale"> <input type="text" class="textinput" value="Scalar" id="MatrixScalar">
+        <input type="text" class="textinput" value="ID Matrix" id="IDMatrixScale"> <input type="text" class="textinput"
+            value="Scalar" id="MatrixScalar">
         <button class="buttons" onclick="scaleMatrix(IDMatrixScale.value,MatrixScalar.value)">Scale</button><br>
-        <input type="text" class="textinput" value="ID 1" id="IDMatrix1Add"> <input type="text" class="textinput" value="ID 2" id="IDMatrix2Add"> <button
-            class="buttons" onclick="addMatrix(IDMatrix1Add.value,IDMatrix2Add.value)">Addition</button><br>
-        <input type="text" class="textinput" value="ID 1" id="IDMatrix1Subtract"> <input type="text" class="textinput" value="ID 2" id="IDMatrix2Subtract">
+        <input type="text" class="textinput" value="ID 1" id="IDMatrix1Add"> <input type="text" class="textinput"
+            value="ID 2" id="IDMatrix2Add"> <button class="buttons"
+            onclick="addMatrix(IDMatrix1Add.value,IDMatrix2Add.value)">Addition</button><br>
+        <input type="text" class="textinput" value="ID 1" id="IDMatrix1Subtract"> <input type="text" class="textinput"
+            value="ID 2" id="IDMatrix2Subtract">
         <button class="buttons"
             onclick="subtractMatrix(IDMatrix1Subtract.value,IDMatrix2Subtract.value)">Subtraction</button><br>
-        <input type="text" class="textinput" value="ID 1" id="IDMatrix1Mult"> <input type="text" class="textinput" value="ID 2" id="IDMatrix2Mult"> <button
-            class="buttons"
+        <input type="text" class="textinput" value="ID 1" id="IDMatrix1Mult"> <input type="text" class="textinput"
+            value="ID 2" id="IDMatrix2Mult"> <button class="buttons"
             onclick="multiplyMatrix(IDMatrix1Mult.value,IDMatrix2Mult.value)">Multiplication</button><br>
-        <input type="text" class="textinput" value="ID 1" id="IDMatrixPow"> <input type="text" class="textinput" value="power" id="IDpower"> <button
-            class="buttons" onclick="matrixPower(IDMatrixPow.value,IDpower.value)">Power</button><br>
-        <input type="text" class="textinput" value="ID 1" id="IDCrossN"> <input type="text" class="textinput" value="ID 2" id="IDCrossM"> <button
-            class="buttons" onclick="NcrossM(IDCrossN.value,IDCrossM.value)">Cross Product</button>
+        <input type="text" class="textinput" value="ID 1" id="IDMatrixPow"> <input type="text" class="textinput"
+            value="power" id="IDpower"> <button class="buttons"
+            onclick="matrixPower(IDMatrixPow.value,IDpower.value)">Power</button><br>
+        <input type="text" class="textinput" value="ID 1" id="IDCrossN"> <input type="text" class="textinput"
+            value="ID 2" id="IDCrossM"> <button class="buttons" onclick="NcrossM(IDCrossN.value,IDCrossM.value)">Cross
+            Product</button>
         <input type="text" class="textinput" value="ID" id="IDMatrixTrans"> <button class="buttons"
             onclick="transposeMatrix(IDMatrixTrans.value)">Transpose</button><br>
-        <input type="text" class="textinput" value="ID" id="IDREF"> <button class="buttons" onclick="ref(IDREF.value)">REF</button><br>
+        <input type="text" class="textinput" value="ID" id="IDREF"> <button class="buttons"
+            onclick="ref(IDREF.value)">REF</button><br>
         <input type="text" class="textinput" value="ID" id="IDRREF"> <button class="buttons"
             onclick="rref(IDRREF.value)">RREF</button><br>
         <input type="text" class="textinput" value="ID" id="IDdet"> <button class="buttons"
             onclick="determinant(IDdet.value)">Determinant</button><br>
-        <input type="text" class="textinput" value="ID" id="IDtr"> <button class="buttons" onclick="trace(IDtr.value)">Trace</button><br>
+        <input type="text" class="textinput" value="ID" id="IDtr"> <button class="buttons"
+            onclick="trace(IDtr.value)">Trace</button><br>
         <input type="text" class="textinput" value="ID" id="IDinv"> <button class="buttons"
             onclick="inverse(IDinv.value)">Inverse</button><br>
 
@@ -446,7 +489,8 @@
                     Find all $x \in [\text{xmin},\text{xmax}]$, such that $f(x)=0$.
                 </td>
                 <td>
-                    <button class="buttons" onclick="getRoots(polynomialInput.value,rootxmin.value,rootxmax.value)">Get Roots</button>
+                    <button class="buttons" onclick="getRoots(polynomialInput.value,rootxmin.value,rootxmax.value)">Get
+                        Roots</button>
                 </td>
             </tr>
             <tr>
@@ -463,14 +507,16 @@
                     Find all $x \in [\text{xmin},\text{xmax}]$, such that $f'(x)=0$.
                 </td>
                 <td>
-                    <button class="buttons" onclick="getMinMaxPolynomial(maxInput.value,maxxmin.value,maxxmax.value)">Get Max/Min</button>
+                    <button class="buttons"
+                        onclick="getMinMaxPolynomial(maxInput.value,maxxmin.value,maxxmax.value)">Get Max/Min</button>
                 </td>
             </tr>
         </table>
     </div>
     <br>
     <div id="response" class="responseAndHelp">Response area</div><br>
-    <div class="responseAndHelp" id="help" hidden><input type="text" class="textinput" id="copytext"></div>
+    <div class="responseAndHelp" id="help" hidden><input type="text" class="textinput" id="copytext">
+    <input type="text" class="textinput" id="copytext2"></div>
 </body>
 
 </html>

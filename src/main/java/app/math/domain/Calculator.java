@@ -126,7 +126,10 @@ public class Calculator {
 			if (ans.charAt(i) == '^' && (Character.isDigit(ans.charAt(i + 1)) || ans.charAt(i+1) == '-') ) {
 				ans = addChar(ans, "{", i + 1);
 				i += 2;
-				while (i < ans.length() && (Character.isDigit(ans.charAt(i))|| ans.charAt(i) == '-' )) {
+				if(ans.charAt(i) == '-') {
+					i++;
+				}
+				while (i < ans.length() && Character.isDigit(ans.charAt(i))) {
 					i++;
 				}
 				ans = addChar(ans, "}", i);

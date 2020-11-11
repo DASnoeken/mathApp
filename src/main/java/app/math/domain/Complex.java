@@ -104,11 +104,11 @@ public class Complex {
 	
 	public String toPolarString() {
 		toPolar();
-		if(this.theta>0)
-			return this.r+"e^{i"+this.theta+"}";
-		if(this.theta<0)
-			return this.r+"e^{-i"+Math.abs(this.theta)+"}";
-		else {
+		if(this.r!=(int)this.r && this.theta!=0) {
+			return "\\sqrt{"+(int)(this.real*this.real+this.imag*this.imag)+"}e^{"+this.theta/Math.PI+"\\pi i}";
+		}else if(this.r==(int)this.r &&this.theta!=0) {
+			return this.r+"e^{"+this.theta/Math.PI+"\\pi i}";
+		}else {
 			return ""+this.r;
 		}
 	}

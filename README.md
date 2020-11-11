@@ -22,5 +22,5 @@ Here is a list of things I wish to implement in the future.
 - Implement eigenvalue and eigenvector calculation for linear algebra.
 - Implement Newton's method for finding roots of a polynomial. (testing)
 - Basic numerical integration, for definite integrals.
-- Complex numbers
+- Complex numbers (in progress)
 - Implementing the ability to plot polynomials

@@ -253,9 +253,15 @@ function gotoCalc() {
     document.getElementById("ComplexDiv").hidden = true;
     document.getElementById("response").innerHTML = "Response area";
 }
-function toComplex(){
+function toComplex() {
     document.getElementById("CalculatorDiv").hidden = true;
     document.getElementById("ComplexDiv").hidden = false;
+    document.getElementById("complexOperationsDiv").hidden = true;
+    document.getElementById("response").innerHTML = "Response area";
+}
+function toCOperations() {
+    document.getElementById("ComplexDiv").hidden = true;
+    document.getElementById("complexOperationsDiv").hidden = false;
     document.getElementById("response").innerHTML = "Response area";
 }
 function inchToCmCalculate(foot, inch) {
@@ -502,10 +508,19 @@ function calculatorAnswer() {
             document.getElementById("response").innerHTML = this.responseText;
             MathJax.typeset();
             setCopy(this.responseText);
+            setCopySum(this.responseText);
         }
     }
     xhr.open("GET", "https://daansmathapp.herokuapp.com/calculator/getAnswer");
     xhr.send();
+}
+function setCopySum(res){
+    res = res.replace(/\s/g, '');
+    res = res.replace(/<br\s*\/?>/gi, '');
+    res = res.slice(2, res.length);
+    var dolsign = res.indexOf("$$");
+    res = res.slice(0, dolsign);
+    document.getElementById("copytext2").value = res;
 }
 function setCopy(string) {
     var eqsign = string.indexOf("=");
@@ -1014,53 +1029,92 @@ function getMinMaxPolynomial(pol, xmin, xmax) {
     xhr.open("GET", "https://daansmathapp.herokuapp.com/Polynomial/getMinMax/?polynomial=" + pol + "&xmax=" + xmax + "&xmin=" + xmin);
     xhr.send();
 }
-function setComplex(re,im){
-    if(isNaN(re) || isNaN(im)){
+function setComplex(re, im) {
+    if (isNaN(re) || isNaN(im)) {
         document.getElementById("response").innerHTML = "Error! Only numbers allowed!";
         return;
     }
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if(this.readyState==4){
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
             MathJax.typeset();
         }
     }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/Complex/createComplex/?real="+re+"&imag="+im);
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/Complex/createComplex/?real=" + re + "&imag=" + im);
     xhr.send();
 }
-function showAllComplex(){
+function showAllComplex() {
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if(this.readyState==4){
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
             MathJax.typeset();
         }
     }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/Complex/showAllNumbers");
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/Complex/showAllNumbers");
     xhr.send();
 }
-function deleteComplexById(id){
-    if(isNaN(id)){
+function deleteComplexById(id) {
+    if (isNaN(id)) {
         document.getElementById("response").innerHTML = "ID has to be a number";
         return;
     }
-    var xhr= new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if(this.readyState==4){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
         }
     }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/Complex/deleteById/"+id);
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/Complex/deleteById/" + id);
     xhr.send();
 }
-function deleteAllComplex(){
+function deleteAllComplex() {
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if(this.readyState==4){
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
             document.getElementById("response").innerHTML = "All complex numbers were successfully deleted!"
         }
     }
-    xhr.open("DELETE","https://daansmathapp.herokuapp.com/Complex/clearAll");
+    xhr.open("DELETE", "https://daansmathapp.herokuapp.com/Complex/clearAll");
     xhr.send();
+}
+function ComplexAdd(id1, id2) {
+    if (isNaN(id1) || isNaN(id2)) {
+        document.getElementById("response").innerHTML = "ID's are only allowed to be numbers!";
+        return;
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            document.getElementById("response").innerHTML = this.responseText;
+            MathJax.typeset();
+        }
+    }
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/Complex/Op/Add/" + id1 + "/" + id2);
+    xhr.send();
+}
+function toPolar(id){
+    if(isNaN(id)){
+        document.getElementById("response").innerHTML = "Only numbers are allowed for ID!";
+        return;
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if(this.readyState==4){
+            document.getElementById("response").innerHTML = this.responseText;
+            MathJax.typeset();
+        }
+    }
+    xhr.open("GET","https://daansmathapp.herokuapp.com/Complex/toPolar/"+id);
+    xhr.send();
+}
+function calculatorCopyEntireSum(){
+    document.getElementById("help").hidden = false;
+    var copyText = document.getElementById("copytext2");
+    copyText.select();
+    document.execCommand("copy");
+    document.getElementById("help").hidden = true;
+    /* Alert the copied text */
+    alert("Copied the text: \"" + copyText.value + "\"");
 }

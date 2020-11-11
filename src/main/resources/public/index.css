@@ -388,7 +388,7 @@ select {
     box-shadow: 4px 4px 6px black;
 }
 
-.topButtons-dark{
+.topButtons-dark {
     background-color: rgb(172, 10, 29);
     width: 100%;
     border-color: rgba(21, 0, 95, 0.5);
@@ -399,8 +399,8 @@ select {
     font-family: sans-serif;
 }
 
-.topButtons-dark:hover{
-    color:rgb(172, 10, 29);
+.topButtons-dark:hover {
+    color: rgb(172, 10, 29);
     background-color: black;
     border-color: rgb(120, 0, 0);
     border-radius: 4px;
