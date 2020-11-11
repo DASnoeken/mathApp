@@ -1,60 +1,55 @@
 package app.math.domain;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
-
 public class Complex {
-	private BigDecimal real;
-	private BigDecimal imag;
-	private BigDecimal r;
-	private BigDecimal theta;
+	private double real;
+	private double imag;
+	private double r;
+	private double theta;
 	
-	public Complex(BigDecimal re, BigDecimal im) {
+	public Complex(double re, double im) {
 		this.real = re;
 		this.imag = im;
 	}
 	public void toPolar() {
 		this.r=abs();
-		this.theta = new BigDecimal(Math.atan(imag.divide(real).doubleValue()));
+		this.theta = Math.atan(imag/real);
 	}
-	public BigDecimal abs() {
-		BigDecimal ans = new BigDecimal("0");
-		ans=ans.add(( real.multiply(real) ).add( imag.multiply(imag) ));
-		ans=ans.sqrt(new MathContext(50));
-		return ans;
+	public double abs() {
+		return Math.sqrt(real*real+imag*imag);
 	}
 	public void toCartesian() {
-		
+		this.real=this.r*Math.cos(this.theta);
+		this.imag=this.r*Math.sin(this.theta);
 	}
-	public BigDecimal getReal() {
+	public double getReal() {
 		return real;
 	}
 
-	public void setReal(BigDecimal real) {
+	public void setReal(double real) {
 		this.real = real;
 	}
 
-	public BigDecimal getImag() {
+	public double getImag() {
 		return imag;
 	}
 
-	public void setImag(BigDecimal imag) {
+	public void setImag(double imag) {
 		this.imag = imag;
 	}
 
-	public BigDecimal getR() {
+	public double getR() {
 		return r;
 	}
 
-	public void setR(BigDecimal r) {
+	public void setR(double r) {
 		this.r = r;
 	}
 
-	public BigDecimal getTheta() {
+	public double getTheta() {
 		return theta;
 	}
 
-	public void setTheta(BigDecimal theta) {
+	public void setTheta(double theta) {
 		this.theta = theta;
 	}
 	
