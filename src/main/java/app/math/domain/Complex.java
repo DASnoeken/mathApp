@@ -29,6 +29,14 @@ public class Complex {
 		return new Complex(this.real, -this.imag);
 	}
 
+	public Complex pow(int p) {
+		Complex ans = new Complex(this.real,this.imag);
+		for(int i = 0;i<p;i++) {
+			ans=ans.multiply(ans);
+		}
+		return ans;
+	}
+	
 	public Complex multiply(long l) {
 		return new Complex(this.real * l, this.imag * l);
 	}

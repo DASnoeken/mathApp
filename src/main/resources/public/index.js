@@ -166,12 +166,14 @@ function getUnitConversion() {
 }
 function backToInput() {
     document.getElementById("input").hidden = false;
-    document.getElementById("polynomialScreen").hidden=true;
+    document.getElementById("polynomialScreen").hidden = true;
     document.getElementById("Gamescreen").hidden = true;
     document.getElementById("UnitConversionDiv").hidden = true;
     document.getElementById("LinAlgScreen").hidden = true;
     document.getElementById("FactorizationDiv").hidden = true;
     document.getElementById("EncryptionScreen").hidden = true;
+    document.getElementById("ComplexDiv").hidden = true;
+    document.getElementById("CalculatorDiv").hidden = true;
     document.getElementById("response").innerHTML = "Response area";
 }
 function inchToCm() {
@@ -243,6 +245,17 @@ function toFactorizations() {
 function toEncryption() {
     document.getElementById("input").hidden = true;
     document.getElementById("EncryptionScreen").hidden = false;
+    document.getElementById("response").innerHTML = "Response area";
+}
+function gotoCalc() {
+    document.getElementById("input").hidden = true;
+    document.getElementById("CalculatorDiv").hidden = false;
+    document.getElementById("ComplexDiv").hidden = true;
+    document.getElementById("response").innerHTML = "Response area";
+}
+function toComplex(){
+    document.getElementById("CalculatorDiv").hidden = true;
+    document.getElementById("ComplexDiv").hidden = false;
     document.getElementById("response").innerHTML = "Response area";
 }
 function inchToCmCalculate(foot, inch) {
@@ -500,7 +513,7 @@ function setCopy(string) {
     var dolsign = res.indexOf("$$");
     res = res.slice(0, dolsign);
     res = res.replace(/\s/g, '');
-    res = res.replace(/<br\s*\/?>/gi,'');
+    res = res.replace(/<br\s*\/?>/gi, '');
     document.getElementById("copytext").value = res;
 }
 function currConversion(from, to, value) {
@@ -963,34 +976,49 @@ function darkmode() {
         }
     }
 }
-function toPolynomials(){
-    document.getElementById("input").hidden=true;
-    document.getElementById("polynomialScreen").hidden=false;
+function toPolynomials() {
+    document.getElementById("input").hidden = true;
+    document.getElementById("polynomialScreen").hidden = false;
 }
-function getRoots(pol,xmin,xmax){
-    if(isNaN(xmin) || isNaN(xmax)){
+function getRoots(pol, xmin, xmax) {
+    if (isNaN(xmin) || isNaN(xmax)) {
         document.getElementById("response").innerHTML = "ERROR! xmin and xmax must be numbers!";
         return;
     }
-    pol = pol.replaceAll("^","%5E");
-    pol = pol.replaceAll("+","%2B");
+    pol = pol.replaceAll("^", "%5E");
+    pol = pol.replaceAll("+", "%2B");
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if(this.readyState==4){
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
             MathJax.typeset();
         }
     }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/Polynomial/getRoot/?polynomial="+pol+"&xmax="+xmax+"&xmin="+xmin);
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/Polynomial/getRoot/?polynomial=" + pol + "&xmax=" + xmax + "&xmin=" + xmin);
     xhr.send();
 }
-function getMinMaxPolynomial(pol,xmin,xmax){
-    if(isNaN(xmin) || isNaN(xmax)){
+function getMinMaxPolynomial(pol, xmin, xmax) {
+    if (isNaN(xmin) || isNaN(xmax)) {
         document.getElementById("response").innerHTML = "ERROR! xmin and xmax must be numbers!";
         return;
     }
-    pol = pol.replaceAll("^","%5E");
-    pol = pol.replaceAll("+","%2B");
+    pol = pol.replaceAll("^", "%5E");
+    pol = pol.replaceAll("+", "%2B");
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            document.getElementById("response").innerHTML = this.responseText;
+            MathJax.typeset();
+        }
+    }
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/Polynomial/getMinMax/?polynomial=" + pol + "&xmax=" + xmax + "&xmin=" + xmin);
+    xhr.send();
+}
+function setComplex(re,im){
+    if(isNaN(re) || isNaN(im)){
+        document.getElementById("response").innerHTML = "Error! Only numbers allowed!";
+        return;
+    }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function(){
         if(this.readyState==4){
@@ -998,6 +1026,41 @@ function getMinMaxPolynomial(pol,xmin,xmax){
             MathJax.typeset();
         }
     }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/Polynomial/getMinMax/?polynomial="+pol+"&xmax="+xmax+"&xmin="+xmin);
+    xhr.open("GET","https://daansmathapp.herokuapp.com/Complex/createComplex/?real="+re+"&imag="+im);
+    xhr.send();
+}
+function showAllComplex(){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if(this.readyState==4){
+            document.getElementById("response").innerHTML = this.responseText;
+            MathJax.typeset();
+        }
+    }
+    xhr.open("GET","https://daansmathapp.herokuapp.com/Complex/showAllNumbers");
+    xhr.send();
+}
+function deleteComplexById(id){
+    if(isNaN(id)){
+        document.getElementById("response").innerHTML = "ID has to be a number";
+        return;
+    }
+    var xhr= new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if(this.readyState==4){
+            document.getElementById("response").innerHTML = this.responseText;
+        }
+    }
+    xhr.open("GET","https://daansmathapp.herokuapp.com/Complex/deleteById/"+id);
+    xhr.send();
+}
+function deleteAllComplex(){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if(this.readyState==4){
+            document.getElementById("response").innerHTML = "All complex numbers were successfully deleted!"
+        }
+    }
+    xhr.open("DELETE","https://daansmathapp.herokuapp.com/Complex/clearAll");
     xhr.send();
 }

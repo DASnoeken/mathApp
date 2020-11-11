@@ -79,16 +79,7 @@
                         derivative</button></td>
             </tr>
 
-            <tr>
-                <td>
-                    <input type="text" class="textinput" class="textinput" id="calculatorInput" value="Calculator">
-                </td>
-                <td><input type="radio" id="degrees" name="trig" value="degrees" checked>DEG</input><input type="radio"
-                        id="radians" name="trig" value="radians">RAD</input></td>
-                <td>
-                    <button class="buttons" onclick="calculator(calculatorInput.value)">Calculate</button>
-                </td>
-            </tr>
+            
             <tr>
                 <td>
                     <button class="buttons" onclick="toFactorizations()">Factorizations</button>
@@ -108,7 +99,63 @@
                 <td><button class="buttons" onclick="gameStart()">Exercise</button></td>
                 <td><button class="buttons" onclick="gotoLinAlg()">Linear Algebra</button></td>
             </tr>
-
+            <tr>
+                <td>
+                    <button class="buttons" onclick="gotoCalc()">Calculators</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="CalculatorDiv" class="main" hidden>
+        <button class="buttons" id="backButton" onclick="backToInput()">Back</button><br>
+        <table>
+            <tr>
+                <td>
+                    <input type="text" class="textinput" class="textinput" id="calculatorInput" value="Calculator">
+                </td>
+                <td><input type="radio" id="degrees" name="trig" value="degrees" checked>DEG</input><input type="radio"
+                        id="radians" name="trig" value="radians">RAD</input></td>
+                <td>
+                    <button class="buttons" onclick="calculator(calculatorInput.value)">Calculate</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="buttons" onclick="toComplex()">Complex Numbers</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="ComplexDiv" class="main" hidden>
+        <button class="buttons" id="backButton" onclick="gotoCalc()">Back</button><br>
+        <table>
+            <tr>
+                <td>
+                    <input type="text" id="realPart" value="Real">
+                </td>
+                <td>
+                    <input type="text" id="imagPart" value="Imag">
+                </td>
+                <td>
+                    <button class="buttons" onclick="setComplex(realPart.value,imagPart.value)">Set Complex Number</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" id="complexiddelete" value="ID">
+                </td>
+                <td>
+                    <button class="buttons" onclick="deleteComplexById(complexiddelete.value)">Delete number</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="buttons" onclick="showAllComplex()">Print all</button>
+                </td>
+                <td>
+                    <button class="buttons" onclick="deleteAllComplex()">Delete all</button>
+                </td>
+            </tr>
         </table>
     </div>
     <div id="FactorizationDiv" class="main" hidden>
