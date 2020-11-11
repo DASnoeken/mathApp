@@ -5,22 +5,47 @@ public class Complex {
 	private double imag;
 	private double r;
 	private double theta;
-	
+
 	public Complex(double re, double im) {
 		this.real = re;
 		this.imag = im;
 	}
+
 	public void toPolar() {
-		this.r=abs();
-		this.theta = Math.atan(imag/real);
+		this.r = abs();
+		this.theta = Math.atan(imag / real);
 	}
+
 	public double abs() {
-		return Math.sqrt(real*real+imag*imag);
+		return Math.sqrt(real * real + imag * imag);
 	}
+
 	public void toCartesian() {
-		this.real=this.r*Math.cos(this.theta);
-		this.imag=this.r*Math.sin(this.theta);
+		this.real = this.r * Math.cos(this.theta);
+		this.imag = this.r * Math.sin(this.theta);
 	}
+
+	public Complex conj() {
+		return new Complex(this.real, -this.imag);
+	}
+
+	public Complex multiply(long l) {
+		return new Complex(this.real * l, this.imag * l);
+	}
+
+	public Complex multiply(double d) {
+		return new Complex(this.real * d, this.imag * d);
+	}
+
+	public Complex multiply(Complex other) {
+		return new Complex(this.real * other.real - this.imag * other.imag,
+				this.real * other.imag + this.imag * other.real);
+	}
+
+	public Complex add(Complex other) {
+		return new Complex(this.real + other.real, this.imag + other.imag);
+	}
+
 	public double getReal() {
 		return real;
 	}
@@ -52,5 +77,38 @@ public class Complex {
 	public void setTheta(double theta) {
 		this.theta = theta;
 	}
+
+	public String toString() {
+		if (this.real != 0) {
+			if (this.imag < 0)
+				return new String(this.real + " - " + Math.abs(this.imag) + "i");
+			else if (this.imag > 0)
+				return new String(this.real + " + " + this.imag + "i");
+			else
+				return new String("" + this.real);
+		} else {
+			if (this.imag != 0)
+				return new String(this.imag + "i");
+			else
+				return "0";
+		}
+	}
 	
+	public String toPolarString() {
+		toPolar();
+		if(this.theta>0)
+			return this.r+"e^{i"+this.theta+"}";
+		if(this.theta<0)
+			return this.r+"e^{-i"+Math.abs(this.theta)+"}";
+		else {
+			return ""+this.r;
+		}
+	}
+
+	public void printNumber() {
+		if (this.imag < 0)
+			System.out.println(this.real + " - " + Math.abs(this.imag) + "i");
+		else
+			System.out.println(this.real + " + " + this.imag + "i");
+	}
 }

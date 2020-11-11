@@ -108,6 +108,9 @@ public class Factorize {
 			}
 			count5++;
 			count3++;
+			if(localNumber.equals(BigInteger.ONE)) {
+				break;
+			}
 		}
 
 		while (!localNumber.equals(BigInteger.ONE)) {

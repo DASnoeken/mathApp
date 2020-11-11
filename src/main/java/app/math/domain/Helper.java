@@ -1,5 +1,7 @@
 package app.math.domain;
 
+import java.math.BigInteger;
+
 /**
  * This class just contains some helper functions
  */
@@ -109,5 +111,42 @@ public class Helper {
 			}
 		}
 		return polynomial;
+	}
+
+	/**
+	 * Counts the number of occurrences of a character in a string.
+	 * 
+	 * @param s The string to test.
+	 * @param c The character to look for.
+	 * @return The number of occurrences of c in s.
+	 */
+	public static int countCharOcc(String s, char c) {
+		char[] scarr = s.toCharArray();
+		int ans = 0;
+		for (int i = 0; i < scarr.length; i++) {
+			if (scarr[i] == c) {
+				ans++;
+			}
+		}
+		return ans;
+	}
+
+	/**
+	 * Gets the square root of a BigInteger
+	 * @param x The BigInteger to take the square root of.
+	 * @return The square root of x.
+	 */
+	public static BigInteger sqrt(BigInteger x) { 	// https://stackoverflow.com/questions/4407839/how-can-i-find-the-square-root-of-a-java-biginteger/
+													// Thanks to: Edward Falk. I needed this because Heroku needs to update its
+													// Java version.
+		BigInteger div = BigInteger.ZERO.setBit(x.bitLength() / 2);
+		BigInteger div2 = div;
+		for (;;) {
+			BigInteger y = div.add(x.divide(div)).shiftRight(1);
+			if (y.equals(div) || y.equals(div2))
+				return y;
+			div2 = div;
+			div = y;
+		}
 	}
 }
