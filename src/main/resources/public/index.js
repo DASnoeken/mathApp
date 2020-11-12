@@ -1146,3 +1146,15 @@ function complexconjugate(id) {
     xhr.open("GET", "https://daansmathapp.herokuapp.com/Complex/Op/Conj/" + id);
     xhr.send();
 }
+function polarComplextoCartesian(string){
+    string=string.replaceAll("^","%5E");
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if(this.readyState==4){
+            document.getElementById("response").innerHTML=this.responseText;
+            MathJax.typeset();
+        }
+    }
+    xhr.open("GET","https://daansmathapp.herokuapp.com/Complex/toCartesian/?in="+string);
+    xhr.send();
+}

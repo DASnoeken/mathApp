@@ -5,29 +5,41 @@ public class Complex {
 	private double imag;
 	private double r;
 	private double theta;
+	private static final double thresh = 1e-10;
 
 	public Complex(double re, double im) {
 		this.real = re;
 		this.imag = im;
+		if(Math.abs(this.real)<thresh) {
+			this.real=0;
+		}
+		if(Math.abs(this.imag)<thresh) {
+			this.imag=0;
+		}
+	}
+	
+	public Complex() {
+		this.real=0.0;
+		this.imag=0.0;
 	}
 
 	public Complex(String s) {
 		if (!s.matches("\\-?\\d{0,}\\.?\\d{0,}[+-]?\\d{0,}\\.?\\d{0,}i") && !s.matches("\\-?\\d{1,}\\.?\\d{0,}")) {
 			throw new IllegalArgumentException("NaN");
 		}
-		if(s.matches("\\d{0,}\\.?\\d{0,}[+-]i")) {
-			s=s.replace("i", "1i");
+		if (s.matches("\\d{0,}\\.?\\d{0,}[+-]i")) {
+			s = s.replace("i", "1i");
 		}
 		if (!s.contains("i")) {
 			this.imag = 0.0;
 			this.real = Double.parseDouble(s);
 		} else if (!s.contains("+") && s.matches("\\-?\\d{0,}\\.?\\d{0,}i")) {
-				this.real = 0.0;
-				s = s.replace("i", "");
-				this.imag = Double.parseDouble(s);
-		}else if(!s.contains("+") && s.matches("\\-?\\d{0,}\\.?\\d{0,}")) {
-				this.imag=0.0;
-				this.real=Double.parseDouble(s);
+			this.real = 0.0;
+			s = s.replace("i", "");
+			this.imag = Double.parseDouble(s);
+		} else if (!s.contains("+") && s.matches("\\-?\\d{0,}\\.?\\d{0,}")) {
+			this.imag = 0.0;
+			this.real = Double.parseDouble(s);
 		} else if (s.contains("+")) {
 			String[] terms = s.split("[+]");
 			terms[1] = terms[1].replace("i", "");
@@ -45,7 +57,7 @@ public class Complex {
 
 	public void toPolar() {
 		this.r = abs();
-		this.theta = Math.atan(imag / real);
+		this.theta = Math.acos(this.real/this.r);//Math.atan(this.imag / this.real);
 	}
 
 	public double abs() {
@@ -55,6 +67,46 @@ public class Complex {
 	public void toCartesian() {
 		this.real = this.r * Math.cos(this.theta);
 		this.imag = this.r * Math.sin(this.theta);
+		if(Math.abs(this.real)<thresh) {
+			this.real=0;
+		}
+		if(Math.abs(this.imag)<thresh) {
+			this.imag=0;
+		}
+	}
+
+	public void toCartesian(double r, double t) {
+		this.real = r * Math.cos(t);
+		this.imag = r * Math.sin(t);
+		if(Math.abs(this.real)<thresh) {
+			this.real=0;
+		}
+		if(Math.abs(this.imag)<thresh) {
+			this.imag=0;
+		}
+	}
+
+	public static Complex toCartesian(String s) {
+		if (!s.matches("\\d{0,}\\.?\\d{0,}e\\^\\d{0,}\\.?\\d{0,}i")
+				&& !s.matches("\\d{0,}\\.?\\d{0,}e\\^\\d{0,}\\.?\\d{0,}pii")) {
+			throw new IllegalArgumentException("INPUT ERROR!");
+		}
+		String[] terms = s.split("e\\^");
+		String rstr = terms[0];
+		String powstr = terms[1];
+		double r = Double.parseDouble(rstr);
+		powstr=powstr.replaceAll("i", "");
+		double pow = 1.0;
+		if(powstr.contains("p")) {
+			pow*=Math.PI;
+			powstr=powstr.replaceAll("p", "");
+		}
+		if(!powstr.isEmpty()) {
+			pow*=Double.parseDouble(powstr);
+		}
+		Complex c = new Complex();
+		c.toCartesian(r,pow);
+		return c;
 	}
 
 	public Complex conj() {
@@ -120,9 +172,9 @@ public class Complex {
 
 	public String toString() {
 		if (this.real != 0) {
-			if (this.imag < 0)
+			if (this.imag < -thresh)
 				return new String(this.real + " - " + Math.abs(this.imag) + "i");
-			else if (this.imag > 0)
+			else if (this.imag > thresh)
 				return new String(this.real + " + " + this.imag + "i");
 			else
 				return new String("" + this.real);

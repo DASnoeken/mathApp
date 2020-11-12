@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.math.domain.Complex;
+import app.math.domain.Helper;
 
 @RestController
 public class ComplexEndpoint {
@@ -110,5 +111,19 @@ public class ComplexEndpoint {
 		}
 	}
 	
-	//@GetMapping("/Complex/")
+	@GetMapping("/Complex/toCartesian/")
+	public String toCartestian(@RequestParam String in) {
+		Complex c;
+		try {
+			c = Complex.toCartesian(in);
+		}catch(Exception e) {
+			return e.getMessage();
+		}
+		in=Helper.addChar(in, "{", in.indexOf('^')+1);
+		in=Helper.addChar(in, "\\", in.indexOf("pi"));
+		in=Helper.addChar(in, " ", in.lastIndexOf('i'));
+		in=in+'}';
+		System.out.println(in);
+		return "$$"+ in + "=" + c.toString() + "$$";
+	}
 }
