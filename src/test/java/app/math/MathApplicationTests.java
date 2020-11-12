@@ -12,7 +12,7 @@ class MathApplicationTests {
 	void contextLoads() {
 		ComplexEndpoint ce = new ComplexEndpoint();
 		ce.createComplex(1, 2);
-		ce.multiply(0, "2-3i", "multiply");
+		ce.multiply(0, "2-3i");
 		System.out.println(ce.showAllNumbers());
 	}
 }

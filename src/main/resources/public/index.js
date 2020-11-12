@@ -7,9 +7,6 @@ function gotoGitHub() {
 function getHelp() {
     window.location.href = "assets/MathApp_documentation.pdf";
 }
-function getEncryptionHelp() {
-    window.location.href = "assets/Encryption.pdf";
-}
 function reportBug() {
     window.location.href = "mailto:d.a.snoeken@protonmail.com?Subject=MathApp Bug Report";
 }
@@ -1123,14 +1120,22 @@ function complexMultiply(ID,other){
         document.getElementById("response").innerHTML = "ID can only be a number!";
         return;
     }
-    var radios = document.getElementsByName("ComplexMultiplication");
-    var method;
-    other=other.replaceAll("+","%2B")
-    for (var i = 0, length = radios.length; i < length; i++) {
-        if (radios[i].checked) {
-            method = radios[i].value;
-            break;
+    other=other.replaceAll("+","%2B");
+    other=other.replace(/\s/g,'');
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if(this.readyState==4){
+            document.getElementById("response").innerHTML = this.responseText;
+            MathJax.typeset();
         }
+    }
+    xhr.open("GET","https://daansmathapp.herokuapp.com/Complex/Op/Multiply/?id1="+ID+"&other="+other);
+    xhr.send();
+}
+function complexconjugate(id){
+    if(isNaN(id)){
+        document.getElementById("response").innerHTML = "ID can only be a number!";
+        return;
     }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function(){
@@ -1139,6 +1144,6 @@ function complexMultiply(ID,other){
             MathJax.typeset();
         }
     }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/Complex/Op/Multiply/?id1="+ID+"&other="+other+"&option="+method);
+    xhr.open("GET","https://daansmathapp.herokuapp.com/Complex/Op/Conj/"+id);
     xhr.send();
 }

@@ -183,6 +183,17 @@
             </tr>
             <tr>
                 <td>
+                    <input type="text" id="ComplexConjugate" value="ID">
+                </td>
+                <td>
+                    $(a+bi)^*=a-bi$
+                </td>
+                <td>
+                    <button class="buttons" onclick="complexconjugate(ComplexConjugate.value)">Conjugate</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
                     <input type="text" id="idAddComplex1" value="ID1">
                 </td>
                 <td>
@@ -198,10 +209,6 @@
                 </td>
                 <td>
                     <input type="text" id="ComplexMultOther" value="Number">
-                </td>
-                <td>
-                    <input type="radio" id="multiply" name="ComplexMultiplication" value="multiply"
-                        checked>Multiply</input><br><input type="radio" id="scale" name="ComplexMultiplication" value="scale">Scale</input>
                 </td>
                 <td>
                     <button class="buttons" onclick="complexMultiply(idMultComplex.value,ComplexMultOther.value)">Multiply</button>

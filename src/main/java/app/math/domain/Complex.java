@@ -15,6 +15,9 @@ public class Complex {
 		if (!s.matches("\\-?\\d{0,}\\.?\\d{0,}[+-]?\\d{0,}\\.?\\d{0,}i") && !s.matches("\\-?\\d{1,}\\.?\\d{0,}")) {
 			throw new IllegalArgumentException("NaN");
 		}
+		if(s.matches("\\d{0,}\\.?\\d{0,}[+-]i")) {
+			s=s.replace("i", "1i");
+		}
 		if (!s.contains("i")) {
 			this.imag = 0.0;
 			this.real = Double.parseDouble(s);
