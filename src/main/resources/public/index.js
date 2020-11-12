@@ -511,7 +511,7 @@ function calculatorAnswer() {
     xhr.open("GET", "https://daansmathapp.herokuapp.com/calculator/getAnswer");
     xhr.send();
 }
-function setCopySum(res){
+function setCopySum(res) {
     res = res.replace(/\s/g, '');
     res = res.replace(/<br\s*\/?>/gi, '');
     res = res.slice(2, res.length);
@@ -955,7 +955,6 @@ function darkmode() {
         while (tops.length > 0) {
             tops[0].className = "topButtons-dark";
         }
-
     } else {
         var mains = document.getElementsByClassName("main-dark");
         var rah = document.getElementsByClassName("responseAndHelp-dark");
@@ -1091,22 +1090,22 @@ function ComplexAdd(id1, id2) {
     xhr.open("GET", "https://daansmathapp.herokuapp.com/Complex/Op/Add/" + id1 + "/" + id2);
     xhr.send();
 }
-function toPolar(id){
-    if(isNaN(id)){
+function toPolar(id) {
+    if (isNaN(id)) {
         document.getElementById("response").innerHTML = "Only numbers are allowed for ID!";
         return;
     }
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if(this.readyState==4){
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
             MathJax.typeset();
         }
     }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/Complex/toPolar/"+id);
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/Complex/toPolar/" + id);
     xhr.send();
 }
-function calculatorCopyEntireSum(){
+function calculatorCopyEntireSum() {
     document.getElementById("help").hidden = false;
     var copyText = document.getElementById("copytext2");
     copyText.select();
@@ -1115,35 +1114,35 @@ function calculatorCopyEntireSum(){
     /* Alert the copied text */
     alert("Copied the text: \"" + copyText.value + "\"");
 }
-function complexMultiply(ID,other){
-    if(isNaN(ID)){
+function complexMultiply(ID, other) {
+    if (isNaN(ID)) {
         document.getElementById("response").innerHTML = "ID can only be a number!";
         return;
     }
-    other=other.replaceAll("+","%2B");
-    other=other.replace(/\s/g,'');
+    other = other.replaceAll("+", "%2B");
+    other = other.replace(/\s/g, '');
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if(this.readyState==4){
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
             MathJax.typeset();
         }
     }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/Complex/Op/Multiply/?id1="+ID+"&other="+other);
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/Complex/Op/Multiply/?id1=" + ID + "&other=" + other);
     xhr.send();
 }
-function complexconjugate(id){
-    if(isNaN(id)){
+function complexconjugate(id) {
+    if (isNaN(id)) {
         document.getElementById("response").innerHTML = "ID can only be a number!";
         return;
     }
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if(this.readyState==4){
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
             MathJax.typeset();
         }
     }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/Complex/Op/Conj/"+id);
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/Complex/Op/Conj/" + id);
     xhr.send();
 }
