@@ -11,6 +11,35 @@ public class Complex {
 		this.imag = im;
 	}
 
+	public Complex(String s) {
+		if (!s.matches("\\-?\\d{0,}\\.?\\d{0,}[+-]?\\d{0,}\\.?\\d{0,}i") && !s.matches("\\-?\\d{1,}\\.?\\d{0,}")) {
+			throw new IllegalArgumentException("NaN");
+		}
+		if (!s.contains("i")) {
+			this.imag = 0.0;
+			this.real = Double.parseDouble(s);
+		} else if (!s.contains("+") && s.matches("\\-?\\d{0,}\\.?\\d{0,}i")) {
+				this.real = 0.0;
+				s = s.replace("i", "");
+				this.imag = Double.parseDouble(s);
+		}else if(!s.contains("+") && s.matches("\\-?\\d{0,}\\.?\\d{0,}")) {
+				this.imag=0.0;
+				this.real=Double.parseDouble(s);
+		} else if (s.contains("+")) {
+			String[] terms = s.split("[+]");
+			terms[1] = terms[1].replace("i", "");
+			this.real = Double.parseDouble(terms[0]);
+			this.imag = Double.parseDouble(terms[1]);
+		} else if (s.contains("-")) {
+			String[] terms = s.split("[-]");
+			terms[1] = terms[1].replace("i", "");
+			this.real = Double.parseDouble(terms[0]);
+			this.imag = -Double.parseDouble(terms[1]);
+		} else {
+			System.out.println("ERROR!");
+		}
+	}
+
 	public void toPolar() {
 		this.r = abs();
 		this.theta = Math.atan(imag / real);
@@ -30,13 +59,13 @@ public class Complex {
 	}
 
 	public Complex pow(int p) {
-		Complex ans = new Complex(this.real,this.imag);
-		for(int i = 0;i<p;i++) {
-			ans=ans.multiply(ans);
+		Complex ans = new Complex(this.real, this.imag);
+		for (int i = 0; i < p; i++) {
+			ans = ans.multiply(ans);
 		}
 		return ans;
 	}
-	
+
 	public Complex multiply(long l) {
 		return new Complex(this.real * l, this.imag * l);
 	}
@@ -101,15 +130,16 @@ public class Complex {
 				return "0";
 		}
 	}
-	
+
 	public String toPolarString() {
 		toPolar();
-		if(this.r!=(int)this.r && this.theta!=0) {
-			return "\\sqrt{"+(int)(this.real*this.real+this.imag*this.imag)+"}e^{"+this.theta/Math.PI+"\\pi i}";
-		}else if(this.r==(int)this.r &&this.theta!=0) {
-			return this.r+"e^{"+this.theta/Math.PI+"\\pi i}";
-		}else {
-			return ""+this.r;
+		if (this.r != (int) this.r && this.theta != 0) {
+			return "\\sqrt{" + (int) (this.real * this.real + this.imag * this.imag) + "}e^{" + this.theta / Math.PI
+					+ "\\pi i}";
+		} else if (this.r == (int) this.r && this.theta != 0) {
+			return this.r + "e^{" + this.theta / Math.PI + "\\pi i}";
+		} else {
+			return "" + this.r;
 		}
 	}
 

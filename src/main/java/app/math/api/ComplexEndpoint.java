@@ -75,4 +75,40 @@ public class ComplexEndpoint {
 		}
 		return "$$" + numbers.get(id) + "=" + numbers.get(id).toPolarString() + "$$";
 	}
+	
+	@GetMapping("/Complex/Op/Conj/{id}")
+	public String getConj(@PathVariable int id) {
+		Complex c = numbers.get(id).conj();
+		numbers.add(c);
+		return c.toString();
+	}
+	
+	@GetMapping("/Complex/Op/Multiply/")
+	public String multiply(@RequestParam int id1, @RequestParam String other, @RequestParam String option) {
+		if(option.equals("multiply")) {
+			Complex c;
+			try {
+				c = new Complex(other);
+			}catch(Exception e) {
+				return e.getMessage();
+			}
+			Complex ans=numbers.get(id1).multiply(c);
+			numbers.add(ans);
+			return ans.toString();
+		}else if(option.equals("scale")) {
+			if(other.contains(".")) {
+				Double scalar = Double.parseDouble(other);
+				Complex c = this.numbers.get(id1).multiply(scalar);
+				this.numbers.add(c);
+				return c.toString();
+			}else {
+				Long scalar = Long.parseLong(other);
+				Complex c = this.numbers.get(id1).multiply(scalar);
+				this.numbers.add(c);
+				return c.toString();
+			}
+		}else {
+			return "ILLEGAL VALUE FOR OPTION!";
+		}
+	}
 }

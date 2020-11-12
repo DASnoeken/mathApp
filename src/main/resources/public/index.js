@@ -1118,3 +1118,27 @@ function calculatorCopyEntireSum(){
     /* Alert the copied text */
     alert("Copied the text: \"" + copyText.value + "\"");
 }
+function complexMultiply(ID,other){
+    if(isNaN(ID)){
+        document.getElementById("response").innerHTML = "ID can only be a number!";
+        return;
+    }
+    var radios = document.getElementsByName("ComplexMultiplication");
+    var method;
+    other=other.replaceAll("+","%2B")
+    for (var i = 0, length = radios.length; i < length; i++) {
+        if (radios[i].checked) {
+            method = radios[i].value;
+            break;
+        }
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if(this.readyState==4){
+            document.getElementById("response").innerHTML = this.responseText;
+            MathJax.typeset();
+        }
+    }
+    xhr.open("GET","https://daansmathapp.herokuapp.com/Complex/Op/Multiply/?id1="+ID+"&other="+other+"&option="+method);
+    xhr.send();
+}

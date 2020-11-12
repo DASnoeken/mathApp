@@ -192,6 +192,21 @@
                     <button class="buttons" onclick="ComplexAdd(idAddComplex1.value,idAddComplex2.value)">Add</button>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <input type="text" id="idMultComplex" value="ID">
+                </td>
+                <td>
+                    <input type="text" id="ComplexMultOther" value="Number">
+                </td>
+                <td>
+                    <input type="radio" id="multiply" name="ComplexMultiplication" value="multiply"
+                        checked>Multiply</input><br><input type="radio" id="scale" name="ComplexMultiplication" value="scale">Scale</input>
+                </td>
+                <td>
+                    <button class="buttons" onclick="complexMultiply(idMultComplex.value,ComplexMultOther.value)">Multiply</button>
+                </td>
+            </tr>
         </table>
     </div>
     <div id="FactorizationDiv" class="main" hidden>
@@ -516,7 +531,7 @@
     <br>
     <div id="response" class="responseAndHelp">Response area</div><br>
     <div class="responseAndHelp" id="help" hidden><input type="text" class="textinput" id="copytext">
-    <input type="text" class="textinput" id="copytext2"></div>
+        <input type="text" class="textinput" id="copytext2"></div>
 </body>
 
 </html>
