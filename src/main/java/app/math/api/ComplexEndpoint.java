@@ -123,7 +123,6 @@ public class ComplexEndpoint {
 		in=Helper.addChar(in, "\\", in.indexOf("pi"));
 		in=Helper.addChar(in, " ", in.lastIndexOf('i'));
 		in=in+'}';
-		System.out.println(in);
 		return "$$"+ in + "=" + c.toString() + "$$";
 	}
 }

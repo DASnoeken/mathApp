@@ -149,4 +149,17 @@ public class Helper {
 			div = y;
 		}
 	}
+	
+	/**
+	 * Rounds a double to a certain number of digits.
+	 * @param input	Input double
+	 * @param toDigit Round the input to this many digits after decimal point
+ 	 * @return Rounded double
+	 */
+	public static double roundDecimalToDigits(double input,int toDigit) {
+		input*=Math.pow(10.0, toDigit);
+		input=Math.round(input);
+		input/=Math.pow(10.0, toDigit);
+		return input;
+	}
 }
