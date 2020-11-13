@@ -1,6 +1,7 @@
 package app.math.api;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,9 @@ public class PolynomialEndpoint {
 		}else {
 			ans+="<br> No real roots found!";
 		}
+		ans+="<br><canvas id=\"polynomial\" width=\"400\" height=\"400\" style=\"border:1px solid black;background-color:white;\">\r\n" + 
+				"        Your browser does not support the canvas element.\r\n" + 
+				"    </canvas>";
 		return ans;
 	}
 	
@@ -43,5 +47,17 @@ public class PolynomialEndpoint {
 			ans+="<br>No minimum / maximum / plateau found!";
 		}
 		return ans;
+	}
+	
+	@GetMapping("/Polynomial/GetCoefficients")
+	public ArrayList<BigDecimal> getCoefficients(@RequestParam String polynomial){
+		Polynomial p = new Polynomial(polynomial);
+		return p.getCoefficients();
+	}
+	
+	@GetMapping("/Polynomial/GetPowers")
+	public ArrayList<BigInteger> getPowers(@RequestParam String polynomial){
+		Polynomial p = new Polynomial(polynomial);
+		return p.getPowers();
 	}
 }

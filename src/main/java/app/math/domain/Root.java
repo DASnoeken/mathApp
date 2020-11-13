@@ -229,7 +229,7 @@ public class Root {
 		ArrayList<BigDecimal> minmax = p.getMinMax(this.x_min.longValue(), this.x_max.longValue());
 		boolean worthit = false;
 		for (BigDecimal x : minmax) {
-			if (p.get(x).compareTo(BigDecimal.ONE) < 0) { // See if there is a p(x) < 1
+			if (p.get(x).compareTo(new BigDecimal("1E-5")) < 0) { // See if there is a p(x) < 1e-5
 				worthit = true;
 			}
 		}
@@ -242,10 +242,15 @@ public class Root {
 			}
 			BigDecimal lastxn = x0;
 			BigDecimal xn;
-			BigDecimal _1e5 = new BigDecimal("1E5");
+			int iteration = 0;
 			do {
 				xn = lastxn.subtract(p.get(lastxn).divide(p.getDerivative().get(lastxn)));
-			} while (xn.abs().compareTo(thresh.multiply(_1e5)) >= 0);
+				iteration++;
+			} while (xn.abs().compareTo(thresh) >= 0 && iteration<200);
+			if (p.get(xn).abs().compareTo(thresh) < 0) {
+				this.roots.add(xn);
+				return;
+			}
 		}
 	}
 

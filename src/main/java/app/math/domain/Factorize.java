@@ -71,7 +71,6 @@ public class Factorize {
 		}
 		BigInteger limit = sqrt(localNumber);
 		BigInteger[] remainder;
-
 		// Working loop
 		int count5 = 1;
 		int count3 = 1;

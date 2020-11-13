@@ -143,4 +143,13 @@ public class Polynomial {
 			}
 		}
 	}
+
+	public ArrayList<BigDecimal> getCoefficients() {
+		return coefficients;
+	}
+
+	public ArrayList<BigInteger> getPowers() {
+		return powers;
+	}
+	
 }

@@ -1003,10 +1003,68 @@ function getRoots(pol, xmin, xmax) {
         if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
             MathJax.typeset();
+            getCoefs(pol);
         }
     }
     xhr.open("GET", "https://daansmathapp.herokuapp.com/Polynomial/getRoot/?polynomial=" + pol + "&xmax=" + xmax + "&xmin=" + xmin);
     xhr.send();
+}
+function getCoefs(pol) {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            var coefs = JSON.parse(this.responseText);
+            getPowers(pol, coefs);
+        }
+    }
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/Polynomial/GetCoefficients/?polynomial=" + pol);
+    xhr.send();
+}
+function getPowers(pol, coefsIn) {
+    var xhr = new XMLHttpRequest();
+    var coefs = coefsIn;
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            var pows = JSON.parse(this.responseText);
+            plot(coefs, pows);
+        }
+    }
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/Polynomial/GetPowers/?polynomial=" + pol);
+    xhr.send();
+}
+function plot(coefs, pows) {
+    var xmin = document.getElementById("rootxmin").value;
+    var xmax = document.getElementById("rootxmax").value;
+    if (xmin > -5 && xmin < 0) {
+        xmin = -5;
+    }
+    if (xmax < 5 && xmax > 0) {
+        xmax = 5;
+    }
+    var canvas = document.getElementById("polynomial");
+    var axes = canvas.getContext("2d");
+    var ctx = canvas.getContext("2d");
+    var width = canvas.width;
+    var height = canvas.height;
+    axes.beginPath();
+    axes.moveTo(0, height / 2);
+    axes.lineTo(width, height / 2);
+    axes.stroke();
+    axes.moveTo(width / 2, 0);
+    axes.lineTo(width / 2, height);
+    axes.stroke();
+    ctx.beginPath();
+    ctx.strokeStyle = "blue";
+    var yval = 0;
+    for (var i = -100; i < 100; i += 0.001) {
+        for (var j = 0; j < coefs.length; j++) {
+            yval += coefs[j] * Math.pow(i, pows[j]);
+        }
+        ctx.lineTo(i * width / (xmax - xmin) + width / 2, -yval * height / (xmax - xmin) + height / 2);
+        ctx.moveTo(i * width / (xmax - xmin) + width / 2, -yval * height / (xmax - xmin) + height / 2);
+        yval = 0;
+    }
+    ctx.stroke();
 }
 function getMinMaxPolynomial(pol, xmin, xmax) {
     if (isNaN(xmin) || isNaN(xmax)) {
@@ -1146,15 +1204,15 @@ function complexconjugate(id) {
     xhr.open("GET", "https://daansmathapp.herokuapp.com/Complex/Op/Conj/" + id);
     xhr.send();
 }
-function polarComplextoCartesian(string){
-    string=string.replaceAll("^","%5E");
+function polarComplextoCartesian(string) {
+    string = string.replaceAll("^", "%5E");
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if(this.readyState==4){
-            document.getElementById("response").innerHTML=this.responseText;
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            document.getElementById("response").innerHTML = this.responseText;
             MathJax.typeset();
         }
     }
-    xhr.open("GET","https://daansmathapp.herokuapp.com/Complex/toCartesian/?in="+string);
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/Complex/toCartesian/?in=" + string);
     xhr.send();
 }

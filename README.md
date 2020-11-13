@@ -18,9 +18,8 @@ Currently, the app contains the following:
 - Find the roots of a polynomial based on sign flips in a certain interval.
 ## Future plans
 Here is a list of things I wish to implement in the future.
-- Implement MathJax for the derivative function. (Testing!)
 - Implement eigenvalue and eigenvector calculation for linear algebra.
 - Implement Newton's method for finding roots of a polynomial. (testing)
 - Basic numerical integration, for definite integrals.
-- Complex numbers (in progress)
-- Implementing the ability to plot polynomials
+- Complex numbers (Testing)
+- Implementing the ability to plot polynomials (in progress)
