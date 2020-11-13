@@ -29,7 +29,7 @@ public class Root {
 		this.x_min = BigDecimal.valueOf(x_min);
 		this.x_max = BigDecimal.valueOf(x_max);
 		this.x_maxOrig = this.x_max;
-		this.delta = BigDecimal.valueOf(0.5);
+		this.delta = BigDecimal.valueOf(1e-4);
 		this.roots = new ArrayList<BigDecimal>();
 		splitToTerms();
 		checkInterval();
@@ -70,7 +70,7 @@ public class Root {
 			return;
 		} else {
 			this.x_min = roots.get(roots.size() - 1).add(new BigDecimal("0.1"));
-			this.delta = new BigDecimal("0.5");
+			this.delta = new BigDecimal("1e-4");
 			this.x_max = this.x_maxOrig;
 			this.xgrid.clear();
 			this.yval.clear();

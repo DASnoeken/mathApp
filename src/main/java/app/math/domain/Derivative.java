@@ -33,7 +33,7 @@ public class Derivative {
 
 	private void specializeTerms() {
 		for (String term : terms) {
-			if (term.matches("[-]?\\d{0,}x\\^[-]?\\d{1,}") || term.matches("[-]?\\d{0,}x")) {
+			if (term.matches("[-]?\\d{0,}.?\\d{0,}x\\^[-]?\\d{1,}") || term.matches("[-]?\\d{0,}.?\\d{0,}x")) {
 				polynomialTerms.add(term);
 			} else if (term.matches("[-]?\\d{1,}\\^x")) {
 				exponentialTerms.add(term);

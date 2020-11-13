@@ -107,12 +107,10 @@ public class Polynomial {
 	public void splitToTerms() {
 		this.polynomial = this.polynomial.replaceAll("\\s", "");
 		this.polynomial = this.polynomial.replaceAll("(?<!\\+)-", "+-");
-		String[] terms = this.polynomial.split("[\\+]");
-		try {
-		} catch (ArrayIndexOutOfBoundsException e) {
-			System.out.println("hier");
-			e.printStackTrace();
+		if(this.polynomial.charAt(0)=='+') {
+			this.polynomial=this.polynomial.substring(1);
 		}
+		String[] terms = this.polynomial.split("[\\+]");
 		for (int i = 0; i < terms.length; i++) {
 			if (!terms[i].contains("x")) {
 				terms[i] = terms[i] + "x^0";
@@ -121,7 +119,7 @@ public class Polynomial {
 				terms[i] = terms[i] + "^1";
 			} else if (!terms[i].contains("^") && terms[i].matches("\\d{0}x")) {
 				terms[i] = "1" + terms[i] + "^1";
-			} else if (terms[i].charAt(0) != '-' && terms[i].contains("^") && !terms[i].matches("\\d{1,}x\\^\\d{1,}")) {
+			} else if (terms[i].charAt(0) != '-' && terms[i].contains("^") && !terms[i].matches("\\d{1,}\\.?\\d{0,}x\\^\\d{1,}")) {
 				terms[i] = "1" + terms[i];
 			}
 		}
@@ -141,10 +139,14 @@ public class Polynomial {
 				sign = "-1";
 				term = sign + term.substring(1);
 			}
-			coefPow.add(term.split("x\\^?")[0]);
-			coefPow.add(term.split("x\\^?")[1]);
+			String[] cp = term.split("x\\^?");
+			coefPow.add(cp[0]);
+			if(cp.length>1) {
+				coefPow.add(cp[1]);
+			}else {
+				coefPow.add("0.0");
+			}
 		}
-		
 		for (int i = 0; i < coefPow.size(); i++) {
 			if (i % 2 == 0) {
 				this.coefficients.add(new BigDecimal(coefPow.get(i)));
