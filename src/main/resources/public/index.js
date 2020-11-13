@@ -1078,6 +1078,7 @@ function getMinMaxPolynomial(pol, xmin, xmax) {
         if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
             MathJax.typeset();
+            getCoefs(pol);
         }
     }
     xhr.open("GET", "https://daansmathapp.herokuapp.com/Polynomial/getMinMax/?polynomial=" + pol + "&xmax=" + xmax + "&xmin=" + xmin);

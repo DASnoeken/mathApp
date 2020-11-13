@@ -46,6 +46,9 @@ public class PolynomialEndpoint {
 		}else {
 			ans+="<br>No minimum / maximum / plateau found!";
 		}
+		ans+="<br><canvas id=\"polynomial\" width=\"400\" height=\"400\" style=\"border:1px solid black;background-color:white;\">\r\n" + 
+				"        Your browser does not support the canvas element.\r\n" + 
+				"    </canvas>";
 		return ans;
 	}
 	

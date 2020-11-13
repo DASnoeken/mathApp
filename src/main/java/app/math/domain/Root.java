@@ -137,6 +137,7 @@ public class Root {
 	}
 
 	private void splitToTerms() {
+		this.polynomial=this.polynomial.replaceAll("\\+\\+","+");
 		String[] terms = this.polynomial.split("[\\+]");
 		for (int i = 0; i < terms.length; i++) {
 			if (!terms[i].contains("x")) {
@@ -169,6 +170,7 @@ public class Root {
 			coefPow.add(term.split("x\\^?")[0]);
 			coefPow.add(term.split("x\\^?")[1]);
 		}
+
 		for (int i = 0; i < coefPow.size(); i++) {
 			if (i % 2 == 0) {
 				this.coefficients.add(new BigDecimal(coefPow.get(i)));
