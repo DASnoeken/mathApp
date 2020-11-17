@@ -41,8 +41,8 @@ public class Polynomial {
 		d.derive();
 		Polynomial der = new Polynomial(d.getResult());
 		der.setPolynomial(der.getPolynomial().replaceAll("\\s", ""));
-		der.setPolynomial(der.getPolynomial().replaceAll("\\+\\-", "-"));
 		der.setPolynomial(Helper.integerPolynomial(der.getPolynomial()));
+		der.setPolynomial(der.getPolynomial().replaceAll("\\+\\-", "-"));
 		Root derRoots = new Root(der.getPolynomial(), xmin, xmax);
 		this.xOfMinMax = derRoots.getRoots();
 		return xOfMinMax;
@@ -111,6 +111,7 @@ public class Polynomial {
 			this.polynomial=this.polynomial.substring(1);
 		}
 		String[] terms = this.polynomial.split("[\\+]");
+		this.polynomial = this.polynomial.replaceAll("\\+\\-", "-");
 		for (int i = 0; i < terms.length; i++) {
 			if (!terms[i].contains("x")) {
 				terms[i] = terms[i] + "x^0";

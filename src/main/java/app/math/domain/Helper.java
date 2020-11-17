@@ -162,4 +162,21 @@ public class Helper {
 		input/=Math.pow(10.0, toDigit);
 		return input;
 	}
+	
+	/**
+	 * Prints a stack trace so you can see where a function is being called from. This is solely used for debugging/
+	 * @param print Give something to print, can be any string variable that needs to be checked. Optionally takes multiple strings. All
+	 *  are printed in order that they were given.
+	 */
+	public static void stackTrace(String... print ) {
+		System.out.println("--------------START--------------");
+		for(String p:print) {
+			System.out.println(p);
+		}
+		try {
+			throw new RuntimeException();
+		}catch(RuntimeException e) {
+			e.printStackTrace();
+		}System.out.println("---------------END---------------");
+	}
 }
