@@ -44,6 +44,7 @@ public class Polynomial {
 		der.setPolynomial(Helper.integerPolynomial(der.getPolynomial()));
 		der.setPolynomial(der.getPolynomial().replaceAll("\\+\\-", "-"));
 		Root derRoots = new Root(der.getPolynomial(), xmin, xmax);
+		derRoots.roundRoots();
 		this.xOfMinMax = derRoots.getRoots();
 		return xOfMinMax;
 	}

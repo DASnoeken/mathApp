@@ -157,10 +157,13 @@ public class Helper {
  	 * @return Rounded double
 	 */
 	public static double roundDecimalToDigits(double input,int toDigit) {
-		input*=Math.pow(10.0, toDigit);
-		input=Math.round(input);
-		input/=Math.pow(10.0, toDigit);
-		return input;
+		String instr = Double.toString(input);
+		int startindex = 0;
+		while(startindex<instr.length() && instr.charAt(startindex)!='.') {
+			startindex++;
+		}
+		String outstr = instr.substring(0,startindex+toDigit);
+		return Double.parseDouble(outstr);
 	}
 	
 	/**

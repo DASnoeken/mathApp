@@ -192,16 +192,18 @@ public class Root {
 	}
 
 	public void roundRoots() {
+		boolean rounded = false;
 		for (int i = 0; i < this.roots.size(); i++) {
 			BigDecimal root = this.roots.get(i);
 			String rootString = root.toString();
+			rounded = false;
 			for (int j = rootString.indexOf('.'); j < rootString.length(); j++) {
 				if (j == -1) {
 					break;
 				}
 				int count = 0;
 				if (j > 0 && j < rootString.length() && (rootString.charAt(j - 1) == '.'
-						&& (rootString.charAt(j) == '9' || rootString.charAt(j) == '0'))) {
+						&& (rootString.indexOf('.')+1 == '9' || rootString.indexOf('.')+1 == '0'))) {
 					while (j < rootString.length() && rootString.charAt(j) == '9') {
 						j++;
 						count++;
@@ -209,6 +211,7 @@ public class Root {
 							rootString = rootString.substring(0, rootString.indexOf('.'));
 							BigInteger intpart = new BigInteger(rootString).add(BigInteger.ONE);
 							this.roots.set(i, new BigDecimal(intpart.toString()));
+							rounded=true;
 						}
 					}
 					while (j < rootString.length() && rootString.charAt(j) == '0') {
@@ -217,6 +220,19 @@ public class Root {
 						if (count == 5) {
 							rootString = rootString.substring(0, j - count);
 							this.roots.set(i, new BigDecimal(rootString));
+							rounded=true;
+						}
+					}
+				}else if(rootString.indexOf('.')!=-1 && !rounded){
+					while(j<rootString.length()) {
+						j++;
+						count++;
+						if(count==9) {
+							String rootStringInt = rootString.substring(0, rootString.indexOf('.'));
+							BigInteger intpart = new BigInteger(rootStringInt);
+							BigInteger decpart = new BigInteger(rootString.substring(rootString.indexOf('.')+1, rootString.indexOf('.')+10));
+							this.roots.set(i, new BigDecimal(intpart.toString()+"."+decpart.toString()));
+							rounded=true;
 						}
 					}
 				}

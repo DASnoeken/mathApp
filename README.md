@@ -16,10 +16,11 @@ Currently, the app contains the following:
 - Factorize numbers into prime factors.
 - Calculate binomial coefficients.
 - Find the roots of a polynomial based on sign flips in a certain interval.
+- Calculate using complex numbers.
 ## Future plans
 Here is a list of things I wish to implement in the future.
 - Implement eigenvalue and eigenvector calculation for linear algebra.
 - Implement Newton's method for finding roots of a polynomial. (testing)
-- Basic numerical integration, for definite integrals.
+- Basic numerical integration, for definite integrals, using Riemann sums.
 - Complex numbers (Testing)
-- Implementing the ability to plot polynomials (in progress)
+- Implementing the ability to plot polynomials (testing)
