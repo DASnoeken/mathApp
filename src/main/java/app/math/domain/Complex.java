@@ -10,21 +10,21 @@ public class Complex {
 	public Complex(double re, double im) {
 		this.real = re;
 		this.imag = im;
-		if(Math.abs(this.real)<thresh) {
-			this.real=0;
-		}else if(Math.abs(Math.round(this.real)-this.real)<thresh) {
-			this.real=Math.round(this.real);
+		if (Math.abs(this.real) < thresh) {
+			this.real = 0;
+		} else if (Math.abs(Math.round(this.real) - this.real) < thresh) {
+			this.real = Math.round(this.real);
 		}
-		if(Math.abs(this.imag)<thresh) {
-			this.imag=0;
-		}else if(Math.abs(Math.round(this.imag)-this.imag)<thresh) {
-			this.imag=Math.round(this.imag);
+		if (Math.abs(this.imag) < thresh) {
+			this.imag = 0;
+		} else if (Math.abs(Math.round(this.imag) - this.imag) < thresh) {
+			this.imag = Math.round(this.imag);
 		}
 	}
-	
+
 	public Complex() {
-		this.real=0.0;
-		this.imag=0.0;
+		this.real = 0.0;
+		this.imag = 0.0;
 	}
 
 	public Complex(String s) {
@@ -61,10 +61,20 @@ public class Complex {
 
 	public void toPolar() {
 		this.r = abs();
-		if(this.r!=0) {
-			this.theta = Math.atan(this.imag / this.real);
-		}else {
-			this.theta=0.0;
+		if (this.r != 0 && this.real != 0) {
+			if (this.real > 0) {
+				this.theta = Math.atan(this.imag / this.real);
+			} else {
+				this.theta = Math.atan(this.imag / this.real) + Math.PI;
+			}
+		} else if (this.real == 0 && this.imag != 0) {
+			if (this.imag > 0) {
+				this.theta = Math.PI / 2;
+			} else {
+				this.theta = 3 * Math.PI / 2;
+			}
+		} else {
+			this.theta = 0.0;
 		}
 	}
 
@@ -75,30 +85,30 @@ public class Complex {
 	public void toCartesian() {
 		this.real = this.r * Math.cos(this.theta);
 		this.imag = this.r * Math.sin(this.theta);
-		if(Math.abs(this.real)<thresh) {
-			this.real=0;
-		}else if(Math.abs(Math.round(this.real)-this.real)<thresh) {
-			this.real=Math.round(this.real);
+		if (Math.abs(this.real) < thresh) {
+			this.real = 0;
+		} else if (Math.abs(Math.round(this.real) - this.real) < thresh) {
+			this.real = Math.round(this.real);
 		}
-		if(Math.abs(this.imag)<thresh) {
-			this.imag=0;
-		}else if(Math.abs(Math.round(this.imag)-this.imag)<thresh) {
-			this.imag=Math.round(this.imag);
+		if (Math.abs(this.imag) < thresh) {
+			this.imag = 0;
+		} else if (Math.abs(Math.round(this.imag) - this.imag) < thresh) {
+			this.imag = Math.round(this.imag);
 		}
 	}
 
 	public void toCartesian(double r, double t) {
 		this.real = r * Math.cos(t);
 		this.imag = r * Math.sin(t);
-		if(Math.abs(this.real)<thresh) {
-			this.real=0;
-		}else if(Math.abs(Math.round(this.real)-this.real)<thresh) {
-			this.real=Math.round(this.real);
+		if (Math.abs(this.real) < thresh) {
+			this.real = 0;
+		} else if (Math.abs(Math.round(this.real) - this.real) < thresh) {
+			this.real = Math.round(this.real);
 		}
-		if(Math.abs(this.imag)<thresh) {
-			this.imag=0;
-		}else if(Math.abs(Math.round(this.imag)-this.imag)<thresh) {
-			this.imag=Math.round(this.imag);
+		if (Math.abs(this.imag) < thresh) {
+			this.imag = 0;
+		} else if (Math.abs(Math.round(this.imag) - this.imag) < thresh) {
+			this.imag = Math.round(this.imag);
 		}
 	}
 
@@ -111,17 +121,17 @@ public class Complex {
 		String rstr = terms[0];
 		String powstr = terms[1];
 		double r = Double.parseDouble(rstr);
-		powstr=powstr.replaceAll("i", "");
+		powstr = powstr.replaceAll("i", "");
 		double pow = 1.0;
-		if(powstr.contains("p")) {
-			pow*=Math.PI;
-			powstr=powstr.replaceAll("p", "");
+		if (powstr.contains("p")) {
+			pow *= Math.PI;
+			powstr = powstr.replaceAll("p", "");
 		}
-		if(!powstr.isEmpty()) {
-			pow*=Double.parseDouble(powstr);
+		if (!powstr.isEmpty()) {
+			pow *= Double.parseDouble(powstr);
 		}
 		Complex c = new Complex();
-		c.toCartesian(r,pow);
+		c.toCartesian(r, pow);
 		return c;
 	}
 
@@ -204,11 +214,10 @@ public class Complex {
 
 	public String toPolarString() {
 		toPolar();
-		this.theta=this.theta/Math.PI;
-		this.theta=Helper.roundDecimalToDigits(this.theta, 5);
+		this.theta = this.theta / Math.PI;
+		this.theta = Helper.roundDecimalToDigits(this.theta, 5);
 		if (this.r != (int) this.r && this.theta != 0) {
-			return "\\sqrt{" + (int) (this.real * this.real + this.imag * this.imag) + "}e^{" + this.theta
-					+ "\\pi i}";
+			return "\\sqrt{" + (int) (this.real * this.real + this.imag * this.imag) + "}e^{" + this.theta + "\\pi i}";
 		} else if (this.r == (int) this.r && this.theta != 0) {
 			return this.r + "e^{" + this.theta + "\\pi i}";
 		} else {
