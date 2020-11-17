@@ -16,7 +16,7 @@ public class Root {
 	private static final BigDecimal thresh = new BigDecimal("1E-15");
 	private int totalSignFlips;
 
-	public Root(String inPol, long x_min, long x_max) {
+	public Root(String inPol, double x_min, double x_max) {
 		this.polynomial = inPol.trim().replaceAll("\\s", "");
 		if (this.polynomial.charAt(0) == '-') {
 			this.polynomial = "0" + this.polynomial;
@@ -139,8 +139,8 @@ public class Root {
 	public void splitToTerms() {
 		this.polynomial = this.polynomial.replaceAll("\\s", "");
 		this.polynomial = this.polynomial.replaceAll("(?<!\\+)-", "+-");
-		if(this.polynomial.charAt(0)=='+') {
-			this.polynomial=this.polynomial.substring(1);
+		if (this.polynomial.charAt(0) == '+') {
+			this.polynomial = this.polynomial.substring(1);
 		}
 		String[] terms = this.polynomial.split("[\\+]");
 		for (int i = 0; i < terms.length; i++) {
@@ -151,7 +151,8 @@ public class Root {
 				terms[i] = terms[i] + "^1";
 			} else if (!terms[i].contains("^") && terms[i].matches("\\d{0}x")) {
 				terms[i] = "1" + terms[i] + "^1";
-			} else if (terms[i].charAt(0) != '-' && terms[i].contains("^") && !terms[i].matches("\\d{1,}\\.?\\d{0,}x\\^\\d{1,}")) {
+			} else if (terms[i].charAt(0) != '-' && terms[i].contains("^")
+					&& !terms[i].matches("\\d{1,}\\.?\\d{0,}x\\^\\d{1,}")) {
 				terms[i] = "1" + terms[i];
 			}
 		}
@@ -173,9 +174,9 @@ public class Root {
 			}
 			String[] cp = term.split("x\\^?");
 			coefPow.add(cp[0]);
-			if(cp.length>1) {
+			if (cp.length > 1) {
 				coefPow.add(cp[1]);
-			}else {
+			} else {
 				coefPow.add("0.0");
 			}
 		}
@@ -202,8 +203,8 @@ public class Root {
 					break;
 				}
 				int count = 0;
-				if (j > 0 && j < rootString.length() && (rootString.charAt(j - 1) == '.'
-						&& (rootString.indexOf('.')+1 == '9' || rootString.indexOf('.')+1 == '0'))) {
+				if (j > 0 && j < rootString.length() && ((rootString.charAt(rootString.indexOf('.') + 1) == '9'
+						|| rootString.charAt(rootString.indexOf('.') + 1) == '0'))) {
 					while (j < rootString.length() && rootString.charAt(j) == '9') {
 						j++;
 						count++;
@@ -211,29 +212,39 @@ public class Root {
 							rootString = rootString.substring(0, rootString.indexOf('.'));
 							BigInteger intpart = new BigInteger(rootString).add(BigInteger.ONE);
 							this.roots.set(i, new BigDecimal(intpart.toString()));
-							rounded=true;
+							rounded = true;
 						}
 					}
 					while (j < rootString.length() && rootString.charAt(j) == '0') {
 						j++;
 						count++;
 						if (count == 5) {
-							rootString = rootString.substring(0, j - count);
+							rootString = rootString.substring(0, rootString.indexOf('.'));
 							this.roots.set(i, new BigDecimal(rootString));
-							rounded=true;
+							rounded = true;
 						}
 					}
-				}else if(rootString.indexOf('.')!=-1 && !rounded){
-					while(j<rootString.length()) {
-						j++;
-						count++;
-						if(count==9) {
-							String rootStringInt = rootString.substring(0, rootString.indexOf('.'));
-							BigInteger intpart = new BigInteger(rootStringInt);
-							BigInteger decpart = new BigInteger(rootString.substring(rootString.indexOf('.')+1, rootString.indexOf('.')+10));
-							this.roots.set(i, new BigDecimal(intpart.toString()+"."+decpart.toString()));
-							rounded=true;
+				} else {
+					break;
+				}
+			}
+			if (rootString.indexOf('.') != -1 && !rounded) {
+				int j = 0;
+				int count = 0;
+				while (j < rootString.length()) {
+					j++;
+					count++;
+					if (count == 9) {
+						String rootStringInt = rootString.substring(0, rootString.indexOf('.'));
+						BigInteger intpart = new BigInteger(rootStringInt);
+						BigInteger decpart = new BigInteger(
+								rootString.substring(rootString.indexOf('.') + 1, rootString.indexOf('.') + 10));
+						if (intpart.toString().equals("0") && rootStringInt.charAt(0) == '-') {
+							this.roots.set(i, new BigDecimal("-" + intpart.toString() + "." + decpart.toString()));
+						} else {
+							this.roots.set(i, new BigDecimal(intpart.toString() + "." + decpart.toString()));
 						}
+						rounded = true;
 					}
 				}
 			}
@@ -252,32 +263,24 @@ public class Root {
 	public void newton() {
 		Polynomial p = new Polynomial(this.polynomial);
 		p.setXgrid(this.x_min, this.x_max, this.delta);
-		ArrayList<BigDecimal> minmax = p.getMinMax(this.x_min.longValue(), this.x_max.longValue());
-		boolean worthit = false;
-		for (BigDecimal x : minmax) {
-			if (p.get(x).compareTo(new BigDecimal("1E-5")) < 0) { // See if there is a p(x) < 1e-5
-				worthit = true;
-			}
+		p.setDerivative();
+		BigDecimal x0 = p.getXgrid().get((int) (p.getXgrid().size() / 2));
+		if (p.get(x0).abs().compareTo(thresh) < 0) {
+			this.roots.add(x0);
+			return;
 		}
-		if (worthit) {
-			p.setDerivative();
-			BigDecimal x0 = p.getXgrid().get((int) (p.getXgrid().size() / 2));
-			if (p.get(x0).abs().compareTo(thresh) < 0) {
-				this.roots.add(x0);
-				return;
-			}
-			BigDecimal lastxn = x0;
-			BigDecimal xn;
-			int iteration = 0;
-			do {
-				xn = lastxn.subtract(p.get(lastxn).divide(p.getDerivative().get(lastxn)));
-				iteration++;
-			} while (xn.abs().compareTo(thresh) >= 0 && iteration<200);
-			if (p.get(xn).abs().compareTo(thresh) < 0) {
-				this.roots.add(xn);
-				return;
-			}
+		BigDecimal lastxn = x0;
+		BigDecimal xn;
+		int iteration = 0;
+		do {
+			xn = lastxn.subtract(p.get(lastxn).divide(p.getDerivative().get(lastxn)));
+			iteration++;
+		} while (xn.abs().compareTo(thresh) >= 0 && iteration < 200);
+		if (p.get(xn).abs().compareTo(thresh) < 0) {
+			this.roots.add(xn);
+			return;
 		}
+
 	}
 
 }

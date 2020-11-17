@@ -15,7 +15,7 @@ import app.math.domain.Root;
 @RestController
 public class PolynomialEndpoint {
 	@GetMapping("Polynomial/getRoot/")
-	public String getRoot(@RequestParam String polynomial, @RequestParam long xmin, @RequestParam long xmax) {
+	public String getRoot(@RequestParam String polynomial, @RequestParam double xmin, @RequestParam double xmax, @RequestParam boolean darkState) {
 		Root r = new Root(polynomial,xmin,xmax);
 		r.roundRoots();
 		String ans = "For polynomial $$" + Helper.texify(polynomial) + "$$" + 
@@ -27,14 +27,20 @@ public class PolynomialEndpoint {
 		}else {
 			ans+="<br> No real roots found!";
 		}
-		ans+="<br><canvas id=\"polynomial\" width=\"400\" height=\"400\" style=\"border:1px solid black;background-color:white;\">\r\n" + 
+		if(darkState) {
+			ans+="<br><canvas id=\"polynomial-roots\" class=\"polynomialCanvas-dark\" width=\"500\" height=\"500\">\r\n" + 
 				"        Your browser does not support the canvas element.\r\n" + 
 				"    </canvas>";
+		}else {
+			ans+="<br><canvas id=\"polynomial-roots\" class=\"polynomialCanvas\" width=\"500\" height=\"500\">\r\n" + 
+					"        Your browser does not support the canvas element.\r\n" + 
+					"    </canvas>";
+		}
 		return ans;
 	}
 	
 	@GetMapping("Polynomial/getMinMax/")
-	public String getMinMax(@RequestParam String polynomial, @RequestParam long xmin, @RequestParam long xmax) {
+	public String getMinMax(@RequestParam String polynomial, @RequestParam double xmin, @RequestParam double xmax, @RequestParam boolean darkState) {
 		String ans = "For polynomial $$" + Helper.texify(polynomial) + "$$";
 		Polynomial p = new Polynomial(polynomial);
 		ans+="Found minimum / maximum / plateau at: ";
@@ -46,9 +52,15 @@ public class PolynomialEndpoint {
 		}else {
 			ans+="<br>No minimum / maximum / plateau found!";
 		}
-		ans+="<br><canvas id=\"polynomial\" width=\"400\" height=\"400\" style=\"border:1px solid black;background-color:white;\">\r\n" + 
+		if(darkState) {
+			ans+="<br><canvas id=\"polynomial-minmax\" class=\"polynomialCanvas-dark\" width=\"500\" height=\"500\">\r\n" + 
 				"        Your browser does not support the canvas element.\r\n" + 
 				"    </canvas>";
+		}else {
+			ans+="<br><canvas id=\"polynomial-minmax\" class=\"polynomialCanvas\" width=\"500\" height=\"500\">\r\n" + 
+					"        Your browser does not support the canvas element.\r\n" + 
+					"    </canvas>";
+		}
 		return ans;
 	}
 	

@@ -924,7 +924,13 @@ function closeFullscreen() {
     }
     document.getElementById("fullscreenbutton").onclick = fullscreenMode();
 }
+var darkState = false;
 function darkmode() {
+    if (darkState) {
+        darkState = false;
+    } else {
+        darkState = true;
+    }
     if (document.getElementById("input").className == "main") {
         var mains = document.getElementsByClassName("main");
         var rah = document.getElementsByClassName("responseAndHelp");
@@ -933,6 +939,7 @@ function darkmode() {
         var textinput = document.getElementsByClassName("textinput");
         var selectboxes = document.getElementsByClassName("select-css");
         var tops = document.getElementsByClassName("topButtons");
+        var pol = document.getElementsByClassName("polynomialCanvas");
         document.body.style.backgroundColor = "#000000";
         while (mains.length > 0) {
             document.getElementById(mains[0].id).className = "main-dark";
@@ -955,6 +962,10 @@ function darkmode() {
         while (tops.length > 0) {
             tops[0].className = "topButtons-dark";
         }
+        while (pol.length > 0) {
+            pol[0].className = "polynomialCanvas-dark";
+            replot();
+        }
     } else {
         var mains = document.getElementsByClassName("main-dark");
         var rah = document.getElementsByClassName("responseAndHelp-dark");
@@ -963,6 +974,7 @@ function darkmode() {
         var textinput = document.getElementsByClassName("textinput-dark");
         var selectboxes = document.getElementsByClassName("select-css-dark");
         var tops = document.getElementsByClassName("topButtons-dark");
+        var pol = document.getElementsByClassName("polynomialCanvas-dark");
         document.body.style.backgroundColor = "#660000";
         while (mains.length > 0) {
             document.getElementById(mains[0].id).className = "main";
@@ -985,6 +997,10 @@ function darkmode() {
         while (tops.length > 0) {
             tops[0].className = "topButtons";
         }
+        while (pol.length > 0) {
+            pol[0].className = "polynomialCanvas";
+            replot();
+        }
     }
 }
 function toPolynomials() {
@@ -1003,50 +1019,104 @@ function getRoots(pol, xmin, xmax) {
         if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
             MathJax.typeset();
-            getCoefs(pol);
+            getCoefs(pol, "roots");
         }
     }
-    xhr.open("GET", "https://daansmathapp.herokuapp.com/Polynomial/getRoot/?polynomial=" + pol + "&xmax=" + xmax + "&xmin=" + xmin);
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/Polynomial/getRoot/?polynomial=" + pol + "&xmax=" + xmax + "&xmin=" + xmin + "&darkState=" + darkState);
     xhr.send();
 }
-function getCoefs(pol) {
+function getCoefs(pol, from) {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
             var coefs = JSON.parse(this.responseText);
-            getPowers(pol, coefs);
+            getPowers(pol, coefs, from);
         }
     }
     xhr.open("GET", "https://daansmathapp.herokuapp.com/Polynomial/GetCoefficients/?polynomial=" + pol);
     xhr.send();
 }
-function getPowers(pol, coefsIn) {
+function getPowers(pol, coefsIn, from) {
     var xhr = new XMLHttpRequest();
     var coefs = coefsIn;
     xhr.onreadystatechange = function () {
         if (this.readyState == 4) {
             var pows = JSON.parse(this.responseText);
-            plot(coefs, pows);
+            plot(coefs, pows, from);
         }
     }
     xhr.open("GET", "https://daansmathapp.herokuapp.com/Polynomial/GetPowers/?polynomial=" + pol);
     xhr.send();
 }
-function plot(coefs, pows) {
-    var xmin = document.getElementById("rootxmin").value;
-    var xmax = document.getElementById("rootxmax").value;
-    if (xmin > -5 && xmin < 0) {
+var coefsReplot;
+var powsReplot;
+var lastFrom;
+function getCoefsReplot(pol) {
+    pol = pol.replaceAll("^", "%5E");
+    pol = pol.replaceAll("+", "%2B");
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            coefsReplot = JSON.parse(this.responseText);
+            getPowersReplot(pol);
+        }
+    }
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/Polynomial/GetCoefficients/?polynomial=" + pol);
+    xhr.send();
+}
+function getPowersReplot(pol) {
+    pol = pol.replaceAll("^", "%5E");
+    pol = pol.replaceAll("+", "%2B");
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            powsReplot = JSON.parse(this.responseText);
+            plot(coefsReplot, powsReplot, lastFrom);
+        }
+    }
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/Polynomial/GetPowers/?polynomial=" + pol);
+    xhr.send();
+}
+function replot() {
+    if (lastFrom == "roots") {
+        getCoefsReplot(document.getElementById("polynomialInput").value);
+    }
+    else if (lastFrom == "minmax") {
+        getCoefsReplot(document.getElementById("maxInput").value);
+    }
+}
+function plot(coefs, pows, from) {
+    lastFrom = from;
+    var xmin;
+    var xmax;
+    if (from == "roots") {
+        xmin = document.getElementById("rootxmin").value;
+        xmax = document.getElementById("rootxmax").value;
+    }
+    if (from == "minmax") {
+        xmin = document.getElementById("maxxmin").value;
+        xmax = document.getElementById("maxxmax").value
+    }
+    /*if (xmin > -5 && xmin < 0) {
         xmin = -5;
     }
     if (xmax < 5 && xmax > 0) {
         xmax = 5;
-    }
-    var canvas = document.getElementById("polynomial");
+    }*/
+    var canvasID = "polynomial-" + from;
+    var canvas = document.getElementById(canvasID);
+    const context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
     var axes = canvas.getContext("2d");
     var ctx = canvas.getContext("2d");
     var width = canvas.width;
     var height = canvas.height;
     axes.beginPath();
+    if (document.getElementById(canvasID).className == "polynomialCanvas-dark") {
+        axes.strokeStyle = "white";
+    } else {
+        axes.strokeStyle = "black";
+    }
     axes.moveTo(0, height / 2);
     axes.lineTo(width, height / 2);
     axes.stroke();
@@ -1054,7 +1124,12 @@ function plot(coefs, pows) {
     axes.lineTo(width / 2, height);
     axes.stroke();
     ctx.beginPath();
-    ctx.strokeStyle = "blue";
+    console.log(document.getElementById(canvasID).className);
+    if (document.getElementById(canvasID).className == "polynomialCanvas-dark") {
+        ctx.strokeStyle = "red";
+    } else {
+        ctx.strokeStyle = "blue";
+    }
     var yval = 0;
     for (var i = -100; i < 100; i += 0.001) {
         for (var j = 0; j < coefs.length; j++) {
@@ -1078,10 +1153,10 @@ function getMinMaxPolynomial(pol, xmin, xmax) {
         if (this.readyState == 4) {
             document.getElementById("response").innerHTML = this.responseText;
             MathJax.typeset();
-            getCoefs(pol);
+            getCoefs(pol, "minmax");
         }
     }
-    xhr.open("GET", "https://daansmathapp.herokuapp.com/Polynomial/getMinMax/?polynomial=" + pol + "&xmax=" + xmax + "&xmin=" + xmin);
+    xhr.open("GET", "https://daansmathapp.herokuapp.com/Polynomial/getMinMax/?polynomial=" + pol + "&xmax=" + xmax + "&xmin=" + xmin + "&darkState=" + darkState);
     xhr.send();
 }
 function setComplex(re, im) {

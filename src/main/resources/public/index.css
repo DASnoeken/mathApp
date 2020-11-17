@@ -447,3 +447,13 @@ body:-webkit-full-screen {
 body:-moz-full-screen {
     overflow: auto !important;
 }
+
+.polynomialCanvas{
+    border:1px solid black;
+    background-color:white;
+}
+
+.polynomialCanvas-dark{
+    border:1px solid white;
+    background-color:black;
+}

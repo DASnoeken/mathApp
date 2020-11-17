@@ -36,7 +36,7 @@ public class Polynomial {
 		return this.derivative;
 	}
 
-	public ArrayList<BigDecimal> getMinMax(long xmin, long xmax) {
+	public ArrayList<BigDecimal> getMinMax(double xmin, double xmax) {
 		Derivative d = new Derivative(this.polynomial);
 		d.derive();
 		Polynomial der = new Polynomial(d.getResult());
