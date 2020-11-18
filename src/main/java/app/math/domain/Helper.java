@@ -133,11 +133,13 @@ public class Helper {
 
 	/**
 	 * Gets the square root of a BigInteger
+	 * 
 	 * @param x The BigInteger to take the square root of.
 	 * @return The square root of x.
 	 */
-	public static BigInteger sqrt(BigInteger x) { 	// https://stackoverflow.com/questions/4407839/how-can-i-find-the-square-root-of-a-java-biginteger/
-													// Thanks to: Edward Falk. I needed this because Heroku needs to update its
+	public static BigInteger sqrt(BigInteger x) { // https://stackoverflow.com/questions/4407839/how-can-i-find-the-square-root-of-a-java-biginteger/
+													// Thanks to: Edward Falk. I needed this because Heroku needs to
+													// update its
 													// Java version.
 		BigInteger div = BigInteger.ZERO.setBit(x.bitLength() / 2);
 		BigInteger div2 = div;
@@ -149,37 +151,42 @@ public class Helper {
 			div = y;
 		}
 	}
-	
+
 	/**
 	 * Rounds a double to a certain number of digits.
-	 * @param input	Input double
+	 * 
+	 * @param input   Input double
 	 * @param toDigit Round the input to this many digits after decimal point
- 	 * @return Rounded double
+	 * @return Rounded double
 	 */
-	public static double roundDecimalToDigits(double input,int toDigit) {
+	public static double roundDecimalToDigits(double input, int toDigit) {
 		String instr = Double.toString(input);
 		int startindex = 0;
-		while(startindex<instr.length() && instr.charAt(startindex)!='.') {
+		while (startindex < instr.length() && instr.charAt(startindex) != '.') {
 			startindex++;
 		}
-		String outstr = instr.substring(0,startindex+toDigit);
+		String outstr = instr.substring(0, startindex + toDigit);
 		return Double.parseDouble(outstr);
 	}
-	
+
 	/**
-	 * Prints a stack trace so you can see where a function is being called from. This is solely used for debugging/
-	 * @param print Give something to print, can be any string variable that needs to be checked. Optionally takes multiple strings. All
-	 *  are printed in order that they were given.
+	 * Prints a stack trace so you can see where a function is being called from.
+	 * This is solely used for debugging/
+	 * 
+	 * @param print Give something to print, can be any string variable that needs
+	 *              to be checked. Optionally takes multiple strings. All are
+	 *              printed in order that they were given.
 	 */
-	public static void stackTrace(String... print ) {
+	public static void stackTrace(String... print) {
 		System.out.println("--------------START--------------");
-		for(String p:print) {
+		for (String p : print) {
 			System.out.println(p);
 		}
 		try {
 			throw new RuntimeException();
-		}catch(RuntimeException e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
-		}System.out.println("---------------END---------------");
+		}
+		System.out.println("---------------END---------------");
 	}
 }

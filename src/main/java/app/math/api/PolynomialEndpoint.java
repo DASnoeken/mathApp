@@ -75,4 +75,10 @@ public class PolynomialEndpoint {
 		Polynomial p = new Polynomial(polynomial);
 		return p.getPowers();
 	}
+	
+	@GetMapping("/Polynomial/GetIntegral")
+	public String getIntegral(@RequestParam String polynomial,@RequestParam BigDecimal a, @RequestParam BigDecimal b) {
+		Polynomial p = new Polynomial(polynomial);
+		return "$$\\int_{"+a+"}^{"+b+"}"+polynomial+"="+p.integrate(a, b).toString()+"$$";
+	}
 }

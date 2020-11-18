@@ -578,4 +578,9 @@ public class Derivative {
 	public StringBuilder getDerivative() {
 		return derivative;
 	}
+
+	public ArrayList<String> getTerms() {
+		return terms;
+	}
+	
 }

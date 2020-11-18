@@ -2,6 +2,7 @@ package app.math.domain;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
 import java.util.ArrayList;
 
 public class Polynomial {
@@ -159,6 +160,33 @@ public class Polynomial {
 				this.powers.add(new BigInteger(coefPow.get(i)));
 			}
 		}
+	}
+	
+	/**
+	 * Definite integral from a to b. The constant of integration is assumed to be 0.
+	 * @param a Start definite integral.
+	 * @param b	End definite integral.
+	 * @return Area under curve between a and b.
+	 */
+	public BigDecimal integrate(BigDecimal a, BigDecimal b) {
+		ArrayList<BigInteger> locPowers = this.powers;
+		ArrayList<BigDecimal> locCoefs = this.coefficients;
+		if(locPowers.size()!=locCoefs.size()) {
+			throw new RuntimeException("Coefficient and power ArrayList size mismatch!");
+		}
+		String newPol = new String();
+		MathContext mc = new MathContext(10);
+		for(int i = 0;i<locPowers.size();i++) {
+			locPowers.set(i, locPowers.get(i).add(BigInteger.ONE));						//Add one to power
+			locCoefs.set(i, locCoefs.get(i).divide(new BigDecimal(locPowers.get(i)),mc));	//Divide by new power
+			if(i<locPowers.size()-1)		//Power is never 0
+				newPol+=locCoefs.get(i).toString() + "x^" + locPowers.get(i).toString() + "+";
+			else
+				newPol+=locCoefs.get(i).toString() + "x^" + locPowers.get(i).toString();
+		}
+		Polynomial integral = new Polynomial(newPol);
+		BigDecimal ans = integral.get(b).subtract(integral.get(a));
+		return ans;
 	}
 
 	public ArrayList<BigDecimal> getCoefficients() {

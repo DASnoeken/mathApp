@@ -544,6 +544,23 @@
                         onclick="getMinMaxPolynomial(maxInput.value,maxxmin.value,maxxmax.value)">Get Max/Min</button>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <input type="text" style="width: 70%;" class="textinput" id="integralInput" value="f(x)">
+                </td>
+                <td>
+                    <input type="text" style="width: 70%;" class="textinput" id="integralA" value="a">
+                </td>
+                <td>
+                    <input type="text" style="width: 70%;" class="textinput" id="integralB" value="b">
+                </td>
+                <td>
+                    $\int_a^b f(x)dx$
+                </td>
+                <td>
+                    <button class="buttons" onclick="integratePolynomial(integralInput.value,integralA.value,integralB.value)">Integrate</button>
+                </td>
+            </tr>
         </table>
     </div>
     <br>

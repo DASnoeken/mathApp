@@ -1292,3 +1292,20 @@ function polarComplextoCartesian(string) {
     xhr.open("GET", "https://daansmathapp.herokuapp.com/Complex/toCartesian/?in=" + string);
     xhr.send();
 }
+function integratePolynomial(fun,a,b){
+    if(isNaN(a) || isNaN(b)){
+        document.getElementById("response").innerHTML = "ERROR! Integration bounds must be numbers!";
+        return;
+    }
+    fun = fun.replaceAll("^", "%5E");
+    fun = fun.replaceAll("+", "%2B");
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if(this.readyState==4){
+            document.getElementById("response").innerHTML = this.responseText;
+            MathJax.typeset();
+        }
+    }
+    xhr.open("GET","https://daansmathapp.herokuapp.com/Polynomial/GetIntegral?polynomial="+fun+"&a="+a+"&b="+b);
+    xhr.send();
+}
