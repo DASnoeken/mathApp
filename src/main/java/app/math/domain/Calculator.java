@@ -107,10 +107,11 @@ public class Calculator {
 					ans = addChar(ans, "}", i);
 				} else {
 					while (i < ans.length()
-							&& (Character.isDigit(ans.charAt(i)) || ans.charAt(i) == '^' || ans.charAt(i) == '/')) {
+							&& (Character.isDigit(ans.charAt(i)) || ans.charAt(i) == '^' || ans.charAt(i) == '/'
+									|| ans.charAt(i) == 'e' || ans.charAt(i) == 'p' || ans.charAt(i) == 'i')) {
 						i++;
 					}
-					i++;
+					// i++;
 					ans = addChar(ans, "}", i);
 				}
 			}
@@ -123,10 +124,10 @@ public class Calculator {
 					i++;
 				}
 			}
-			if (ans.charAt(i) == '^' && (Character.isDigit(ans.charAt(i + 1)) || ans.charAt(i+1) == '-') ) {
+			if (ans.charAt(i) == '^' && (Character.isDigit(ans.charAt(i + 1)) || ans.charAt(i + 1) == '-')) {
 				ans = addChar(ans, "{", i + 1);
 				i += 2;
-				if(ans.charAt(i) == '-') {
+				if (ans.charAt(i) == '-') {
 					i++;
 				}
 				while (i < ans.length() && Character.isDigit(ans.charAt(i))) {
@@ -147,7 +148,7 @@ public class Calculator {
 					ans = addChar(ans, "}", i);
 					i++;
 				}
-			}else if(ans.charAt(i) == 'p' && ans.charAt(i+1) == 'h' && ans.charAt(i + 2) == 'i') {
+			} else if (ans.charAt(i) == 'p' && ans.charAt(i + 1) == 'h' && ans.charAt(i + 2) == 'i') {
 				boolean phipower = false;
 				if (i > 0 && ans.charAt(i - 1) == '^') {
 					ans = addChar(ans, "{", i);
@@ -160,7 +161,7 @@ public class Calculator {
 					ans = addChar(ans, "}", i);
 					i++;
 				}
-			}else if (((int) ans.charAt(i) >= 65 && (int) ans.charAt(i) <= 90)
+			} else if (((int) ans.charAt(i) >= 65 && (int) ans.charAt(i) <= 90)
 					|| ((int) ans.charAt(i) >= 97 && (int) ans.charAt(i) <= 122)) { // is letter
 				StringBuilder sb = new StringBuilder(ans);
 				sb.replace(i, i + 1, "\\text{" + ans.charAt(i) + "}");
@@ -213,49 +214,51 @@ public class Calculator {
 		if (this.sum.charAt(0) == '-') {
 			this.sum = "0" + this.sum;
 		}
-		if(this.sum.contains("/-")) {
-			for(int i=0;i<this.sum.length();i++) {
-				if(this.sum.charAt(i)=='/' && this.sum.charAt(i+1)=='-') {
-					int j=i-1;
-					while(j>0 && Character.isDigit(this.sum.charAt(j))) {
+		if (this.sum.contains("/-")) {
+			for (int i = 0; i < this.sum.length(); i++) {
+				if (this.sum.charAt(i) == '/' && this.sum.charAt(i + 1) == '-') {
+					int j = i - 1;
+					while (j > 0 && Character.isDigit(this.sum.charAt(j))) {
 						j--;
 					}
 					this.sum = addChar(this.sum, "-", j);
 					i++;
 				}
 			}
-			this.sum=this.sum.replaceAll("\\/-", "/");
+			this.sum = this.sum.replaceAll("\\/-", "/");
 		}
-		if(this.sum.contains("*-")) {
-			for(int i=0;i<this.sum.length();i++) {
-				if(this.sum.charAt(i)=='*' && this.sum.charAt(i+1)=='-') {
-					int j=i-1;
-					while(j>0 && Character.isDigit(this.sum.charAt(j))) {
+		if (this.sum.contains("*-")) {
+			for (int i = 0; i < this.sum.length(); i++) {
+				if (this.sum.charAt(i) == '*' && this.sum.charAt(i + 1) == '-') {
+					int j = i - 1;
+					while (j > 0 && Character.isDigit(this.sum.charAt(j))) {
 						j--;
 					}
 					this.sum = addChar(this.sum, "-", j);
 					i++;
 				}
 			}
-			this.sum=this.sum.replaceAll("\\*-", "*");
+			this.sum = this.sum.replaceAll("\\*-", "*");
 		}
-		if(this.sum.contains("^-")) {
-			for(int i=0;i<this.sum.length();i++) {
-				if(this.sum.charAt(i)=='^' && this.sum.charAt(i+1)=='-') {
-					int j=i-1;
-					while(j>0 && Character.isDigit(this.sum.charAt(j))) {
+		if (this.sum.contains("^-")) {
+			for (int i = 0; i < this.sum.length(); i++) {
+				if (this.sum.charAt(i) == '^' && this.sum.charAt(i + 1) == '-') {
+					int j = i - 1;
+					while (j > 0 && Character.isDigit(this.sum.charAt(j))) {
 						j--;
 					}
 					this.sum = addChar(this.sum, "1/(", j);
-					i+=3;
-					while(i<this.sum.length() && (this.sum.charAt(i)=='^' || (this.sum.charAt(i)=='-' && this.sum.charAt(i-1) == '^') || Character.isDigit(this.sum.charAt(i))) ) {
+					i += 3;
+					while (i < this.sum.length() && (this.sum.charAt(i) == '^'
+							|| (this.sum.charAt(i) == '-' && this.sum.charAt(i - 1) == '^')
+							|| Character.isDigit(this.sum.charAt(i)))) {
 						i++;
 					}
 					this.sum = addChar(this.sum, ")", i);
 					i++;
 				}
 			}
-			this.sum=this.sum.replaceAll("\\^-", "^");
+			this.sum = this.sum.replaceAll("\\^-", "^");
 			try {
 				solveParenthesis();
 			} catch (CalculatorSyntaxException e) {

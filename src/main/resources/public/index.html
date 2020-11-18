@@ -131,10 +131,10 @@
         <table>
             <tr>
                 <td>
-                    <input type="text" id="realPart" value="Real">
+                    <input type="text" class="textinput" id="realPart" value="Real">
                 </td>
                 <td>
-                    <input type="text" id="imagPart" value="Imag">
+                    <input type="text" class="textinput" id="imagPart" value="Imag">
                 </td>
                 <td>
                     <button class="buttons" onclick="setComplex(realPart.value,imagPart.value)">Set Complex
@@ -143,7 +143,7 @@
             </tr>
             <tr>
                 <td>
-                    <input type="text" id="complexiddelete" value="ID">
+                    <input type="text" class="textinput" id="complexiddelete" value="ID">
                 </td>
                 <td>
                     <button class="buttons" onclick="deleteComplexById(complexiddelete.value)">Delete number</button>
@@ -172,7 +172,7 @@
             </tr>
             <tr>
                 <td>
-                    <input type="text" id="toPolarid" value="ID">
+                    <input type="text" class="textinput" id="toPolarid" value="ID">
                 </td>
                 <td>
                     Convert to polar complex number.
@@ -183,7 +183,7 @@
             </tr>
             <tr>
                 <td>
-                    <input type="text" id="toCartesian" value="Polar Expr">
+                    <input type="text" class="textinput" id="toCartesian" value="Polar Expr">
                 </td>
                 <td>
                     Convert polar to Cartesian.
@@ -194,7 +194,7 @@
             </tr>
             <tr>
                 <td>
-                    <input type="text" id="ComplexConjugate" value="ID">
+                    <input type="text" class="textinput" id="ComplexConjugate" value="ID">
                 </td>
                 <td>
                     $(a+bi)^*=a-bi$
@@ -205,10 +205,10 @@
             </tr>
             <tr>
                 <td>
-                    <input type="text" id="idAddComplex1" value="ID1">
+                    <input type="text" class="textinput" id="idAddComplex1" value="ID1">
                 </td>
                 <td>
-                    <input type="text" id="idAddComplex2" value="ID2">
+                    <input type="text" class="textinput" id="idAddComplex2" value="ID2">
                 </td>
                 <td>
                     <button class="buttons" onclick="ComplexAdd(idAddComplex1.value,idAddComplex2.value)">Add</button>
@@ -216,10 +216,10 @@
             </tr>
             <tr>
                 <td>
-                    <input type="text" id="idMultComplex" value="ID">
+                    <input type="text" class="textinput" id="idMultComplex" value="ID">
                 </td>
                 <td>
-                    <input type="text" id="ComplexMultOther" value="Number">
+                    <input type="text" class="textinput" id="ComplexMultOther" value="Number">
                 </td>
                 <td>
                     <button class="buttons" onclick="complexMultiply(idMultComplex.value,ComplexMultOther.value)">Multiply</button>

@@ -169,6 +169,9 @@ public class Polynomial {
 	 * @return Area under curve between a and b.
 	 */
 	public BigDecimal integrate(BigDecimal a, BigDecimal b) {
+		if(a.equals(b)) {
+			return BigDecimal.ZERO;
+		}
 		ArrayList<BigInteger> locPowers = this.powers;
 		ArrayList<BigDecimal> locCoefs = this.coefficients;
 		if(locPowers.size()!=locCoefs.size()) {
@@ -177,9 +180,9 @@ public class Polynomial {
 		String newPol = new String();
 		MathContext mc = new MathContext(10);
 		for(int i = 0;i<locPowers.size();i++) {
-			locPowers.set(i, locPowers.get(i).add(BigInteger.ONE));						//Add one to power
+			locPowers.set(i, locPowers.get(i).add(BigInteger.ONE));							//Add one to power
 			locCoefs.set(i, locCoefs.get(i).divide(new BigDecimal(locPowers.get(i)),mc));	//Divide by new power
-			if(i<locPowers.size()-1)		//Power is never 0
+			if(i<locPowers.size()-1)														//Power is never 0
 				newPol+=locCoefs.get(i).toString() + "x^" + locPowers.get(i).toString() + "+";
 			else
 				newPol+=locCoefs.get(i).toString() + "x^" + locPowers.get(i).toString();
