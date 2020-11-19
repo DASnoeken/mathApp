@@ -37,16 +37,16 @@ public class Derivative {
 				polynomialTerms.add(term);
 			} else if (term.matches("[-]?\\d{1,}\\^x")) {
 				exponentialTerms.add(term);
-			} else if (term.matches("[-]?(log)[_]\\d{1,}[(]x[)]")) {
+			} else if (term.matches("[-]?(log)[_]\\d{1,}[{]x[}]")) {
 				logTerms.add(term);
 			} else {
 				specialTerms.add(term);
 			}
-			if (term.contains("*") && !term.contains("{") && !term.contains("}")) {
+			if (term.contains("*") && !term.contains("(") && !term.contains(")")) {
 				productRuleTerms.add(term);
-			} else if (term.contains("{") && term.contains("}") && !term.contains("*")) {
+			} else if (term.contains("(") && term.contains(")") && !term.contains("*")) {
 				chainRuleTerms.add(term);
-			} else if (term.contains("*") && term.contains("{") && term.contains("}")) {
+			} else if (term.contains("*") && term.contains("(") && term.contains(")")) {
 				chainProductRuleTerms.add(term);
 			}
 		}
@@ -88,14 +88,14 @@ public class Derivative {
 		for (String term : chainProductRuleTerms) {
 			String[] tmp = term.split("[*]");
 			for (int i = 0; i < tmp.length; i++) {
-				tmp[i] = tmp[i].replaceAll("\\(", "");
-				tmp[i] = tmp[i].replaceAll("\\)", "");
+				tmp[i] = tmp[i].replaceAll("\\{", "");
+				tmp[i] = tmp[i].replaceAll("\\}", "");
 				if (!tmp[i].contains("x")) { // numbers have derivative 0
 					continue;
 				}
 				if (!tmp[i].matches("\\d{1,}"))
-					if (tmp[i].contains("{") && tmp[i].contains("}")) {
-						ans += "(" + chainRule(tmp[i]) + ")*";
+					if (tmp[i].contains("(") && tmp[i].contains(")")) {
+						ans += "{" + chainRule(tmp[i]) + "}*";
 					} else {
 						ans += singleTerm(tmp[i]) + "*";
 					}
@@ -123,16 +123,16 @@ public class Derivative {
 		String ans = new String();
 		for (String term : chainRuleTerms) {
 			String extractedTerm = new String();
-			Pattern pattern = Pattern.compile("\\{.*\\}");
+			Pattern pattern = Pattern.compile("\\(.*\\)");
 			Matcher matcher = pattern.matcher(term);
-			String outerTerm = term.replaceAll("\\{.*\\}", "u");
+			String outerTerm = term.replaceAll("\\(.*\\)", "u");
 			Derivative d_outer = new Derivative(outerTerm);
 			String outerDerivative = d_outer.derive();
 			outerDerivative = outerDerivative.replaceAll("x", "u");
 			do {
 				if (matcher.find()) {
 					extractedTerm = matcher.group(0).substring(1, matcher.group(0).length() - 1);
-					outerDerivative = outerDerivative.replaceAll("u", "({" + extractedTerm + "})");
+					outerDerivative = outerDerivative.replaceAll("u", "{(" + extractedTerm + ")}");
 					outerDerivative.trim();
 					ans += outerDerivative + " * ";
 				}
@@ -143,7 +143,7 @@ public class Derivative {
 					e.printStackTrace();
 				}
 				matcher = pattern.matcher(extractedTerm);
-			} while (extractedTerm.contains("{") && extractedTerm.contains("}"));
+			} while (extractedTerm.contains("(") && extractedTerm.contains(")"));
 			ans += "+";
 		}
 		return ans;
@@ -152,16 +152,16 @@ public class Derivative {
 	private String chainRule(String term) {
 		String ans = new String();
 		String extractedTerm = new String();
-		Pattern pattern = Pattern.compile("\\{.*\\}");
+		Pattern pattern = Pattern.compile("\\(.*\\)");
 		Matcher matcher = pattern.matcher(term);
-		String outerTerm = term.replaceAll("\\{.*\\}", "u");
+		String outerTerm = term.replaceAll("\\(.*\\)", "u");
 		Derivative d_outer = new Derivative(outerTerm);
 		String outerDerivative = d_outer.derive();
-		outerDerivative = outerDerivative.replaceAll("\\(x\\)", "(u)");
+		outerDerivative = outerDerivative.replaceAll("\\{x\\}", "(u)");
 		do {
 			if (matcher.find()) {
 				extractedTerm = matcher.group(0).substring(1, matcher.group(0).length() - 1);
-				outerDerivative = outerDerivative.replaceAll("\\(u\\)", "({" + extractedTerm + "})");
+				outerDerivative = outerDerivative.replaceAll("\\{u\\}", "{(" + extractedTerm + ")}");
 				ans += outerDerivative + "*";
 			}
 			try {
@@ -171,7 +171,7 @@ public class Derivative {
 				e.printStackTrace();
 			}
 			matcher = pattern.matcher(extractedTerm);
-		} while (extractedTerm.contains("{") && extractedTerm.contains("}"));
+		} while (extractedTerm.contains("(") && extractedTerm.contains(")"));
 		return ans;
 	}
 
@@ -211,58 +211,58 @@ public class Derivative {
 			ans += powerRule(term);
 		} else if (term.matches("[-]?\\d{1,}\\^x")) {
 			ans += exponentialNonE(term);
-		} else if (term.matches("[-]?(log)[_]\\d{1,}[(]x[)]")) {
+		} else if (term.matches("[-]?(log)[_]\\d{1,}[{]x[}]")) {
 			ans += logarithmicNonE(term);
-		} else if (term.contains("{") && term.contains("}")) {
+		} else if (term.contains("(") && term.contains(")")) {
 			ans += chainRule(term);
 		} else {
 			switch (term) {
-			case "ln(x)": {
-				ans += "1/(x)";
+			case "ln{x}": {
+				ans += "1/{x}";
 				break;
 			}
 			case "e^x": {
-				ans += "e^(x)";
+				ans += "e^{x}";
 				break;
 			}
-			case "exp(x)": {
-				ans += "exp(x)";
+			case "exp{x}": {
+				ans += "exp{x}";
 				break;
 			}
-			case "sin(x)": {
-				ans += "cos(x)";
+			case "sin{x}": {
+				ans += "cos{x}";
 				break;
 			}
-			case "cos(x)": {
-				ans += "-sin(x)";
+			case "cos{x}": {
+				ans += "-sin{x}";
 				break;
 			}
-			case "-sin(x)": {
-				ans += "-cos(x)";
+			case "-sin{x}": {
+				ans += "-cos{x}";
 				break;
 			}
-			case "-cos(x)": {
-				ans += "sin(x)";
+			case "-cos{x}": {
+				ans += "sin{x}";
 				break;
 			}
-			case "tan(x)": {
-				ans += "sec(x)*sec(x)";
+			case "tan{x}": {
+				ans += "sec{x}*sec{x}";
 				break;
 			}
-			case "sec(x)": {
-				ans += "tan(x)*sec(x)";
+			case "sec{x}": {
+				ans += "tan{x}*sec{x}";
 				break;
 			}
-			case "csc(x)": {
-				ans += "-cot(x)*csc(x) + ";
+			case "csc{x}": {
+				ans += "-cot{x}*csc{x} + ";
 				break;
 			}
-			case "cot(x)": {
-				ans += "-csc(x)*csc(x) + ";
+			case "cot{x}": {
+				ans += "-csc{x}*csc{x} + ";
 				break;
 			}
 			case "x^x": {
-				ans += "x^x*(ln(x)+1)";
+				ans += "x^x*{ln{x}+1}";
 				break;
 			}
 			}
@@ -273,9 +273,9 @@ public class Derivative {
 	private String logarithmicNonE(String term) {
 		String ans = new String();
 		String[] tmp = term.split("[_]");
-		tmp = tmp[1].split("[(]");
+		tmp = tmp[1].split("[{]");
 		String base = tmp[0];
-		ans = "1/(x*ln(" + base + "))";
+		ans = "1/{x*ln{" + base + "}}";
 		return ans;
 	}
 
@@ -283,9 +283,9 @@ public class Derivative {
 		String ans = new String();
 		for (String term : logTerms) {
 			String[] tmp = term.split("[_]");
-			tmp = tmp[1].split("[(]");
+			tmp = tmp[1].split("[{]");
 			String base = tmp[0];
-			ans = "1/(x*ln(" + base + "))";
+			ans = "1/{x*ln{" + base + "}}";
 		}
 		return ans;
 	}
@@ -294,7 +294,7 @@ public class Derivative {
 		String ans = new String();
 		String[] tmp = term.split("\\^");
 		String base = tmp[0];
-		ans = term + "*ln(" + base + ")";
+		ans = term + "*ln{" + base + "}";
 		return ans;
 	}
 
@@ -303,7 +303,7 @@ public class Derivative {
 		for (String term : exponentialTerms) {
 			String[] tmp = term.split("\\^");
 			String base = tmp[0];
-			ans = term + "*ln(" + base + ") + ";
+			ans = term + "*ln{" + base + "} + ";
 		}
 		return ans;
 	}
@@ -312,52 +312,52 @@ public class Derivative {
 		String ans = new String();
 		for (String term : specialTerms) {
 			switch (term) {
-			case "ln(x)": {
-				ans += "1/(x) + ";
+			case "ln{x}": {
+				ans += "1/{x}";
 				break;
 			}
 			case "e^x": {
-				ans += "e^(x) + ";
+				ans += "e^{x}";
 				break;
 			}
-			case "exp(x)": {
-				ans += "exp(x) + ";
+			case "exp{x}": {
+				ans += "exp{x}";
 				break;
 			}
-			case "sin(x)": {
-				ans += "cos(x) + ";
+			case "sin{x}": {
+				ans += "cos{x}";
 				break;
 			}
-			case "cos(x)": {
-				ans += "-sin(x) + ";
+			case "cos{x}": {
+				ans += "-sin{x}";
 				break;
 			}
-			case "-sin(x)": {
-				ans += "-cos(x) + ";
+			case "-sin{x}": {
+				ans += "-cos{x}";
 				break;
 			}
-			case "-cos(x)": {
-				ans += "sin(x) + ";
+			case "-cos{x}": {
+				ans += "sin{x}";
 				break;
 			}
-			case "tan(x)": {
-				ans += "sec(x)*sec(x) + ";
+			case "tan{x}": {
+				ans += "sec{x}*sec{x}";
 				break;
 			}
-			case "sec(x)": {
-				ans += "tan(x)*sec(x) + ";
+			case "sec{x}": {
+				ans += "tan{x}*sec{x}";
 				break;
 			}
-			case "csc(x)": {
-				ans += "-cot(x)*csc(x) + ";
+			case "csc{x}": {
+				ans += "-cot{x}*csc{x} + ";
 				break;
 			}
-			case "cot(x)": {
-				ans += "-csc(x)*csc(x) + ";
+			case "cot{x}": {
+				ans += "-csc{x}*csc{x} + ";
 				break;
 			}
 			case "x^x": {
-				ans += "x^x*(ln(x)+1)";
+				ans += "x^x*{ln{x}+1}";
 				break;
 			}
 			}
@@ -440,7 +440,7 @@ public class Derivative {
 	}
 
 	private void breakIntoTerms() {
-		String[] terms_P = function.split("(?<!\\^)-(?!.*\\})"); // (?<!\\^|\\{)-
+		String[] terms_P = function.split("(?<!\\^)-(?!.*\\))"); // (?<!\\^|\\{)-
 		if (terms_P[0].equals("")) {
 			for (int i = 0; i < terms_P.length - 1; i++) {
 				terms_P[i] = terms_P[i + 1];
@@ -459,7 +459,7 @@ public class Derivative {
 		terms = new ArrayList<String>();
 		String[] termF;
 		for (String term : terms_P) {
-			if (term.contains("+") && !term.matches(".*\\{.*[\\+-].*\\}.*")) {
+			if (term.contains("+") && !term.matches(".*\\(.*[\\+-].*\\).*")) {
 				termF = term.split("[+]");
 				for (int i = 0; i < termF.length; i++) {
 					if (!term.equals("0") && !term.equals("-0"))
@@ -484,17 +484,17 @@ public class Derivative {
 	public void texify() { // Texifies the result
 		this.function = this.function.trim();
 		this.result = this.result.trim();
-		this.function = this.function.replaceAll("\\s", "").replaceAll("\\(\\(", "(").replaceAll("\\)\\)", ")");
-		this.result = this.result.replaceAll("\\s", "").replaceAll("\\(\\(", "(").replaceAll("\\)\\)", ")")
-				.replaceAll("1\\/\\(x\\)\\*x(?!\\^)", "1").replaceAll("1\\*", "").replaceAll("\\+\\-", "-");
+		this.function = this.function.replaceAll("\\s", "").replaceAll("\\{\\{", "{").replaceAll("\\}\\}", "}");
+		this.result = this.result.replaceAll("\\s", "").replaceAll("\\{\\{", "{").replaceAll("\\}\\}", "}")
+				.replaceAll("1\\/\\{x\\}\\*x(?!\\^)", "1").replaceAll("1\\*", "").replaceAll("\\+\\-", "-");
 		for (int i = 0; i < this.result.length(); i++) {
 			if (this.result.charAt(i) == '^') {
 				i++;
 				this.result = addChar(this.result, "{", i);
 				i++;
 				while (i < this.result.length() && (Character.isDigit(this.result.charAt(i))
-						|| this.result.charAt(i) == 'x' || this.result.charAt(i) == '(' || this.result.charAt(i) == ')'
-						|| this.result.charAt(i) == '{' || this.result.charAt(i) == '}' || this.result.charAt(i) == '.'
+						|| this.result.charAt(i) == 'x' || this.result.charAt(i) == '(' || this.result.charAt(i) == '{'
+						|| this.result.charAt(i) == '.'
 						|| (this.result.charAt(i) == '-' && this.result.charAt(i - 2) == '^'))) {
 					i++;
 				}
@@ -502,7 +502,7 @@ public class Derivative {
 			}
 			if (checkSubstring(this.result, "cos", i) || checkSubstring(this.result, "sin", i)
 					|| checkSubstring(this.result, "sec", i) || checkSubstring(this.result, "tan", i)
-					|| checkSubstring(this.result, "csc", i) || checkSubstring(this.result,"cot",i)) {
+					|| checkSubstring(this.result, "csc", i) || checkSubstring(this.result, "cot", i)) {
 				this.result = addChar(this.result, "\\text{", i);
 				i += 9;
 				this.result = addChar(this.result, "}", i);
@@ -522,8 +522,7 @@ public class Derivative {
 				i++;
 				while (i < this.function.length() && (Character.isDigit(this.function.charAt(i))
 						|| this.function.charAt(i) == 'x' || this.function.charAt(i) == '('
-						|| this.function.charAt(i) == ')' || this.function.charAt(i) == '{'
-						|| this.function.charAt(i) == '}' || this.function.charAt(i) == '.'
+						|| this.function.charAt(i) == '{' || this.function.charAt(i) == '.'
 						|| (this.function.charAt(i) == '-' && this.result.charAt(i - 2) == '^'))) {
 					i++;
 				}
@@ -582,5 +581,9 @@ public class Derivative {
 	public ArrayList<String> getTerms() {
 		return terms;
 	}
-	
+
+	public ArrayList<String> getPolynomialTerms() {
+		return polynomialTerms;
+	}
+
 }
