@@ -1,1 +1,1 @@
- - Dividing by a negative number is a serious issue. FIXED!
+ - Calculator: things like 2*10^-2 don't work, 10^-2*2 does. also (10^-2)*2 does not work

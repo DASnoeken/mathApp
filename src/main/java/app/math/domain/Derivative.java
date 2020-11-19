@@ -161,7 +161,7 @@ public class Derivative {
 		do {
 			if (matcher.find()) {
 				extractedTerm = matcher.group(0).substring(1, matcher.group(0).length() - 1);
-				outerDerivative = outerDerivative.replaceAll("\\{u\\}", "{(" + extractedTerm + ")}");
+				outerDerivative = outerDerivative.replaceAll("\\(u\\)", "{(" + extractedTerm + ")}");
 				ans += outerDerivative + "*";
 			}
 			try {
@@ -499,6 +499,9 @@ public class Derivative {
 						|| this.result.charAt(i) == '^' || this.result.charAt(i) == '+'
 						|| this.result.charAt(i) == '}')) {
 					i++;
+					if(this.result.charAt(i-1)==')') {
+						break;
+					}
 				}
 				this.result = addChar(this.result, "}", i);
 				int powend = i;
@@ -506,6 +509,7 @@ public class Derivative {
 				String pow = this.result.substring(powstart, powend);
 				pow = pow.replaceAll("[\\(\\)\\{\\}]", "");
 				this.result = this.result.substring(0, powstart) + pow + this.result.substring(powend);
+				this.result = this.result.replaceAll("\\s", "").replaceAll("\\{\\{", "{").replaceAll("\\}\\}", "}");
 			}
 			if (checkSubstring(this.result, "cos", i) || checkSubstring(this.result, "sin", i)
 					|| checkSubstring(this.result, "sec", i) || checkSubstring(this.result, "tan", i)

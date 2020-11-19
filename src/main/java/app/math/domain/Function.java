@@ -11,7 +11,8 @@ public class Function {
 	private ArrayList<String> otherTerms;
 	private ArrayList<BigDecimal> xgrid;
 	private ArrayList<BigDecimal> y;
-	private String trigState;		//"radians" or "degrees"
+	BigDecimal delta;
+	private String trigState; // "radians" or "degrees"
 
 	public Function(String input, String trigS) {
 		this.function = input;
@@ -54,18 +55,42 @@ public class Function {
 			Polynomial p = new Polynomial(s);
 			ans = ans.add(p.integrate(a, b));
 		}
-
+		String nonPolIn = new String();
+		for (String s : otherTerms) {
+			nonPolIn += s + "+";
+		}
+		if (nonPolIn.charAt(nonPolIn.length() - 1) == '+') {
+			nonPolIn = nonPolIn.substring(0, nonPolIn.length() - 1);
+		}
+		Function nonpol = new Function(nonPolIn,this.trigState);
+		nonpol.setXgrid(a, b, this.delta);
+		nonpol.setY();
+		for(int i = 0;i<nonpol.getY().size();i++) {
+			ans = ans.add(nonpol.getY().get(i).multiply(this.delta));
+		}
+		System.out.println(nonPolIn);
 		return ans;
 	}
-	
-	
 
 	public ArrayList<BigDecimal> getY() {
 		return y;
 	}
 
 	public void setY() {
-		
+		String tmpFunction;
+		for (int i = 0; i < this.xgrid.size(); i++) {
+			// replace x with x-values
+			tmpFunction = this.function;
+			tmpFunction = tmpFunction.replaceAll("(?<!e)x(?!p)", xgrid.get(i).toString());
+			// use calculator to calculate y value
+			Calculator c = null;
+			try {
+				c = new Calculator(tmpFunction, this.trigState);
+			}catch(Exception e) {
+				System.out.println("tmp = "+tmpFunction);
+			}
+			y.add(c.getAnswer());
+		}
 	}
 
 	public ArrayList<BigDecimal> getXgrid() {
@@ -73,6 +98,7 @@ public class Function {
 	}
 
 	public void setXgrid(BigDecimal xmin, BigDecimal xmax, BigDecimal delta) {
+		this.delta = delta;
 		this.xgrid.add(xmin);
 		while (this.xgrid.get(this.xgrid.size() - 1).compareTo(xmax) < 0) {
 			this.xgrid.add(this.xgrid.get(this.xgrid.size() - 1).add(delta));
@@ -104,11 +130,10 @@ public class Function {
 	}
 
 	public void setTrigState(String trigState) {
-		if(!trigState.equals(this.trigState)) {
+		if (!trigState.equals(this.trigState)) {
 			this.trigState = trigState;
 			setFunction(this.function, trigState);
 		}
 	}
 
-	
 }

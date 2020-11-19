@@ -132,7 +132,7 @@ public class Calculator {
 					i++;
 				}
 				while (i < ans.length() && (Character.isDigit(ans.charAt(i)) || ans.charAt(i) == '*'
-						|| ans.charAt(i) == '(' || ans.charAt(i) == ')')) {
+						|| ans.charAt(i) == '(' || ans.charAt(i) == '.' || ans.charAt(i) == ')')) {
 					i++;
 				}
 				ans = addChar(ans, "}", i);
@@ -205,6 +205,7 @@ public class Calculator {
 			throw new CalculatorSyntaxException("Parenthesis Error!");
 		}
 		String subsum = this.sum.substring(ind + 1, indP);
+		System.out.println(subsum);
 		BigDecimal subAnswer = calculate(subsum);
 		StringBuilder replacer = new StringBuilder(this.sum);
 		replacer.replace(ind, indP + 1, subAnswer.toString());
@@ -246,14 +247,14 @@ public class Calculator {
 			for (int i = 0; i < this.sum.length(); i++) {
 				if (this.sum.charAt(i) == '^' && this.sum.charAt(i + 1) == '-') {
 					int j = i - 1;
-					while (j > 0 && Character.isDigit(this.sum.charAt(j))) {
+					while (j > 0 && (Character.isDigit(this.sum.charAt(j)) || this.sum.charAt(j) == '.')) {
 						j--;
 					}
 					this.sum = addChar(this.sum, "1/(", j);
 					i += 3;
 					while (i < this.sum.length() && (this.sum.charAt(i) == '^'
 							|| (this.sum.charAt(i) == '-' && this.sum.charAt(i - 1) == '^')
-							|| Character.isDigit(this.sum.charAt(i)))) {
+							|| Character.isDigit(this.sum.charAt(i)) || this.sum.charAt(i) == '.')) {
 						i++;
 					}
 					this.sum = addChar(this.sum, ")", i);
@@ -268,7 +269,8 @@ public class Calculator {
 			}
 		}
 		this.sum = this.sum.replaceAll("\\+-", "-");
-		this.terms = this.sum.split("(\\+|\\-)"); // contains numbers
+		this.sum = this.sum.replaceAll("E", "*10^");
+		this.terms = this.sum.split("\\+|(?<!)E\\-"); // contains numbers
 		this.ops = this.sum.split(
 				"\\({0,}([\\*\\/\\^]?\\d{1,}[\\*\\/\\^]?|[a-z]{1,}\\{\\d{1,}\\.?\\d{0,}\\}|(?i)e|(?i)pi|(?i)phi|\\d{0}(?!\\-)\\d{1,})\\){0,}");
 
@@ -634,6 +636,7 @@ public class Calculator {
 			}
 			for (int j = 0; j < opsI.length; j++) {
 				if (opsI[j].equals("^")) {
+
 					double power = Double.parseDouble(termsI[j + 1]);
 					if ((int) power == power) {
 						for (int k = 1; k < power; k++) {
@@ -643,6 +646,7 @@ public class Calculator {
 						finalValue = new BigDecimal(Math.pow(Double.valueOf(finalValue.toString()), power));// Math.pow(Double.parseDouble(termsI[j]),
 																											// power);
 					}
+
 				} else if (opsI[j].equals("*")) {
 					finalValue = finalValue.multiply(new BigDecimal(termsI[j + 1]));// Double.parseDouble(termsI[j +
 																					// 1]);
@@ -654,6 +658,7 @@ public class Calculator {
 			}
 			addsubTerms.add(finalValue);
 		}
+
 		boolean test2 = Arrays.stream(ops).anyMatch("*"::equals);
 		boolean test3 = Arrays.stream(ops).anyMatch("/"::equals);
 		boolean test4 = Arrays.stream(ops).anyMatch("."::equals);
@@ -696,9 +701,12 @@ public class Calculator {
 		if (subsum.charAt(0) == '-') {
 			subsum = "0" + subsum;
 		}
-		this.terms = subsum.split("(\\+|\\-)"); // contains numbers
+		this.terms = subsum.split("(\\+|(?<![\\^E])\\-)"); // contains numbers
 		this.ops = subsum.split(
 				"\\({0,}([\\*\\/\\^]?\\d{1,}[\\*\\/\\^]?|[a-z]{1,}\\{\\d{1,}\\.?\\d{0,}\\}|(?i)e|(?i)pi|(?i)phi|\\d{0}(?!\\-)\\d{1,})\\){0,}");
+		for(String o:ops) {
+			System.out.println("o = "+o+" ss = "+subsum);
+		}
 		ArrayList<String> list = new ArrayList<String>(Arrays.asList(this.terms));
 		list.remove("");
 		for (int i = 0; i < list.size(); i++) {
@@ -728,7 +736,10 @@ public class Calculator {
 				continue;
 			}
 			String[] termsI = terms[i].split("\\*|\\/|\\^");
-			String[] opsI = terms[i].split("\\d{1,}\\.?\\d{0,}|[a-z]{1,}\\{\\d{1,}\\}|(?i)pi|(?i)e|(?i)phi");
+			String[] opsI = terms[i].split("\\-?\\d{1,}\\.?\\d{0,}|[a-z]{1,}\\{\\d{1,}\\}|(?i)pi|(?i)e|(?i)phi");
+			for(String o:opsI) {
+				System.out.println(o);
+			}
 			for (int j = 0; j < termsI.length; j++) {
 				if (termsI[j].contains("neg")) {
 					String[] termsIp = termsI[j].split("\\{");
