@@ -124,13 +124,15 @@ public class Calculator {
 					i++;
 				}
 			}
-			if (ans.charAt(i) == '^' && (Character.isDigit(ans.charAt(i + 1)) || ans.charAt(i + 1) == '-')) {
+			if (ans.charAt(i) == '^'
+					&& (Character.isDigit(ans.charAt(i + 1)) || ans.charAt(i + 1) == '-' || ans.charAt(i + 1) == '(')) {
 				ans = addChar(ans, "{", i + 1);
 				i += 2;
 				if (ans.charAt(i) == '-') {
 					i++;
 				}
-				while (i < ans.length() && Character.isDigit(ans.charAt(i))) {
+				while (i < ans.length() && (Character.isDigit(ans.charAt(i)) || ans.charAt(i) == '*'
+						|| ans.charAt(i) == '(' || ans.charAt(i) == ')')) {
 					i++;
 				}
 				ans = addChar(ans, "}", i);
