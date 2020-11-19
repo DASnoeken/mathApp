@@ -492,13 +492,20 @@ public class Derivative {
 				i++;
 				this.result = addChar(this.result, "{", i);
 				i++;
+				int powstart = i;
 				while (i < this.result.length() && (Character.isDigit(this.result.charAt(i))
 						|| this.result.charAt(i) == 'x' || this.result.charAt(i) == '(' || this.result.charAt(i) == '{'
-						|| this.result.charAt(i) == '.'
-						|| (this.result.charAt(i) == '-' && this.result.charAt(i - 2) == '^'))) {
+						|| this.result.charAt(i) == '.' || this.result.charAt(i) == '-' || this.result.charAt(i) == ')'
+						|| this.result.charAt(i) == '^' || this.result.charAt(i) == '+'
+						|| this.result.charAt(i) == '}')) {
 					i++;
 				}
-				this.result = addChar(this.result, "}", i++);
+				this.result = addChar(this.result, "}", i);
+				int powend = i;
+				i++;
+				String pow = this.result.substring(powstart, powend);
+				pow = pow.replaceAll("[\\(\\)\\{\\}]", "");
+				this.result = this.result.substring(0, powstart) + pow + this.result.substring(powend);
 			}
 			if (checkSubstring(this.result, "cos", i) || checkSubstring(this.result, "sin", i)
 					|| checkSubstring(this.result, "sec", i) || checkSubstring(this.result, "tan", i)
@@ -520,13 +527,20 @@ public class Derivative {
 				i++;
 				this.function = addChar(this.function, "{", i);
 				i++;
+				int powstart = i;
 				while (i < this.function.length() && (Character.isDigit(this.function.charAt(i))
 						|| this.function.charAt(i) == 'x' || this.function.charAt(i) == '('
 						|| this.function.charAt(i) == '{' || this.function.charAt(i) == '.'
-						|| (this.function.charAt(i) == '-' && this.result.charAt(i - 2) == '^'))) {
+						|| this.function.charAt(i) == '-' || this.function.charAt(i) == '^'
+						|| this.function.charAt(i) == ')' || this.function.charAt(i) == '}')) {
 					i++;
 				}
-				this.function = addChar(this.function, "}", i++);
+				this.function = addChar(this.function, "}", i);
+				int powend = i;
+				i++;
+				String pow = this.function.substring(powstart, powend);
+				pow = pow.replaceAll("[\\(\\)\\{\\}]", "");
+				this.function = this.function.substring(0, powstart) + pow + this.function.substring(powend);
 			}
 			if (checkSubstring(this.function, "cos", i) || checkSubstring(this.function, "sin", i)
 					|| checkSubstring(this.function, "sec", i) || checkSubstring(this.function, "tan", i)
