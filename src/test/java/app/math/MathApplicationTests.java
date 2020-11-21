@@ -20,6 +20,6 @@ class MathApplicationTests {
 		f.setY();
 		ArrayList<BigDecimal> x = f.getXgrid();
 		ArrayList<BigDecimal> y = f.getY();
-		System.out.println("integrate = " + f.integrate(BigDecimal.ZERO, BigDecimal.ONE));
+		System.out.println("integrate = " + f.integrate(new BigDecimal("-1"), BigDecimal.ONE));
 	}
 }
