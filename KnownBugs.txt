@@ -1,1 +1,3 @@
- - Calculator: things like 2*10^-2 don't work, 10^-2*2 does. also (10^-2)*2 does not work
+ - Calculator: things like 2*10^-2 don't work, 10^-2*2 does. (10^-2)*2 works now. 
+ - MathJax part for (10^-2)*2 type is still a bit janky.
+ - Everything seems to work fine now. Still gotta fix that MathJax.

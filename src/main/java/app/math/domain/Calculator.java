@@ -193,6 +193,7 @@ public class Calculator {
 
 	public void solveParenthesis() throws CalculatorSyntaxException {
 		int ind = this.sum.lastIndexOf('(');
+		System.out.println(this.sum+" -- this.sum");
 		// find next close parenthesis
 		int indP = -1;
 		for (int i = ind + 1; i < this.sum.length(); i++) {
@@ -205,7 +206,6 @@ public class Calculator {
 			throw new CalculatorSyntaxException("Parenthesis Error!");
 		}
 		String subsum = this.sum.substring(ind + 1, indP);
-		System.out.println(subsum);
 		BigDecimal subAnswer = calculate(subsum);
 		StringBuilder replacer = new StringBuilder(this.sum);
 		replacer.replace(ind, indP + 1, subAnswer.toString());
@@ -247,9 +247,10 @@ public class Calculator {
 			for (int i = 0; i < this.sum.length(); i++) {
 				if (this.sum.charAt(i) == '^' && this.sum.charAt(i + 1) == '-') {
 					int j = i - 1;
-					while (j > 0 && (Character.isDigit(this.sum.charAt(j)) || this.sum.charAt(j) == '.')) {
+					while (j >= 0 && (Character.isDigit(this.sum.charAt(j)) || this.sum.charAt(j) == '.')) {
 						j--;
 					}
+					j++;
 					this.sum = addChar(this.sum, "1/(", j);
 					i += 3;
 					while (i < this.sum.length() && (this.sum.charAt(i) == '^'
@@ -697,15 +698,23 @@ public class Calculator {
 	}
 
 	public BigDecimal calculate(String subsum) {
+		System.out.println(subsum);
 		subsum = subsum.replace("\\s", ""); // remove spaces
 		if (subsum.charAt(0) == '-') {
 			subsum = "0" + subsum;
 		}
+		
 		this.terms = subsum.split("(\\+|(?<![\\^E])\\-)"); // contains numbers
 		this.ops = subsum.split(
-				"\\({0,}([\\*\\/\\^]?\\d{1,}[\\*\\/\\^]?|[a-z]{1,}\\{\\d{1,}\\.?\\d{0,}\\}|(?i)e|(?i)pi|(?i)phi|\\d{0}(?!\\-)\\d{1,})\\){0,}");
-		for(String o:ops) {
-			System.out.println("o = "+o+" ss = "+subsum);
+				"\\({0,}([\\*\\/\\^]?\\d{1,}[\\*\\/\\^]?-?|[a-z]{1,}\\{\\d{1,}\\.?\\d{0,}\\}|(?i)e|(?i)pi|(?i)phi|\\d{0}(?!\\-)\\d{1,})\\){0,}");
+		for(int i=0; i<terms.length;i++) {
+			if (terms[i].contains("^-")) {
+				String[] subsplit = terms[i].split("\\^-");
+				String base = subsplit[0];
+				String exponent = subsplit[1];
+				BigDecimal div = new BigDecimal(base).pow(Integer.parseInt(exponent), mc);
+				terms[i] = "1/"+div.toString();
+			}
 		}
 		ArrayList<String> list = new ArrayList<String>(Arrays.asList(this.terms));
 		list.remove("");
@@ -737,9 +746,6 @@ public class Calculator {
 			}
 			String[] termsI = terms[i].split("\\*|\\/|\\^");
 			String[] opsI = terms[i].split("\\-?\\d{1,}\\.?\\d{0,}|[a-z]{1,}\\{\\d{1,}\\}|(?i)pi|(?i)e|(?i)phi");
-			for(String o:opsI) {
-				System.out.println(o);
-			}
 			for (int j = 0; j < termsI.length; j++) {
 				if (termsI[j].contains("neg")) {
 					String[] termsIp = termsI[j].split("\\{");
